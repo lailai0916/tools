@@ -1,0 +1,62 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  height: 60px;
+  border-bottom: 1px solid var(--emphasis-200);
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--font-color-base);
+}
+
+.brand:hover {
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.themeBtn {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--font-color-base);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.themeBtn:hover {
+  background: var(--emphasis-100);
+  border-color: var(--emphasis-400);
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: 2rem 1.5rem;
+}
+
+.placeholder {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.placeholder p {
+  color: var(--font-color-secondary);
+}

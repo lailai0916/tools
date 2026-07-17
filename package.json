@@ -1,0 +1,39 @@
+{
+  "name": "tools",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "format": "npx prettier --write .",
+    "lint": "eslint src",
+    "typecheck": "tsc -b --noEmit",
+    "check": "npm run format && npm run lint && npm run typecheck"
+  },
+  "dependencies": {
+    "@iconify/react": "^6.0.0",
+    "clsx": "^2.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^7.1.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^10.7.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.7.0",
+    "prettier": "^3.6.2",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.63.0",
+    "vite": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20.0"
+  }
+}

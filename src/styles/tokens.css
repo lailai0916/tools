@@ -1,0 +1,112 @@
+/*
+ * Design tokens — a snapshot of lailai's Home (lailai.one).
+ *
+ * This file is a deliberate COPY, not a dependency: the tools site shares no code
+ * with the main site. The greyscale below is snapshotted from Infima (the style
+ * library Docusaurus ships), the primary ramp and the shadow/radius scale from the
+ * main site's src/css/custom.css.
+ *
+ * Changing a colour on lailai.one does NOT propagate here — sync by hand.
+ */
+
+:root {
+  /* Greyscale — snapshot of Infima's --ifm-color-gray-* */
+  --gray-0: #ffffff;
+  --gray-100: #f5f6f7;
+  --gray-200: #ebedf0;
+  --gray-300: #dadde1;
+  --gray-400: #ccd0d5;
+  --gray-500: #bec3c9;
+  --gray-600: #8d949e;
+  --gray-700: #606770;
+  --gray-800: #444950;
+  --gray-900: #1c1e21;
+  --gray-1000: #000000;
+
+  /* Emphasis ramp — light mode maps straight through */
+  --emphasis-0: var(--gray-0);
+  --emphasis-100: var(--gray-100);
+  --emphasis-200: var(--gray-200);
+  --emphasis-300: var(--gray-300);
+  --emphasis-400: var(--gray-400);
+  --emphasis-500: var(--gray-500);
+  --emphasis-600: var(--gray-600);
+  --emphasis-700: var(--gray-700);
+  --emphasis-800: var(--gray-800);
+  --emphasis-900: var(--gray-900);
+  --emphasis-1000: var(--gray-1000);
+
+  /* Brand */
+  --color-primary: #1d9bf0;
+  --color-primary-dark: #0f8ee3;
+  --color-primary-darker: #0e86d6;
+  --color-primary-darkest: #0c6eb1;
+  --color-primary-light: #36a6f2;
+  --color-primary-lighter: #43acf3;
+  --color-primary-lightest: #69bcf5;
+  --color-primary-rgb: 29, 155, 240;
+
+  /* Semantic */
+  --color-success: #1a8754;
+  --color-danger: #d93838;
+  --color-warning: #f0a52a;
+
+  /* Surfaces */
+  --background: var(--gray-0);
+  --card-background: var(--gray-0);
+  --font-color-base: var(--emphasis-900);
+  --font-color-secondary: var(--emphasis-700);
+
+  /* Elevation — layered ambient + key, same scale as the main site */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.04), 0 6px 16px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-overlay: 0 20px 50px -16px rgba(0, 0, 0, 0.22), 0 6px 16px rgba(0, 0, 0, 0.06);
+
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 22%, transparent);
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+
+  --font-family-base:
+    'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-family-mono:
+    'SF Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+
+  /* Interaction transitions are always 160ms ease, property named explicitly */
+  --transition: 160ms ease;
+}
+
+[data-theme='dark'] {
+  /* Dark inverts the whole ramp — this is what Infima does, not a tint of light */
+  --emphasis-0: var(--gray-1000);
+  --emphasis-100: var(--gray-900);
+  --emphasis-200: var(--gray-800);
+  --emphasis-300: var(--gray-700);
+  --emphasis-400: var(--gray-600);
+  --emphasis-500: var(--gray-500);
+  --emphasis-600: var(--gray-400);
+  --emphasis-700: var(--gray-300);
+  --emphasis-800: var(--gray-200);
+  --emphasis-900: var(--gray-100);
+  --emphasis-1000: var(--gray-0);
+
+  --color-success: #34c77b;
+  --color-danger: #ff6b6b;
+
+  --background: #1b1b1d;
+  --card-background: #242526;
+  --font-color-base: #e3e3e3;
+  --font-color-secondary: var(--emphasis-700);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.24), 0 4px 12px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.24), 0 6px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.36);
+  --shadow-overlay: 0 20px 50px -16px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.3);
+
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent);
+}
