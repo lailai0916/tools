@@ -1,0 +1,84 @@
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.paneLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.empty {
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.85rem;
+  color: var(--font-color-secondary);
+  background: var(--card-background);
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-md);
+}
+
+.tableWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  overflow-x: auto;
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-md);
+  background: var(--card-background);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.th {
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+  border-bottom: 1px solid var(--emphasis-200);
+  white-space: nowrap;
+}
+
+.td {
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-family-mono);
+  color: var(--font-color-base);
+  border-bottom: 1px solid var(--emphasis-100);
+  white-space: nowrap;
+}
+
+.glyphCell {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--emphasis-100);
+  width: 3.5rem;
+}
+
+.glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  font-size: 1.1rem;
+  color: var(--font-color-base);
+}
+
+.table tbody tr:last-child .td,
+.table tbody tr:last-child .glyphCell {
+  border-bottom: none;
+}
+
+.truncated {
+  margin: 0;
+  padding: 0 0.75rem 0.6rem;
+  font-size: 0.8rem;
+  color: var(--font-color-secondary);
+}

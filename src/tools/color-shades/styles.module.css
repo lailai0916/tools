@@ -1,0 +1,90 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 22rem;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.color {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  padding: 2px;
+  background: var(--background);
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.input {
+  min-height: 0;
+  resize: none;
+  flex: 1 1 auto;
+}
+
+.error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  font-family: var(--font-family-mono);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.sectionLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 0.6rem;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  background: var(--card-background);
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-md);
+}
+
+.chip {
+  height: 44px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--emphasis-200);
+}
+
+.hex {
+  text-align: center;
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  color: var(--font-color-base);
+}
+
+.copy {
+  justify-content: center;
+  width: 100%;
+}

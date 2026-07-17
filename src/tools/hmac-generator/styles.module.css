@@ -1,0 +1,51 @@
+.pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.paneLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.input {
+  min-height: 0;
+  resize: none;
+}
+
+.algorithms {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hash {
+  padding: 0.75rem;
+  background: var(--card-background);
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-mono);
+  font-size: 0.85rem;
+  color: var(--font-color-base);
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.empty {
+  color: var(--font-color-secondary);
+}

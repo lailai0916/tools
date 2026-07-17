@@ -1,0 +1,51 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem 1.25rem;
+  margin-top: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 22rem;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input {
+  min-height: 0;
+  resize: none;
+  flex: 1 1 auto;
+}
+
+.suffix {
+  flex: 0 0 auto;
+  font-family: var(--font-family-mono);
+  font-size: 0.85rem;
+  color: var(--font-color-secondary);
+}
+
+.error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  font-family: var(--font-family-mono);
+}
+
+.note {
+  margin: 1.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--font-color-secondary);
+}

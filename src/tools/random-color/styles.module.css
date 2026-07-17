@@ -1,0 +1,59 @@
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.groupLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.counts {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-background);
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.block {
+  height: 96px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem 0.5rem 0.75rem;
+}
+
+.hex {
+  font-family: var(--font-family-mono);
+  font-size: 0.85rem;
+  color: var(--font-color-base);
+  text-transform: uppercase;
+}

@@ -1,0 +1,49 @@
+.pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.paneLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.signature {
+  padding: 0.6rem 0.75rem;
+  background: var(--card-background);
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-mono);
+  font-size: 0.85rem;
+  color: var(--font-color-base);
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  font-family: var(--font-family-mono);
+}
+
+.note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--font-color-secondary);
+}

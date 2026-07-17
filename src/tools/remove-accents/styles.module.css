@@ -1,0 +1,34 @@
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.paneLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.empty {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border: 1px dashed var(--emphasis-300);
+  border-radius: var(--radius-md);
+  color: var(--font-color-secondary);
+  font-size: 0.85rem;
+}

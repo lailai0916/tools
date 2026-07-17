@@ -8,13 +8,18 @@ machine. Page views are counted with self-hosted, cookieless Umami analytics.
 
 ## Tools
 
-| Category  | Tools                                                              |
-| --------- | ------------------------------------------------------------------ |
-| Converter | JSON Formatter, Base Converter, Base64, Color Converter, Timestamp |
-| Crypto    | Text Hash (SHA-1/256/384/512)                                      |
-| Web       | URL Encoder                                                        |
-| Text      | Case Converter, Regex Tester, Text Diff                            |
-| Generator | QR Code, UUID                                                      |
+76 tools across seven categories. The registry (`src/tools/registry.ts`) is the single
+source of truth; the home grid, routes and search all derive from it.
+
+| Category        | Tools                                                                                                                                                                                                                                    |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Converter (16)  | JSON Formatter, Base Converter, Base64, Base32, Color Converter, Timestamp, JSON ⇄ YAML, JSON ⇄ CSV, HTML Entities, Roman Numerals, Text ⇄ Binary, Temperature, Data Size, chmod Calculator, Duration, Angle                             |
+| Text (16)       | Case Converter, Regex Tester, Text Diff, Text Statistics, Sort Lines, Find & Replace, Slugify, Text Reverse, String Escape, Unicode Inspector, Remove Whitespace, Remove Accents, Line Endings, Caesar Cipher, Morse Code, NATO Alphabet |
+| Crypto (7)      | Text Hash (SHA-1/256/384/512), HMAC Generator, Text Encryption (AES-GCM), JWT Decoder, TOTP Generator, Password Strength, CRC-32                                                                                                         |
+| Web (9)         | URL Encoder, URL Parser, Query ⇄ JSON, Basic Auth Header, User-Agent Parser, IP Converter, MIME Lookup, HTTP Status Codes, Punycode                                                                                                      |
+| Development (8) | JSON to TypeScript, CSS Gradient, Box Shadow, Color Shades, CSS Unit Converter, Crontab Parser, SVG to Data URI, Meta Tags                                                                                                               |
+| Math (8)        | Math Evaluator, Percentage Calculator, Statistics, GCD & LCM, Prime Factorization, Prime Sieve, Combinatorics, Modular Exponentiation                                                                                                    |
+| Generator (12)  | UUID, ULID, Nano ID, Password Generator, Key Generator, Random Number, Random String, Random Color, QR Code, MAC Address, Placeholder Image, Lorem Ipsum                                                                                 |
 
 ## Stack
 
@@ -22,7 +27,8 @@ machine. Page views are counted with self-hosted, cookieless Umami analytics.
 - **react-router** — one real route per tool, deep-linkable
 - CSS Modules; design tokens are a hand-synced snapshot of [lailai.one](https://lailai.one)
 - Lightweight self-built i18n (English default, Simplified Chinese)
-- Almost every tool uses native browser APIs; only `qrcode` and `diff` are added deps
+- Almost every tool uses native browser APIs (`crypto.subtle`, `TextEncoder`, `URL`,
+  canvas, `Intl`…); the only added deps are `qrcode`, `diff` and `js-yaml`
 
 ## Develop
 

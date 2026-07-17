@@ -1,0 +1,88 @@
+.controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rangeField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.value {
+  font-family: var(--font-family-mono);
+  font-weight: 500;
+  color: var(--font-color-base);
+}
+
+.color {
+  width: 56px;
+  height: 40px;
+  padding: 2px;
+  background: var(--background);
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.range {
+  width: 100%;
+  accent-color: var(--color-primary);
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.paneLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.preview {
+  height: 180px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--emphasis-300);
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.output {
+  display: block;
+  padding: 0.75rem 0.9rem;
+  background: var(--card-background);
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-mono);
+  font-size: 0.9rem;
+  color: var(--font-color-base);
+  overflow-x: auto;
+  white-space: nowrap;
+}
