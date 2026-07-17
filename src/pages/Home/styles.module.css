@@ -70,6 +70,7 @@
 .card {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding: 1.25rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
@@ -104,12 +105,23 @@
   font-weight: 600;
   font-size: 1rem;
   margin-bottom: 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* Fixed 2 lines: longer text ellipsis-truncates, shorter still reserves the
+   height, so every card is exactly the same size regardless of copy length. */
 .cardDesc {
   color: var(--font-color-secondary);
   font-size: 0.875rem;
   line-height: 1.5;
+  height: calc(2 * 1.5 * 0.875rem);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 
 .empty {

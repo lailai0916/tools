@@ -2,44 +2,54 @@ import { useCallback, useEffect, useState } from 'react';
 
 export type Theme = 'light' | 'dark';
 
-const STORAGE_KEY = 'theme';
+function systemTheme(): Theme {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
 
-function currentTheme(): Theme {
-  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+function apply(theme: Theme) {
+  document.documentElement.setAttribute('data-theme', theme);
 }
 
 export function useTheme() {
-  // The inline script in index.html has already resolved and applied the theme
-  // before first paint, so read it back rather than recomputing.
-  const [theme, setThemeState] = useState<Theme>(currentTheme);
+  // The theme follows the system by default. A manual toggle overrides it only for
+  // the current session (never persisted) — as soon as the OS theme changes, we
+  // follow the system again. So there is no separate "auto" mode to manage.
+  const [theme, setThemeState] = useState<Theme>(systemTheme);
 
   const setTheme = useCallback((next: Theme) => {
-    document.documentElement.setAttribute('data-theme', next);
-    try {
-      localStorage.setItem(STORAGE_KEY, next);
-    } catch {
-      // Private mode / storage disabled — the theme still applies for this page.
-    }
+    apply(next);
     setThemeState(next);
   }, []);
 
   const toggle = useCallback(() => {
-    setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+    setTheme(
+      (document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark') as Theme
+    );
   }, [setTheme]);
 
-  // Follow the OS only while the user has made no explicit choice.
+  // Always follow the system, overriding any manual choice. `sync` re-reads the
+  // live system value every time rather than trusting a captured MediaQueryList,
+  // and we also re-sync when the tab becomes visible again — covering the common
+  // "switch away, change the OS theme, switch back" path.
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const onChange = (e: MediaQueryListEvent) => {
-      if (localStorage.getItem(STORAGE_KEY)) {
-        return;
-      }
-      const next: Theme = e.matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', next);
+    const sync = () => {
+      const next = systemTheme();
+      apply(next);
       setThemeState(next);
     };
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
+    sync();
+    mq.addEventListener('change', sync);
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') {
+        sync();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      mq.removeEventListener('change', sync);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
   }, []);
 
   return { theme, setTheme, toggle };

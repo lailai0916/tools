@@ -11,7 +11,8 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <Link to="/" className={styles.brand}>
-        {t('site.title')}
+        <img src="/logo.svg" alt="" className={styles.logo} />
+        <span>{t('site.title')}</span>
       </Link>
       <div className={styles.actions}>
         <button

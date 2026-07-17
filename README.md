@@ -7,13 +7,13 @@ in the browser: no accounts, no tracking, no data leaves your machine.
 
 ## Tools
 
-| Category | Tools |
-| --- | --- |
+| Category  | Tools                                                              |
+| --------- | ------------------------------------------------------------------ |
 | Converter | JSON Formatter, Base Converter, Base64, Color Converter, Timestamp |
-| Crypto | Text Hash (SHA-1/256/384/512) |
-| Web | URL Encoder |
-| Text | Case Converter, Regex Tester, Text Diff |
-| Generator | QR Code, UUID |
+| Crypto    | Text Hash (SHA-1/256/384/512)                                      |
+| Web       | URL Encoder                                                        |
+| Text      | Case Converter, Regex Tester, Text Diff                            |
+| Generator | QR Code, UUID                                                      |
 
 ## Stack
 
