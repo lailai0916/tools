@@ -19,6 +19,18 @@
         }
       })();
     </script>
+    <script>
+      // Umami analytics, injected dynamically: Vite rewrites a static
+      // <script src> in index.html and strips its data-* attributes, which
+      // would drop the website id. Building the element in JS keeps it intact.
+      (function () {
+        var s = document.createElement('script');
+        s.defer = true;
+        s.src = 'https://analytics.lailai.one/script.js';
+        s.setAttribute('data-website-id', '8563fa7d-0ea3-49c8-b390-89aa3d997905');
+        document.head.appendChild(s);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
