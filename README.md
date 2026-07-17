@@ -2,8 +2,9 @@
 
 Handy tools for developers — [tools.lailai.one](https://tools.lailai.one)
 
-A small, fast, privacy-respecting collection of developer utilities. Everything runs
-in the browser: no accounts, no tracking, no data leaves your machine.
+A small, fast, privacy-respecting collection of developer utilities. Every tool runs
+entirely in your browser — no accounts, and the text you paste in never leaves your
+machine. Page views are counted with self-hosted, cookieless Umami analytics.
 
 ## Tools
 
