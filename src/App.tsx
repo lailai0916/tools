@@ -1,40 +1,26 @@
 import { Route, Routes } from 'react-router';
-import { useTheme } from './hooks/useTheme';
+import { I18nProvider } from './i18n';
+import Header from './components/Header';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import { TOOLS } from './tools/registry';
 import styles from './App.module.css';
 
 export default function App() {
-  const { theme, toggle } = useTheme();
-
   return (
-    <div className={styles.shell}>
-      <header className={styles.header}>
-        <a className={styles.brand} href="/">
-          lailai&apos;s Tools
-        </a>
-        <button
-          type="button"
-          className={styles.themeBtn}
-          onClick={toggle}
-          aria-label="Toggle theme"
-        >
-          {theme === 'dark' ? 'Light' : 'Dark'}
-        </button>
-      </header>
-
-      <main className={styles.main}>
-        <Routes>
-          <Route path="/" element={<Placeholder />} />
-        </Routes>
-      </main>
-    </div>
-  );
-}
-
-function Placeholder() {
-  return (
-    <div className={styles.placeholder}>
-      <h1>lailai&apos;s Tools</h1>
-      <p>Handy tools for developers.</p>
-    </div>
+    <I18nProvider>
+      <div className={styles.shell}>
+        <Header />
+        <main className={styles.main}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            {TOOLS.map(({ id, Component }) => (
+              <Route key={id} path={`/${id}`} element={<Component />} />
+            ))}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+      </div>
+    </I18nProvider>
   );
 }

@@ -1,0 +1,52 @@
+.copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 32px;
+  padding: 0 0.7rem;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--emphasis-700);
+  font: inherit;
+  font-size: 0.825rem;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--transition);
+}
+
+.copy:not(:disabled):hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.copy:not(:disabled):active {
+  transform: scale(0.97);
+  transition-duration: 60ms;
+}
+
+.copy:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.copy:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Success state — the check reads as completion, not a persistent style */
+.copied,
+.copied:hover {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.icon {
+  font-size: 1rem;
+}

@@ -1,0 +1,16 @@
+.wrap {
+  text-align: center;
+  padding: 5rem 0;
+}
+
+.code {
+  font-size: 4rem;
+  letter-spacing: -0.03em;
+  color: var(--emphasis-400);
+}
+
+.link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 600;
+}
