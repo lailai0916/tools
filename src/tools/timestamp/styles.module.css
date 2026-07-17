@@ -1,0 +1,59 @@
+.current {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 1.25rem;
+  background: var(--card-background);
+  border-radius: var(--radius-lg);
+}
+
+.currentHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.currentLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.currentValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: var(--font-family-mono);
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.currentDate {
+  font-size: 0.9rem;
+  color: var(--font-color-secondary);
+  font-family: var(--font-family-mono);
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.paneLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  font-family: var(--font-family-mono);
+}

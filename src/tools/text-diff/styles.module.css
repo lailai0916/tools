@@ -1,0 +1,92 @@
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .inputs {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.paneLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.diff {
+  min-height: 8rem;
+  max-height: 28rem;
+  overflow: auto;
+  padding: 0.5rem 0;
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-md);
+  background: var(--card-background);
+  font-family: var(--font-family-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.hint {
+  margin: 0;
+  padding: 0 0.75rem;
+  color: var(--font-color-secondary);
+}
+
+.line_add,
+.line_del,
+.line_same {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.line_add {
+  color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 12%, transparent);
+}
+
+.line_del {
+  color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+}
+
+.line_same {
+  color: var(--font-color-base);
+}
+
+.sign {
+  flex: none;
+  width: 1ch;
+  user-select: none;
+  opacity: 0.7;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
