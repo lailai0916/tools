@@ -99,6 +99,13 @@
   color: #ffffff;
 }
 
+.active.variant_secondary:not(:disabled):hover,
+.active.variant_ghost:not(:disabled):hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: #ffffff;
+}
+
 .icon {
   display: inline-flex;
   font-size: 1.1em;

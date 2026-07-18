@@ -19,7 +19,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     children,
     variant = 'secondary',
     size = 'md',
-    active = false,
+    active,
     fullWidth = false,
     leftIcon,
     type = 'button',
@@ -40,6 +40,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
         fullWidth && styles.fullWidth,
         className
       )}
+      aria-pressed={active}
       {...rest}
     >
       {leftIcon != null && <span className={styles.icon}>{leftIcon}</span>}

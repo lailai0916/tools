@@ -36,7 +36,8 @@ export const en = {
   'tools.baseConverter.hexadecimal': 'Hexadecimal',
   'tools.baseConverter.invalid': 'Invalid digits for this base.',
   'tools.base64.name': 'Base64 Encode / Decode',
-  'tools.base64.description': 'Encode text to Base64 or decode it back, with full UTF-8 support.',
+  'tools.base64.description':
+    'Encode text as Base64 or decode Base64 back to text, with full UTF-8 support.',
   'tools.base64.encode': 'Encode',
   'tools.base64.decode': 'Decode',
   'tools.base64.encodePlaceholder': 'Enter text to encode…',
@@ -62,8 +63,9 @@ export const en = {
   'tools.hashText.description': 'Compute SHA-1, SHA-256, SHA-384, and SHA-512 hashes of any text.',
   'tools.hashText.placeholder': 'Type or paste text to hash…',
   'tools.hashText.empty': 'Waiting for input…',
-  'tools.urlEncode.name': 'URL Encoder',
-  'tools.urlEncode.description': 'Encode or decode URL components, with error reporting.',
+  'tools.urlEncode.name': 'URL Encode / Decode',
+  'tools.urlEncode.description':
+    'Encode text as a URL component or decode it back, with error reporting.',
   'tools.urlEncode.placeholder': 'Enter text here…',
   'tools.urlEncode.encode': 'Encode',
   'tools.urlEncode.decode': 'Decode',
@@ -146,7 +148,8 @@ export const en = {
   'tools.textToBinary.binaryPlaceholder': 'Paste space-separated bytes to decode…',
   'tools.textToBinary.error': 'Invalid binary input.',
   'tools.base32.name': 'Base32 Encode / Decode',
-  'tools.base32.description': 'Encode text to Base32 (RFC 4648) or decode it back.',
+  'tools.base32.description':
+    'Encode text as Base32 (RFC 4648) or decode Base32 back to text, with full UTF-8 support.',
   'tools.base32.encode': 'Encode',
   'tools.base32.decode': 'Decode',
   'tools.base32.encodePlaceholder': 'Enter text to encode…',

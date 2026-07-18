@@ -174,7 +174,7 @@ export const TOOLS: ToolMeta[] = [
   },
   {
     id: 'text-to-binary',
-    icon: 'lucide:square-binary',
+    icon: 'lucide:binary',
     category: 'converter',
     key: 'textToBinary',
     Component: TextToBinary,
