@@ -10,13 +10,15 @@
   </p>
 </div>
 
+## Website Introduction
+
 Handy browser-based tools for developers at [tools.lailai.one](https://tools.lailai.one).
 
 A small, fast, privacy-respecting collection of developer utilities. Every tool runs
 entirely in your browser — no accounts, and the text you paste in never leaves your
 machine. Page views are counted with self-hosted, cookieless Umami analytics.
 
-## Tools
+## Available Tools
 
 76 tools across seven categories. The registry (`src/tools/registry.ts`) is the single
 source of truth; the home grid, routes and search all derive from it.
@@ -31,7 +33,7 @@ source of truth; the home grid, routes and search all derive from it.
 | Math (8)        | Math Evaluator, Percentage Calculator, Statistics, GCD & LCM, Prime Factorization, Prime Sieve, Combinatorics, Modular Exponentiation                                                                                                    |
 | Generator (12)  | UUID, ULID, Nano ID, Password Generator, Key Generator, Random Number, Random String, Random Color, QR Code, MAC Address, Placeholder Image, Lorem Ipsum                                                                                 |
 
-## Stack
+## Tech Stack
 
 - **Vite 7** + **React 18** + **TypeScript** (strict)
 - **react-router** — one real route per tool, deep-linkable
@@ -40,7 +42,7 @@ source of truth; the home grid, routes and search all derive from it.
 - Almost every tool uses native browser APIs (`crypto.subtle`, `TextEncoder`, `URL`,
   canvas, `Intl`…); the only added deps are `qrcode`, `diff` and `js-yaml`
 
-## Develop
+## Getting Started
 
 ```bash
 npm install
@@ -49,7 +51,7 @@ npm run build      # tsc + vite build + prerender one .html per route
 npm run check      # format + lint + typecheck
 ```
 
-## Adding a tool
+## Adding Tools
 
 The registry is the single source of truth — the home grid, routes, and search all
 derive from it.
@@ -59,7 +61,27 @@ derive from it.
 2. Add its entry to `src/tools/registry.ts`.
 3. Add its message keys to `src/i18n/en.ts` and `src/i18n/zh-Hans.ts`.
 
-## Deploy
+## Project Structure
+
+```bash
+tools/
+├── public/                         # Static assets
+├── scripts/                        # Build and deployment scripts
+├── src/                            # Source code
+│   ├── components/                 # Shared interface components
+│   ├── hooks/                      # Shared React hooks
+│   ├── i18n/                       # English and Chinese dictionaries
+│   ├── pages/                      # Application pages
+│   ├── styles/                     # Global styles and design tokens
+│   └── tools/                      # Individual browser tools
+├── index.html                      # Application entry page
+├── package-lock.json               # Dependency lock file
+├── package.json                    # Dependency configuration
+├── tsconfig.json                   # TypeScript configuration
+└── vite.config.ts                  # Vite configuration
+```
+
+## Site Deployment
 
 Pushing to `main` builds and rsyncs `dist/` to the origin server, served statically
 by Caddy. Each route is prerendered to a real `.html` so unknown paths return a true
@@ -67,4 +89,4 @@ by Caddy. Each route is prerendered to a real `.html` so unknown paths return a 
 
 ## License
 
-Licensed under the [MIT License](LICENSE).
+This project's code is licensed under [MIT License](LICENSE).

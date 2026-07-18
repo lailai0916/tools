@@ -10,11 +10,13 @@
   </p>
 </div>
 
+## 网站简介
+
 [tools.lailai.one](https://tools.lailai.one) 上面向开发者的浏览器工具集。所有工具都在
 本地浏览器中运行，不需要账号，粘贴的文本不会离开设备。页面访问量使用自托管、无
 Cookie 的 Umami 统计。
 
-## 工具
+## 工具列表
 
 共 $76$ 个工具，分为 $7$ 类。`src/tools/registry.ts` 是单一数据源，首页网格、路由与
 搜索都由它生成。
@@ -29,7 +31,7 @@ Cookie 的 Umami 统计。
 |  数学  | $8$  |   表达式、百分比、统计、GCD / LCM、质因数、筛法、组合与模幂    |
 |  生成  | $12$ |    UUID、ULID、Nano ID、密码、随机值、二维码、MAC 与占位图     |
 
-## 技术栈
+## 技术架构
 
 - Vite 7、React 18 与严格模式 TypeScript。
 - `react-router` 为每个工具提供可直接访问的真实路由。
@@ -37,7 +39,7 @@ Cookie 的 Umami 统计。
 - 自建轻量 i18n，默认英文，完整支持简体中文。
 - 大部分工具仅使用浏览器原生 API；额外依赖仅有 `qrcode`、`diff` 与 `js-yaml`。
 
-## 本地开发
+## 快速开始
 
 ```bash
 git clone https://github.com/lailai0916/tools.git
@@ -62,11 +64,31 @@ npm run check
 
 首页、路由与搜索都从 registry 派生，不要在其他位置重复维护工具列表。
 
-## 部署
+## 项目结构
+
+```bash
+tools/
+├── public/                         # 静态资源
+├── scripts/                        # 构建与部署脚本
+├── src/                            # 源代码
+│   ├── components/                 # 共享界面组件
+│   ├── hooks/                      # 共享 React Hook
+│   ├── i18n/                       # 中英文字典
+│   ├── pages/                      # 应用页面
+│   ├── styles/                     # 全局样式与设计 token
+│   └── tools/                      # 独立浏览器工具
+├── index.html                      # 应用入口页面
+├── package-lock.json               # 依赖锁定文件
+├── package.json                    # 依赖配置
+├── tsconfig.json                   # TypeScript 配置
+└── vite.config.ts                  # Vite 配置
+```
+
+## 网站部署
 
 推送到 `main` 后，工作流构建 `dist/` 并通过 rsync 发布到由 Caddy 托管的源站。每条路由
 都会预渲染为真实 `.html`，未知路径返回真实 $404$，而非 soft $200$。
 
-## 许可
+## 许可协议
 
-采用 [MIT License](LICENSE)。
+本项目代码采用 [MIT 许可协议](LICENSE)。
