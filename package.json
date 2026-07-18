@@ -1,7 +1,9 @@
 {
   "name": "tools",
   "version": "0.0.0",
+  "description": "Privacy-respecting browser tools for developers",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",

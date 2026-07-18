@@ -1,6 +1,16 @@
-# lailai's Tools
+<div align="center">
+  <h1>lailai's Tools</h1>
+  <p>English | <a href="README.zh-Hans.md">简体中文</a></p>
+  <p>
+    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/tools/deploy.yml?style=flat-square" alt="deployment" />
+    <img src="https://img.shields.io/github/last-commit/lailai0916/tools?style=flat-square" alt="last commit" />
+    <img src="https://img.shields.io/github/languages/top/lailai0916/tools?style=flat-square" alt="top language" />
+    <img src="https://img.shields.io/github/repo-size/lailai0916/tools?style=flat-square" alt="repo size" />
+    <img src="https://img.shields.io/github/license/lailai0916/tools?style=flat-square" alt="license" />
+  </p>
+</div>
 
-Handy tools for developers — [tools.lailai.one](https://tools.lailai.one)
+Handy browser-based tools for developers at [tools.lailai.one](https://tools.lailai.one).
 
 A small, fast, privacy-respecting collection of developer utilities. Every tool runs
 entirely in your browser — no accounts, and the text you paste in never leaves your
@@ -54,3 +64,7 @@ derive from it.
 Pushing to `main` builds and rsyncs `dist/` to the origin server, served statically
 by Caddy. Each route is prerendered to a real `.html` so unknown paths return a true
 404 rather than a soft 200.
+
+## License
+
+Licensed under the [MIT License](LICENSE).
