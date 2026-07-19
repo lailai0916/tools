@@ -61,7 +61,7 @@ function parseInt10(s: string): number | null {
   const t = s.trim();
   if (t === '') return null;
   const n = Number(t);
-  return Number.isInteger(n) ? n : null;
+  return Number.isSafeInteger(n) ? n : null;
 }
 
 type Params = { lo: number; hi: number; k: number };
@@ -70,7 +70,14 @@ function validate(minS: string, maxS: string, countS: string): Params | null {
   const lo = parseInt10(minS);
   const hi = parseInt10(maxS);
   const k = parseInt10(countS);
-  if (lo === null || hi === null || k === null || lo > hi || k < 1) {
+  if (
+    lo === null ||
+    hi === null ||
+    k === null ||
+    lo > hi ||
+    k < 1 ||
+    !Number.isSafeInteger(hi - lo + 1)
+  ) {
     return null;
   }
   return { lo, hi, k: Math.min(k, MAX_COUNT) };

@@ -1,8 +1,27 @@
+.controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .field {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   max-width: 22rem;
+}
+
+.stepField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stepOptions {
+  display: flex;
+  gap: 0.4rem;
 }
 
 .label {

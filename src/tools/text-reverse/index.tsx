@@ -4,6 +4,7 @@ import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
+import { splitGraphemes } from '@/utils/text';
 import styles from './styles.module.css';
 
 type Mode = 'char' | 'word' | 'line';
@@ -11,7 +12,7 @@ type Mode = 'char' | 'word' | 'line';
 function reverse(input: string, mode: Mode): string {
   switch (mode) {
     case 'char':
-      return Array.from(input).reverse().join('');
+      return splitGraphemes(input).reverse().join('');
     case 'word':
       return input.trim() ? input.trim().split(/\s+/).reverse().join(' ') : '';
     case 'line':

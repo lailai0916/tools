@@ -15,6 +15,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function TextAre
     <textarea
       ref={ref}
       spellCheck={spellCheck}
+      aria-invalid={rest['aria-invalid'] ?? (invalid || undefined)}
       className={clsx(
         styles.textarea,
         monospace && styles.mono,

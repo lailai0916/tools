@@ -59,15 +59,30 @@ function buildPool(opts: Options): string {
   return pool;
 }
 
+function sourceFor(c: CharClass, opts: Options): string {
+  return opts.excludeAmbiguous
+    ? [...SOURCES[c]].filter((char) => !AMBIGUOUS.has(char)).join('')
+    : SOURCES[c];
+}
+
 function draw(opts: Options): string {
   const pool = buildPool(opts);
   if (!pool) return '';
-  const n = pool.length;
-  let out = '';
-  for (let i = 0; i < opts.length; i++) {
-    out += pool[randomBelow(n)];
+
+  // Include every enabled character class, then shuffle so required characters
+  // do not appear in predictable positions.
+  const chars = CLASSES.filter((c) => opts[c]).map((c) => {
+    const source = sourceFor(c, opts);
+    return source[randomBelow(source.length)];
+  });
+  while (chars.length < opts.length) {
+    chars.push(pool[randomBelow(pool.length)]);
   }
-  return out;
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = randomBelow(i + 1);
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+  return chars.join('');
 }
 
 export default function PasswordGenerator() {
@@ -104,7 +119,7 @@ export default function PasswordGenerator() {
             min={4}
             max={64}
             value={opts.length}
-            onChange={(e) => update({ length: Number(e.target.value) })}
+            onInput={(e) => update({ length: Number(e.currentTarget.value) })}
             className={styles.range}
             aria-label={t('tools.passwordGenerator.length')}
           />

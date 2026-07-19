@@ -64,6 +64,11 @@ export default function TemperatureConverter() {
       return;
     }
     const celsius = toCelsius(source, parseFloat(value.trim()));
+    if (!Number.isFinite(celsius) || celsius < -273.15) {
+      setFields((prev) => ({ ...prev, [source]: value }));
+      setInvalid(source);
+      return;
+    }
     const next: Fields = { ...EMPTY };
     for (const u of UNITS) {
       next[u.key] = u.key === source ? value : fmt(fromCelsius(u.key, celsius));

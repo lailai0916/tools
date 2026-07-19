@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
@@ -136,6 +136,16 @@ export default function ColorConverter() {
   const [invalid, setInvalid] = useState<Field | null>(null);
   const [preview, setPreview] = useState(() => toHexString(INITIAL));
 
+  const current = parseHex(preview) ?? INITIAL;
+
+  function commit(next: Rgb) {
+    setHex(toHexString(next));
+    setRgb(toRgbString(next));
+    setHsl(toHslString(next));
+    setPreview(toHexString(next));
+    setInvalid(null);
+  }
+
   function edit(field: Field, value: string) {
     if (field === 'hex') {
       setHex(value);
@@ -162,23 +172,38 @@ export default function ColorConverter() {
       setInvalid(field);
       return;
     }
-    setInvalid(null);
-    setPreview(toHexString(parsed));
-    if (field !== 'hex') {
-      setHex(toHexString(parsed));
-    }
-    if (field !== 'rgb') {
-      setRgb(toRgbString(parsed));
-    }
-    if (field !== 'hsl') {
-      setHsl(toHslString(parsed));
-    }
+    commit(parsed);
+  }
+
+  function editChannel(channel: keyof Rgb, value: number) {
+    commit({ ...current, [channel]: clamp(Math.round(value), 0, 255) });
   }
 
   const fields: { key: Field; label: string; value: string; placeholder: string }[] = [
     { key: 'hex', label: 'HEX', value: hex, placeholder: '#4f46e5' },
     { key: 'rgb', label: 'RGB', value: rgb, placeholder: 'rgb(79, 70, 229)' },
     { key: 'hsl', label: 'HSL', value: hsl, placeholder: 'hsl(244, 76%, 59%)' },
+  ];
+
+  const channels: { key: keyof Rgb; label: string; value: number; gradient: string }[] = [
+    {
+      key: 'r',
+      label: t('tools.colorConverter.red'),
+      value: current.r,
+      gradient: `linear-gradient(to right, rgb(0, ${current.g}, ${current.b}), rgb(255, ${current.g}, ${current.b}))`,
+    },
+    {
+      key: 'g',
+      label: t('tools.colorConverter.green'),
+      value: current.g,
+      gradient: `linear-gradient(to right, rgb(${current.r}, 0, ${current.b}), rgb(${current.r}, 255, ${current.b}))`,
+    },
+    {
+      key: 'b',
+      label: t('tools.colorConverter.blue'),
+      value: current.b,
+      gradient: `linear-gradient(to right, rgb(${current.r}, ${current.g}, 0), rgb(${current.r}, ${current.g}, 255))`,
+    },
   ];
 
   return (
@@ -196,7 +221,21 @@ export default function ColorConverter() {
           />
           <div className={styles.previewMeta}>
             <span className={styles.previewLabel}>{t('tools.colorConverter.preview')}</span>
-            <CopyButton value={preview} label={t('common.copy')} copiedLabel={t('common.copied')} />
+            <label className={styles.pickerLabel}>
+              <span>{t('tools.colorConverter.pickColor')}</span>
+              <input
+                type="color"
+                className={styles.picker}
+                value={preview}
+                onChange={(event) => {
+                  const next = parseHex(event.target.value);
+                  if (next) {
+                    commit(next);
+                  }
+                }}
+                aria-label={t('tools.colorConverter.pickColor')}
+              />
+            </label>
           </div>
         </div>
 
@@ -206,23 +245,69 @@ export default function ColorConverter() {
               <label className={styles.fieldLabel} htmlFor={`color-${f.key}`}>
                 {f.label}
               </label>
-              <TextArea
-                id={`color-${f.key}`}
-                className={styles.input}
-                rows={1}
-                value={f.value}
-                onChange={(e) => edit(f.key, e.target.value)}
-                invalid={invalid === f.key}
-                placeholder={f.placeholder}
-                aria-label={f.label}
-              />
+              <div className={styles.fieldControl}>
+                <TextArea
+                  id={`color-${f.key}`}
+                  className={styles.input}
+                  rows={1}
+                  value={f.value}
+                  onChange={(e) => edit(f.key, e.target.value)}
+                  invalid={invalid === f.key}
+                  aria-describedby={invalid === f.key ? `color-${f.key}-error` : undefined}
+                  placeholder={f.placeholder}
+                  aria-label={f.label}
+                />
+                <CopyButton
+                  value={f.value}
+                  label={t('common.copy')}
+                  copiedLabel={t('common.copied')}
+                />
+              </div>
               {invalid === f.key && (
-                <p className={styles.error}>{t('tools.colorConverter.invalid')}</p>
+                <p id={`color-${f.key}-error`} className={styles.error} role="alert">
+                  {t('tools.colorConverter.invalid')}
+                </p>
               )}
             </div>
           ))}
         </div>
       </div>
+
+      <section className={styles.adjust} aria-labelledby="color-rgb-heading">
+        <div className={styles.adjustHead}>
+          <h2 id="color-rgb-heading" className={styles.adjustTitle}>
+            {t('tools.colorConverter.adjustRgb')}
+          </h2>
+          <span className={styles.adjustValue}>{toRgbString(current)}</span>
+        </div>
+        <div className={styles.sliders}>
+          {channels.map((channel) => {
+            const id = `color-channel-${channel.key}`;
+            return (
+              <div key={channel.key} className={styles.sliderRow}>
+                <label htmlFor={id} className={styles.channelLabel}>
+                  {channel.key.toUpperCase()}
+                  <span className={styles.srOnly}>{channel.label}</span>
+                </label>
+                <input
+                  id={id}
+                  type="range"
+                  className={styles.slider}
+                  min={0}
+                  max={255}
+                  value={channel.value}
+                  onInput={(event) => editChannel(channel.key, Number(event.currentTarget.value))}
+                  aria-label={channel.label}
+                  style={{ '--slider-gradient': channel.gradient } as CSSProperties}
+                />
+                <output htmlFor={id} className={styles.channelValue}>
+                  {channel.value}
+                </output>
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </ToolLayout>
   );
 }

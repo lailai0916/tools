@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
+import SecretInput from '@/components/SecretInput';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -54,13 +55,13 @@ export default function BasicAuth() {
         </div>
         <div className={styles.field}>
           <label className={styles.fieldLabel}>{t('tools.basicAuth.password')}</label>
-          <TextArea
-            className={styles.input}
-            rows={1}
+          <SecretInput
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t('tools.basicAuth.passwordPlaceholder')}
             aria-label={t('tools.basicAuth.password')}
+            showLabel={t('common.show')}
+            hideLabel={t('common.hide')}
           />
         </div>
       </div>

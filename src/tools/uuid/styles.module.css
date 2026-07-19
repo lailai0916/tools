@@ -6,9 +6,23 @@
   flex-wrap: wrap;
 }
 
+.options,
+.optionGroup,
 .counts {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.options {
+  gap: 1rem;
+}
+
+.optionLabel {
+  color: var(--font-color-secondary);
+  font-size: var(--font-size-label);
+  font-weight: 600;
 }
 
 .pane {

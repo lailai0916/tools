@@ -16,10 +16,11 @@ function fmt(n: number): string {
 }
 
 type Stats = { labelKey: MessageKey; value: string }[];
+type VarianceMode = 'population' | 'sample';
 
 type Result = { kind: 'empty' } | { kind: 'invalid' } | { kind: 'ok'; stats: Stats };
 
-function compute(input: string): Result {
+function compute(input: string, varianceMode: VarianceMode): Result {
   const tokens = input
     .trim()
     .split(/[\s,]+/)
@@ -63,8 +64,12 @@ function compute(input: string): Result {
 
   const min = sorted[0];
   const max = sorted[n - 1];
-  const variance = values.reduce((acc, v) => acc + (v - mean) ** 2, 0) / n;
-  const stddev = Math.sqrt(variance);
+  const sumSquares = values.reduce((acc, v) => acc + (v - mean) ** 2, 0);
+  const variance =
+    varianceMode === 'sample' && n < 2
+      ? null
+      : sumSquares / (varianceMode === 'sample' ? n - 1 : n);
+  const stddev = variance === null ? null : Math.sqrt(variance);
 
   const stats: Stats = [
     { labelKey: 'tools.statistics.count', value: String(n) },
@@ -75,8 +80,20 @@ function compute(input: string): Result {
     { labelKey: 'tools.statistics.min', value: fmt(min) },
     { labelKey: 'tools.statistics.max', value: fmt(max) },
     { labelKey: 'tools.statistics.range', value: fmt(max - min) },
-    { labelKey: 'tools.statistics.variance', value: fmt(variance) },
-    { labelKey: 'tools.statistics.stddev', value: fmt(stddev) },
+    {
+      labelKey:
+        varianceMode === 'sample'
+          ? 'tools.statistics.varianceSample'
+          : 'tools.statistics.variancePopulation',
+      value: variance === null ? '—' : fmt(variance),
+    },
+    {
+      labelKey:
+        varianceMode === 'sample'
+          ? 'tools.statistics.stddevSample'
+          : 'tools.statistics.stddevPopulation',
+      value: stddev === null ? '—' : fmt(stddev),
+    },
   ];
   return { kind: 'ok', stats };
 }
@@ -84,7 +101,8 @@ function compute(input: string): Result {
 export default function Statistics() {
   const { t } = useI18n();
   const [input, setInput] = useState('');
-  const result = useMemo(() => compute(input), [input]);
+  const [varianceMode, setVarianceMode] = useState<VarianceMode>('population');
+  const result = useMemo(() => compute(input, varianceMode), [input, varianceMode]);
 
   return (
     <ToolLayout
@@ -93,7 +111,31 @@ export default function Statistics() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
+        <div className={styles.controlLeft}>
+          <label className={styles.paneLabel}>{t('common.input')}</label>
+          <div
+            className={styles.modes}
+            role="group"
+            aria-label={t('tools.statistics.varianceMode')}
+          >
+            <Button
+              size="sm"
+              active={varianceMode === 'population'}
+              onClick={() => setVarianceMode('population')}
+              aria-pressed={varianceMode === 'population'}
+            >
+              {t('tools.statistics.population')}
+            </Button>
+            <Button
+              size="sm"
+              active={varianceMode === 'sample'}
+              onClick={() => setVarianceMode('sample')}
+              aria-pressed={varianceMode === 'sample'}
+            >
+              {t('tools.statistics.sample')}
+            </Button>
+          </div>
+        </div>
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}
         </Button>

@@ -6,13 +6,21 @@ import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
-const UNITS = ['B', 'KB', 'MB', 'GB', 'TB'] as const;
-type Unit = (typeof UNITS)[number];
+type System = 'decimal' | 'binary';
+const UNITS = {
+  decimal: ['B', 'kB', 'MB', 'GB', 'TB'],
+  binary: ['B', 'KiB', 'MiB', 'GiB', 'TiB'],
+} as const;
+type Unit = (typeof UNITS)[System][number];
 
 const NUMBER = /^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/;
 
-function factor(unit: Unit): number {
-  return 1024 ** UNITS.indexOf(unit);
+function unitsFor(system: System): readonly Unit[] {
+  return UNITS[system];
+}
+
+function factor(unit: Unit, system: System): number {
+  return (system === 'binary' ? 1024 : 1000) ** unitsFor(system).indexOf(unit);
 }
 
 function fmt(n: number): string {
@@ -27,7 +35,7 @@ function fmt(n: number): string {
 
 type Parsed = { state: 'empty' } | { state: 'invalid' } | { state: 'ok'; bytes: number };
 
-function parse(value: string, unit: Unit): Parsed {
+function parse(value: string, unit: Unit, system: System): Parsed {
   const trimmed = value.trim();
   if (trimmed === '') {
     return { state: 'empty' };
@@ -35,16 +43,24 @@ function parse(value: string, unit: Unit): Parsed {
   if (!NUMBER.test(trimmed)) {
     return { state: 'invalid' };
   }
-  return { state: 'ok', bytes: parseFloat(trimmed) * factor(unit) };
+  const bytes = parseFloat(trimmed) * factor(unit, system);
+  return Number.isFinite(bytes) && bytes >= 0 ? { state: 'ok', bytes } : { state: 'invalid' };
 }
 
 export default function DataSizeConverter() {
   const { t } = useI18n();
   const [value, setValue] = useState('');
-  const [unit, setUnit] = useState<Unit>('MB');
+  const [system, setSystem] = useState<System>('binary');
+  const [unit, setUnit] = useState<Unit>('MiB');
 
-  const parsed = useMemo(() => parse(value, unit), [value, unit]);
+  const parsed = useMemo(() => parse(value, unit, system), [value, unit, system]);
   const bytes = parsed.state === 'ok' ? parsed.bytes : null;
+
+  const changeSystem = (next: System) => {
+    const index = unitsFor(system).indexOf(unit);
+    setSystem(next);
+    setUnit(unitsFor(next)[index]);
+  };
 
   return (
     <ToolLayout
@@ -68,12 +84,36 @@ export default function DataSizeConverter() {
         />
       </div>
 
-      <div className={styles.units}>
-        {UNITS.map((u) => (
-          <Button key={u} size="sm" active={unit === u} onClick={() => setUnit(u)}>
-            {u}
+      <div className={styles.controls}>
+        <div
+          className={styles.systems}
+          role="group"
+          aria-label={t('tools.dataSizeConverter.system')}
+        >
+          <Button
+            size="sm"
+            active={system === 'binary'}
+            onClick={() => changeSystem('binary')}
+            aria-pressed={system === 'binary'}
+          >
+            {t('tools.dataSizeConverter.binary')}
           </Button>
-        ))}
+          <Button
+            size="sm"
+            active={system === 'decimal'}
+            onClick={() => changeSystem('decimal')}
+            aria-pressed={system === 'decimal'}
+          >
+            {t('tools.dataSizeConverter.decimal')}
+          </Button>
+        </div>
+        <div className={styles.units} role="group" aria-label={t('tools.dataSizeConverter.unit')}>
+          {unitsFor(system).map((u) => (
+            <Button key={u} size="sm" active={unit === u} onClick={() => setUnit(u)}>
+              {u}
+            </Button>
+          ))}
+        </div>
       </div>
 
       {parsed.state === 'invalid' && (
@@ -81,8 +121,8 @@ export default function DataSizeConverter() {
       )}
 
       <div className={styles.results}>
-        {UNITS.map((u) => {
-          const out = bytes !== null ? fmt(bytes / factor(u)) : '';
+        {unitsFor(system).map((u) => {
+          const out = bytes !== null ? fmt(bytes / factor(u, system)) : '';
           return (
             <div key={u} className={styles.row}>
               <span className={styles.rowLabel}>{u}</span>

@@ -69,6 +69,11 @@ export default function AngleConverter() {
       return;
     }
     const deg = toDegrees(source, parseFloat(value.trim()));
+    if (!Number.isFinite(deg)) {
+      setFields((prev) => ({ ...prev, [source]: value }));
+      setInvalid(source);
+      return;
+    }
     const next: Fields = { ...EMPTY };
     for (const u of UNITS) {
       next[u.key] = u.key === source ? value : fmt(fromDegrees(u.key, deg));

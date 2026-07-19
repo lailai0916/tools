@@ -63,7 +63,7 @@ export default function BoxShadow() {
               min={s.min}
               max={s.max}
               value={s.value}
-              onChange={(e) => s.set(Number(e.target.value))}
+              onInput={(e) => s.set(Number(e.currentTarget.value))}
               aria-label={t(`tools.boxShadow.${s.key}` as MessageKey)}
             />
           </div>
@@ -93,7 +93,7 @@ export default function BoxShadow() {
             max={1}
             step={0.01}
             value={opacity}
-            onChange={(e) => setOpacity(Number(e.target.value))}
+            onInput={(e) => setOpacity(Number(e.currentTarget.value))}
             aria-label={t('tools.boxShadow.opacity')}
           />
         </div>

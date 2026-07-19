@@ -179,7 +179,10 @@ function applyBinary(op: string, a: number, b: number): number {
   }
 }
 
-function applyFn(name: string, x: number): number {
+type AngleMode = 'radians' | 'degrees';
+
+function applyFn(name: string, x: number, angleMode: AngleMode): number {
+  const angle = angleMode === 'degrees' ? (x * Math.PI) / 180 : x;
   switch (name) {
     case 'sqrt':
       return Math.sqrt(x);
@@ -192,11 +195,11 @@ function applyFn(name: string, x: number): number {
     case 'round':
       return Math.round(x);
     case 'sin':
-      return Math.sin(x);
+      return Math.sin(angle);
     case 'cos':
-      return Math.cos(x);
+      return Math.cos(angle);
     case 'tan':
-      return Math.tan(x);
+      return Math.tan(angle);
     case 'log':
       return Math.log10(x);
     case 'ln':
@@ -206,7 +209,7 @@ function applyFn(name: string, x: number): number {
   }
 }
 
-function evalRPN(rpn: Token[]): number {
+function evalRPN(rpn: Token[], angleMode: AngleMode): number {
   const stack: number[] = [];
   for (const tk of rpn) {
     if (tk.t === 'num') {
@@ -233,7 +236,7 @@ function evalRPN(rpn: Token[]): number {
       if (stack.length < 1) {
         throw new Error('invalid expression');
       }
-      stack.push(applyFn(tk.v, stack.pop() as number));
+      stack.push(applyFn(tk.v, stack.pop() as number, angleMode));
     } else {
       throw new Error('invalid expression');
     }
@@ -258,12 +261,12 @@ function fmt(n: number): string {
 
 type Result = { kind: 'empty' } | { kind: 'error' } | { kind: 'ok'; value: string };
 
-function evaluate(input: string): Result {
+function evaluate(input: string, angleMode: AngleMode): Result {
   if (input.trim() === '') {
     return { kind: 'empty' };
   }
   try {
-    return { kind: 'ok', value: fmt(evalRPN(toRPN(tokenize(input)))) };
+    return { kind: 'ok', value: fmt(evalRPN(toRPN(tokenize(input)), angleMode)) };
   } catch {
     return { kind: 'error' };
   }
@@ -272,7 +275,8 @@ function evaluate(input: string): Result {
 export default function MathEvaluator() {
   const { t } = useI18n();
   const [input, setInput] = useState('');
-  const result = useMemo(() => evaluate(input), [input]);
+  const [angleMode, setAngleMode] = useState<AngleMode>('radians');
+  const result = useMemo(() => evaluate(input, angleMode), [input, angleMode]);
   const value = result.kind === 'ok' ? result.value : '';
 
   return (
@@ -282,7 +286,31 @@ export default function MathEvaluator() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
+        <div className={styles.controlLeft}>
+          <label className={styles.paneLabel}>{t('common.input')}</label>
+          <div
+            className={styles.modes}
+            role="group"
+            aria-label={t('tools.mathEvaluator.angleMode')}
+          >
+            <Button
+              size="sm"
+              active={angleMode === 'radians'}
+              onClick={() => setAngleMode('radians')}
+              aria-pressed={angleMode === 'radians'}
+            >
+              {t('tools.mathEvaluator.radians')}
+            </Button>
+            <Button
+              size="sm"
+              active={angleMode === 'degrees'}
+              onClick={() => setAngleMode('degrees')}
+              aria-pressed={angleMode === 'degrees'}
+            >
+              {t('tools.mathEvaluator.degrees')}
+            </Button>
+          </div>
+        </div>
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}
         </Button>

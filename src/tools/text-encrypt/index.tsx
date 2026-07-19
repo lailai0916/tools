@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
+import SecretInput from '@/components/SecretInput';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -145,14 +146,14 @@ export default function TextEncrypt() {
 
       <div className={styles.pane}>
         <label className={styles.paneLabel}>{t('tools.textEncrypt.passphrase')}</label>
-        <TextArea
-          className={styles.input}
-          rows={1}
+        <SecretInput
           value={passphrase}
           onChange={(e) => setPassphrase(e.target.value)}
           invalid={error}
           placeholder={t('tools.textEncrypt.passphrasePlaceholder')}
           aria-label={t('tools.textEncrypt.passphrase')}
+          showLabel={t('common.show')}
+          hideLabel={t('common.hide')}
         />
         {error && <p className={styles.error}>{t('tools.textEncrypt.error')}</p>}
       </div>

@@ -54,7 +54,7 @@ export default function CssGradient() {
             min={0}
             max={360}
             value={angle}
-            onChange={(e) => setAngle(Number(e.target.value))}
+            onInput={(e) => setAngle(Number(e.currentTarget.value))}
             aria-label={t('tools.cssGradient.angle')}
           />
         </div>

@@ -51,7 +51,7 @@ export default function CaesarCipher() {
             min={0}
             max={25}
             value={shift}
-            onChange={(e) => setShift(Number(e.target.value))}
+            onInput={(e) => setShift(Number(e.currentTarget.value))}
             aria-label={t('tools.caesarCipher.shift')}
           />
           <Button size="sm" active={shift === 13} onClick={() => setShift(13)}>

@@ -7,6 +7,14 @@
   margin-bottom: 0.5rem;
 }
 
+.controlLeft,
+.modes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .paneLabel {
   font-size: var(--font-size-label);
   font-weight: 600;

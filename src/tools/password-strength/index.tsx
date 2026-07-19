@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import Button from '@/components/Button';
-import TextArea from '@/components/TextArea';
+import SecretInput from '@/components/SecretInput';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import styles from './styles.module.css';
@@ -123,13 +123,14 @@ export default function PasswordStrength() {
             {t('common.clear')}
           </Button>
         </div>
-        <TextArea
+        <SecretInput
           className={styles.input}
-          rows={1}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder={t('tools.passwordStrength.placeholder')}
           aria-label={t('common.input')}
+          showLabel={t('common.show')}
+          hideLabel={t('common.hide')}
         />
       </div>
 

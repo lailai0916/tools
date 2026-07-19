@@ -41,7 +41,8 @@ function parse(value: string, unit: Unit): Parsed {
     return { state: 'invalid' };
   }
   const factor = UNITS.find((u) => u.key === unit)?.ms ?? 1;
-  return { state: 'ok', ms: parseFloat(trimmed) * factor };
+  const ms = parseFloat(trimmed) * factor;
+  return Number.isFinite(ms) ? { state: 'ok', ms } : { state: 'invalid' };
 }
 
 export default function DurationConverter() {

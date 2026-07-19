@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
+import SecretInput from '@/components/SecretInput';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
-const PERIOD = 30;
-const DIGITS = 6;
 const BASE32_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+type Algorithm = 'SHA-1' | 'SHA-256' | 'SHA-512';
+type TotpConfig = { secret: Uint8Array; algorithm: Algorithm; digits: number; period: number };
 
 function base32Decode(input: string): Uint8Array | null {
   const clean = input.replace(/=+$/, '').replace(/\s+/g, '').toUpperCase();
@@ -32,11 +32,47 @@ function base32Decode(input: string): Uint8Array | null {
   return new Uint8Array(out);
 }
 
-async function generateTotp(secret: Uint8Array, counter: number): Promise<string> {
+function parseConfig(input: string): TotpConfig | null {
+  let secretText = input.trim();
+  let algorithm: Algorithm = 'SHA-1';
+  let digits = 6;
+  let period = 30;
+
+  if (/^otpauth:\/\//i.test(secretText)) {
+    try {
+      const uri = new URL(secretText);
+      if (uri.hostname.toLowerCase() !== 'totp') return null;
+      secretText = uri.searchParams.get('secret') ?? '';
+      const requestedAlgorithm = (uri.searchParams.get('algorithm') ?? 'SHA1')
+        .toUpperCase()
+        .replace(/^SHA-?/, 'SHA-') as Algorithm;
+      if (!['SHA-1', 'SHA-256', 'SHA-512'].includes(requestedAlgorithm)) return null;
+      algorithm = requestedAlgorithm;
+      const requestedDigits = Number(uri.searchParams.get('digits') ?? 6);
+      const requestedPeriod = Number(uri.searchParams.get('period') ?? 30);
+      if (
+        ![6, 8].includes(requestedDigits) ||
+        !Number.isInteger(requestedPeriod) ||
+        requestedPeriod < 1
+      ) {
+        return null;
+      }
+      digits = requestedDigits;
+      period = requestedPeriod;
+    } catch {
+      return null;
+    }
+  }
+
+  const decoded = base32Decode(secretText);
+  return decoded && decoded.length > 0 ? { secret: decoded, algorithm, digits, period } : null;
+}
+
+async function generateTotp(config: TotpConfig, counter: number): Promise<string> {
   const key = await crypto.subtle.importKey(
     'raw',
-    secret as BufferSource,
-    { name: 'HMAC', hash: 'SHA-1' },
+    config.secret as BufferSource,
+    { name: 'HMAC', hash: config.algorithm },
     false,
     ['sign']
   );
@@ -51,7 +87,7 @@ async function generateTotp(secret: Uint8Array, counter: number): Promise<string
     (signature[offset + 1] << 16) |
     (signature[offset + 2] << 8) |
     signature[offset + 3];
-  return String(binary % 10 ** DIGITS).padStart(DIGITS, '0');
+  return String(binary % 10 ** config.digits).padStart(config.digits, '0');
 }
 
 export default function Totp() {
@@ -66,18 +102,19 @@ export default function Totp() {
   }, []);
 
   const trimmed = secret.trim();
-  const secretBytes = useMemo(() => (trimmed ? base32Decode(trimmed) : null), [trimmed]);
+  const config = useMemo(() => (trimmed ? parseConfig(trimmed) : null), [trimmed]);
   const epochSeconds = Math.floor(now / 1000);
-  const counter = Math.floor(epochSeconds / PERIOD);
-  const remaining = PERIOD - (epochSeconds % PERIOD);
+  const period = config?.period ?? 30;
+  const counter = Math.floor(epochSeconds / period);
+  const remaining = period - (epochSeconds % period);
 
   useEffect(() => {
-    if (!secretBytes || secretBytes.length === 0) {
+    if (!config) {
       setCode('');
       return;
     }
     let cancelled = false;
-    generateTotp(secretBytes, counter).then((result) => {
+    generateTotp(config, counter).then((result) => {
       if (!cancelled) {
         setCode(result);
       }
@@ -85,9 +122,9 @@ export default function Totp() {
     return () => {
       cancelled = true;
     };
-  }, [secretBytes, counter]);
+  }, [config, counter]);
 
-  const invalid = trimmed !== '' && (secretBytes === null || secretBytes.length === 0);
+  const invalid = trimmed !== '' && config === null;
 
   return (
     <ToolLayout
@@ -97,14 +134,14 @@ export default function Totp() {
     >
       <div className={styles.pane}>
         <label className={styles.paneLabel}>{t('tools.totp.secret')}</label>
-        <TextArea
-          className={styles.input}
-          rows={1}
+        <SecretInput
           value={secret}
           onChange={(e) => setSecret(e.target.value)}
           invalid={invalid}
           placeholder={t('tools.totp.secretPlaceholder')}
           aria-label={t('tools.totp.secret')}
+          showLabel={t('common.show')}
+          hideLabel={t('common.hide')}
         />
         {invalid && <p className={styles.error}>{t('tools.totp.invalid')}</p>}
       </div>

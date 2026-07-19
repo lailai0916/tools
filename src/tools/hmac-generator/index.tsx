@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
+import SecretInput from '@/components/SecretInput';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -70,13 +71,13 @@ export default function HmacGenerator() {
 
       <div className={styles.pane}>
         <label className={styles.paneLabel}>{t('tools.hmacGenerator.secret')}</label>
-        <TextArea
-          className={styles.input}
-          rows={1}
+        <SecretInput
           value={secret}
           onChange={(e) => setSecret(e.target.value)}
           placeholder={t('tools.hmacGenerator.secretPlaceholder')}
           aria-label={t('tools.hmacGenerator.secret')}
+          showLabel={t('common.show')}
+          hideLabel={t('common.hide')}
         />
       </div>
 

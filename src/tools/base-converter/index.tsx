@@ -25,6 +25,18 @@ type Fields = Record<BaseKey, string>;
 
 const EMPTY: Fields = { bin: '', oct: '', dec: '', hex: '' };
 
+function parseBigInteger(value: string, base: number): bigint {
+  const trimmed = value.trim();
+  const negative = trimmed.startsWith('-');
+  const digits = negative ? trimmed.slice(1) : trimmed;
+  let result = 0n;
+  for (const char of digits.toLowerCase()) {
+    const digit = char >= 'a' ? char.charCodeAt(0) - 87 : Number(char);
+    result = result * BigInt(base) + BigInt(digit);
+  }
+  return negative ? -result : result;
+}
+
 export default function BaseConverter() {
   const { t } = useI18n();
   const [fields, setFields] = useState<Fields>(EMPTY);
@@ -41,12 +53,7 @@ export default function BaseConverter() {
       setInvalid(source);
       return;
     }
-    const num = parseInt(value.trim(), base);
-    if (!Number.isSafeInteger(num)) {
-      setFields((prev) => ({ ...prev, [source]: value }));
-      setInvalid(source);
-      return;
-    }
+    const num = parseBigInteger(value, base);
     const next: Fields = { bin: '', oct: '', dec: '', hex: '' };
     for (const b of BASES) {
       next[b.key] = b.key === source ? value : num.toString(b.base);

@@ -47,10 +47,15 @@ const NATO: Record<string, string> = {
 
 function spell(input: string): string {
   const parts: string[] = [];
+  let pendingGap = false;
   for (const ch of input) {
-    // Whitespace becomes a plain word gap via the join; other symbols pass through.
     if (/\s/.test(ch)) {
+      pendingGap = parts.length > 0;
       continue;
+    }
+    if (pendingGap) {
+      parts.push('/');
+      pendingGap = false;
     }
     parts.push(NATO[ch.toUpperCase()] ?? ch);
   }

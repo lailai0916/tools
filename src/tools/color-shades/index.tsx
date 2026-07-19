@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -36,10 +37,12 @@ function mix(rgb: Rgb, target: number, amount: number): Rgb {
   };
 }
 
-const STEPS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
+const STEP_COUNTS = [5, 7, 9] as const;
 
-function ramp(base: Rgb, target: number): string[] {
-  return STEPS.map((amount) => toHex(mix(base, target, amount)));
+function ramp(base: Rgb, target: number, count: number): string[] {
+  return Array.from({ length: count }, (_, index) =>
+    toHex(mix(base, target, (index + 1) / (count + 1)))
+  );
 }
 
 export default function ColorShades() {
@@ -47,6 +50,7 @@ export default function ColorShades() {
   const [hex, setHex] = useState('#1d9bf0');
   const [color, setColor] = useState('#1d9bf0');
   const [invalid, setInvalid] = useState(false);
+  const [stepCount, setStepCount] = useState<number>(9);
 
   function editHex(value: string) {
     setHex(value);
@@ -66,8 +70,8 @@ export default function ColorShades() {
   }
 
   const base = useMemo(() => parseHex(color) ?? { r: 29, g: 155, b: 240 }, [color]);
-  const tints = useMemo(() => ramp(base, 255), [base]);
-  const shades = useMemo(() => ramp(base, 0), [base]);
+  const tints = useMemo(() => ramp(base, 255, stepCount), [base, stepCount]);
+  const shades = useMemo(() => ramp(base, 0, stepCount), [base, stepCount]);
 
   const rows: { key: 'tints' | 'shades'; label: string; values: string[] }[] = [
     { key: 'tints', label: t('tools.colorShades.tints'), values: tints },
@@ -80,27 +84,57 @@ export default function ColorShades() {
       description={t('tools.colorShades.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.field}>
-        <label className={styles.label}>{t('tools.colorShades.baseColor')}</label>
-        <div className={styles.inputRow}>
-          <input
-            className={styles.color}
-            type="color"
-            value={color}
-            onChange={(e) => editColor(e.target.value)}
-            aria-label={t('tools.colorShades.baseColor')}
-          />
-          <TextArea
-            className={styles.input}
-            rows={1}
-            value={hex}
-            onChange={(e) => editHex(e.target.value)}
-            invalid={invalid}
-            placeholder="#1d9bf0"
-            aria-label={t('tools.colorShades.baseColor')}
-          />
+      <div className={styles.controls}>
+        <div className={styles.field}>
+          <label className={styles.label} htmlFor="color-shades-hex">
+            {t('tools.colorShades.baseColor')}
+          </label>
+          <div className={styles.inputRow}>
+            <input
+              className={styles.color}
+              type="color"
+              value={color}
+              onInput={(e) => editColor(e.currentTarget.value)}
+              aria-label={t('tools.colorShades.baseColor')}
+            />
+            <TextArea
+              id="color-shades-hex"
+              className={styles.input}
+              rows={1}
+              value={hex}
+              onChange={(e) => editHex(e.target.value)}
+              invalid={invalid}
+              aria-describedby={invalid ? 'color-shades-error' : undefined}
+              placeholder="#1d9bf0"
+              aria-label={t('tools.colorShades.baseColor')}
+            />
+          </div>
+          {invalid && (
+            <p id="color-shades-error" className={styles.error} role="alert">
+              {t('tools.colorShades.invalid')}
+            </p>
+          )}
         </div>
-        {invalid && <p className={styles.error}>{t('tools.colorShades.invalid')}</p>}
+        <div className={styles.stepField}>
+          <span className={styles.label}>{t('tools.colorShades.steps')}</span>
+          <div
+            className={styles.stepOptions}
+            role="group"
+            aria-label={t('tools.colorShades.steps')}
+          >
+            {STEP_COUNTS.map((count) => (
+              <Button
+                key={count}
+                size="sm"
+                active={stepCount === count}
+                onClick={() => setStepCount(count)}
+                aria-pressed={stepCount === count}
+              >
+                {count}
+              </Button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {rows.map((row) => (

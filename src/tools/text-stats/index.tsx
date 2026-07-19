@@ -4,6 +4,7 @@ import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
+import { splitGraphemes } from '@/utils/text';
 import styles from './styles.module.css';
 
 type Stats = {
@@ -20,8 +21,8 @@ type Stats = {
 function computeStats(input: string): Stats {
   const words = input.trim() ? input.trim().split(/\s+/).length : 0;
   return {
-    characters: Array.from(input).length,
-    charactersNoSpaces: Array.from(input.replace(/\s/g, '')).length,
+    characters: splitGraphemes(input).length,
+    charactersNoSpaces: splitGraphemes(input.replace(/\s/g, '')).length,
     words,
     lines: input.length === 0 ? 0 : input.split(/\r\n|\r|\n/).length,
     sentences: (input.match(/[^.!?。！？…]+[.!?。！？…]+/g) || []).length,
