@@ -7,10 +7,10 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0 1.5rem;
-  height: 60px;
-  background: color-mix(in srgb, var(--background) 80%, transparent);
+  height: 64px;
+  background: color-mix(in srgb, var(--background) 84%, transparent);
   backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--emphasis-200);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .brand {
@@ -33,6 +33,7 @@
   height: 28px;
   border-radius: 8px;
   object-fit: cover;
+  box-shadow: var(--shadow-sm);
 }
 
 .actions {
@@ -45,10 +46,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 36px;
-  height: 36px;
+  min-width: 40px;
+  height: 40px;
   padding: 0 0.5rem;
-  border: 1px solid var(--emphasis-300);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   background: transparent;
   color: var(--font-color-base);
@@ -64,8 +65,8 @@
 }
 
 .iconBtn:hover {
-  background: var(--emphasis-100);
-  border-color: var(--emphasis-400);
+  background: var(--surface-hover);
+  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--border-strong));
 }
 
 .iconBtn:active {
@@ -80,4 +81,16 @@
 
 .iconBtn svg {
   font-size: 1.05rem;
+}
+
+@media (max-width: 640px) {
+  .header {
+    height: 60px;
+    padding: 0 1rem;
+  }
+
+  .iconBtn {
+    min-width: 44px;
+    height: 44px;
+  }
 }

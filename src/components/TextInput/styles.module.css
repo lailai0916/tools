@@ -1,16 +1,14 @@
-.textarea {
+.input {
   width: 100%;
-  min-height: 180px;
-  padding: 0.85rem 1rem;
+  height: var(--control-height-md);
+  padding: 0 0.85rem;
+  appearance: none;
   background: var(--surface-inset);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
   color: var(--font-color-base);
   font-family: var(--font-family-base);
   font-size: 0.9rem;
-  line-height: 1.6;
-  resize: vertical;
-  appearance: none;
   transition:
     background-color var(--transition),
     border-color var(--transition),
@@ -22,26 +20,22 @@
   font-size: 0.85rem;
 }
 
-.textarea::placeholder {
+.input::placeholder {
   color: var(--emphasis-600);
 }
 
-.textarea:not(:disabled):not(:focus-visible):hover {
+.input:not(:disabled):not(:focus-visible):hover {
   border-color: color-mix(in srgb, var(--color-primary) 45%, var(--border-strong));
 }
 
-.textarea:focus-visible {
+.input:focus-visible {
   outline: none;
   background: var(--card-background);
   border-color: var(--color-primary);
   box-shadow: var(--focus-ring);
 }
 
-.textarea:read-only {
-  background: color-mix(in srgb, var(--surface-inset) 72%, var(--card-background));
-}
-
-.textarea:disabled {
+.input:disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
@@ -53,7 +47,7 @@
 }
 
 @media (max-width: 640px) {
-  .textarea {
-    min-height: 160px;
+  .input {
+    min-height: 44px;
   }
 }

@@ -12,6 +12,8 @@ export const en = {
   'common.copied': 'Copied',
   'common.input': 'Input',
   'common.output': 'Output',
+  'common.switchLanguage': 'Switch language',
+  'common.toggleTheme': 'Toggle theme',
 
   'category.converter': 'Converter',
   'category.crypto': 'Crypto',

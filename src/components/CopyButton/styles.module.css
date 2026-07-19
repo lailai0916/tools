@@ -2,11 +2,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  height: 32px;
+  min-width: 76px;
+  height: var(--control-height-sm);
   padding: 0 0.7rem;
-  border: 1px solid var(--emphasis-300);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
-  background: transparent;
+  background: var(--card-background);
   color: var(--emphasis-700);
   font: inherit;
   font-size: 0.825rem;
@@ -21,6 +22,7 @@
 }
 
 .copy:not(:disabled):hover {
+  background: var(--surface-hover);
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
@@ -43,10 +45,23 @@
 /* Success state — the check reads as completion, not a persistent style */
 .copied,
 .copied:hover {
+  background: color-mix(in srgb, var(--color-success) 8%, var(--card-background));
   border-color: var(--color-success);
   color: var(--color-success);
 }
 
 .icon {
+  flex: none;
   font-size: 1rem;
+}
+
+.label {
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+}
+
+@media (max-width: 640px) {
+  .copy {
+    min-height: 44px;
+  }
 }

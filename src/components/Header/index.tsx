@@ -19,11 +19,19 @@ export default function Header() {
           type="button"
           className={styles.iconBtn}
           onClick={() => setLocale(locale === 'zh-Hans' ? 'en' : 'zh-Hans')}
-          aria-label="Switch language"
+          aria-label={t('common.switchLanguage')}
+          title={t('common.switchLanguage')}
         >
           {locale === 'zh-Hans' ? '中' : 'EN'}
         </button>
-        <button type="button" className={styles.iconBtn} onClick={toggle} aria-label="Toggle theme">
+        <button
+          type="button"
+          className={styles.iconBtn}
+          onClick={toggle}
+          aria-label={t('common.toggleTheme')}
+          aria-pressed={theme === 'dark'}
+          title={t('common.toggleTheme')}
+        >
           <Icon icon={theme === 'dark' ? 'lucide:sun' : 'lucide:moon'} />
         </button>
       </div>

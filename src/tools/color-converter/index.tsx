@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
+import Field from '@/components/Field';
+import TextInput from '@/components/TextInput';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
@@ -195,28 +196,33 @@ export default function ColorConverter() {
             aria-label={t('tools.colorConverter.preview')}
           />
           <div className={styles.previewMeta}>
-            <span className={styles.previewLabel}>{t('tools.colorConverter.preview')}</span>
+            <span className={styles.previewLabel}>
+              <span className={styles.swatch} style={{ background: preview }} aria-hidden="true" />
+              {t('tools.colorConverter.preview')}
+            </span>
             <CopyButton value={preview} label={t('common.copy')} copiedLabel={t('common.copied')} />
           </div>
         </div>
 
         <div className={styles.fields}>
           {fields.map((f) => (
-            <div key={f.key} className={styles.field}>
-              <label className={styles.fieldLabel}>{f.label}</label>
-              <TextArea
-                className={styles.input}
-                rows={1}
+            <Field
+              key={f.key}
+              htmlFor={`color-${f.key}`}
+              label={f.label}
+              error={invalid === f.key ? t('tools.colorConverter.invalid') : undefined}
+            >
+              <TextInput
+                id={`color-${f.key}`}
+                monospace
                 value={f.value}
                 onChange={(e) => edit(f.key, e.target.value)}
                 invalid={invalid === f.key}
                 placeholder={f.placeholder}
                 aria-label={f.label}
+                aria-describedby={invalid === f.key ? `color-${f.key}-error` : undefined}
               />
-              {invalid === f.key && (
-                <p className={styles.error}>{t('tools.colorConverter.invalid')}</p>
-              )}
-            </div>
+            </Field>
           ))}
         </div>
       </div>
