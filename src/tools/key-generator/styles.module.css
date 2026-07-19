@@ -13,7 +13,7 @@
 }
 
 .label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
   margin-right: 0.25rem;
@@ -33,13 +33,13 @@
   padding: 0.6rem 0.75rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
 }
 
 .rowLabel {
   flex: 0 0 auto;
   width: 5rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -50,6 +50,6 @@
   overflow-x: auto;
   white-space: nowrap;
   font-family: var(--font-family-mono);
-  font-size: 0.9rem;
+  font-size: var(--font-size-control);
   color: var(--font-color-base);
 }

@@ -20,7 +20,7 @@ export default function Header() {
             type="button"
             className={styles.iconBtn}
             onClick={() => setLocale(locale === 'zh-Hans' ? 'en' : 'zh-Hans')}
-            aria-label="Switch language"
+            aria-label={t('site.switchLanguage')}
           >
             {locale === 'zh-Hans' ? '中' : 'EN'}
           </button>
@@ -28,7 +28,7 @@ export default function Header() {
             type="button"
             className={styles.iconBtn}
             onClick={toggle}
-            aria-label="Toggle theme"
+            aria-label={t('site.toggleTheme')}
           >
             <Icon icon={theme === 'dark' ? 'lucide:sun' : 'lucide:moon'} />
           </button>

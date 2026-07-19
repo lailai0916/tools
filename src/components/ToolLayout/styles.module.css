@@ -41,3 +41,10 @@
   flex-direction: column;
   gap: 1.125rem;
 }
+
+@media (max-width: 600px) {
+  .back {
+    min-height: 44px;
+    margin-bottom: 1rem;
+  }
+}

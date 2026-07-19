@@ -20,7 +20,7 @@
 }
 
 .label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -34,7 +34,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  height: 32px;
+  height: var(--control-height-compact);
   font-size: 0.875rem;
   color: var(--font-color-base);
   cursor: pointer;
@@ -53,7 +53,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }

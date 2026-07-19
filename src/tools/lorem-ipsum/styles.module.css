@@ -13,7 +13,7 @@
 }
 
 .label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
   margin-right: 0.25rem;
@@ -26,7 +26,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }

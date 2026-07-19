@@ -31,7 +31,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -44,11 +44,11 @@
 
 .color {
   width: 56px;
-  height: 40px;
+  height: var(--control-height);
   padding: 2px;
   background: var(--background);
   border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   cursor: pointer;
 }
 
@@ -61,7 +61,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  height: 40px;
+  height: var(--control-height);
   font-size: 0.875rem;
   color: var(--font-color-base);
   cursor: pointer;
@@ -81,7 +81,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -94,14 +94,14 @@
   padding: 2.5rem;
   background: var(--emphasis-100);
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-panel);
 }
 
 .previewBox {
   width: 120px;
   height: 120px;
   background: var(--card-background);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
 }
 
 .outputHead {
@@ -115,9 +115,9 @@
   padding: 0.75rem 0.9rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   font-family: var(--font-family-mono);
-  font-size: 0.9rem;
+  font-size: var(--font-size-control);
   color: var(--font-color-base);
   overflow-x: auto;
   white-space: nowrap;

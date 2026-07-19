@@ -20,21 +20,21 @@
 }
 
 .label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
 
 .input {
   width: 7rem;
-  height: 40px;
+  height: var(--control-height);
   padding: 0 0.75rem;
   background: var(--background);
   border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   color: var(--font-color-base);
   font-family: var(--font-family-mono);
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   appearance: none;
   transition:
     border-color var(--transition),
@@ -53,11 +53,11 @@
 
 .color {
   width: 40px;
-  height: 40px;
+  height: var(--control-height);
   padding: 0;
   background: var(--background);
   border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   cursor: pointer;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -94,14 +94,14 @@
   justify-content: center;
   padding: 1.5rem;
   background: var(--emphasis-100);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-panel);
 }
 
 .image {
   max-width: 100%;
   height: auto;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-control);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--emphasis-1000) 10%, transparent);
 }
 
 .download {
@@ -109,17 +109,26 @@
   align-self: flex-start;
   align-items: center;
   padding: 0.4rem 1rem;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   font-weight: 600;
   color: var(--color-primary);
   border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   text-decoration: none;
   transition: border-color var(--transition);
 }
 
 .download:hover {
-  border-color: var(--color-primary);
+  border-color: var(--emphasis-400);
+  background: var(--emphasis-100);
+  color: var(--font-color-base);
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .download {
+    min-height: 44px;
+  }
 }
 
 .outputHead {

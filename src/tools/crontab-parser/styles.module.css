@@ -7,7 +7,7 @@
 
 .error {
   margin: 0.75rem 0 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--color-danger);
   font-family: var(--font-family-mono);
 }
@@ -20,7 +20,7 @@
 }
 
 .summaryLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -46,13 +46,13 @@
   padding: 0.6rem 0.75rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
 }
 
 .rowLabel {
   flex: 0 0 auto;
   width: 8.5rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -64,7 +64,7 @@
   background: var(--emphasis-100);
   border-radius: var(--radius-sm);
   font-family: var(--font-family-mono);
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--font-color-base);
   text-align: center;
 }
@@ -74,6 +74,6 @@
   min-width: 0;
   overflow-x: auto;
   white-space: nowrap;
-  font-size: 0.9rem;
+  font-size: var(--font-size-control);
   color: var(--font-color-secondary);
 }

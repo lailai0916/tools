@@ -16,7 +16,7 @@
 .preview {
   flex: 1;
   min-height: 152px;
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
   border: 1px solid var(--emphasis-300);
 }
 
@@ -27,7 +27,7 @@
 }
 
 .previewLabel {
-  font-size: 0.775rem;
+  font-size: var(--font-size-label);
   font-weight: 650;
   letter-spacing: 0.01em;
   color: var(--font-color-secondary);
@@ -48,7 +48,7 @@
 }
 
 .fieldLabel {
-  font-size: 0.775rem;
+  font-size: var(--font-size-label);
   font-weight: 650;
   letter-spacing: 0.01em;
   color: var(--font-color-secondary);
@@ -61,7 +61,7 @@
 
 .error {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--color-danger);
   font-family: var(--font-family-mono);
 }

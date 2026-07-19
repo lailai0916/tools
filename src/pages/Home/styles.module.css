@@ -43,7 +43,7 @@
   padding: 0 0.9rem 0 2.35rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-300);
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
   color: var(--font-color-base);
   font: inherit;
   font-size: 0.9rem;
@@ -101,7 +101,7 @@
   padding: 1.1rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
-  border-radius: 10px;
+  border-radius: var(--radius-panel);
   color: var(--font-color-base);
   transition:
     border-color var(--transition),

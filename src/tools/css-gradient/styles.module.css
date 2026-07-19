@@ -23,7 +23,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -36,11 +36,11 @@
 
 .color {
   width: 56px;
-  height: 40px;
+  height: var(--control-height);
   padding: 2px;
   background: var(--background);
   border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   cursor: pointer;
 }
 
@@ -57,14 +57,14 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
 
 .preview {
   height: 180px;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-panel);
   border: 1px solid var(--emphasis-300);
 }
 
@@ -79,9 +79,9 @@
   padding: 0.75rem 0.9rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   font-family: var(--font-family-mono);
-  font-size: 0.9rem;
+  font-size: var(--font-size-control);
   color: var(--font-color-base);
   overflow-x: auto;
   white-space: nowrap;

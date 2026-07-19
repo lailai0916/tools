@@ -4,10 +4,10 @@
   padding: 0.8rem 0.875rem;
   background: var(--background);
   border: 1px solid var(--emphasis-300);
-  border-radius: 8px;
+  border-radius: var(--radius-control);
   color: var(--font-color-base);
   font-family: var(--font-family-base);
-  font-size: 0.875rem;
+  font-size: var(--font-size-control);
   line-height: 1.65;
   caret-color: var(--color-primary);
   resize: vertical;
@@ -20,7 +20,7 @@
 
 .mono {
   font-family: var(--font-family-mono);
-  font-size: 0.825rem;
+  font-size: var(--font-size-code);
 }
 
 .textarea::placeholder {
@@ -47,4 +47,22 @@
   background: var(--emphasis-100);
   color: var(--emphasis-600);
   cursor: not-allowed;
+}
+
+.textarea[rows='1'] {
+  min-height: var(--control-height);
+  height: var(--control-height);
+  padding-block: 0.45rem;
+  resize: none;
+}
+
+.textarea[rows='2'] {
+  min-height: 72px;
+}
+
+@media (max-width: 600px) {
+  .textarea[rows='1'] {
+    min-height: 44px;
+    height: 44px;
+  }
 }

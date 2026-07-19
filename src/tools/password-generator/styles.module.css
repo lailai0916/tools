@@ -17,14 +17,14 @@
 }
 
 .label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
 
 .value {
   font-family: var(--font-family-mono);
-  font-size: 0.9rem;
+  font-size: var(--font-size-control);
   font-weight: 600;
   color: var(--color-primary);
 }
@@ -63,7 +63,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -83,7 +83,7 @@
 
 .error {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--color-danger);
   font-family: var(--font-family-mono);
 }

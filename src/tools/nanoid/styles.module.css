@@ -20,21 +20,21 @@
 }
 
 .label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
 
 .input {
   width: 7rem;
-  height: 32px;
+  height: var(--control-height-compact);
   padding: 0 0.75rem;
   background: var(--background);
   border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   color: var(--font-color-base);
   font-family: var(--font-family-mono);
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   appearance: none;
   transition:
     border-color var(--transition),
@@ -63,7 +63,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }

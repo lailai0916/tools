@@ -5,6 +5,8 @@ export const en = {
   'site.allTools': 'All tools',
   'site.searchPlaceholder': 'Search tools',
   'site.noResults': 'No matching tools.',
+  'site.switchLanguage': 'Switch language',
+  'site.toggleTheme': 'Toggle theme',
 
   'common.back': 'Back',
   'common.clear': 'Clear',

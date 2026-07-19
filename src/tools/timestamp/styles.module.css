@@ -4,7 +4,8 @@
   gap: 0.35rem;
   padding: 1rem 1.25rem;
   background: var(--card-background);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-panel);
 }
 
 .currentHead {
@@ -14,7 +15,7 @@
 }
 
 .currentLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -28,7 +29,7 @@
 }
 
 .currentDate {
-  font-size: 0.9rem;
+  font-size: var(--font-size-control);
   color: var(--font-color-secondary);
   font-family: var(--font-family-mono);
 }
@@ -40,7 +41,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -53,7 +54,7 @@
 
 .error {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--color-danger);
   font-family: var(--font-family-mono);
 }

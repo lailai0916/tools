@@ -7,7 +7,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -15,11 +15,11 @@
 .empty {
   margin: 0;
   padding: 0.6rem 0.75rem;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--font-color-secondary);
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
 }
 
 .tableWrap {
@@ -28,14 +28,22 @@
   gap: 0.6rem;
   overflow-x: auto;
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   background: var(--card-background);
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
+}
+
+.table tbody tr {
+  transition: background-color var(--transition);
+}
+
+.table tbody tr:hover {
+  background: color-mix(in srgb, var(--emphasis-100) 55%, transparent);
 }
 
 .th {
@@ -79,6 +87,6 @@
 .truncated {
   margin: 0;
   padding: 0 0.75rem 0.6rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   color: var(--font-color-secondary);
 }

@@ -5,7 +5,7 @@
   height: 32px;
   padding: 0 0.7rem;
   border: 1px solid var(--emphasis-300);
-  border-radius: 7px;
+  border-radius: var(--radius-control);
   background: transparent;
   color: var(--emphasis-700);
   font: inherit;

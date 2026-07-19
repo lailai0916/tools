@@ -5,7 +5,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -17,7 +17,7 @@
 
 .error {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--color-danger);
   font-family: var(--font-family-mono);
 }
@@ -29,7 +29,7 @@
   padding: 1.25rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
 }
 
 .codeHead {
@@ -48,12 +48,12 @@
 }
 
 .expires {
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--font-color-secondary);
   font-family: var(--font-family-mono);
 }
 
 .empty {
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--font-color-secondary);
 }

@@ -65,6 +65,118 @@ pre {
   background: color-mix(in srgb, var(--color-primary) 22%, transparent);
 }
 
+input,
+textarea {
+  caret-color: var(--color-primary);
+}
+
+input[type='checkbox'],
+input[type='radio'],
+input[type='range'] {
+  accent-color: var(--color-primary);
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+input[type='range'] {
+  appearance: none;
+  min-height: 24px;
+  background: transparent;
+  cursor: ew-resize;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--emphasis-300);
+}
+
+input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border: 2px solid var(--background);
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+input[type='range']::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--emphasis-300);
+}
+
+input[type='range']::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-primary);
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--background);
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+input[type='range']:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 0 0 1px var(--color-primary),
+    var(--focus-ring);
+}
+
+input[type='range']:focus-visible::-moz-range-thumb {
+  box-shadow:
+    0 0 0 1px var(--color-primary),
+    var(--focus-ring);
+}
+
+input[type='number'],
+code,
+pre {
+  font-variant-numeric: tabular-nums;
+}
+
+input[type='color'] {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']):not(
+    :disabled
+  ):hover {
+  border-color: var(--emphasis-400);
+}
+
+input:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  input:not([type='checkbox']):not([type='radio']) {
+    min-height: 44px;
+  }
+
+  input[type='color'] {
+    min-width: 44px;
+  }
+
+  label:has(input[type='checkbox']),
+  label:has(input[type='radio']) {
+    min-height: 44px;
+  }
+}
+
 /* One global guard so CSS animations need no per-component handling.
    JS-driven motion must still check the media query itself. */
 @media (prefers-reduced-motion: reduce) {

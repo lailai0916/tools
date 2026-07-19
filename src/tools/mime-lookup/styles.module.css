@@ -14,21 +14,21 @@
 .headExt {
   flex: 0 0 auto;
   width: 6rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
 
 .headMime {
   flex: 1 1 auto;
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
 
 .hint {
   margin: 1rem 0 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--font-color-secondary);
 }
 
@@ -46,14 +46,14 @@
   padding: 0.6rem 0.75rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
 }
 
 .rowExt {
   flex: 0 0 auto;
   width: 6rem;
   font-family: var(--font-family-mono);
-  font-size: 0.9rem;
+  font-size: var(--font-size-control);
   font-weight: 600;
   color: var(--font-color-base);
 }
@@ -64,6 +64,6 @@
   overflow-x: auto;
   white-space: nowrap;
   font-family: var(--font-family-mono);
-  font-size: 0.9rem;
+  font-size: var(--font-size-control);
   color: var(--font-color-base);
 }

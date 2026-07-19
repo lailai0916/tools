@@ -18,14 +18,14 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
 
 .error {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--color-danger);
   font-family: var(--font-family-mono);
 }
@@ -37,39 +37,51 @@
   gap: 1rem;
   padding: 1.5rem;
   background: var(--emphasis-100);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-panel);
 }
 
 .image {
   width: 240px;
   max-width: 100%;
   height: auto;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
 }
 
 .download {
   display: inline-flex;
   align-items: center;
   padding: 0.4rem 1rem;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   font-weight: 600;
   color: var(--color-primary);
   border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   text-decoration: none;
-  transition: var(--transition);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition);
 }
 
 .download:hover {
-  border-color: var(--color-primary);
+  border-color: var(--emphasis-400);
+  background: var(--emphasis-100);
+  color: var(--font-color-base);
+  text-decoration: none;
 }
 
 .empty {
   margin: 0;
   padding: 2rem;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: var(--font-size-control);
   color: var(--font-color-secondary);
   background: var(--emphasis-100);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-panel);
+}
+
+@media (max-width: 600px) {
+  .download {
+    min-height: 44px;
+  }
 }

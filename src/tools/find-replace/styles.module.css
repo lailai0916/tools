@@ -13,7 +13,7 @@
 }
 
 .label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -51,7 +51,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -84,7 +84,7 @@
   min-width: 1.5rem;
   height: 1.5rem;
   padding: 0 0.4rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
   background: var(--emphasis-200);
   color: var(--font-color-base);
   font-variant-numeric: tabular-nums;
@@ -92,7 +92,7 @@
 
 .error {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--color-danger);
   font-family: var(--font-family-mono);
 }

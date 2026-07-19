@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  border-radius: 7px;
+  border-radius: var(--radius-control);
   font-weight: 600;
   letter-spacing: 0;
   white-space: nowrap;
@@ -79,9 +79,9 @@
 }
 
 .size_md {
-  height: 38px;
+  height: var(--control-height);
   padding: 0 0.9rem;
-  font-size: 0.875rem;
+  font-size: var(--font-size-control);
 }
 
 .fullWidth {

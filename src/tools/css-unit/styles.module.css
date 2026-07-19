@@ -13,7 +13,7 @@
 }
 
 .label {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -33,19 +33,19 @@
 .suffix {
   flex: 0 0 auto;
   font-family: var(--font-family-mono);
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--font-color-secondary);
 }
 
 .error {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--color-danger);
   font-family: var(--font-family-mono);
 }
 
 .note {
   margin: 1.25rem 0 0;
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--font-color-secondary);
 }

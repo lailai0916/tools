@@ -6,6 +6,8 @@ export const zhHans: Record<MessageKey, string> = {
   'site.allTools': '全部工具',
   'site.searchPlaceholder': '搜索工具',
   'site.noResults': '没有匹配的工具。',
+  'site.switchLanguage': '切换语言',
+  'site.toggleTheme': '切换主题',
 
   'common.back': '返回',
   'common.clear': '清空',

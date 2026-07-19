@@ -6,7 +6,7 @@
 }
 
 .paneLabel {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
 }
@@ -24,7 +24,7 @@
   padding: 0.75rem;
   background: var(--card-background);
   border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-control);
 }
 
 .rowHead {
@@ -34,7 +34,7 @@
 }
 
 .algo {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--color-primary);
   font-family: var(--font-family-mono);
@@ -42,7 +42,7 @@
 
 .hash {
   font-family: var(--font-family-mono);
-  font-size: 0.85rem;
+  font-size: var(--font-size-code);
   color: var(--font-color-base);
   word-break: break-all;
   line-height: 1.5;

@@ -69,6 +69,15 @@
   --radius-md: 10px;
   --radius-sm: 6px;
 
+  /* Tool UI primitives — one quiet scale shared by every utility. */
+  --radius-panel: 10px;
+  --radius-control: 8px;
+  --font-size-label: 0.775rem;
+  --font-size-control: 0.875rem;
+  --font-size-code: 0.825rem;
+  --control-height: 40px;
+  --control-height-compact: 32px;
+
   --font-family-base:
     'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
