@@ -105,6 +105,50 @@ import Nanoid from './nanoid';
 import MacAddress from './mac-address';
 import PlaceholderImage from './placeholder-image';
 import RandomColor from './random-color';
+import CsvToTsv from './csv-to-tsv';
+import XmlFormatter from './xml-formatter';
+import JsonFlatten from './json-flatten';
+import JsonSortKeys from './json-sort-keys';
+import HexText from './hex-text';
+import ListConverter from './list-converter';
+import MarkdownToHtml from './markdown-to-html';
+import Base58 from './base58';
+import LengthConverter from './length-converter';
+import DuplicateLines from './duplicate-lines';
+import WordFrequency from './word-frequency';
+import LineNumberer from './line-numberer';
+import TextWrap from './text-wrap';
+import ExtractEmails from './extract-emails';
+import ExtractUrls from './extract-urls';
+import UnicodeNormalizer from './unicode-normalizer';
+import WhitespaceVisualizer from './whitespace-visualizer';
+import Md5Hash from './md5-hash';
+import UuidInspector from './uuid-inspector';
+import Ipv4Subnet from './ipv4-subnet';
+import CookieParser from './cookie-parser';
+import HttpHeadersParser from './http-headers-parser';
+import UtmBuilder from './utm-builder';
+import RobotsGenerator from './robots-generator';
+import SitemapGenerator from './sitemap-generator';
+import UrlJoiner from './url-joiner';
+import MailtoGenerator from './mailto-generator';
+import JsonSchemaGenerator from './json-schema-generator';
+import SqlFormatter from './sql-formatter';
+import CssMinifier from './css-minifier';
+import HtmlMinifier from './html-minifier';
+import DockerRunToCompose from './docker-run-to-compose';
+import GitignoreGenerator from './gitignore-generator';
+import SemverCompare from './semver-compare';
+import CssSpecificity from './css-specificity';
+import FractionCalculator from './fraction-calculator';
+import QuadraticSolver from './quadratic-solver';
+import DateDifference from './date-difference';
+import AgeCalculator from './age-calculator';
+import BusinessDays from './business-days';
+import BmiCalculator from './bmi-calculator';
+import LoanCalculator from './loan-calculator';
+import CompoundInterest from './compound-interest';
+import AspectRatio from './aspect-ratio';
 
 export const TOOLS: ToolMeta[] = [
   // converter
@@ -591,6 +635,310 @@ export const TOOLS: ToolMeta[] = [
     category: 'generator',
     key: 'loremIpsum',
     Component: LoremIpsum,
+  },
+
+  // utility expansion
+  {
+    id: 'csv-to-tsv',
+    icon: 'lucide:table-2',
+    category: 'converter',
+    key: 'csvToTsv',
+    Component: CsvToTsv,
+  },
+  {
+    id: 'xml-formatter',
+    icon: 'lucide:file-code-2',
+    category: 'converter',
+    key: 'xmlFormatter',
+    Component: XmlFormatter,
+  },
+  {
+    id: 'json-flatten',
+    icon: 'lucide:unfold-vertical',
+    category: 'converter',
+    key: 'jsonFlatten',
+    Component: JsonFlatten,
+  },
+  {
+    id: 'json-sort-keys',
+    icon: 'lucide:arrow-down-a-z',
+    category: 'converter',
+    key: 'jsonSortKeys',
+    Component: JsonSortKeys,
+  },
+  {
+    id: 'hex-text',
+    icon: 'lucide:binary',
+    category: 'converter',
+    key: 'hexText',
+    Component: HexText,
+  },
+  {
+    id: 'list-converter',
+    icon: 'lucide:list-restart',
+    category: 'converter',
+    key: 'listConverter',
+    Component: ListConverter,
+  },
+  {
+    id: 'markdown-to-html',
+    icon: 'lucide:file-type-2',
+    category: 'converter',
+    key: 'markdownToHtml',
+    Component: MarkdownToHtml,
+  },
+  {
+    id: 'base58',
+    icon: 'lucide:badge',
+    category: 'converter',
+    key: 'base58',
+    Component: Base58,
+  },
+  {
+    id: 'length-converter',
+    icon: 'lucide:ruler',
+    category: 'converter',
+    key: 'lengthConverter',
+    Component: LengthConverter,
+  },
+  {
+    id: 'duplicate-lines',
+    icon: 'lucide:list-minus',
+    category: 'text',
+    key: 'duplicateLines',
+    Component: DuplicateLines,
+  },
+  {
+    id: 'word-frequency',
+    icon: 'lucide:chart-no-axes-column',
+    category: 'text',
+    key: 'wordFrequency',
+    Component: WordFrequency,
+  },
+  {
+    id: 'line-numberer',
+    icon: 'lucide:list-ordered',
+    category: 'text',
+    key: 'lineNumberer',
+    Component: LineNumberer,
+  },
+  {
+    id: 'text-wrap',
+    icon: 'lucide:wrap-text',
+    category: 'text',
+    key: 'textWrap',
+    Component: TextWrap,
+  },
+  {
+    id: 'extract-emails',
+    icon: 'lucide:mail-search',
+    category: 'text',
+    key: 'extractEmails',
+    Component: ExtractEmails,
+  },
+  {
+    id: 'extract-urls',
+    icon: 'lucide:link-2',
+    category: 'text',
+    key: 'extractUrls',
+    Component: ExtractUrls,
+  },
+  {
+    id: 'unicode-normalizer',
+    icon: 'lucide:languages',
+    category: 'text',
+    key: 'unicodeNormalizer',
+    Component: UnicodeNormalizer,
+  },
+  {
+    id: 'whitespace-visualizer',
+    icon: 'lucide:space',
+    category: 'text',
+    key: 'whitespaceVisualizer',
+    Component: WhitespaceVisualizer,
+  },
+  { id: 'md5-hash', icon: 'lucide:hash', category: 'crypto', key: 'md5Hash', Component: Md5Hash },
+  {
+    id: 'uuid-inspector',
+    icon: 'lucide:scan-search',
+    category: 'crypto',
+    key: 'uuidInspector',
+    Component: UuidInspector,
+  },
+  {
+    id: 'ipv4-subnet',
+    icon: 'lucide:network',
+    category: 'web',
+    key: 'ipv4Subnet',
+    Component: Ipv4Subnet,
+  },
+  {
+    id: 'cookie-parser',
+    icon: 'lucide:cookie',
+    category: 'web',
+    key: 'cookieParser',
+    Component: CookieParser,
+  },
+  {
+    id: 'http-headers-parser',
+    icon: 'lucide:rows-3',
+    category: 'web',
+    key: 'httpHeadersParser',
+    Component: HttpHeadersParser,
+  },
+  {
+    id: 'utm-builder',
+    icon: 'lucide:megaphone',
+    category: 'web',
+    key: 'utmBuilder',
+    Component: UtmBuilder,
+  },
+  {
+    id: 'robots-generator',
+    icon: 'lucide:bot',
+    category: 'web',
+    key: 'robotsGenerator',
+    Component: RobotsGenerator,
+  },
+  {
+    id: 'sitemap-generator',
+    icon: 'lucide:network',
+    category: 'web',
+    key: 'sitemapGenerator',
+    Component: SitemapGenerator,
+  },
+  {
+    id: 'url-joiner',
+    icon: 'lucide:link',
+    category: 'web',
+    key: 'urlJoiner',
+    Component: UrlJoiner,
+  },
+  {
+    id: 'mailto-generator',
+    icon: 'lucide:mail-plus',
+    category: 'web',
+    key: 'mailtoGenerator',
+    Component: MailtoGenerator,
+  },
+  {
+    id: 'json-schema-generator',
+    icon: 'lucide:braces',
+    category: 'development',
+    key: 'jsonSchemaGenerator',
+    Component: JsonSchemaGenerator,
+  },
+  {
+    id: 'sql-formatter',
+    icon: 'lucide:database',
+    category: 'development',
+    key: 'sqlFormatter',
+    Component: SqlFormatter,
+  },
+  {
+    id: 'css-minifier',
+    icon: 'lucide:file-minus-2',
+    category: 'development',
+    key: 'cssMinifier',
+    Component: CssMinifier,
+  },
+  {
+    id: 'html-minifier',
+    icon: 'lucide:code-xml',
+    category: 'development',
+    key: 'htmlMinifier',
+    Component: HtmlMinifier,
+  },
+  {
+    id: 'docker-run-to-compose',
+    icon: 'lucide:container',
+    category: 'development',
+    key: 'dockerRunToCompose',
+    Component: DockerRunToCompose,
+  },
+  {
+    id: 'gitignore-generator',
+    icon: 'lucide:git-branch',
+    category: 'development',
+    key: 'gitignoreGenerator',
+    Component: GitignoreGenerator,
+  },
+  {
+    id: 'semver-compare',
+    icon: 'lucide:git-compare-arrows',
+    category: 'development',
+    key: 'semverCompare',
+    Component: SemverCompare,
+  },
+  {
+    id: 'css-specificity',
+    icon: 'lucide:target',
+    category: 'development',
+    key: 'cssSpecificity',
+    Component: CssSpecificity,
+  },
+  {
+    id: 'fraction-calculator',
+    icon: 'lucide:divide',
+    category: 'math',
+    key: 'fractionCalculator',
+    Component: FractionCalculator,
+  },
+  {
+    id: 'quadratic-solver',
+    icon: 'lucide:superscript',
+    category: 'math',
+    key: 'quadraticSolver',
+    Component: QuadraticSolver,
+  },
+  {
+    id: 'date-difference',
+    icon: 'lucide:calendar-range',
+    category: 'math',
+    key: 'dateDifference',
+    Component: DateDifference,
+  },
+  {
+    id: 'age-calculator',
+    icon: 'lucide:cake',
+    category: 'math',
+    key: 'ageCalculator',
+    Component: AgeCalculator,
+  },
+  {
+    id: 'business-days',
+    icon: 'lucide:calendar-check',
+    category: 'math',
+    key: 'businessDays',
+    Component: BusinessDays,
+  },
+  {
+    id: 'bmi-calculator',
+    icon: 'lucide:activity',
+    category: 'math',
+    key: 'bmiCalculator',
+    Component: BmiCalculator,
+  },
+  {
+    id: 'loan-calculator',
+    icon: 'lucide:landmark',
+    category: 'math',
+    key: 'loanCalculator',
+    Component: LoanCalculator,
+  },
+  {
+    id: 'compound-interest',
+    icon: 'lucide:chart-no-axes-combined',
+    category: 'math',
+    key: 'compoundInterest',
+    Component: CompoundInterest,
+  },
+  {
+    id: 'aspect-ratio',
+    icon: 'lucide:ratio',
+    category: 'math',
+    key: 'aspectRatio',
+    Component: AspectRatio,
   },
 ];
 
