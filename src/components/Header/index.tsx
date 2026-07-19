@@ -10,30 +10,29 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <Link to="/" className={styles.brand}>
-        <img src="/logo.svg" alt="" className={styles.logo} />
-        <span>{t('site.title')}</span>
-      </Link>
-      <div className={styles.actions}>
-        <button
-          type="button"
-          className={styles.iconBtn}
-          onClick={() => setLocale(locale === 'zh-Hans' ? 'en' : 'zh-Hans')}
-          aria-label={t('common.switchLanguage')}
-          title={t('common.switchLanguage')}
-        >
-          {locale === 'zh-Hans' ? '中' : 'EN'}
-        </button>
-        <button
-          type="button"
-          className={styles.iconBtn}
-          onClick={toggle}
-          aria-label={t('common.toggleTheme')}
-          aria-pressed={theme === 'dark'}
-          title={t('common.toggleTheme')}
-        >
-          <Icon icon={theme === 'dark' ? 'lucide:sun' : 'lucide:moon'} />
-        </button>
+      <div className={styles.inner}>
+        <Link to="/" className={styles.brand}>
+          <img src="/logo.svg" alt="" className={styles.logo} />
+          <span>{t('site.title')}</span>
+        </Link>
+        <div className={styles.actions}>
+          <button
+            type="button"
+            className={styles.iconBtn}
+            onClick={() => setLocale(locale === 'zh-Hans' ? 'en' : 'zh-Hans')}
+            aria-label="Switch language"
+          >
+            {locale === 'zh-Hans' ? '中' : 'EN'}
+          </button>
+          <button
+            type="button"
+            className={styles.iconBtn}
+            onClick={toggle}
+            aria-label="Toggle theme"
+          >
+            <Icon icon={theme === 'dark' ? 'lucide:sun' : 'lucide:moon'} />
+          </button>
+        </div>
       </div>
     </header>
   );

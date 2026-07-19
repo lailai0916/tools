@@ -1,49 +1,40 @@
 .textarea {
   width: 100%;
-  min-height: 180px;
-  padding: 0.85rem 1rem;
-  background: var(--surface-inset);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-md);
+  min-height: 200px;
+  padding: 0.8rem 0.875rem;
+  background: var(--background);
+  border: 1px solid var(--emphasis-300);
+  border-radius: 8px;
   color: var(--font-color-base);
   font-family: var(--font-family-base);
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  caret-color: var(--color-primary);
   resize: vertical;
   appearance: none;
   transition:
-    background-color var(--transition),
     border-color var(--transition),
-    box-shadow var(--transition);
+    box-shadow var(--transition),
+    background-color var(--transition);
 }
 
 .mono {
   font-family: var(--font-family-mono);
-  font-size: 0.85rem;
+  font-size: 0.825rem;
 }
 
 .textarea::placeholder {
-  color: var(--emphasis-600);
+  color: var(--emphasis-500);
 }
 
-.textarea:not(:disabled):not(:focus-visible):hover {
-  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--border-strong));
+.textarea:not(:disabled):hover {
+  border-color: var(--emphasis-400);
 }
 
 .textarea:focus-visible {
   outline: none;
-  background: var(--card-background);
   border-color: var(--color-primary);
   box-shadow: var(--focus-ring);
-}
-
-.textarea:read-only {
-  background: color-mix(in srgb, var(--surface-inset) 72%, var(--card-background));
-}
-
-.textarea:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
 }
 
 .invalid,
@@ -52,8 +43,8 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
 }
 
-@media (max-width: 640px) {
-  .textarea {
-    min-height: 160px;
-  }
+.textarea:disabled {
+  background: var(--emphasis-100);
+  color: var(--emphasis-600);
+  cursor: not-allowed;
 }

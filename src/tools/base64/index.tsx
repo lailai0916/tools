@@ -3,7 +3,6 @@ import ToolLayout from '@/components/ToolLayout';
 import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
-import Field from '@/components/Field';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
@@ -72,11 +71,10 @@ export default function Base64() {
         </Button>
       </div>
 
-      <Field
-        label={t('common.input')}
-        htmlFor="base64-input"
-        error={error ? t('tools.base64.decodeError') : undefined}
-      >
+      <div className={styles.pane}>
+        <label className={styles.paneLabel} htmlFor="base64-input">
+          {t('common.input')}
+        </label>
         <TextArea
           id="base64-input"
           value={input}
@@ -88,19 +86,19 @@ export default function Base64() {
               : t('tools.base64.decodePlaceholder')
           }
           aria-label={t('common.input')}
-          aria-describedby={error ? 'base64-input-error' : undefined}
         />
-      </Field>
+        {error && <p className={styles.error}>{t('tools.base64.decodeError')}</p>}
+      </div>
 
-      <Field
-        label={t('common.output')}
-        htmlFor="base64-output"
-        action={
+      <div className={styles.pane}>
+        <div className={styles.outputHead}>
+          <label className={styles.paneLabel} htmlFor="base64-output">
+            {t('common.output')}
+          </label>
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        }
-      >
+        </div>
         <TextArea id="base64-output" value={output} readOnly aria-label={t('common.output')} />
-      </Field>
+      </div>
     </ToolLayout>
   );
 }

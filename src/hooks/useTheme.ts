@@ -8,9 +8,6 @@ function systemTheme(): Theme {
 
 function apply(theme: Theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  document
-    .querySelector('meta[name="theme-color"]')
-    ?.setAttribute('content', theme === 'dark' ? '#17181a' : '#f8fafc');
 }
 
 export function useTheme() {

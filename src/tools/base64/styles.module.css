@@ -8,19 +8,37 @@
 
 .modes {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.35rem;
 }
 
-@media (max-width: 640px) {
+.pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.paneLabel {
+  font-size: 0.775rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  color: var(--font-color-secondary);
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+  font-family: var(--font-family-mono);
+}
+
+@media (max-width: 600px) {
   .controls {
     align-items: stretch;
-  }
-
-  .modes {
-    flex: 1;
-  }
-
-  .modes > * {
-    flex: 1;
   }
 }

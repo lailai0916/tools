@@ -54,7 +54,7 @@ export default function CopyButton({
       aria-live="polite"
     >
       <Icon icon={copied ? 'lucide:check' : 'lucide:copy'} className={styles.icon} />
-      <span className={styles.label}>{copied ? copiedLabel : label}</span>
+      <span>{copied ? copiedLabel : label}</span>
     </button>
   );
 }

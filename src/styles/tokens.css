@@ -52,12 +52,8 @@
   --color-warning: #f0a52a;
 
   /* Surfaces */
-  --background: #f8fafc;
+  --background: var(--gray-0);
   --card-background: var(--gray-0);
-  --surface-inset: #f1f4f7;
-  --surface-hover: color-mix(in srgb, var(--color-primary) 6%, var(--card-background));
-  --border-subtle: color-mix(in srgb, var(--gray-300) 72%, transparent);
-  --border-strong: var(--gray-300);
   --font-color-base: var(--emphasis-900);
   --font-color-secondary: var(--emphasis-700);
 
@@ -68,13 +64,10 @@
   --shadow-lg: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
   --shadow-overlay: 0 20px 50px -16px rgba(0, 0, 0, 0.22), 0 6px 16px rgba(0, 0, 0, 0.06);
 
-  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 22%, transparent);
   --radius-lg: 16px;
   --radius-md: 10px;
   --radius-sm: 6px;
-
-  --control-height-sm: 36px;
-  --control-height-md: 42px;
 
   --font-family-base:
     'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, 'Segoe UI', Roboto,
@@ -83,11 +76,8 @@
     'SF Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
 
-  /* Quiet, responsive motion for high-frequency tools. */
-  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --transition-fast: 100ms var(--ease-standard);
-  --transition: 160ms var(--ease-standard);
-  --transition-slow: 220ms var(--ease-standard);
+  /* Quiet, fast feedback for controls used repeatedly throughout the tool library. */
+  --transition: 140ms ease-out;
 }
 
 [data-theme='dark'] {
@@ -107,12 +97,8 @@
   --color-success: #34c77b;
   --color-danger: #ff6b6b;
 
-  --background: #17181a;
-  --card-background: #202225;
-  --surface-inset: #191b1e;
-  --surface-hover: color-mix(in srgb, var(--color-primary) 10%, var(--card-background));
-  --border-subtle: #30343a;
-  --border-strong: #49505a;
+  --background: #1b1b1d;
+  --card-background: #242526;
   --font-color-base: #e3e3e3;
   --font-color-secondary: var(--emphasis-700);
 
@@ -122,5 +108,5 @@
   --shadow-lg: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.36);
   --shadow-overlay: 0 20px 50px -16px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.3);
 
-  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 28%, transparent);
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent);
 }

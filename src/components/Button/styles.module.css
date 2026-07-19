@@ -3,9 +3,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  border-radius: var(--radius-md);
+  border-radius: 7px;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   white-space: nowrap;
   cursor: pointer;
   appearance: none;
@@ -15,13 +15,7 @@
     border-color var(--transition),
     color var(--transition),
     box-shadow var(--transition),
-    transform var(--transition),
     opacity var(--transition);
-}
-
-.label {
-  text-box-trim: trim-both;
-  text-box-edge: cap alphabetic;
 }
 
 .button:focus-visible {
@@ -29,10 +23,8 @@
   box-shadow: var(--focus-ring);
 }
 
-/* Instant feedback on press — responds on pointer-down, not release */
 .button:not(:disabled):active {
-  transform: scale(0.98);
-  transition-duration: 60ms;
+  opacity: 0.82;
 }
 
 .button:disabled,
@@ -56,15 +48,15 @@
 }
 
 .variant_secondary {
-  background: var(--card-background);
-  border: 1px solid var(--border-strong);
+  background: transparent;
+  border: 1px solid var(--emphasis-300);
   color: var(--emphasis-800);
 }
 
 .variant_secondary:not(:disabled):hover {
-  border-color: var(--color-primary);
-  background: var(--surface-hover);
-  color: var(--color-primary);
+  background: var(--emphasis-100);
+  border-color: var(--emphasis-400);
+  color: var(--font-color-base);
 }
 
 .variant_ghost {
@@ -74,22 +66,22 @@
 }
 
 .variant_ghost:not(:disabled):hover {
-  background: var(--surface-hover);
+  background: var(--emphasis-100);
   color: var(--font-color-base);
 }
 
 /* Sizes */
 
 .size_sm {
-  height: var(--control-height-sm);
-  padding: 0 0.75rem;
-  font-size: 0.825rem;
+  height: 32px;
+  padding: 0 0.7rem;
+  font-size: 0.8rem;
 }
 
 .size_md {
-  height: var(--control-height-md);
-  padding: 0 1rem;
-  font-size: 0.9rem;
+  height: 38px;
+  padding: 0 0.9rem;
+  font-size: 0.875rem;
 }
 
 .fullWidth {
@@ -117,7 +109,7 @@
   font-size: 1.1em;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 600px) {
   .size_sm,
   .size_md {
     min-height: 44px;

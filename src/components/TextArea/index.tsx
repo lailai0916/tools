@@ -21,7 +21,6 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function TextAre
         invalid && styles.invalid,
         className
       )}
-      aria-invalid={invalid || undefined}
       {...rest}
     />
   );

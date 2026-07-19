@@ -13,8 +13,6 @@ export const zhHans: Record<MessageKey, string> = {
   'common.copied': '已复制',
   'common.input': '输入',
   'common.output': '输出',
-  'common.switchLanguage': '切换语言',
-  'common.toggleTheme': '切换主题',
 
   'category.converter': '转换',
   'category.crypto': '加密',

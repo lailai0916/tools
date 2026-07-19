@@ -43,13 +43,11 @@ export default function Home() {
       <div className={styles.searchWrap}>
         <Icon icon="lucide:search" className={styles.searchIcon} />
         <input
-          type="search"
           className={styles.search}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t('site.searchPlaceholder')}
           aria-label={t('site.searchPlaceholder')}
-          autoComplete="off"
         />
       </div>
 
