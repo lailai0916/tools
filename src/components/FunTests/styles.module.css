@@ -1,0 +1,889 @@
+.panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 280px;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  overflow: hidden;
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-panel);
+  background: var(--card-background);
+  text-align: center;
+  touch-action: manipulation;
+}
+
+.instructions {
+  max-width: 620px;
+  margin: 0;
+  color: var(--font-color-secondary);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.segmentedWrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-panel);
+  background: var(--card-background);
+}
+
+.eyebrow {
+  color: var(--font-color-secondary);
+  font-size: var(--font-size-label);
+  font-weight: 650;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.segmented {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--radius-control);
+  background: var(--emphasis-100);
+}
+
+.segment {
+  min-width: 54px;
+  min-height: 34px;
+  padding: 0.35rem 0.7rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--font-color-secondary);
+  font: 600 0.8rem var(--font-family-base);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition);
+}
+
+.segment:hover:not(:disabled) {
+  color: var(--font-color-base);
+}
+
+.segmentActive {
+  background: var(--card-background);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.segment:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0;
+}
+
+.stat {
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-panel);
+  background: var(--card-background);
+}
+
+.stat dt {
+  color: var(--font-color-secondary);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+}
+
+.stat dd {
+  margin: 0.25rem 0 0;
+  overflow-wrap: anywhere;
+  color: var(--font-color-base);
+  font: 700 1.2rem/1.25 var(--font-family-mono);
+}
+
+.resultPanel {
+  min-height: 300px;
+}
+
+.resultValue {
+  color: var(--color-primary);
+  font: 750 clamp(2.5rem, 10vw, 4.5rem)/1 var(--font-family-mono);
+  letter-spacing: -0.06em;
+}
+
+.resultDetail {
+  max-width: 540px;
+  margin: 0;
+  color: var(--font-color-secondary);
+  font-size: 0.9rem;
+}
+
+.gameArea {
+  position: relative;
+  width: 100%;
+  min-height: 340px;
+  overflow: hidden;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-panel);
+  background:
+    linear-gradient(var(--emphasis-200) 1px, transparent 1px),
+    linear-gradient(90deg, var(--emphasis-200) 1px, transparent 1px), var(--card-background);
+  background-size: 32px 32px;
+  touch-action: none;
+}
+
+.gameArea:focus-visible {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.giantValue {
+  font: 750 clamp(2.8rem, 12vw, 5.5rem)/1 var(--font-family-mono);
+  letter-spacing: -0.06em;
+}
+
+.muted {
+  color: var(--font-color-secondary);
+}
+
+.statusSuccess {
+  color: var(--color-success);
+}
+
+.statusDanger {
+  color: var(--color-danger);
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.textInput {
+  width: min(100%, 360px);
+  min-height: var(--control-height);
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-control);
+  background: var(--card-background);
+  color: var(--font-color-base);
+  font: 500 1rem var(--font-family-mono);
+  text-align: center;
+}
+
+.clickPad,
+.spacePad,
+.reactionPad,
+.scrollPad {
+  display: flex;
+  width: 100%;
+  min-height: 330px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-panel);
+  background: var(--card-background);
+  color: var(--font-color-base);
+  font-family: var(--font-family-base);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition),
+    transform 60ms ease-out;
+}
+
+.clickPad:hover,
+.spacePad:hover,
+.reactionPad:hover,
+.scrollPad:hover {
+  border-color: var(--color-primary);
+}
+
+.clickPad:active {
+  transform: scale(0.997);
+  background: color-mix(in srgb, var(--color-primary) 5%, var(--card-background));
+}
+
+.clickPrompt,
+.timer {
+  color: var(--font-color-secondary);
+  font-size: 0.9rem;
+}
+
+.timer {
+  font-family: var(--font-family-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.spaceKey {
+  min-width: min(80%, 320px);
+  padding: 0.7rem 1.5rem;
+  border: 1px solid var(--emphasis-400);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-control);
+  background: var(--emphasis-100);
+  color: var(--font-color-secondary);
+  font: 600 0.8rem var(--font-family-base);
+}
+
+.spacePad:active .spaceKey {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.reactionPad {
+  transition:
+    border-color 120ms ease-out,
+    background-color 120ms ease-out,
+    color 120ms ease-out;
+}
+
+.reactionWaiting {
+  background: color-mix(in srgb, var(--color-warning) 10%, var(--card-background));
+}
+
+.reactionReady {
+  border-color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 14%, var(--card-background));
+  color: var(--color-success);
+}
+
+.reactionEarly {
+  border-color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 10%, var(--card-background));
+  color: var(--color-danger);
+}
+
+.reactionPrompt {
+  font-size: clamp(1.8rem, 7vw, 3.4rem);
+  line-height: 1.1;
+}
+
+.areaOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--card-background) 94%, transparent);
+}
+
+.inlinePrimary {
+  min-height: var(--control-height);
+  padding: 0 1rem;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-control);
+  background: var(--color-primary);
+  color: #ffffff;
+  font: 600 var(--font-size-control) var(--font-family-base);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.inlinePrimary:hover {
+  border-color: var(--color-primary-dark);
+  background: var(--color-primary-dark);
+}
+
+.target {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--card-background));
+  cursor: crosshair;
+}
+
+.target::before,
+.target::after,
+.crosshair::before,
+.crosshair::after {
+  position: absolute;
+  content: '';
+  background: var(--color-primary);
+}
+
+.target::before,
+.crosshair::before {
+  top: 50%;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+}
+
+.target::after,
+.crosshair::after {
+  top: 8px;
+  bottom: 8px;
+  left: 50%;
+  width: 1px;
+}
+
+.target span {
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.crosshair {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  transform: translate(-50%, -50%);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 45%, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.crosshair::before {
+  left: 0;
+  right: 0;
+}
+
+.crosshair::after {
+  top: 0;
+  bottom: 0;
+}
+
+.scrollPad {
+  position: relative;
+  overflow: hidden;
+  cursor: ns-resize;
+}
+
+.scrollPad > span {
+  max-width: 480px;
+  color: var(--font-color-secondary);
+  font-size: 0.875rem;
+}
+
+.scrollTrack {
+  position: absolute;
+  top: -30%;
+  right: 1.5rem;
+  width: 5px;
+  height: 160%;
+  border-radius: 999px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--emphasis-300) 0,
+    var(--emphasis-300) 24px,
+    transparent 24px,
+    transparent 40px
+  );
+  opacity: 0.7;
+}
+
+.scrollTrackActive {
+  animation: scroll-track 550ms linear infinite;
+}
+
+@keyframes scroll-track {
+  to {
+    transform: translateY(40px);
+  }
+}
+
+.schulteGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(44px, 72px));
+  gap: 0.45rem;
+}
+
+.schulteCell {
+  aspect-ratio: 1;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-control);
+  background: var(--card-background);
+  color: var(--font-color-base);
+  font: 700 clamp(1rem, 4vw, 1.4rem) var(--font-family-mono);
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.schulteCell:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.cellDone {
+  border-color: transparent;
+  background: var(--emphasis-100);
+  color: var(--emphasis-500);
+}
+
+.timePad,
+.rhythmPad {
+  display: flex;
+  width: 100%;
+  min-height: 330px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-panel);
+  background: var(--card-background);
+  color: var(--font-color-base);
+  font-family: var(--font-family-base);
+  cursor: pointer;
+}
+
+.timePad strong,
+.rhythmPad strong {
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+}
+
+.timePad > span:last-child,
+.rhythmPad > span:last-child {
+  max-width: 460px;
+  color: var(--font-color-secondary);
+  font-size: 0.875rem;
+}
+
+.timeOrbit {
+  width: 88px;
+  height: 88px;
+  border: 2px solid var(--emphasis-300);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-primary) 0 5px, transparent 6px);
+  animation: time-breathe 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes time-breathe {
+  to {
+    transform: scale(1.12);
+    border-color: var(--color-primary);
+  }
+}
+
+.stroopWord {
+  font-size: clamp(2.5rem, 12vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.ink_red {
+  color: #d93838;
+}
+
+.ink_blue {
+  color: #1d9bf0;
+}
+
+.ink_green {
+  color: #1a8754;
+}
+
+.ink_amber {
+  color: #c67c00;
+}
+
+[data-theme='dark'] .ink_red {
+  color: #ff6b6b;
+}
+
+[data-theme='dark'] .ink_green {
+  color: #34c77b;
+}
+
+[data-theme='dark'] .ink_amber {
+  color: #ffc14d;
+}
+
+.colorChoices {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(88px, 1fr));
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.colorChoice {
+  min-height: 52px;
+  border: 0;
+  border-radius: var(--radius-control);
+  color: #ffffff;
+  font: 650 0.875rem var(--font-family-base);
+  cursor: pointer;
+}
+
+.fill_red {
+  background: #d93838;
+}
+
+.fill_blue {
+  background: #1d9bf0;
+}
+
+.fill_green {
+  background: #1a8754;
+}
+
+.fill_amber {
+  background: #b87200;
+}
+
+.hueGrid,
+.oddGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(48px, 88px));
+  gap: 0.5rem;
+}
+
+.hueGrid button {
+  aspect-ratio: 1;
+  border: 2px solid color-mix(in srgb, var(--card-background) 55%, transparent);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+
+.oddGrid {
+  grid-template-columns: repeat(5, minmax(44px, 70px));
+}
+
+.oddGrid button {
+  aspect-ratio: 1;
+  border: 1px solid var(--emphasis-200);
+  border-radius: var(--radius-control);
+  background: var(--card-background);
+  color: var(--font-color-base);
+  font: 700 clamp(1.1rem, 5vw, 1.65rem) var(--font-family-mono);
+  cursor: pointer;
+}
+
+.oddGrid button:hover {
+  border-color: var(--color-primary);
+}
+
+.rhythmPad:disabled {
+  cursor: default;
+}
+
+.metronome {
+  position: relative;
+  width: 86px;
+  height: 110px;
+  border: 2px solid var(--emphasis-300);
+  border-radius: 44px 44px 12px 12px;
+}
+
+.metronome i {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  width: 3px;
+  height: 68px;
+  transform: translateX(-50%) rotate(-18deg);
+  transform-origin: bottom;
+  border-radius: 999px;
+  background: var(--color-primary);
+}
+
+.rhythmPulse .metronome i {
+  animation: metronome 600ms ease-in-out alternate;
+}
+
+@keyframes metronome {
+  to {
+    transform: translateX(-50%) rotate(18deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .colorChoices {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.memoryGrid3,
+.memoryGrid5 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(64px, 104px));
+  gap: 0.6rem;
+}
+
+.memoryGrid5 {
+  grid-template-columns: repeat(5, minmax(44px, 68px));
+  gap: 0.4rem;
+}
+
+.memoryGrid3 button,
+.memoryGrid5 button {
+  aspect-ratio: 1;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-control);
+  background: var(--emphasis-100);
+  cursor: pointer;
+  transition:
+    border-color 100ms ease-out,
+    background-color 100ms ease-out,
+    transform 100ms ease-out;
+}
+
+.memoryGrid3 button:not(:disabled):hover,
+.memoryGrid5 button:not(:disabled):hover {
+  border-color: var(--color-primary);
+}
+
+.memoryGrid3 .memoryActive,
+.memoryGrid5 .memoryActive,
+.memoryGrid5 .memorySelected {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  transform: scale(0.96);
+}
+
+.numberDisplay,
+.verbalWord {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: var(--color-primary);
+  font: 750 clamp(2.2rem, 10vw, 4.5rem)/1.15 var(--font-family-mono);
+  letter-spacing: 0.08em;
+}
+
+.answerForm {
+  display: flex;
+  width: min(100%, 420px);
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.answerForm label {
+  color: var(--font-color-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.verbalWord {
+  letter-spacing: -0.03em;
+}
+
+.choiceButton {
+  min-width: 120px;
+  min-height: 48px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-control);
+  background: var(--card-background);
+  color: var(--font-color-base);
+  font: 650 0.9rem var(--font-family-base);
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.choiceButton:hover {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 6%, var(--card-background));
+}
+
+.matchGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(56px, 92px));
+  gap: 0.6rem;
+  perspective: 900px;
+}
+
+.matchCard {
+  aspect-ratio: 0.82;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-control);
+  background: var(--emphasis-100);
+  color: var(--font-color-secondary);
+  font: 700 1.4rem var(--font-family-mono);
+  cursor: pointer;
+  transition:
+    transform 220ms ease-out,
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.matchCard:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.matchCardOpen {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--card-background));
+  color: var(--color-primary);
+  transform: rotateY(180deg);
+}
+
+.matchCardOpen span {
+  display: inline-block;
+  transform: rotateY(180deg);
+}
+
+@media (max-width: 420px) {
+  .memoryGrid3 {
+    grid-template-columns: repeat(3, minmax(60px, 1fr));
+  }
+
+  .matchGrid {
+    gap: 0.4rem;
+  }
+}
+
+.mathProblem {
+  color: var(--font-color-base);
+  font: 750 clamp(2.5rem, 12vw, 5rem)/1 var(--font-family-mono);
+  letter-spacing: -0.05em;
+}
+
+.goLegend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--font-color-secondary);
+  font-size: 0.875rem;
+}
+
+.goLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.goLegend i {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.goPad {
+  display: flex;
+  width: 100%;
+  min-height: 340px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-panel);
+  background: var(--card-background);
+  color: var(--font-color-base);
+  font-family: var(--font-family-base);
+  cursor: pointer;
+}
+
+.goPad strong {
+  font-size: 1.2rem;
+}
+
+.goOrb {
+  width: 112px;
+  height: 112px;
+  border: 2px solid var(--emphasis-300);
+  border-radius: 50%;
+  background: var(--emphasis-100);
+  transition:
+    border-color 80ms linear,
+    background-color 80ms linear,
+    transform 80ms ease-out;
+}
+
+.goSignal {
+  border-color: var(--color-success);
+  background: var(--color-success);
+  transform: scale(1.04);
+}
+
+.stopSignal {
+  border-color: var(--color-danger);
+  background: var(--color-danger);
+  transform: scale(1.04);
+}
+
+.typingPrompt {
+  max-width: 680px;
+  margin: 0;
+  color: var(--emphasis-500);
+  font: 500 clamp(1rem, 3vw, 1.18rem)/1.9 var(--font-family-mono);
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+.typingPrompt span {
+  border-radius: 2px;
+}
+
+.charCorrect {
+  color: var(--font-color-base);
+}
+
+.charWrong {
+  background: color-mix(in srgb, var(--color-danger) 14%, transparent);
+  color: var(--color-danger);
+  text-decoration: underline;
+}
+
+.charCurrent {
+  box-shadow: inset 2px 0 var(--color-primary);
+}
+
+.typingInput {
+  width: 100%;
+  min-height: 112px;
+  resize: vertical;
+  padding: 0.85rem;
+  border: 1px solid var(--emphasis-300);
+  border-radius: var(--radius-control);
+  background: var(--card-background);
+  color: var(--font-color-base);
+  font: 0.95rem/1.65 var(--font-family-mono);
+}
+
+@media (max-width: 600px) {
+  .panel {
+    min-height: 250px;
+  }
+
+  .segmentedWrap {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .segmented {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(54px, 1fr));
+  }
+
+  .segment {
+    min-height: 44px;
+  }
+
+  .gameArea {
+    min-height: 300px;
+  }
+}

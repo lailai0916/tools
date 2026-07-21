@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react';
 
 export type ToolCategory =
-  'converter' | 'text' | 'crypto' | 'web' | 'development' | 'math' | 'generator';
+  'converter' | 'text' | 'crypto' | 'web' | 'development' | 'math' | 'generator' | 'fun';
 
 export interface ToolMeta {
   /** URL segment and prerender filename — must match the folder name. */
@@ -149,6 +149,28 @@ import BmiCalculator from './bmi-calculator';
 import LoanCalculator from './loan-calculator';
 import CompoundInterest from './compound-interest';
 import AspectRatio from './aspect-ratio';
+
+// fun & tests
+import CpsTest from './cps-test';
+import SpacebarTest from './spacebar-test';
+import ReactionTime from './reaction-time';
+import AimTrainer from './aim-trainer';
+import MouseAccuracy from './mouse-accuracy';
+import ScrollSpeed from './scroll-speed';
+import SchulteTable from './schulte-table';
+import TimePerception from './time-perception';
+import StroopTest from './stroop-test';
+import ColorHueTest from './color-hue-test';
+import OddOneOut from './odd-one-out';
+import RhythmTest from './rhythm-test';
+import SequenceMemory from './sequence-memory';
+import NumberMemory from './number-memory';
+import VisualMemory from './visual-memory';
+import VerbalMemory from './verbal-memory';
+import MemoryMatch from './memory-match';
+import ArithmeticSprint from './arithmetic-sprint';
+import GoNoGo from './go-no-go';
+import TypingSpeed from './typing-speed';
 
 export const TOOLS: ToolMeta[] = [
   // converter
@@ -940,6 +962,142 @@ export const TOOLS: ToolMeta[] = [
     key: 'aspectRatio',
     Component: AspectRatio,
   },
+
+  // fun & tests
+  {
+    id: 'cps-test',
+    icon: 'lucide:mouse-pointer-click',
+    category: 'fun',
+    key: 'cpsTest',
+    Component: CpsTest,
+  },
+  {
+    id: 'spacebar-test',
+    icon: 'lucide:keyboard',
+    category: 'fun',
+    key: 'spacebarTest',
+    Component: SpacebarTest,
+  },
+  {
+    id: 'reaction-time',
+    icon: 'lucide:zap',
+    category: 'fun',
+    key: 'reactionTime',
+    Component: ReactionTime,
+  },
+  {
+    id: 'aim-trainer',
+    icon: 'lucide:crosshair',
+    category: 'fun',
+    key: 'aimTrainer',
+    Component: AimTrainer,
+  },
+  {
+    id: 'mouse-accuracy',
+    icon: 'lucide:mouse-pointer-2',
+    category: 'fun',
+    key: 'mouseAccuracy',
+    Component: MouseAccuracy,
+  },
+  {
+    id: 'scroll-speed',
+    icon: 'lucide:mouse',
+    category: 'fun',
+    key: 'scrollSpeed',
+    Component: ScrollSpeed,
+  },
+  {
+    id: 'schulte-table',
+    icon: 'lucide:grid-3x3',
+    category: 'fun',
+    key: 'schulteTable',
+    Component: SchulteTable,
+  },
+  {
+    id: 'time-perception',
+    icon: 'lucide:timer',
+    category: 'fun',
+    key: 'timePerception',
+    Component: TimePerception,
+  },
+  {
+    id: 'stroop-test',
+    icon: 'lucide:palette',
+    category: 'fun',
+    key: 'stroopTest',
+    Component: StroopTest,
+  },
+  {
+    id: 'color-hue-test',
+    icon: 'lucide:swatch-book',
+    category: 'fun',
+    key: 'colorHueTest',
+    Component: ColorHueTest,
+  },
+  {
+    id: 'odd-one-out',
+    icon: 'lucide:scan-search',
+    category: 'fun',
+    key: 'oddOneOut',
+    Component: OddOneOut,
+  },
+  {
+    id: 'rhythm-test',
+    icon: 'lucide:music-2',
+    category: 'fun',
+    key: 'rhythmTest',
+    Component: RhythmTest,
+  },
+  {
+    id: 'sequence-memory',
+    icon: 'lucide:panels-top-left',
+    category: 'fun',
+    key: 'sequenceMemory',
+    Component: SequenceMemory,
+  },
+  {
+    id: 'number-memory',
+    icon: 'lucide:binary',
+    category: 'fun',
+    key: 'numberMemory',
+    Component: NumberMemory,
+  },
+  {
+    id: 'visual-memory',
+    icon: 'lucide:brain',
+    category: 'fun',
+    key: 'visualMemory',
+    Component: VisualMemory,
+  },
+  {
+    id: 'verbal-memory',
+    icon: 'lucide:spell-check-2',
+    category: 'fun',
+    key: 'verbalMemory',
+    Component: VerbalMemory,
+  },
+  {
+    id: 'memory-match',
+    icon: 'lucide:copy-check',
+    category: 'fun',
+    key: 'memoryMatch',
+    Component: MemoryMatch,
+  },
+  {
+    id: 'arithmetic-sprint',
+    icon: 'lucide:sigma',
+    category: 'fun',
+    key: 'arithmeticSprint',
+    Component: ArithmeticSprint,
+  },
+  { id: 'go-no-go', icon: 'lucide:circle-stop', category: 'fun', key: 'goNoGo', Component: GoNoGo },
+  {
+    id: 'typing-speed',
+    icon: 'lucide:type',
+    category: 'fun',
+    key: 'typingSpeed',
+    Component: TypingSpeed,
+  },
 ];
 
 export const CATEGORY_ORDER: ToolCategory[] = [
@@ -950,4 +1108,5 @@ export const CATEGORY_ORDER: ToolCategory[] = [
   'development',
   'math',
   'generator',
+  'fun',
 ];

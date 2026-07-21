@@ -24,6 +24,7 @@ export const en = {
   'category.development': 'Development',
   'category.math': 'Math',
   'category.generator': 'Generator',
+  'category.fun': 'Fun & Tests',
 
   'tools.jsonFormat.name': 'JSON Formatter',
   'tools.jsonFormat.description': 'Prettify or minify JSON, with error reporting.',
@@ -1009,6 +1010,277 @@ export const en = {
   'tools.aspectRatio.targetWidth': 'Target width',
   'tools.aspectRatio.ratio': 'Aspect ratio',
   'tools.aspectRatio.scaledHeight': 'Scaled height',
+
+  'tools.cpsTest.name': 'CPS Test',
+  'tools.cpsTest.description': 'Measure how many mouse clicks you can make per second.',
+  'tools.cpsTest.duration': 'Test duration',
+  'tools.cpsTest.result': 'Clicks per second',
+  'tools.cpsTest.resultDetail': '{clicks} valid clicks recorded in this run.',
+  'tools.cpsTest.again': 'Try again',
+  'tools.cpsTest.startPrompt': 'Click here to start',
+  'tools.cpsTest.clickPrompt': 'Keep clicking',
+
+  'tools.spacebarTest.name': 'Spacebar Speed Test',
+  'tools.spacebarTest.description': 'Test how quickly you can repeatedly press the spacebar.',
+  'tools.spacebarTest.duration': 'Test duration',
+  'tools.spacebarTest.result': 'Presses per second',
+  'tools.spacebarTest.resultDetail': '{presses} spacebar presses recorded in this run.',
+  'tools.spacebarTest.again': 'Try again',
+  'tools.spacebarTest.space': 'SPACE',
+  'tools.spacebarTest.instructions':
+    'Focus the test area, then press the spacebar as quickly as you can.',
+
+  'tools.reactionTime.name': 'Reaction Time Test',
+  'tools.reactionTime.description': 'Measure how quickly you respond to a changing visual signal.',
+  'tools.reactionTime.startPrompt': 'Start test',
+  'tools.reactionTime.wait': 'Wait for green…',
+  'tools.reactionTime.now': 'Tap now!',
+  'tools.reactionTime.tooSoon': 'Too soon',
+  'tools.reactionTime.again': 'Tap to try again',
+  'tools.reactionTime.tapHint': 'Tap or click anywhere in this panel.',
+  'tools.reactionTime.instructions':
+    'Start the test, wait for the panel to turn green, then respond as quickly as possible.',
+
+  'tools.aimTrainer.name': 'Aim Trainer',
+  'tools.aimTrainer.description':
+    'Hit 20 moving targets and measure your average acquisition time.',
+  'tools.aimTrainer.hits': 'Targets hit',
+  'tools.aimTrainer.pace': 'Average pace',
+  'tools.aimTrainer.result': 'Average target time',
+  'tools.aimTrainer.resultDetail':
+    'Lower is better. Accuracy and controlled movement matter more than frantic clicking.',
+  'tools.aimTrainer.again': 'Run again',
+  'tools.aimTrainer.instructions':
+    'Click each target as it appears. The clock starts with the first target.',
+  'tools.aimTrainer.start': 'Start training',
+  'tools.aimTrainer.target': 'Target',
+
+  'tools.mouseAccuracy.name': 'Mouse Accuracy Test',
+  'tools.mouseAccuracy.description': 'Click as close to the center of each crosshair as possible.',
+  'tools.mouseAccuracy.round': 'Target',
+  'tools.mouseAccuracy.averageError': 'Average error',
+  'tools.mouseAccuracy.result': 'Average center error',
+  'tools.mouseAccuracy.resultDetail':
+    'The score is the average pointer distance from the exact target center.',
+  'tools.mouseAccuracy.again': 'Run again',
+  'tools.mouseAccuracy.playArea': 'Mouse accuracy play area',
+  'tools.mouseAccuracy.instructions':
+    'Twelve crosshairs will appear. Aim for the exact center of each one.',
+  'tools.mouseAccuracy.start': 'Start test',
+
+  'tools.scrollSpeed.name': 'Scroll Speed Test',
+  'tools.scrollSpeed.description':
+    'Measure the wheel or trackpad distance you can scroll in five seconds.',
+  'tools.scrollSpeed.distance': 'Distance',
+  'tools.scrollSpeed.time': 'Time left',
+  'tools.scrollSpeed.result': 'Average scroll speed',
+  'tools.scrollSpeed.resultDetail': '{distance} pixels of wheel movement were recorded.',
+  'tools.scrollSpeed.again': 'Try again',
+  'tools.scrollSpeed.playArea': 'Scroll speed play area',
+  'tools.scrollSpeed.ready': 'Ready to scroll?',
+  'tools.scrollSpeed.scrollNow': 'Scroll now',
+  'tools.scrollSpeed.instructions':
+    'Keep the pointer over this panel and move your wheel or trackpad vertically.',
+  'tools.scrollSpeed.start': 'Start test',
+
+  'tools.schulteTable.name': 'Schulte Table',
+  'tools.schulteTable.description':
+    'Find the numbers from 1 to 25 in order as quickly as possible.',
+  'tools.schulteTable.next': 'Find next',
+  'tools.schulteTable.time': 'Elapsed time',
+  'tools.schulteTable.result': 'Completion time',
+  'tools.schulteTable.resultDetail':
+    'Try to keep your gaze near the center and use peripheral vision to scan the grid.',
+  'tools.schulteTable.again': 'New table',
+  'tools.schulteTable.instructions':
+    'Select every number in ascending order. Timing begins when you select 1.',
+
+  'tools.timePerception.name': 'Time Perception Test',
+  'tools.timePerception.description': 'Estimate a hidden time interval without watching a clock.',
+  'tools.timePerception.target': 'Target interval',
+  'tools.timePerception.result': 'Absolute error',
+  'tools.timePerception.resultDetail': 'You stopped at {elapsed} seconds.',
+  'tools.timePerception.again': 'Try again',
+  'tools.timePerception.start': 'Start hidden timer',
+  'tools.timePerception.stop': 'Stop now',
+  'tools.timePerception.instructions':
+    'Start the timer, estimate the target interval in your head, then stop it.',
+  'tools.timePerception.runningHint': 'The timer is running, but its value is hidden.',
+
+  'tools.stroopTest.name': 'Stroop Effect Test',
+  'tools.stroopTest.description':
+    'Identify the ink color while ignoring the conflicting color word.',
+  'tools.stroopTest.progress': 'Progress',
+  'tools.stroopTest.correct': 'Correct',
+  'tools.stroopTest.result': 'Correct answers',
+  'tools.stroopTest.resultDetail': 'You completed the 20 trials in {time} seconds.',
+  'tools.stroopTest.again': 'Run again',
+  'tools.stroopTest.instructions': 'Choose the ink color, not the meaning of the displayed word.',
+  'tools.stroopTest.start': 'Start test',
+  'tools.stroopTest.chooseInk': 'Choose the ink color',
+  'tools.stroopTest.color.red': 'Red',
+  'tools.stroopTest.color.blue': 'Blue',
+  'tools.stroopTest.color.green': 'Green',
+  'tools.stroopTest.color.amber': 'Amber',
+
+  'tools.colorHueTest.name': 'Color Hue Test',
+  'tools.colorHueTest.description':
+    'Find the tile with a subtly different hue across eight rounds.',
+  'tools.colorHueTest.progress': 'Progress',
+  'tools.colorHueTest.correct': 'Correct',
+  'tools.colorHueTest.result': 'Correct answers',
+  'tools.colorHueTest.resultDetail': 'The hue difference becomes smaller after each round.',
+  'tools.colorHueTest.again': 'Run again',
+  'tools.colorHueTest.instructions':
+    'One tile has a slightly different hue. Differences become progressively harder to see.',
+  'tools.colorHueTest.start': 'Start test',
+  'tools.colorHueTest.pickDifferent': 'Pick the differently colored tile.',
+  'tools.colorHueTest.tile': 'Color tile',
+
+  'tools.oddOneOut.name': 'Odd One Out',
+  'tools.oddOneOut.description': 'Spot the one symbol that differs from the rest.',
+  'tools.oddOneOut.progress': 'Progress',
+  'tools.oddOneOut.correct': 'Correct',
+  'tools.oddOneOut.result': 'Correct answers',
+  'tools.oddOneOut.resultDetail':
+    'Careful visual comparison is more reliable than scanning at random.',
+  'tools.oddOneOut.again': 'Run again',
+  'tools.oddOneOut.instructions':
+    'Each grid contains one different character or symbol. Find it across ten rounds.',
+  'tools.oddOneOut.start': 'Start test',
+  'tools.oddOneOut.pickDifferent': 'Find the odd symbol.',
+
+  'tools.rhythmTest.name': 'Rhythm Accuracy Test',
+  'tools.rhythmTest.description': 'Copy a steady visual beat and measure your timing consistency.',
+  'tools.rhythmTest.result': 'Average timing error',
+  'tools.rhythmTest.resultDetail':
+    'This is your average deviation from the demonstrated 600 ms beat.',
+  'tools.rhythmTest.again': 'Try again',
+  'tools.rhythmTest.instructions':
+    'Watch four example beats, then reproduce the same tempo with nine taps.',
+  'tools.rhythmTest.start': 'Start test',
+  'tools.rhythmTest.watch': 'Watch the beat',
+  'tools.rhythmTest.tap': 'Keep the rhythm',
+
+  'tools.sequenceMemory.name': 'Sequence Memory',
+  'tools.sequenceMemory.description':
+    'Remember and repeat an increasingly long sequence of grid cells.',
+  'tools.sequenceMemory.level': 'Level',
+  'tools.sequenceMemory.length': 'Sequence length',
+  'tools.sequenceMemory.result': 'Level reached',
+  'tools.sequenceMemory.resultDetail': 'Each completed level adds one more step to the sequence.',
+  'tools.sequenceMemory.again': 'Start over',
+  'tools.sequenceMemory.instructions':
+    'Watch the cells light up, then select them in exactly the same order.',
+  'tools.sequenceMemory.start': 'Start test',
+  'tools.sequenceMemory.watch': 'Watch the sequence',
+  'tools.sequenceMemory.repeat': 'Repeat it',
+  'tools.sequenceMemory.cell': 'Cell',
+
+  'tools.numberMemory.name': 'Number Memory',
+  'tools.numberMemory.description':
+    'Memorize digit strings that grow by one digit after every success.',
+  'tools.numberMemory.digits': 'Digits',
+  'tools.numberMemory.result': 'Longest completed length',
+  'tools.numberMemory.resultDetail': 'The missed number was {number}.',
+  'tools.numberMemory.again': 'Start over',
+  'tools.numberMemory.instructions':
+    'A number will appear briefly. Enter it exactly after it disappears.',
+  'tools.numberMemory.start': 'Start test',
+  'tools.numberMemory.remember': 'Remember this number',
+  'tools.numberMemory.enterNumber': 'Enter the number you saw',
+  'tools.numberMemory.submit': 'Submit',
+
+  'tools.visualMemory.name': 'Visual Memory',
+  'tools.visualMemory.description': 'Remember which cells were highlighted in a five-by-five grid.',
+  'tools.visualMemory.level': 'Level',
+  'tools.visualMemory.cells': 'Cells to remember',
+  'tools.visualMemory.result': 'Levels completed',
+  'tools.visualMemory.resultDetail':
+    'The number of highlighted cells increases after every successful round.',
+  'tools.visualMemory.again': 'Start over',
+  'tools.visualMemory.instructions':
+    'Memorize the highlighted cells, then select all of them after they disappear.',
+  'tools.visualMemory.start': 'Start test',
+  'tools.visualMemory.remember': 'Remember these cells',
+  'tools.visualMemory.select': 'Select the cells',
+  'tools.visualMemory.cell': 'Cell',
+
+  'tools.verbalMemory.name': 'Verbal Memory',
+  'tools.verbalMemory.description':
+    'Decide whether each word has appeared earlier in the current run.',
+  'tools.verbalMemory.progress': 'Progress',
+  'tools.verbalMemory.correct': 'Correct',
+  'tools.verbalMemory.result': 'Correct answers',
+  'tools.verbalMemory.resultDetail':
+    'The test mixed new words with deliberate repeats over 30 trials.',
+  'tools.verbalMemory.again': 'Run again',
+  'tools.verbalMemory.instructions':
+    'For each word, choose Seen if it appeared earlier, otherwise choose New.',
+  'tools.verbalMemory.start': 'Start test',
+  'tools.verbalMemory.haveSeen': 'Have you seen this word?',
+  'tools.verbalMemory.seen': 'Seen',
+  'tools.verbalMemory.new': 'New',
+
+  'tools.memoryMatch.name': 'Memory Matching',
+  'tools.memoryMatch.description':
+    'Flip cards and match all eight pairs in as few moves as possible.',
+  'tools.memoryMatch.moves': 'Moves',
+  'tools.memoryMatch.pairs': 'Pairs found',
+  'tools.memoryMatch.result': 'Moves used',
+  'tools.memoryMatch.resultDetail': 'You matched every pair in {time} seconds.',
+  'tools.memoryMatch.again': 'New board',
+  'tools.memoryMatch.instructions':
+    'Open two cards at a time and remember where each letter is hidden.',
+  'tools.memoryMatch.card': 'Hidden card',
+
+  'tools.arithmeticSprint.name': 'Arithmetic Sprint',
+  'tools.arithmeticSprint.description':
+    'Solve 15 quick addition, subtraction, and multiplication problems.',
+  'tools.arithmeticSprint.progress': 'Progress',
+  'tools.arithmeticSprint.correct': 'Correct',
+  'tools.arithmeticSprint.result': 'Correct answers',
+  'tools.arithmeticSprint.resultDetail': 'You completed all 15 problems in {time} seconds.',
+  'tools.arithmeticSprint.again': 'Run again',
+  'tools.arithmeticSprint.instructions':
+    'Answer 15 mixed arithmetic problems as quickly and accurately as possible.',
+  'tools.arithmeticSprint.start': 'Start sprint',
+  'tools.arithmeticSprint.answer': 'Your answer',
+  'tools.arithmeticSprint.submit': 'Submit',
+
+  'tools.goNoGo.name': 'Go / No-Go Test',
+  'tools.goNoGo.description':
+    'Respond to green signals while withholding responses to red signals.',
+  'tools.goNoGo.progress': 'Progress',
+  'tools.goNoGo.hits': 'Hits',
+  'tools.goNoGo.falseAlarms': 'False alarms',
+  'tools.goNoGo.result': 'Control score',
+  'tools.goNoGo.resultDetail':
+    '{misses} missed green signals and {falseAlarms} responses to red signals.',
+  'tools.goNoGo.again': 'Run again',
+  'tools.goNoGo.instructions': 'Tap or press Space for green. Do nothing when the signal is red.',
+  'tools.goNoGo.go': 'Green: respond',
+  'tools.goNoGo.stop': 'Red: hold',
+  'tools.goNoGo.start': 'Start test',
+  'tools.goNoGo.tap': 'Respond now',
+  'tools.goNoGo.hold': 'Do not respond',
+  'tools.goNoGo.wait': 'Get ready',
+
+  'tools.typingSpeed.name': 'Typing Speed Test',
+  'tools.typingSpeed.description':
+    'Measure typing speed and character-level accuracy with a short passage.',
+  'tools.typingSpeed.cpm': 'CPM',
+  'tools.typingSpeed.wpm': 'WPM',
+  'tools.typingSpeed.accuracy': 'Accuracy',
+  'tools.typingSpeed.time': 'Elapsed time',
+  'tools.typingSpeed.result': 'Typing speed',
+  'tools.typingSpeed.resultDetail': 'Your character accuracy was {accuracy}%.',
+  'tools.typingSpeed.again': 'New passage',
+  'tools.typingSpeed.prompt': 'Text to type',
+  'tools.typingSpeed.placeholder': 'Start typing here…',
+  'tools.typingSpeed.input': 'Typing input',
+  'tools.typingSpeed.instructions':
+    'Timing starts with your first character and ends when the passage length is reached.',
 } as const;
 
 export type MessageKey = keyof typeof en;
