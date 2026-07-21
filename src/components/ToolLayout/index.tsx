@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { Icon } from '@iconify/react';
+import clsx from 'clsx';
 import styles from './styles.module.css';
 
 type ToolLayoutProps = {
@@ -8,11 +9,18 @@ type ToolLayoutProps = {
   description?: string;
   backLabel: string;
   children: ReactNode;
+  wide?: boolean;
 };
 
-export default function ToolLayout({ title, description, backLabel, children }: ToolLayoutProps) {
+export default function ToolLayout({
+  title,
+  description,
+  backLabel,
+  children,
+  wide = false,
+}: ToolLayoutProps) {
   return (
-    <div className={styles.layout}>
+    <div className={clsx(styles.layout, wide && styles.wide)}>
       <Link to="/" className={styles.back}>
         <Icon icon="lucide:arrow-left" />
         <span>{backLabel}</span>

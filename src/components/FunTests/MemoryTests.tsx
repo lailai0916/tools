@@ -4,23 +4,29 @@ import { useI18n } from '@/i18n';
 import {
   GamePanel,
   Instructions,
-  Result,
-  Stat,
-  Stats,
+  MetricCard,
+  ReportShell,
+  Segmented,
+  SessionBar,
+  TelemetryGrid,
   TestShell,
   funStyles,
   randomInt,
   shuffle,
   useGameText,
+  useLabText,
+  useLocalBest,
 } from './shared';
 
 export function SequenceMemoryTest() {
   const text = useGameText('sequenceMemory');
+  const lab = useLabText();
   const [status, setStatus] = useState<'idle' | 'show' | 'input' | 'done'>('idle');
   const [sequence, setSequence] = useState<number[]>([]);
   const [active, setActive] = useState<number | null>(null);
   const [inputIndex, setInputIndex] = useState(0);
   const [level, setLevel] = useState(0);
+  const [failedCell, setFailedCell] = useState<number | null>(null);
 
   useEffect(() => {
     if (status !== 'show') return;
@@ -48,11 +54,15 @@ export function SequenceMemoryTest() {
     setStatus('show');
   };
 
-  const start = () => startLevel([randomInt(0, 8), randomInt(0, 8), randomInt(0, 8)], 1);
+  const start = () => {
+    setFailedCell(null);
+    startLevel([randomInt(0, 8), randomInt(0, 8), randomInt(0, 8)], 1);
+  };
 
   const choose = (cell: number) => {
     if (status !== 'input') return;
     if (sequence[inputIndex] !== cell) {
+      setFailedCell(cell);
       setStatus('done');
       return;
     }
@@ -64,20 +74,71 @@ export function SequenceMemoryTest() {
     }
   };
 
+  const completedLevel = Math.max(0, level - 1);
+  const { best, newBest } = useLocalBest(
+    'sequence-memory.level',
+    completedLevel,
+    status === 'done'
+  );
+  const grade =
+    completedLevel >= 10
+      ? 'S'
+      : completedLevel >= 7
+        ? 'A'
+        : completedLevel >= 5
+          ? 'B'
+          : completedLevel >= 3
+            ? 'C'
+            : 'D';
+
   return (
     <TestShell stem="sequenceMemory">
-      <Stats>
-        <Stat label={text('level')} value={level} />
-        <Stat label={text('length')} value={sequence.length || '—'} />
-      </Stats>
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'done'
+              ? lab('status.done')
+              : status === 'show'
+                ? text('watch')
+                : text('repeat')
+        }
+        progress={
+          status === 'input' ? inputIndex / Math.max(1, sequence.length) : status === 'done' ? 1 : 0
+        }
+        active={status === 'show' || status === 'input'}
+        complete={status === 'done'}
+        detail={`${text('level')} ${level || 1}`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={level}
-          detail={text('resultDetail')}
-          onReset={start}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={completedLevel.toString()}
+          unit={text('levelUnit')}
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail')}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={() => {
+            setFailedCell(null);
+            start();
+          }}
+        >
+          <TelemetryGrid>
+            <MetricCard label={text('length')} value={sequence.length} />
+            <MetricCard label={text('correctSteps')} value={inputIndex} />
+            <MetricCard label={text('expectedCell')} value={(sequence[inputIndex] ?? 0) + 1} />
+            <MetricCard label={lab('personalBest')} value={best || '—'} accent={newBest} />
+          </TelemetryGrid>
+          <div className={funStyles.answerReveal}>
+            {text('answerReveal')
+              .replace('{chosen}', String((failedCell ?? 0) + 1))
+              .replace('{expected}', String((sequence[inputIndex] ?? 0) + 1))}
+          </div>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
@@ -113,10 +174,12 @@ function makeDigits(length: number) {
 
 export function NumberMemoryTest() {
   const text = useGameText('numberMemory');
+  const lab = useLabText();
   const [status, setStatus] = useState<'idle' | 'show' | 'input' | 'done'>('idle');
   const [level, setLevel] = useState(3);
   const [digits, setDigits] = useState('');
   const [answer, setAnswer] = useState('');
+  const [lastAnswer, setLastAnswer] = useState('');
 
   useEffect(() => {
     if (status !== 'show') return;
@@ -133,23 +196,56 @@ export function NumberMemoryTest() {
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
+    setLastAnswer(answer);
     if (answer === digits) showLevel(level + 1);
     else setStatus('done');
   };
 
+  const score = Math.max(0, level - 1);
+  const { best, newBest } = useLocalBest('number-memory.digits', score, status === 'done');
+  const grade = score >= 12 ? 'S' : score >= 9 ? 'A' : score >= 7 ? 'B' : score >= 5 ? 'C' : 'D';
+
   return (
     <TestShell stem="numberMemory">
-      <Stats>
-        <Stat label={text('digits')} value={level} />
-      </Stats>
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'done'
+              ? lab('status.done')
+              : status === 'show'
+                ? text('remember')
+                : text('enterNumber')
+        }
+        progress={status === 'show' ? 0.5 : status === 'input' ? 0.8 : status === 'done' ? 1 : 0}
+        active={status === 'show' || status === 'input'}
+        complete={status === 'done'}
+        detail={`${level} ${text('digitsUnit')}`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={level - 1}
-          detail={text('resultDetail').replace('{number}', digits)}
-          onReset={() => showLevel(3)}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={score.toString()}
+          unit={text('digitsUnit')}
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail').replace('{number}', digits)}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={() => showLevel(3)}
+        >
+          <TelemetryGrid>
+            <MetricCard label={text('targetNumber')} value={digits} />
+            <MetricCard label={text('yourAnswer')} value={lastAnswer || '—'} />
+            <MetricCard
+              label={text('displayTime')}
+              value={`${Math.min(4200, 1000 + level * 220) / 1000}s`}
+            />
+            <MetricCard label={lab('personalBest')} value={best || '—'} accent={newBest} />
+          </TelemetryGrid>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
@@ -191,10 +287,12 @@ function visualCells(count: number) {
 
 export function VisualMemoryTest() {
   const text = useGameText('visualMemory');
+  const lab = useLabText();
   const [status, setStatus] = useState<'idle' | 'show' | 'input' | 'done'>('idle');
   const [level, setLevel] = useState(3);
   const [targets, setTargets] = useState<number[]>([]);
   const [selected, setSelected] = useState<number[]>([]);
+  const [failedCell, setFailedCell] = useState<number | null>(null);
 
   useEffect(() => {
     if (status !== 'show') return;
@@ -206,12 +304,14 @@ export function VisualMemoryTest() {
     setLevel(nextLevel);
     setTargets(visualCells(Math.min(nextLevel, 12)));
     setSelected([]);
+    setFailedCell(null);
     setStatus('show');
   };
 
   const choose = (cell: number) => {
     if (status !== 'input' || selected.includes(cell)) return;
     if (!targets.includes(cell)) {
+      setFailedCell(cell);
       setStatus('done');
       return;
     }
@@ -222,20 +322,54 @@ export function VisualMemoryTest() {
     }
   };
 
+  const score = Math.max(0, level - 3);
+  const { best, newBest } = useLocalBest('visual-memory.level', score, status === 'done');
+  const grade = score >= 9 ? 'S' : score >= 7 ? 'A' : score >= 5 ? 'B' : score >= 3 ? 'C' : 'D';
+
   return (
     <TestShell stem="visualMemory">
-      <Stats>
-        <Stat label={text('level')} value={level - 2} />
-        <Stat label={text('cells')} value={Math.min(level, 12)} />
-      </Stats>
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'done'
+              ? lab('status.done')
+              : status === 'show'
+                ? text('remember')
+                : text('select')
+        }
+        progress={
+          status === 'input'
+            ? selected.length / Math.max(1, targets.length)
+            : status === 'done'
+              ? 1
+              : 0
+        }
+        active={status === 'show' || status === 'input'}
+        complete={status === 'done'}
+        detail={`${text('level')} ${level - 2}`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={level - 3}
-          detail={text('resultDetail')}
-          onReset={() => showLevel(3)}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={score.toString()}
+          unit={text('levelUnit')}
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail')}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={() => showLevel(3)}
+        >
+          <TelemetryGrid>
+            <MetricCard label={text('cells')} value={targets.length} />
+            <MetricCard label={text('correctCells')} value={selected.length} />
+            <MetricCard label={text('failedCell')} value={(failedCell ?? 0) + 1} />
+            <MetricCard label={lab('personalBest')} value={best || '—'} accent={newBest} />
+          </TelemetryGrid>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
@@ -334,6 +468,7 @@ const ZH_WORDS = [
 
 export function VerbalMemoryTest() {
   const text = useGameText('verbalMemory');
+  const lab = useLabText();
   const { locale } = useI18n();
   const words = useMemo(() => (locale === 'zh-Hans' ? ZH_WORDS : EN_WORDS), [locale]);
   const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle');
@@ -341,6 +476,8 @@ export function VerbalMemoryTest() {
   const [word, setWord] = useState('');
   const [round, setRound] = useState(0);
   const [correct, setCorrect] = useState(0);
+  const [responseTimes, setResponseTimes] = useState<number[]>([]);
+  const wordAt = useRef(0);
 
   const nextWord = (seenWords: string[], nextRound: number) => {
     const unseen = words.filter((candidate) => !seenWords.includes(candidate));
@@ -357,10 +494,14 @@ export function VerbalMemoryTest() {
     setWord(first);
     setRound(0);
     setCorrect(0);
+    setResponseTimes([]);
+    wordAt.current = performance.now();
     setStatus('running');
   };
 
   const answer = (claimedSeen: boolean) => {
+    const now = performance.now();
+    setResponseTimes((values) => [...values, now - wordAt.current]);
     const wasSeen = seen.includes(word);
     const nextCorrect = correct + (claimedSeen === wasSeen ? 1 : 0);
     const nextSeen = wasSeen ? seen : [...seen, word];
@@ -372,26 +513,62 @@ export function VerbalMemoryTest() {
       const nextRound = round + 1;
       setRound(nextRound);
       setWord(nextWord(nextSeen, nextRound));
+      wordAt.current = now;
     }
   };
 
+  const accuracy = (correct / 30) * 100;
+  const averageResponse = responseTimes.length
+    ? responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length
+    : 0;
+  const { best, newBest } = useLocalBest(
+    'verbal-memory.score',
+    correct * 1000 - averageResponse,
+    status === 'done'
+  );
+  const grade =
+    correct >= 29 ? 'S' : correct >= 26 ? 'A' : correct >= 22 ? 'B' : correct >= 17 ? 'C' : 'D';
+
   return (
     <TestShell stem="verbalMemory">
-      <Stats>
-        <Stat
-          label={text('progress')}
-          value={`${Math.min(round + (status === 'running' ? 1 : 0), 30)} / 30`}
-        />
-        <Stat label={text('correct')} value={correct} />
-      </Stats>
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'running'
+              ? lab('status.running')
+              : lab('status.done')
+        }
+        progress={(status === 'done' ? 30 : round) / 30}
+        active={status === 'running'}
+        complete={status === 'done'}
+        detail={`${Math.min(round + (status === 'running' ? 1 : 0), 30)} / 30`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={`${correct} / 30`}
-          detail={text('resultDetail')}
-          onReset={start}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={accuracy.toFixed(0)}
+          unit="%"
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail')}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={start}
+        >
+          <TelemetryGrid>
+            <MetricCard label={text('correct')} value={`${correct} / 30`} />
+            <MetricCard label={lab('mistakes')} value={30 - correct} />
+            <MetricCard label={lab('average')} value={`${Math.round(averageResponse)} ms`} />
+            <MetricCard
+              label={lab('personalBest')}
+              value={best ? Math.round(best) : '—'}
+              accent={newBest}
+            />
+          </TelemetryGrid>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
@@ -417,11 +594,15 @@ export function VerbalMemoryTest() {
   );
 }
 
-const MATCH_VALUES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const MATCH_VALUES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
 export function MemoryMatchTest() {
   const text = useGameText('memoryMatch');
-  const [cards, setCards] = useState(() => shuffle([...MATCH_VALUES, ...MATCH_VALUES]));
+  const lab = useLabText();
+  const [pairCount, setPairCount] = useState(8);
+  const [cards, setCards] = useState(() =>
+    shuffle([...MATCH_VALUES.slice(0, 8), ...MATCH_VALUES.slice(0, 8)])
+  );
   const [open, setOpen] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
@@ -449,8 +630,9 @@ export function MemoryMatchTest() {
     return () => window.clearTimeout(timer);
   }, [cards, matched, open]);
 
-  const reset = () => {
-    setCards(shuffle([...MATCH_VALUES, ...MATCH_VALUES]));
+  const reset = (nextPairCount = pairCount) => {
+    const values = MATCH_VALUES.slice(0, nextPairCount);
+    setCards(shuffle([...values, ...values]));
     setOpen([]);
     setMatched([]);
     setMoves(0);
@@ -458,6 +640,19 @@ export function MemoryMatchTest() {
     setDone(false);
     startedAt.current = 0;
   };
+
+  const { best, newBest } = useLocalBest(`memory-match.${pairCount}`, moves, done, 'lower');
+  const efficiency = moves ? (pairCount / moves) * 100 : 100;
+  const grade =
+    moves <= pairCount + 2
+      ? 'S'
+      : moves <= pairCount * 1.5
+        ? 'A'
+        : moves <= pairCount * 2
+          ? 'B'
+          : moves <= pairCount * 3
+            ? 'C'
+            : 'D';
 
   const flip = (index: number) => {
     if (open.length >= 2 || open.includes(index) || matched.includes(index) || done) return;
@@ -468,18 +663,50 @@ export function MemoryMatchTest() {
 
   return (
     <TestShell stem="memoryMatch">
-      <Stats>
-        <Stat label={text('moves')} value={moves} />
-        <Stat label={text('pairs')} value={`${matched.length / 2} / 8`} />
-      </Stats>
+      <Segmented
+        value={pairCount}
+        options={[6, 8, 10]}
+        onChange={(value) => {
+          setPairCount(value);
+          reset(value);
+        }}
+        label={text('pairs')}
+        disabled={startedAt.current > 0 && !done}
+      />
+      <SessionBar
+        status={
+          done
+            ? lab('status.done')
+            : startedAt.current
+              ? lab('status.running')
+              : lab('status.ready')
+        }
+        progress={matched.length / cards.length}
+        active={startedAt.current > 0 && !done}
+        complete={done}
+        detail={`${matched.length / 2} / ${pairCount}`}
+      />
       {done ? (
-        <Result
-          title={text('result')}
-          value={`${moves}`}
-          detail={text('resultDetail').replace('{time}', (elapsed / 1000).toFixed(1))}
-          onReset={reset}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={moves.toString()}
+          unit={text('movesUnit')}
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail').replace('{time}', (elapsed / 1000).toFixed(1))}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={() => reset()}
+        >
+          <TelemetryGrid>
+            <MetricCard label={text('pairs')} value={pairCount} />
+            <MetricCard label={lab('time')} value={`${(elapsed / 1000).toFixed(1)} s`} />
+            <MetricCard label={text('efficiency')} value={`${efficiency.toFixed(0)}%`} />
+            <MetricCard label={lab('personalBest')} value={best || '—'} accent={newBest} />
+          </TelemetryGrid>
+        </ReportShell>
       ) : (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>

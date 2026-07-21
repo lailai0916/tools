@@ -26,6 +26,24 @@ export const en = {
   'category.generator': 'Generator',
   'category.fun': 'Fun & Tests',
 
+  'fun.report': 'Performance report',
+  'fun.rating': 'Rating',
+  'fun.personalBest': 'Personal best',
+  'fun.newBest': 'New personal best',
+  'fun.replayHint': 'Quick replay',
+  'fun.status.ready': 'Ready',
+  'fun.status.running': 'Session in progress',
+  'fun.status.done': 'Session complete',
+  'fun.total': 'Total',
+  'fun.average': 'Average',
+  'fun.bestRound': 'Best round',
+  'fun.accuracy': 'Accuracy',
+  'fun.mistakes': 'Mistakes',
+  'fun.time': 'Time',
+  'fun.rounds': 'Rounds',
+  'fun.consistency': 'Consistency',
+  'fun.insight': 'Review the detailed metrics, then repeat the test to track improvement.',
+
   'tools.jsonFormat.name': 'JSON Formatter',
   'tools.jsonFormat.description': 'Prettify or minify JSON, with error reporting.',
   'tools.jsonFormat.placeholder': 'Paste JSON here…',
@@ -1019,6 +1037,29 @@ export const en = {
   'tools.cpsTest.again': 'Try again',
   'tools.cpsTest.startPrompt': 'Click here to start',
   'tools.cpsTest.clickPrompt': 'Keep clicking',
+  'tools.cpsTest.status.ready': 'Ready for input',
+  'tools.cpsTest.status.live': 'Session in progress',
+  'tools.cpsTest.status.complete': 'Session complete',
+  'tools.cpsTest.reportTitle': 'Performance report',
+  'tools.cpsTest.rating': 'Rating',
+  'tools.cpsTest.newBest': 'New personal best',
+  'tools.cpsTest.replayHint': 'Quick replay',
+  'tools.cpsTest.totalClicks': 'Total clicks',
+  'tools.cpsTest.peakRate': 'Peak rate',
+  'tools.cpsTest.consistency': 'Consistency',
+  'tools.cpsTest.personalBest': 'Personal best',
+  'tools.cpsTest.timeline': 'Click speed curve',
+  'tools.cpsTest.sampling': '{interval} ms sampling · {duration} s',
+  'tools.cpsTest.readyLabel': 'Ready',
+  'tools.cpsTest.liveLabel': 'Live clicks',
+  'tools.cpsTest.liveRate': 'Current rate',
+  'tools.cpsTest.privacy': 'Measured locally in your browser',
+  'tools.cpsTest.insight.fast':
+    'Excellent burst speed. Your peak is competitive; focus on preserving the same cadence over longer sessions.',
+  'tools.cpsTest.insight.steady':
+    'Your cadence is notably consistent. A slightly faster first second could lift the overall score without sacrificing control.',
+  'tools.cpsTest.insight.practice':
+    'Your speed varies between seconds. Relax your hand and aim for an even rhythm before trying to click faster.',
 
   'tools.spacebarTest.name': 'Spacebar Speed Test',
   'tools.spacebarTest.description': 'Test how quickly you can repeatedly press the spacebar.',
@@ -1029,6 +1070,10 @@ export const en = {
   'tools.spacebarTest.space': 'SPACE',
   'tools.spacebarTest.instructions':
     'Focus the test area, then press the spacebar as quickly as you can.',
+  'tools.spacebarTest.peakRate': 'Peak rate',
+  'tools.spacebarTest.liveRate': 'Current rate',
+  'tools.spacebarTest.timeline': 'Press speed curve',
+  'tools.spacebarTest.sampling': '{interval} ms sampling · {duration} s',
 
   'tools.reactionTime.name': 'Reaction Time Test',
   'tools.reactionTime.description': 'Measure how quickly you respond to a changing visual signal.',
@@ -1040,6 +1085,11 @@ export const en = {
   'tools.reactionTime.tapHint': 'Tap or click anywhere in this panel.',
   'tools.reactionTime.instructions':
     'Start the test, wait for the panel to turn green, then respond as quickly as possible.',
+  'tools.reactionTime.resultDetail':
+    'Five valid rounds are averaged. False starts this run: {falseStarts}.',
+  'tools.reactionTime.median': 'Median',
+  'tools.reactionTime.roundResults': 'Reaction time for each round',
+  'tools.reactionTime.nextRound': 'Tap to begin the next round',
 
   'tools.aimTrainer.name': 'Aim Trainer',
   'tools.aimTrainer.description':
@@ -1067,6 +1117,8 @@ export const en = {
   'tools.mouseAccuracy.instructions':
     'Twelve crosshairs will appear. Aim for the exact center of each one.',
   'tools.mouseAccuracy.start': 'Start test',
+  'tools.mouseAccuracy.p90Error': '90th percentile error',
+  'tools.mouseAccuracy.responseTime': 'Average response time',
 
   'tools.scrollSpeed.name': 'Scroll Speed Test',
   'tools.scrollSpeed.description':
@@ -1082,6 +1134,12 @@ export const en = {
   'tools.scrollSpeed.instructions':
     'Keep the pointer over this panel and move your wheel or trackpad vertically.',
   'tools.scrollSpeed.start': 'Start test',
+  'tools.scrollSpeed.duration': 'Test duration',
+  'tools.scrollSpeed.peakRate': 'Peak speed',
+  'tools.scrollSpeed.liveRate': 'Current speed',
+  'tools.scrollSpeed.reversals': 'Direction changes',
+  'tools.scrollSpeed.timeline': 'Scroll speed curve',
+  'tools.scrollSpeed.sampling': '{interval} ms sampling · {duration} s',
 
   'tools.schulteTable.name': 'Schulte Table',
   'tools.schulteTable.description':
@@ -1094,6 +1152,8 @@ export const en = {
   'tools.schulteTable.again': 'New table',
   'tools.schulteTable.instructions':
     'Select every number in ascending order. Timing begins when you select 1.',
+  'tools.schulteTable.size': 'Table size',
+  'tools.schulteTable.averageStep': 'Average selection time',
 
   'tools.timePerception.name': 'Time Perception Test',
   'tools.timePerception.description': 'Estimate a hidden time interval without watching a clock.',
@@ -1106,6 +1166,9 @@ export const en = {
   'tools.timePerception.instructions':
     'Start the timer, estimate the target interval in your head, then stop it.',
   'tools.timePerception.runningHint': 'The timer is running, but its value is hidden.',
+  'tools.timePerception.bias': 'Average bias',
+  'tools.timePerception.roundResult': 'Round error',
+  'tools.timePerception.nextRound': 'Start next round',
 
   'tools.stroopTest.name': 'Stroop Effect Test',
   'tools.stroopTest.description':
@@ -1136,6 +1199,7 @@ export const en = {
   'tools.colorHueTest.start': 'Start test',
   'tools.colorHueTest.pickDifferent': 'Pick the differently colored tile.',
   'tools.colorHueTest.tile': 'Color tile',
+  'tools.colorHueTest.finestDifference': 'Finest hue difference',
 
   'tools.oddOneOut.name': 'Odd One Out',
   'tools.oddOneOut.description': 'Spot the one symbol that differs from the rest.',
@@ -1160,6 +1224,7 @@ export const en = {
     'Watch four example beats, then reproduce the same tempo with nine taps.',
   'tools.rhythmTest.start': 'Start test',
   'tools.rhythmTest.watch': 'Watch the beat',
+  'tools.rhythmTest.tempo': 'Measured tempo',
   'tools.rhythmTest.tap': 'Keep the rhythm',
 
   'tools.sequenceMemory.name': 'Sequence Memory',
@@ -1176,6 +1241,10 @@ export const en = {
   'tools.sequenceMemory.watch': 'Watch the sequence',
   'tools.sequenceMemory.repeat': 'Repeat it',
   'tools.sequenceMemory.cell': 'Cell',
+  'tools.sequenceMemory.levelUnit': 'levels',
+  'tools.sequenceMemory.correctSteps': 'Correct steps',
+  'tools.sequenceMemory.expectedCell': 'Expected cell',
+  'tools.sequenceMemory.answerReveal': 'You selected cell {chosen}; the next cell was {expected}.',
 
   'tools.numberMemory.name': 'Number Memory',
   'tools.numberMemory.description':
@@ -1190,6 +1259,10 @@ export const en = {
   'tools.numberMemory.remember': 'Remember this number',
   'tools.numberMemory.enterNumber': 'Enter the number you saw',
   'tools.numberMemory.submit': 'Submit',
+  'tools.numberMemory.digitsUnit': 'digits',
+  'tools.numberMemory.targetNumber': 'Target number',
+  'tools.numberMemory.yourAnswer': 'Your answer',
+  'tools.numberMemory.displayTime': 'Display time',
 
   'tools.visualMemory.name': 'Visual Memory',
   'tools.visualMemory.description': 'Remember which cells were highlighted in a five-by-five grid.',
@@ -1205,6 +1278,9 @@ export const en = {
   'tools.visualMemory.remember': 'Remember these cells',
   'tools.visualMemory.select': 'Select the cells',
   'tools.visualMemory.cell': 'Cell',
+  'tools.visualMemory.levelUnit': 'levels',
+  'tools.visualMemory.correctCells': 'Correct cells',
+  'tools.visualMemory.failedCell': 'Incorrect cell',
 
   'tools.verbalMemory.name': 'Verbal Memory',
   'tools.verbalMemory.description':
@@ -1233,20 +1309,28 @@ export const en = {
   'tools.memoryMatch.instructions':
     'Open two cards at a time and remember where each letter is hidden.',
   'tools.memoryMatch.card': 'Hidden card',
+  'tools.memoryMatch.movesUnit': 'moves',
+  'tools.memoryMatch.efficiency': 'Move efficiency',
 
   'tools.arithmeticSprint.name': 'Arithmetic Sprint',
   'tools.arithmeticSprint.description':
-    'Solve 15 quick addition, subtraction, and multiplication problems.',
+    'Train mental math speed with configurable mixed arithmetic sprints.',
   'tools.arithmeticSprint.progress': 'Progress',
   'tools.arithmeticSprint.correct': 'Correct',
   'tools.arithmeticSprint.result': 'Correct answers',
-  'tools.arithmeticSprint.resultDetail': 'You completed all 15 problems in {time} seconds.',
+  'tools.arithmeticSprint.resultDetail':
+    'You solved {correct} of {total} problems correctly in {time} seconds.',
   'tools.arithmeticSprint.again': 'Run again',
   'tools.arithmeticSprint.instructions':
-    'Answer 15 mixed arithmetic problems as quickly and accurately as possible.',
+    'Answer {count} mixed arithmetic problems as quickly and accurately as possible.',
   'tools.arithmeticSprint.start': 'Start sprint',
   'tools.arithmeticSprint.answer': 'Your answer',
   'tools.arithmeticSprint.submit': 'Submit',
+  'tools.arithmeticSprint.questions': 'Questions',
+  'tools.arithmeticSprint.paceUnit': 'correct/min',
+  'tools.arithmeticSprint.averageResponse': 'Average response',
+  'tools.arithmeticSprint.feedbackCorrect': 'Correct — keep the rhythm going.',
+  'tools.arithmeticSprint.feedbackWrong': 'The correct answer was {answer}.',
 
   'tools.goNoGo.name': 'Go / No-Go Test',
   'tools.goNoGo.description':
@@ -1265,6 +1349,10 @@ export const en = {
   'tools.goNoGo.tap': 'Respond now',
   'tools.goNoGo.hold': 'Do not respond',
   'tools.goNoGo.wait': 'Get ready',
+  'tools.goNoGo.trials': 'Trials',
+  'tools.goNoGo.correctStops': 'Correct inhibitions',
+  'tools.goNoGo.misses': 'Misses',
+  'tools.goNoGo.averageResponse': 'Average response',
 
   'tools.typingSpeed.name': 'Typing Speed Test',
   'tools.typingSpeed.description':
@@ -1281,6 +1369,8 @@ export const en = {
   'tools.typingSpeed.input': 'Typing input',
   'tools.typingSpeed.instructions':
     'Timing starts with your first character and ends when the passage length is reached.',
+  'tools.typingSpeed.rawSpeed': 'Raw character speed',
+  'tools.typingSpeed.corrections': 'Corrections',
 } as const;
 
 export type MessageKey = keyof typeof en;

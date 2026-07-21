@@ -3,6 +3,10 @@
   margin-inline: auto;
 }
 
+.wide {
+  max-width: 980px;
+}
+
 .back {
   display: inline-flex;
   align-items: center;

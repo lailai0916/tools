@@ -1,16 +1,20 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import clsx from 'clsx';
 import { useI18n } from '@/i18n';
 import {
   GamePanel,
   Instructions,
-  Result,
-  Stat,
-  Stats,
+  MetricCard,
+  ReportShell,
+  Segmented,
+  SessionBar,
+  TelemetryGrid,
   TestShell,
   funStyles,
   randomInt,
   useGameText,
+  useLabText,
+  useLocalBest,
 } from './shared';
 
 type Problem = { left: number; right: number; operator: '+' | '−' | '×'; answer: number };
@@ -34,58 +38,133 @@ function makeProblem(): Problem {
 
 export function ArithmeticSprintTest() {
   const text = useGameText('arithmeticSprint');
+  const lab = useLabText();
+  const [questionCount, setQuestionCount] = useState(15);
   const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle');
   const [problem, setProblem] = useState(makeProblem);
   const [answer, setAnswer] = useState('');
   const [round, setRound] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [elapsed, setElapsed] = useState(0);
+  const [responseTimes, setResponseTimes] = useState<number[]>([]);
+  const [lastResult, setLastResult] = useState<{ correct: boolean; answer: number } | null>(null);
   const startedAt = useRef(0);
+  const questionStartedAt = useRef(0);
 
   const start = () => {
+    const now = performance.now();
     setProblem(makeProblem());
     setAnswer('');
     setRound(0);
     setCorrect(0);
     setElapsed(0);
-    startedAt.current = performance.now();
+    setResponseTimes([]);
+    setLastResult(null);
+    startedAt.current = now;
+    questionStartedAt.current = now;
     setStatus('running');
   };
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    const nextCorrect = correct + (Number(answer) === problem.answer ? 1 : 0);
+    const now = performance.now();
+    const isCorrect = Number(answer) === problem.answer;
+    const nextCorrect = correct + (isCorrect ? 1 : 0);
     setCorrect(nextCorrect);
-    if (round + 1 >= 15) {
-      setElapsed(performance.now() - startedAt.current);
+    setResponseTimes((values) => [...values, now - questionStartedAt.current]);
+    setLastResult({ correct: isCorrect, answer: problem.answer });
+    if (round + 1 >= questionCount) {
+      setElapsed(now - startedAt.current);
       setStatus('done');
-    } else {
-      setRound((value) => value + 1);
-      setProblem(makeProblem());
-      setAnswer('');
+      return;
     }
+    setRound((value) => value + 1);
+    setProblem(makeProblem());
+    setAnswer('');
+    questionStartedAt.current = now;
   };
+
+  const accuracy = questionCount ? (correct / questionCount) * 100 : 0;
+  const averageResponse = responseTimes.length
+    ? responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length
+    : 0;
+  const scoredElapsed = Math.max(elapsed, questionCount * 200);
+  const pace = elapsed > 0 ? Math.round(correct / (scoredElapsed / 60000)) : 0;
+  const { best, newBest } = useLocalBest(
+    `arithmetic.${questionCount}.pace`,
+    pace,
+    status === 'done'
+  );
+  const grade =
+    accuracy >= 95 && pace >= 25
+      ? 'S'
+      : accuracy >= 90 && pace >= 18
+        ? 'A'
+        : accuracy >= 80
+          ? 'B'
+          : accuracy >= 65
+            ? 'C'
+            : 'D';
 
   return (
     <TestShell stem="arithmeticSprint">
-      <Stats>
-        <Stat
-          label={text('progress')}
-          value={`${Math.min(round + (status === 'running' ? 1 : 0), 15)} / 15`}
-        />
-        <Stat label={text('correct')} value={correct} />
-      </Stats>
+      <Segmented
+        value={questionCount}
+        options={[10, 15, 25]}
+        onChange={setQuestionCount}
+        label={text('questions')}
+        format={(value) => `${value}`}
+        disabled={status === 'running'}
+      />
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'running'
+              ? lab('status.running')
+              : lab('status.done')
+        }
+        progress={status === 'done' ? 1 : round / questionCount}
+        active={status === 'running'}
+        complete={status === 'done'}
+        detail={`${Math.min(round + (status === 'running' ? 1 : 0), questionCount)} / ${questionCount}`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={`${correct} / 15`}
-          detail={text('resultDetail').replace('{time}', (elapsed / 1000).toFixed(1))}
-          onReset={start}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={pace.toString()}
+          unit={text('paceUnit')}
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail')
+            .replace('{correct}', String(correct))
+            .replace('{total}', String(questionCount))
+            .replace('{time}', (elapsed / 1000).toFixed(1))}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={start}
+        >
+          <TelemetryGrid>
+            <MetricCard label={lab('accuracy')} value={`${accuracy.toFixed(0)}%`} />
+            <MetricCard
+              label={text('averageResponse')}
+              value={`${(averageResponse / 1000).toFixed(2)} s`}
+            />
+            <MetricCard label={lab('mistakes')} value={questionCount - correct} />
+            <MetricCard
+              label={lab('personalBest')}
+              value={best ? `${Math.round(best)} ${text('paceUnit')}` : '—'}
+              accent={newBest}
+            />
+          </TelemetryGrid>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
-          <Instructions>{text('instructions')}</Instructions>
+          <Instructions>
+            {text('instructions').replace('{count}', String(questionCount))}
+          </Instructions>
           <button type="button" className={funStyles.inlinePrimary} onClick={start}>
             {text('start')}
           </button>
@@ -102,13 +181,23 @@ export function ArithmeticSprintTest() {
               className={funStyles.textInput}
               inputMode="numeric"
               value={answer}
-              onChange={(event) => setAnswer(event.target.value.replace(/[^0-9-]/g, ''))}
+              onChange={(event) => {
+                setAnswer(event.target.value.replace(/[^0-9-]/g, ''));
+                if (lastResult) setLastResult(null);
+              }}
               autoFocus
             />
             <button type="submit" className={funStyles.inlinePrimary} disabled={answer === ''}>
               {text('submit')}
             </button>
           </form>
+          {lastResult && (
+            <div className={funStyles.answerReveal} aria-live="polite">
+              {lastResult.correct
+                ? text('feedbackCorrect')
+                : text('feedbackWrong').replace('{answer}', String(lastResult.answer))}
+            </div>
+          )}
         </GamePanel>
       )}
     </TestShell>
@@ -119,25 +208,32 @@ type Stimulus = 'go' | 'stop';
 
 export function GoNoGoTest() {
   const text = useGameText('goNoGo');
+  const lab = useLabText();
+  const [trialCount, setTrialCount] = useState(20);
   const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle');
   const [round, setRound] = useState(0);
   const [stimulus, setStimulus] = useState<Stimulus>('go');
   const [visible, setVisible] = useState(false);
   const [hits, setHits] = useState(0);
+  const [correctStops, setCorrectStops] = useState(0);
   const [misses, setMisses] = useState(0);
   const [falseAlarms, setFalseAlarms] = useState(0);
+  const [responseTimes, setResponseTimes] = useState<number[]>([]);
   const responded = useRef(false);
+  const stimulusAt = useRef(0);
 
   useEffect(() => {
     if (status !== 'running') return;
     responded.current = false;
+    stimulusAt.current = performance.now();
     setVisible(true);
     const displayTimer = window.setTimeout(() => {
       setVisible(false);
       if (stimulus === 'go' && !responded.current) setMisses((value) => value + 1);
+      if (stimulus === 'stop' && !responded.current) setCorrectStops((value) => value + 1);
     }, 650);
     const nextTimer = window.setTimeout(() => {
-      if (round >= 19) {
+      if (round + 1 >= trialCount) {
         setStatus('done');
       } else {
         setStimulus(Math.random() < 0.72 ? 'go' : 'stop');
@@ -148,53 +244,123 @@ export function GoNoGoTest() {
       window.clearTimeout(displayTimer);
       window.clearTimeout(nextTimer);
     };
-  }, [round, status, stimulus]);
+  }, [round, status, stimulus, trialCount]);
+
+  const respond = () => {
+    if (status !== 'running' || !visible || responded.current) return;
+    responded.current = true;
+    if (stimulus === 'go') {
+      setHits((value) => value + 1);
+      setResponseTimes((values) => [...values, performance.now() - stimulusAt.current]);
+    } else {
+      setFalseAlarms((value) => value + 1);
+    }
+  };
+
+  useEffect(() => {
+    if (status !== 'running') return;
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.code !== 'Space' || event.repeat) return;
+      event.preventDefault();
+      respond();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  });
 
   const start = () => {
     setRound(0);
     setHits(0);
+    setCorrectStops(0);
     setMisses(0);
     setFalseAlarms(0);
+    setResponseTimes([]);
     setStimulus('go');
     setVisible(false);
     setStatus('running');
   };
 
-  const respond = () => {
-    if (status !== 'running' || !visible || responded.current) return;
-    responded.current = true;
-    if (stimulus === 'go') setHits((value) => value + 1);
-    else setFalseAlarms((value) => value + 1);
-  };
+  const correctTrials = hits + correctStops;
+  const accuracy = trialCount ? (correctTrials / trialCount) * 100 : 0;
+  const averageResponse = responseTimes.length
+    ? responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length
+    : 0;
+  const { best, newBest } = useLocalBest(
+    `go-no-go.${trialCount}.accuracy`,
+    accuracy,
+    status === 'done'
+  );
+  const grade =
+    accuracy >= 97 && falseAlarms === 0
+      ? 'S'
+      : accuracy >= 92
+        ? 'A'
+        : accuracy >= 82
+          ? 'B'
+          : accuracy >= 70
+            ? 'C'
+            : 'D';
 
-  const keyRespond = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.code === 'Space') {
-      event.preventDefault();
-      respond();
-    }
-  };
-
-  const score = Math.max(0, hits - falseAlarms);
   return (
     <TestShell stem="goNoGo">
-      <Stats>
-        <Stat
-          label={text('progress')}
-          value={`${Math.min(round + (status === 'running' ? 1 : 0), 20)} / 20`}
-        />
-        <Stat label={text('hits')} value={hits} />
-        <Stat label={text('falseAlarms')} value={falseAlarms} />
-      </Stats>
+      <Segmented
+        value={trialCount}
+        options={[20, 40, 60]}
+        onChange={setTrialCount}
+        label={text('trials')}
+        disabled={status === 'running'}
+      />
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'running'
+              ? lab('status.running')
+              : lab('status.done')
+        }
+        progress={status === 'done' ? 1 : round / trialCount}
+        active={status === 'running'}
+        complete={status === 'done'}
+        detail={`${Math.min(round + (status === 'running' ? 1 : 0), trialCount)} / ${trialCount}`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={score}
-          detail={text('resultDetail')
+        <ReportShell
+          eyebrow={lab('report')}
+          score={accuracy.toFixed(0)}
+          unit="%"
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail')
             .replace('{misses}', String(misses))
             .replace('{falseAlarms}', String(falseAlarms))}
-          onReset={start}
-          resetLabel={text('again')}
-        />
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={start}
+        >
+          <TelemetryGrid>
+            <MetricCard label={text('hits')} value={hits} />
+            <MetricCard label={text('correctStops')} value={correctStops} />
+            <MetricCard
+              label={text('averageResponse')}
+              value={averageResponse ? `${Math.round(averageResponse)} ms` : '—'}
+            />
+            <MetricCard
+              label={lab('personalBest')}
+              value={best ? `${best.toFixed(0)}%` : '—'}
+              accent={newBest}
+            />
+          </TelemetryGrid>
+          <div className={funStyles.roundStrip}>
+            <span>
+              {text('misses')}: {misses}
+            </span>
+            <span>
+              {text('falseAlarms')}: {falseAlarms}
+            </span>
+          </div>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
@@ -211,12 +377,7 @@ export function GoNoGoTest() {
           </button>
         </GamePanel>
       ) : (
-        <button
-          type="button"
-          className={funStyles.goPad}
-          onPointerDown={respond}
-          onKeyDown={keyRespond}
-        >
+        <button type="button" className={funStyles.goPad} onPointerDown={respond}>
           <span
             className={clsx(
               funStyles.goOrb,
@@ -245,6 +406,7 @@ const ZH_PROMPTS = [
 
 export function TypingSpeedTest() {
   const text = useGameText('typingSpeed');
+  const lab = useLabText();
   const { locale } = useI18n();
   const prompts = locale === 'zh-Hans' ? ZH_PROMPTS : EN_PROMPTS;
   const [promptIndex, setPromptIndex] = useState(() => randomInt(0, prompts.length - 1));
@@ -252,6 +414,7 @@ export function TypingSpeedTest() {
   const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle');
   const [input, setInput] = useState('');
   const [elapsed, setElapsed] = useState(0);
+  const [corrections, setCorrections] = useState(0);
   const startedAt = useRef(0);
 
   useEffect(() => {
@@ -269,11 +432,13 @@ export function TypingSpeedTest() {
     setPromptIndex((value) => (value + 1) % prompts.length);
     setInput('');
     setElapsed(0);
+    setCorrections(0);
     setStatus('idle');
   };
 
   const update = (value: string) => {
     const limited = value.slice(0, prompt.length);
+    if (limited.length < input.length) setCorrections((count) => count + 1);
     if (status === 'idle' && limited.length > 0) {
       startedAt.current = performance.now();
       setStatus('running');
@@ -290,30 +455,66 @@ export function TypingSpeedTest() {
     [input, prompt]
   );
   const accuracy = input.length ? (correctCharacters / input.length) * 100 : 100;
-  const minutes = Math.max(elapsed / 60000, 1 / 60000);
-  const wpm =
+  const scoredElapsed = Math.max(elapsed, input.length * 25, 1);
+  const minutes = scoredElapsed / 60000;
+  const speed =
     locale === 'zh-Hans'
       ? Math.round(correctCharacters / minutes)
       : Math.round(correctCharacters / 5 / minutes);
+  const rawCpm = Math.round(input.length / minutes);
+  const unit = locale === 'zh-Hans' ? text('cpm') : text('wpm');
+  const { best, newBest } = useLocalBest(`typing.${locale}.speed`, speed, status === 'done');
+  const grade =
+    accuracy >= 98 && speed >= (locale === 'zh-Hans' ? 55 : 60)
+      ? 'S'
+      : accuracy >= 95 && speed >= (locale === 'zh-Hans' ? 40 : 45)
+        ? 'A'
+        : accuracy >= 90
+          ? 'B'
+          : accuracy >= 80
+            ? 'C'
+            : 'D';
 
   return (
     <TestShell stem="typingSpeed">
-      <Stats>
-        <Stat
-          label={locale === 'zh-Hans' ? text('cpm') : text('wpm')}
-          value={status === 'idle' ? '—' : wpm}
-        />
-        <Stat label={text('accuracy')} value={`${accuracy.toFixed(0)}%`} />
-        <Stat label={text('time')} value={`${(elapsed / 1000).toFixed(1)} s`} />
-      </Stats>
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'running'
+              ? lab('status.running')
+              : lab('status.done')
+        }
+        progress={input.length / prompt.length}
+        active={status === 'running'}
+        complete={status === 'done'}
+        detail={`${input.length} / ${prompt.length}`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={`${wpm} ${locale === 'zh-Hans' ? text('cpm') : text('wpm')}`}
-          detail={text('resultDetail').replace('{accuracy}', accuracy.toFixed(0))}
-          onReset={reset}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={speed.toString()}
+          unit={unit}
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail').replace('{accuracy}', accuracy.toFixed(0))}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={reset}
+        >
+          <TelemetryGrid>
+            <MetricCard label={lab('accuracy')} value={`${accuracy.toFixed(1)}%`} />
+            <MetricCard label={text('rawSpeed')} value={`${rawCpm} ${text('cpm')}`} />
+            <MetricCard label={text('corrections')} value={corrections} />
+            <MetricCard
+              label={lab('personalBest')}
+              value={best ? `${Math.round(best)} ${unit}` : '—'}
+              accent={newBest}
+            />
+          </TelemetryGrid>
+        </ReportShell>
       ) : (
         <GamePanel>
           <p className={funStyles.typingPrompt} aria-label={text('prompt')}>
@@ -339,6 +540,11 @@ export function TypingSpeedTest() {
             aria-label={text('input')}
             autoFocus
           />
+          <TelemetryGrid>
+            <MetricCard label={unit} value={status === 'idle' ? '—' : speed} />
+            <MetricCard label={lab('accuracy')} value={`${accuracy.toFixed(0)}%`} />
+            <MetricCard label={lab('time')} value={`${(elapsed / 1000).toFixed(1)} s`} />
+          </TelemetryGrid>
           <Instructions>{text('instructions')}</Instructions>
         </GamePanel>
       )}

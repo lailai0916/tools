@@ -3,15 +3,18 @@ import clsx from 'clsx';
 import {
   GamePanel,
   Instructions,
-  Result,
+  MetricCard,
+  ReportShell,
   Segmented,
-  Stat,
-  Stats,
+  SessionBar,
+  TelemetryGrid,
   TestShell,
   funStyles,
   randomInt,
   shuffle,
   useGameText,
+  useLabText,
+  useLocalBest,
 } from './shared';
 
 function useLiveElapsed(active: boolean, startedAt: React.MutableRefObject<number>) {
@@ -31,53 +34,127 @@ function useLiveElapsed(active: boolean, startedAt: React.MutableRefObject<numbe
 
 export function SchulteTableTest() {
   const text = useGameText('schulteTable');
+  const lab = useLabText();
+  const [size, setSize] = useState(5);
+  const total = size * size;
   const [numbers, setNumbers] = useState(() =>
     shuffle(Array.from({ length: 25 }, (_, index) => index + 1))
   );
   const [next, setNext] = useState(1);
+  const [mistakes, setMistakes] = useState(0);
+  const [splits, setSplits] = useState<number[]>([]);
   const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle');
   const startedAt = useRef(0);
   const [elapsed, setElapsed] = useLiveElapsed(status === 'running', startedAt);
 
   const reset = () => {
-    setNumbers(shuffle(Array.from({ length: 25 }, (_, index) => index + 1)));
+    setNumbers(shuffle(Array.from({ length: total }, (_, index) => index + 1)));
     setNext(1);
+    setMistakes(0);
+    setSplits([]);
     setElapsed(0);
     setStatus('idle');
   };
 
   const choose = (value: number) => {
-    if (value !== next || status === 'done') return;
+    if (status === 'done') return;
+    if (value !== next) {
+      setMistakes((count) => count + 1);
+      return;
+    }
     if (status === 'idle') {
       startedAt.current = performance.now();
       setStatus('running');
     }
-    if (value === 25) {
-      setElapsed(performance.now() - startedAt.current);
+    const now = performance.now();
+    setSplits((values) => [...values, now - startedAt.current]);
+    if (value === total) {
+      setElapsed(now - startedAt.current);
       setStatus('done');
     } else {
       setNext((current) => current + 1);
     }
   };
 
+  const averageStep = splits.length ? elapsed / splits.length : 0;
+  const { best, newBest } = useLocalBest(`schulte.${size}`, elapsed, status === 'done', 'lower');
+  const seconds = elapsed / 1000;
+  const gradeLimit = total * 0.9;
+  const grade =
+    seconds <= gradeLimit
+      ? 'S'
+      : seconds <= gradeLimit * 1.3
+        ? 'A'
+        : seconds <= gradeLimit * 1.7
+          ? 'B'
+          : seconds <= gradeLimit * 2.3
+            ? 'C'
+            : 'D';
+
   return (
     <TestShell stem="schulteTable">
-      <Stats>
-        <Stat label={text('next')} value={status === 'done' ? '—' : next} />
-        <Stat label={text('time')} value={`${(elapsed / 1000).toFixed(2)} s`} />
-      </Stats>
+      <Segmented
+        value={size}
+        options={[3, 4, 5, 6]}
+        onChange={(value) => {
+          setSize(value);
+          const count = value * value;
+          setNumbers(shuffle(Array.from({ length: count }, (_, index) => index + 1)));
+          setNext(1);
+          setStatus('idle');
+          setElapsed(0);
+          setMistakes(0);
+          setSplits([]);
+        }}
+        label={text('size')}
+        format={(value) => `${value} × ${value}`}
+        disabled={status === 'running'}
+      />
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'running'
+              ? lab('status.running')
+              : lab('status.done')
+        }
+        progress={(next - 1) / total}
+        active={status === 'running'}
+        complete={status === 'done'}
+        detail={status === 'done' ? `${total} / ${total}` : `${next} / ${total}`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={`${(elapsed / 1000).toFixed(2)} s`}
-          detail={text('resultDetail')}
-          onReset={reset}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={seconds.toFixed(2)}
+          unit="s"
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail')}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={reset}
+        >
+          <TelemetryGrid>
+            <MetricCard label={text('size')} value={`${size} × ${size}`} />
+            <MetricCard label={text('averageStep')} value={`${Math.round(averageStep)} ms`} />
+            <MetricCard label={lab('mistakes')} value={mistakes} />
+            <MetricCard
+              label={lab('personalBest')}
+              value={best ? `${(best / 1000).toFixed(2)} s` : '—'}
+              accent={newBest}
+            />
+          </TelemetryGrid>
+        </ReportShell>
       ) : (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
-          <div className={funStyles.schulteGrid}>
+          <div
+            className={funStyles.schulteGrid}
+            style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
+          >
             {numbers.map((value) => (
               <button
                 type="button"
@@ -98,9 +175,11 @@ export function SchulteTableTest() {
 
 export function TimePerceptionTest() {
   const text = useGameText('timePerception');
+  const lab = useLabText();
   const [target, setTarget] = useState(10);
-  const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle');
+  const [status, setStatus] = useState<'idle' | 'running' | 'roundResult' | 'done'>('idle');
   const [elapsed, setElapsed] = useState(0);
+  const [results, setResults] = useState<number[]>([]);
   const startedAt = useRef(0);
 
   const start = () => {
@@ -110,21 +189,38 @@ export function TimePerceptionTest() {
   };
 
   const stop = () => {
-    setElapsed(performance.now() - startedAt.current);
-    setStatus('done');
+    const value = performance.now() - startedAt.current;
+    const next = [...results, value];
+    setElapsed(value);
+    setResults(next);
+    setStatus(next.length >= 3 ? 'done' : 'roundResult');
   };
 
   const reset = () => {
     setElapsed(0);
+    setResults([]);
     setStatus('idle');
   };
 
-  const error = Math.abs(elapsed / 1000 - target);
+  const errors = results.map((value) => Math.abs(value / 1000 - target));
+  const error = errors.length ? errors.reduce((sum, value) => sum + value, 0) / errors.length : 0;
+  const bias = results.length
+    ? results.reduce((sum, value) => sum + (value / 1000 - target), 0) / results.length
+    : 0;
+  const accuracy = Math.max(0, 100 - (error / target) * 100);
+  const { best, newBest } = useLocalBest(
+    `time-perception.${target}`,
+    error,
+    status === 'done',
+    'lower'
+  );
+  const grade =
+    accuracy >= 97 ? 'S' : accuracy >= 93 ? 'A' : accuracy >= 85 ? 'B' : accuracy >= 70 ? 'C' : 'D';
   return (
     <TestShell stem="timePerception">
       <Segmented
         value={target}
-        options={[5, 10, 15]}
+        options={[3, 5, 10, 15, 30, 60]}
         onChange={(value) => {
           setTarget(value);
           reset();
@@ -133,14 +229,64 @@ export function TimePerceptionTest() {
         format={(value) => `${value} s`}
         disabled={status === 'running'}
       />
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'done'
+              ? lab('status.done')
+              : lab('status.running')
+        }
+        progress={results.length / 3}
+        active={status === 'running'}
+        complete={status === 'done'}
+        detail={`${Math.min(results.length + (status === 'done' ? 0 : 1), 3)} / 3`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={`${error.toFixed(2)} s`}
-          detail={text('resultDetail').replace('{elapsed}', (elapsed / 1000).toFixed(2))}
-          onReset={reset}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={error.toFixed(2)}
+          unit="s"
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail').replace('{elapsed}', (elapsed / 1000).toFixed(2))}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={reset}
+        >
+          <TelemetryGrid>
+            <MetricCard label={lab('accuracy')} value={`${accuracy.toFixed(1)}%`} />
+            <MetricCard
+              label={text('bias')}
+              value={`${bias >= 0 ? '+' : ''}${bias.toFixed(2)} s`}
+            />
+            <MetricCard label={lab('bestRound')} value={`${Math.min(...errors).toFixed(2)} s`} />
+            <MetricCard
+              label={lab('personalBest')}
+              value={best ? `${best.toFixed(2)} s` : '—'}
+              accent={newBest}
+            />
+          </TelemetryGrid>
+          <div className={funStyles.roundStrip}>
+            {errors.map((value, index) => (
+              <span key={index}>
+                <small>{index + 1}</small>
+                <strong>{value.toFixed(2)}</strong>
+                <em>s</em>
+              </span>
+            ))}
+          </div>
+        </ReportShell>
+      ) : status === 'roundResult' ? (
+        <GamePanel>
+          <span className={funStyles.eyebrow}>{text('roundResult')}</span>
+          <strong className={funStyles.resultValue}>{errors.at(-1)?.toFixed(2)} s</strong>
+          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+            {text('nextRound')}
+          </button>
+        </GamePanel>
       ) : (
         <button
           type="button"
@@ -171,52 +317,101 @@ function randomStroop(previous?: { word: ColorName; ink: ColorName }) {
 
 export function StroopTest() {
   const text = useGameText('stroopTest');
+  const lab = useLabText();
   const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle');
   const [trial, setTrial] = useState(() => randomStroop());
   const [round, setRound] = useState(0);
   const [correct, setCorrect] = useState(0);
+  const [responseTimes, setResponseTimes] = useState<number[]>([]);
   const startedAt = useRef(0);
+  const trialAt = useRef(0);
   const [elapsed, setElapsed] = useState(0);
 
   const start = () => {
     setTrial(randomStroop());
     setRound(0);
     setCorrect(0);
+    setResponseTimes([]);
     setElapsed(0);
     startedAt.current = performance.now();
+    trialAt.current = startedAt.current;
     setStatus('running');
   };
 
   const choose = (color: ColorName) => {
     if (status !== 'running') return;
+    const now = performance.now();
+    setResponseTimes((values) => [...values, now - trialAt.current]);
     const nextCorrect = correct + (color === trial.ink ? 1 : 0);
     setCorrect(nextCorrect);
     if (round + 1 >= 20) {
-      setElapsed(performance.now() - startedAt.current);
+      setElapsed(now - startedAt.current);
       setStatus('done');
     } else {
       setRound((value) => value + 1);
       setTrial((current) => randomStroop(current));
+      trialAt.current = now;
     }
   };
 
+  const accuracy = (correct / 20) * 100;
+  const averageResponse = responseTimes.length
+    ? responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length
+    : 0;
+  const bestRound = responseTimes.length ? Math.min(...responseTimes) : 0;
+  const score = accuracy * 10 - averageResponse / 10;
+  const { best, newBest } = useLocalBest('stroop.score', score, status === 'done');
+  const grade =
+    accuracy >= 95 && averageResponse < 900
+      ? 'S'
+      : accuracy >= 90
+        ? 'A'
+        : accuracy >= 80
+          ? 'B'
+          : accuracy >= 65
+            ? 'C'
+            : 'D';
+
   return (
     <TestShell stem="stroopTest">
-      <Stats>
-        <Stat
-          label={text('progress')}
-          value={`${Math.min(round + (status === 'running' ? 1 : 0), 20)} / 20`}
-        />
-        <Stat label={text('correct')} value={correct} />
-      </Stats>
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'running'
+              ? lab('status.running')
+              : lab('status.done')
+        }
+        progress={(status === 'done' ? 20 : round) / 20}
+        active={status === 'running'}
+        complete={status === 'done'}
+        detail={`${Math.min(round + (status === 'running' ? 1 : 0), 20)} / 20`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={`${correct} / 20`}
-          detail={text('resultDetail').replace('{time}', (elapsed / 1000).toFixed(1))}
-          onReset={start}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={accuracy.toFixed(0)}
+          unit="%"
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail').replace('{time}', (elapsed / 1000).toFixed(1))}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={start}
+        >
+          <TelemetryGrid>
+            <MetricCard label={text('correct')} value={`${correct} / 20`} />
+            <MetricCard label={lab('average')} value={`${Math.round(averageResponse)} ms`} />
+            <MetricCard label={lab('bestRound')} value={`${Math.round(bestRound)} ms`} />
+            <MetricCard
+              label={lab('personalBest')}
+              value={best ? Math.round(best) : '—'}
+              accent={newBest}
+            />
+          </TelemetryGrid>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
@@ -257,20 +452,27 @@ const makeHueRound = (round: number): HueRound => ({
 
 export function ColorHueTest() {
   const text = useGameText('colorHueTest');
+  const lab = useLabText();
   const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle');
   const [round, setRound] = useState(0);
   const [correct, setCorrect] = useState(0);
+  const [responseTimes, setResponseTimes] = useState<number[]>([]);
   const [puzzle, setPuzzle] = useState(() => makeHueRound(0));
+  const roundAt = useRef(0);
 
   const start = () => {
     setRound(0);
     setCorrect(0);
+    setResponseTimes([]);
     setPuzzle(makeHueRound(0));
+    roundAt.current = performance.now();
     setStatus('running');
   };
 
   const choose = (index: number) => {
     if (status !== 'running') return;
+    const now = performance.now();
+    setResponseTimes((values) => [...values, now - roundAt.current]);
     const nextCorrect = correct + (index === puzzle.oddIndex ? 1 : 0);
     setCorrect(nextCorrect);
     if (round + 1 >= 8) {
@@ -279,26 +481,58 @@ export function ColorHueTest() {
       const nextRound = round + 1;
       setRound(nextRound);
       setPuzzle(makeHueRound(nextRound));
+      roundAt.current = now;
     }
   };
 
+  const accuracy = (correct / 8) * 100;
+  const averageResponse = responseTimes.length
+    ? responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length
+    : 0;
+  const { newBest } = useLocalBest(
+    'color-hue.score',
+    correct * 1000 - averageResponse,
+    status === 'done'
+  );
+  const grade =
+    correct === 8 ? 'S' : correct >= 7 ? 'A' : correct >= 6 ? 'B' : correct >= 4 ? 'C' : 'D';
+
   return (
     <TestShell stem="colorHueTest">
-      <Stats>
-        <Stat
-          label={text('progress')}
-          value={`${Math.min(round + (status === 'running' ? 1 : 0), 8)} / 8`}
-        />
-        <Stat label={text('correct')} value={correct} />
-      </Stats>
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'running'
+              ? lab('status.running')
+              : lab('status.done')
+        }
+        progress={(status === 'done' ? 8 : round) / 8}
+        active={status === 'running'}
+        complete={status === 'done'}
+        detail={`${Math.min(round + (status === 'running' ? 1 : 0), 8)} / 8`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={`${correct} / 8`}
-          detail={text('resultDetail')}
-          onReset={start}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={correct.toString()}
+          unit="/ 8"
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail')}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={start}
+        >
+          <TelemetryGrid>
+            <MetricCard label={lab('accuracy')} value={`${accuracy.toFixed(0)}%`} />
+            <MetricCard label={lab('average')} value={`${Math.round(averageResponse)} ms`} />
+            <MetricCard label={text('finestDifference')} value="4°" />
+            <MetricCard label={lab('mistakes')} value={8 - correct} />
+          </TelemetryGrid>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
@@ -339,20 +573,27 @@ const ODD_PAIRS = [
 
 export function OddOneOutTest() {
   const text = useGameText('oddOneOut');
+  const lab = useLabText();
   const [status, setStatus] = useState<'idle' | 'running' | 'done'>('idle');
   const [round, setRound] = useState(0);
   const [correct, setCorrect] = useState(0);
+  const [responseTimes, setResponseTimes] = useState<number[]>([]);
   const [oddIndex, setOddIndex] = useState(() => randomInt(0, 24));
+  const roundAt = useRef(0);
   const pair = ODD_PAIRS[round % ODD_PAIRS.length];
 
   const start = () => {
     setRound(0);
     setCorrect(0);
+    setResponseTimes([]);
     setOddIndex(randomInt(0, 24));
+    roundAt.current = performance.now();
     setStatus('running');
   };
 
   const choose = (index: number) => {
+    const now = performance.now();
+    setResponseTimes((values) => [...values, now - roundAt.current]);
     const nextCorrect = correct + (index === oddIndex ? 1 : 0);
     setCorrect(nextCorrect);
     if (round + 1 >= 10) {
@@ -360,26 +601,61 @@ export function OddOneOutTest() {
     } else {
       setRound((value) => value + 1);
       setOddIndex(randomInt(0, 24));
+      roundAt.current = now;
     }
   };
 
+  const accuracy = correct * 10;
+  const averageResponse = responseTimes.length
+    ? responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length
+    : 0;
+  const { newBest } = useLocalBest(
+    'odd-one-out.score',
+    correct * 1000 - averageResponse,
+    status === 'done'
+  );
+  const grade =
+    correct === 10 ? 'S' : correct >= 9 ? 'A' : correct >= 7 ? 'B' : correct >= 5 ? 'C' : 'D';
+
   return (
     <TestShell stem="oddOneOut">
-      <Stats>
-        <Stat
-          label={text('progress')}
-          value={`${Math.min(round + (status === 'running' ? 1 : 0), 10)} / 10`}
-        />
-        <Stat label={text('correct')} value={correct} />
-      </Stats>
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'running'
+              ? lab('status.running')
+              : lab('status.done')
+        }
+        progress={(status === 'done' ? 10 : round) / 10}
+        active={status === 'running'}
+        complete={status === 'done'}
+        detail={`${Math.min(round + (status === 'running' ? 1 : 0), 10)} / 10`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={`${correct} / 10`}
-          detail={text('resultDetail')}
-          onReset={start}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={correct.toString()}
+          unit="/ 10"
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail')}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={start}
+        >
+          <TelemetryGrid>
+            <MetricCard label={lab('accuracy')} value={`${accuracy}%`} />
+            <MetricCard label={lab('average')} value={`${Math.round(averageResponse)} ms`} />
+            <MetricCard
+              label={lab('bestRound')}
+              value={`${Math.round(Math.min(...responseTimes))} ms`}
+            />
+            <MetricCard label={lab('mistakes')} value={10 - correct} />
+          </TelemetryGrid>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
@@ -405,6 +681,7 @@ export function OddOneOutTest() {
 
 export function RhythmTest() {
   const text = useGameText('rhythmTest');
+  const lab = useLabText();
   const [status, setStatus] = useState<'idle' | 'demo' | 'tapping' | 'done'>('idle');
   const [beat, setBeat] = useState(0);
   const [taps, setTaps] = useState<number[]>([]);
@@ -442,17 +719,83 @@ export function RhythmTest() {
   const averageError = intervals.length
     ? intervals.reduce((sum, value) => sum + Math.abs(value - 600), 0) / intervals.length
     : 0;
+  const averageInterval = intervals.length
+    ? intervals.reduce((sum, value) => sum + value, 0) / intervals.length
+    : 600;
+  const deviation = intervals.length
+    ? Math.sqrt(
+        intervals.reduce((sum, value) => sum + (value - averageInterval) ** 2, 0) / intervals.length
+      )
+    : 0;
+  const consistency = Math.max(0, Math.round(100 - (deviation / 600) * 100));
+  const bestRound = intervals.length
+    ? Math.min(...intervals.map((value) => Math.abs(value - 600)))
+    : 0;
+  const { best, newBest } = useLocalBest('rhythm.error', averageError, status === 'done', 'lower');
+  const grade =
+    averageError <= 30
+      ? 'S'
+      : averageError <= 55
+        ? 'A'
+        : averageError <= 90
+          ? 'B'
+          : averageError <= 150
+            ? 'C'
+            : 'D';
 
   return (
     <TestShell stem="rhythmTest">
+      <SessionBar
+        status={
+          status === 'idle'
+            ? lab('status.ready')
+            : status === 'done'
+              ? lab('status.done')
+              : status === 'demo'
+                ? text('watch')
+                : lab('status.running')
+        }
+        progress={
+          status === 'demo'
+            ? beat / 4
+            : status === 'tapping'
+              ? taps.length / 9
+              : status === 'done'
+                ? 1
+                : 0
+        }
+        active={status === 'demo' || status === 'tapping'}
+        complete={status === 'done'}
+        detail={status === 'demo' ? `${beat} / 4` : `${taps.length} / 9`}
+      />
       {status === 'done' ? (
-        <Result
-          title={text('result')}
-          value={`${Math.round(averageError)} ms`}
-          detail={text('resultDetail')}
-          onReset={start}
-          resetLabel={text('again')}
-        />
+        <ReportShell
+          eyebrow={lab('report')}
+          score={Math.round(averageError).toString()}
+          unit="ms"
+          grade={grade}
+          gradeLabel={lab('rating')}
+          newBest={newBest}
+          newBestLabel={lab('newBest')}
+          insight={text('resultDetail')}
+          replayLabel={text('again')}
+          replayHint={lab('replayHint')}
+          onReplay={start}
+        >
+          <TelemetryGrid>
+            <MetricCard
+              label={text('tempo')}
+              value={`${Math.round(60000 / averageInterval)} BPM`}
+            />
+            <MetricCard label={lab('consistency')} value={`${consistency}%`} />
+            <MetricCard label={lab('bestRound')} value={`${Math.round(bestRound)} ms`} />
+            <MetricCard
+              label={lab('personalBest')}
+              value={best ? `${Math.round(best)} ms` : '—'}
+              accent={newBest}
+            />
+          </TelemetryGrid>
+        </ReportShell>
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
