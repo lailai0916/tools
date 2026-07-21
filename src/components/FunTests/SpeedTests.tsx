@@ -258,6 +258,7 @@ export function CpsTest() {
               : text('status.complete')
         }
         progress={progress}
+        continuous
         active={status === 'running'}
         complete={status === 'done'}
         detail={status === 'running' ? `${(remaining / 1000).toFixed(1)} s` : `${duration} s`}
@@ -434,6 +435,7 @@ export function SpacebarTest() {
               : lab('status.done')
         }
         progress={progress}
+        continuous
         active={status === 'running'}
         complete={status === 'done'}
         detail={status === 'running' ? `${(remaining / 1000).toFixed(1)} s` : `${duration} s`}
@@ -993,6 +995,7 @@ export function ScrollSpeedTest() {
               : lab('status.done')
         }
         progress={progress}
+        continuous
         active={status === 'running'}
         complete={status === 'done'}
         detail={status === 'running' ? `${(remaining / 1000).toFixed(1)} s` : `${duration} s`}

@@ -102,6 +102,11 @@
   transition: transform 80ms linear;
 }
 
+.sessionProgressContinuous span {
+  will-change: transform;
+  transition: none;
+}
+
 .sessionDetail {
   justify-content: flex-end;
   font-family: var(--font-family-mono);

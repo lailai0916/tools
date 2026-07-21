@@ -183,12 +183,14 @@ export function SessionBar({
   detail,
   active = false,
   complete = false,
+  continuous = false,
 }: {
   status: string;
   progress: number;
   detail?: ReactNode;
   active?: boolean;
   complete?: boolean;
+  continuous?: boolean;
 }) {
   return (
     <div className={styles.sessionBar} aria-live="polite">
@@ -203,7 +205,10 @@ export function SessionBar({
         />
         <strong>{status}</strong>
       </div>
-      <div className={styles.sessionProgress} aria-hidden="true">
+      <div
+        className={clsx(styles.sessionProgress, continuous && styles.sessionProgressContinuous)}
+        aria-hidden="true"
+      >
         <span style={{ transform: `scaleX(${Math.min(1, Math.max(0, progress))})` }} />
       </div>
       {detail != null && <div className={styles.sessionDetail}>{detail}</div>}
