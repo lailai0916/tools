@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { SelectField, TextField } from '@lailai/ui';
 import Button from '@/components/Button';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
@@ -82,46 +83,43 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
           const placeholderKey = messageKey(`${stem}.${field.key}Placeholder`);
           const placeholder = t(placeholderKey) === placeholderKey ? '' : t(placeholderKey);
 
-          return (
-            <label
-              className={field.type === 'textarea' ? styles.wideField : styles.field}
-              key={field.key}
-            >
+          return field.type === 'textarea' ? (
+            <label className={styles.wideField} key={field.key}>
               <span className={styles.label}>{label}</span>
-              {field.type === 'textarea' ? (
-                <TextArea
-                  value={values[field.key] ?? ''}
-                  onChange={(event) => update(field.key, event.target.value)}
-                  placeholder={placeholder}
-                  aria-label={label}
-                />
-              ) : field.type === 'select' ? (
-                <select
-                  className={styles.control}
-                  value={values[field.key] ?? ''}
-                  onChange={(event) => update(field.key, event.target.value)}
-                  aria-label={label}
-                >
-                  {field.options?.map((option) => (
-                    <option key={option} value={option}>
-                      {t(messageKey(`${stem}.${field.key}.${option}`))}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <input
-                  className={styles.control}
-                  type={field.type ?? 'text'}
-                  value={values[field.key] ?? ''}
-                  onChange={(event) => update(field.key, event.target.value)}
-                  placeholder={placeholder}
-                  min={field.min}
-                  max={field.max}
-                  step={field.step}
-                  aria-label={label}
-                />
-              )}
+              <TextArea
+                value={values[field.key] ?? ''}
+                onChange={(event) => update(field.key, event.target.value)}
+                placeholder={placeholder}
+                aria-label={label}
+              />
             </label>
+          ) : field.type === 'select' ? (
+            <SelectField
+              key={field.key}
+              className={styles.control}
+              label={label}
+              value={values[field.key] ?? ''}
+              onChange={(event) => update(field.key, event.target.value)}
+            >
+              {field.options?.map((option) => (
+                <option key={option} value={option}>
+                  {t(messageKey(`${stem}.${field.key}.${option}`))}
+                </option>
+              ))}
+            </SelectField>
+          ) : (
+            <TextField
+              key={field.key}
+              className={styles.control}
+              label={label}
+              type={field.type ?? 'text'}
+              value={values[field.key] ?? ''}
+              onChange={(event) => update(field.key, event.target.value)}
+              placeholder={placeholder}
+              min={field.min}
+              max={field.max}
+              step={field.step}
+            />
           );
         })}
       </div>

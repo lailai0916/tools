@@ -17,11 +17,12 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 ## Layout
 
 - Header height: `56px`.
+- Brand logos have no border, ring, or decorative shadow.
 - Content width: `1100px` maximum.
 - Desktop page padding: `24px`; mobile page padding: `16px`.
 - Home search width: `520px` maximum.
 - Tool grid: `repeat(auto-fill, minmax(230px, 1fr))`.
-- Card gap: `12px`; section gap: `44px`.
+- Card gap: `10px`; section gap: `44px`.
 - Primary breakpoints: `600px` and `900px`.
 
 ## Components
@@ -32,6 +33,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - The theme button is `34px` visually and `44px` on mobile.
 - Theme choices appear only in an anchored menu.
 - Do not place a segmented theme card in the header.
+- Inputs and selects use the shared control geometry, custom select chevron, and unified states.
 
 ### Search and Filters
 

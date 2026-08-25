@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
+import Button from '@/components/Button';
 import styles from './styles.module.css';
 
 type CopyButtonProps = {
@@ -46,8 +47,9 @@ export default function CopyButton({
   }, [value]);
 
   return (
-    <button
-      type="button"
+    <Button
+      size="sm"
+      variant="secondary"
       className={clsx(styles.copy, copied && styles.copied, className)}
       onClick={onClick}
       disabled={disabled || !value}
@@ -55,6 +57,6 @@ export default function CopyButton({
     >
       <Icon icon={copied ? 'lucide:check' : 'lucide:copy'} className={styles.icon} />
       <span>{copied ? copiedLabel : label}</span>
-    </button>
+    </Button>
   );
 }

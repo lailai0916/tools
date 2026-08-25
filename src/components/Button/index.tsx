@@ -1,4 +1,5 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { Button as SharedButton } from '@lailai/ui';
 import clsx from 'clsx';
 import styles from './styles.module.css';
 
@@ -29,23 +30,18 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   ref
 ) {
   return (
-    <button
+    <SharedButton
       ref={ref}
       type={type}
-      className={clsx(
-        styles.button,
-        styles[`variant_${variant}`],
-        styles[`size_${size}`],
-        active && styles.active,
-        fullWidth && styles.fullWidth,
-        className
-      )}
+      variant={variant === 'ghost' ? 'quiet' : variant}
+      size={size === 'sm' ? 'small' : 'medium'}
+      className={clsx(fullWidth && styles.fullWidth, className)}
       aria-pressed={active}
       {...rest}
     >
       {leftIcon != null && <span className={styles.icon}>{leftIcon}</span>}
       {children != null && <span className={styles.label}>{children}</span>}
-    </button>
+    </SharedButton>
   );
 });
 

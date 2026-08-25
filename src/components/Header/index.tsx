@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ThemeControl } from '@lailai/ui';
+import { Brand, IconButton, ThemeControl } from '@lailai/ui';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
@@ -14,18 +14,17 @@ export default function Header() {
       <header className={styles.header}>
         <div className={styles.inner}>
           <Link to="/" className={styles.brand}>
-            <img src="/logo.svg" alt="" className={styles.logo} />
-            <span>{t('site.title')}</span>
+            <Brand logoSrc="/logo.svg" name={t('site.title')} />
           </Link>
           <div className={styles.actions}>
-            <button
-              type="button"
-              className={styles.iconBtn}
+            <IconButton
+              size="small"
+              className={styles.languageButton}
+              label={t('site.switchLanguage')}
               onClick={() => setLocale(locale === 'zh-Hans' ? 'en' : 'zh-Hans')}
-              aria-label={t('site.switchLanguage')}
             >
               {locale === 'zh-Hans' ? '中' : 'EN'}
-            </button>
+            </IconButton>
             <ThemeControl
               variant="compact"
               labels={{

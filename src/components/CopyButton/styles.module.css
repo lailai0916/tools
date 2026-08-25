@@ -1,58 +1,14 @@
 .copy {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  height: 32px;
-  padding: 0 0.7rem;
-  border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-control);
-  background: transparent;
-  color: var(--emphasis-700);
-  font: inherit;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition:
-    background-color var(--transition),
-    border-color var(--transition),
-    color var(--transition),
-    background-color var(--transition);
-}
-
-.copy:not(:disabled):hover {
-  border-color: var(--emphasis-400);
-  background: var(--emphasis-100);
-  color: var(--font-color-base);
-}
-
-.copy:not(:disabled):active {
-  background: var(--emphasis-200);
-}
-
-.copy:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.copy:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  min-width: 82px;
 }
 
 /* Success state — the check reads as completion, not a persistent style */
-.copied,
-.copied:hover {
+.copy.copied,
+.copy.copied:hover:not(:disabled) {
   border-color: var(--color-success);
   color: var(--color-success);
 }
 
 .icon {
   font-size: 1rem;
-}
-
-@media (max-width: 600px) {
-  .copy {
-    min-height: 44px;
-  }
 }

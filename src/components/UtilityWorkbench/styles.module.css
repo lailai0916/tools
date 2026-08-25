@@ -4,7 +4,6 @@
   gap: 0.875rem;
 }
 
-.field,
 .wideField {
   display: flex;
   min-width: 0;
@@ -23,23 +22,7 @@
 }
 
 .control {
-  width: 100%;
-  min-height: var(--control-height);
-  padding: 0.55rem 0.7rem;
-  border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-control);
-  outline: none;
-  background: var(--card-background);
-  color: var(--font-color-base);
   font: var(--font-size-control) var(--font-family-mono);
-  transition:
-    border-color var(--transition),
-    box-shadow var(--transition);
-}
-
-.control:focus {
-  border-color: var(--color-primary);
-  box-shadow: var(--focus-ring);
 }
 
 .outputHeader {
