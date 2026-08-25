@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 import { en, type MessageKey } from './en';
 import { zhHans } from './zh-Hans';
 
@@ -33,6 +41,10 @@ const I18nContext = createContext<I18nValue | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
+
+  useEffect(() => {
+    document.documentElement.lang = locale === 'zh-Hans' ? 'zh-Hans' : 'en';
+  }, [locale]);
 
   const setLocale = useCallback((next: Locale) => {
     try {

@@ -20,7 +20,7 @@ machine. Page views are counted with self-hosted, cookieless Umami analytics.
 
 ## Available Tools
 
-76 tools across seven categories. The registry (`src/tools/registry.ts`) is the single
+140 tools across eight categories. The registry (`src/tools/registry.ts`) is the single
 source of truth; the home grid, routes and search all derive from it.
 
 | Category        | Tools                                                                                                                                                                                                                                    |
@@ -36,6 +36,8 @@ source of truth; the home grid, routes and search all derive from it.
 ## Tech Stack
 
 - **Vite 7** + **React 18** + **TypeScript** (strict)
+- Shared tokens and accessible primitives from [`@lailai/ui`](https://github.com/lailai0916/ui)
+- Route-level code splitting, so each tool loads only when opened
 - **react-router** — one real route per tool, deep-linkable
 - CSS Modules; design tokens are a hand-synced snapshot of [lailai.one](https://lailai.one)
 - Lightweight self-built i18n (English default, Simplified Chinese)

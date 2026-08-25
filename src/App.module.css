@@ -12,6 +12,37 @@
   padding: 1.5rem 1.5rem 4rem;
 }
 
+.loading {
+  display: grid;
+  min-height: 240px;
+  place-items: center;
+}
+
+.loadingIndicator {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--emphasis-300);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: loading-spin 700ms linear infinite;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 600px) {
   .main {
     padding: 1.25rem 1rem 3rem;

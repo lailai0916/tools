@@ -3,8 +3,8 @@
 ## Project
 
 `tools.lailai.one` is a privacy-respecting collection of browser-only developer utilities.
-It uses Vite 7, React 18, strict TypeScript, React Router, CSS Modules, and a lightweight
-English/Simplified-Chinese i18n layer. Node.js 20 or newer is required.
+It uses Vite 7, React 18, strict TypeScript, React Router, CSS Modules, `@lailai/ui`, and a
+lightweight English/Simplified-Chinese i18n layer. Node.js 20 or newer is required.
 
 ## Commands
 
@@ -27,6 +27,7 @@ Run `npm run check` and `npm run build` before delivering code changes.
 - Keep tools client-side. Text and secrets entered by users must not be sent to a server.
 - Preserve real per-tool routes and prerendering so unknown paths keep returning a true 404.
 - Reuse existing design tokens and interaction patterns instead of introducing one-off UI.
+- Keep tool modules lazily loaded through the route map in `src/App.tsx`.
 
 ## Agent configuration
 

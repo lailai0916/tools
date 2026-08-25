@@ -3,19 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f5f7" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>lailai's Tools</title>
     <meta name="description" content="Handy tools for developers, by lailai." />
     <script>
-      // Runs before first paint so the page never flashes the wrong theme.
-      // The theme always follows the OS — a manual toggle only lasts the session
-      // and is never persisted, so there is nothing to read back here.
       (function () {
         try {
-          var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+          var preference = localStorage.getItem('lailai.theme');
+          var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          var theme = preference === 'light' || preference === 'dark' ? preference : system;
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.dataset.themePreference = preference || 'system';
         } catch (_) {
-          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.dataset.theme = 'light';
+          document.documentElement.dataset.themePreference = 'system';
         }
       })();
     </script>

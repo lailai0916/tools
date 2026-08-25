@@ -18,7 +18,7 @@ Cookie 的 Umami 统计。
 
 ## 工具列表
 
-共 $76$ 个工具，分为 $7$ 类。`src/tools/registry.ts` 是单一数据源，首页网格、路由与
+共 $140$ 个工具，分为 $8$ 类。`src/tools/registry.ts` 是单一数据源，首页网格、路由与
 搜索都由它生成。
 
 |  分类  | 数量 |                              示例                              |
@@ -34,6 +34,8 @@ Cookie 的 Umami 统计。
 ## 技术架构
 
 - Vite 7、React 18 与严格模式 TypeScript。
+- 使用 [`@lailai/ui`](https://github.com/lailai0916/ui) 的共享设计令牌与无障碍组件。
+- 按工具路由拆包，仅在打开工具时加载对应代码。
 - `react-router` 为每个工具提供可直接访问的真实路由。
 - CSS Modules 与从 [lailai.one](https://lailai.one) 同步的设计 token。
 - 自建轻量 i18n，默认英文，完整支持简体中文。
