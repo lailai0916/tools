@@ -117,9 +117,6 @@ export default function Home() {
   return (
     <div className={styles.home}>
       <header className={styles.hero}>
-        <p className={styles.eyebrow}>
-          {TOOLS.length} {t('site.toolsAvailable')}
-        </p>
         <h1 className={styles.title}>{t('site.title')}</h1>
         <p className={styles.tagline}>{t('site.tagline')}</p>
       </header>
@@ -146,49 +143,51 @@ export default function Home() {
           )}
         </div>
 
-        <div className={styles.viewTabs} role="group" aria-label={t('site.allTools')}>
-          {(['all', 'favorites', 'recent'] as const).map((item) => (
-            <button
-              key={item}
-              type="button"
-              className={styles.viewTab}
-              aria-pressed={view === item}
-              onClick={() => updateParam('view', item === 'all' ? null : item)}
-            >
-              <Icon
-                icon={
-                  item === 'all'
-                    ? 'lucide:grid-2x2'
-                    : item === 'favorites'
-                      ? 'lucide:star'
-                      : 'lucide:history'
-                }
-              />
-              {t(`site.view${item[0].toUpperCase()}${item.slice(1)}` as MessageKey)}
-            </button>
-          ))}
-        </div>
+        <div className={styles.filterRow}>
+          <div className={styles.viewTabs} role="group" aria-label={t('site.allTools')}>
+            {(['all', 'favorites', 'recent'] as const).map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={styles.viewTab}
+                aria-pressed={view === item}
+                onClick={() => updateParam('view', item === 'all' ? null : item)}
+              >
+                <Icon
+                  icon={
+                    item === 'all'
+                      ? 'lucide:grid-2x2'
+                      : item === 'favorites'
+                        ? 'lucide:star'
+                        : 'lucide:history'
+                  }
+                />
+                {t(`site.view${item[0].toUpperCase()}${item.slice(1)}` as MessageKey)}
+              </button>
+            ))}
+          </div>
 
-        <div className={styles.categories} aria-label={t('site.allCategories')}>
-          <button
-            type="button"
-            className={styles.category}
-            aria-pressed={!category}
-            onClick={() => updateParam('category')}
-          >
-            {t('site.allCategories')}
-          </button>
-          {CATEGORY_ORDER.map((item) => (
+          <div className={styles.categories} aria-label={t('site.allCategories')}>
             <button
-              key={item}
               type="button"
               className={styles.category}
-              aria-pressed={category === item}
-              onClick={() => updateParam('category', item)}
+              aria-pressed={!category}
+              onClick={() => updateParam('category')}
             >
-              {t(`category.${item}` as MessageKey)}
+              {t('site.allCategories')}
             </button>
-          ))}
+            {CATEGORY_ORDER.map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={styles.category}
+                aria-pressed={category === item}
+                onClick={() => updateParam('category', item)}
+              >
+                {t(`category.${item}` as MessageKey)}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 

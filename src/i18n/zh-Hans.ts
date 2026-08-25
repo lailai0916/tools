@@ -19,6 +19,7 @@ export const zhHans: Record<MessageKey, string> = {
   'site.removeFavorite': '取消收藏',
   'site.emptyFavorites': '收藏的工具会显示在这里。',
   'site.emptyRecent': '打开过的工具会显示在这里。',
+  'site.skipToContent': '跳到主要内容',
 
   'common.back': '返回',
   'common.clear': '清空',

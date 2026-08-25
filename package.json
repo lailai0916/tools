@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@iconify/react": "^6.0.0",
-    "@lailai/ui": "github:lailai0916/ui#v0.1.1",
+    "@lailai/ui": "github:lailai0916/ui#v0.2.2",
     "clsx": "^2.0.0",
     "diff": "^9.0.0",
     "js-yaml": "^4.3.1",

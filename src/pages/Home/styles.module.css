@@ -3,45 +3,34 @@
 }
 
 .hero {
-  padding: 32px 0 28px;
-}
-
-.eyebrow {
-  margin: 0 0 8px;
-  color: var(--color-primary);
-  font-size: 13px;
-  font-weight: 650;
-  letter-spacing: 0.02em;
+  padding: 36px 0 24px;
+  text-align: center;
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 2.75rem);
-  line-height: 1.06;
+  font-size: clamp(2rem, 5vw, 2.6rem);
   font-weight: 700;
-  letter-spacing: -0.04em;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
 }
 
 .tagline {
   margin: 10px 0 0;
   color: var(--font-color-secondary);
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.55;
 }
 
 .finder {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) auto;
-  gap: 16px;
-  margin-bottom: 36px;
-  padding: 16px;
-  border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-lg);
-  background: var(--card-background);
+  gap: 18px;
+  margin-bottom: 42px;
 }
 
 .searchWrap {
   position: relative;
-  min-width: 0;
+  width: min(100%, 520px);
+  margin-inline: auto;
 }
 
 .searchIcon {
@@ -56,11 +45,11 @@
 
 .search {
   width: 100%;
-  height: 42px;
+  height: 44px;
   padding: 0 42px 0 40px;
   border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-control);
-  background: var(--background);
+  border-radius: var(--radius-panel);
+  background: var(--card-background);
   color: var(--font-color-base);
   font: inherit;
   font-size: 14px;
@@ -82,7 +71,7 @@
 .clearSearch {
   position: absolute;
   top: 50%;
-  right: 4px;
+  right: 5px;
   display: grid;
   width: 34px;
   height: 34px;
@@ -90,10 +79,14 @@
   transform: translateY(-50%);
   place-items: center;
   border: 0;
-  border-radius: 6px;
+  border-radius: 7px;
   background: transparent;
   color: var(--font-color-secondary);
   font: inherit;
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    transform var(--transition);
 }
 
 .clearSearch:hover {
@@ -101,13 +94,26 @@
   color: var(--font-color-base);
 }
 
-.viewTabs {
+.clearSearch:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.filterRow {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.viewTabs {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
   gap: 2px;
-  padding: 3px;
+  padding: 2px;
   border: 1px solid var(--emphasis-300);
-  border-radius: 10px;
+  border-radius: 9px;
   background: var(--emphasis-100);
 }
 
@@ -120,19 +126,23 @@
 
 .viewTab {
   display: inline-flex;
+  min-height: 32px;
   align-items: center;
   justify-content: center;
-  min-height: 34px;
   gap: 6px;
-  padding: 0 12px;
-  border-radius: 7px;
+  padding: 0 10px;
+  border-radius: 6px;
   background: transparent;
   color: var(--font-color-secondary);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   transition:
     background-color var(--transition),
     color var(--transition);
+}
+
+.viewTab svg {
+  font-size: 14px;
 }
 
 .viewTab[aria-pressed='true'] {
@@ -142,27 +152,30 @@
 }
 
 .categories {
-  grid-column: 1 / -1;
   display: flex;
-  gap: 6px;
+  min-width: 0;
+  flex: 1;
+  justify-content: flex-end;
+  gap: 2px;
   overflow-x: auto;
-  padding-bottom: 1px;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   overscroll-behavior-x: contain;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
 }
 
 .category {
   min-height: 34px;
-  padding: 0 12px;
-  border: 1px solid transparent;
-  border-radius: 8px;
+  padding: 0 9px;
+  border-radius: 7px;
   background: transparent;
   color: var(--font-color-secondary);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 550;
   transition:
     background-color var(--transition),
-    border-color var(--transition),
     color var(--transition);
 }
 
@@ -172,13 +185,12 @@
 }
 
 .category[aria-pressed='true'] {
-  border-color: var(--color-primary);
   background: var(--lui-color-accent-soft);
-  color: var(--color-primary);
+  color: var(--lui-color-accent-label);
 }
 
 .section {
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 
 .section:last-child {
@@ -189,7 +201,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 13px;
   color: var(--font-color-secondary);
   font-size: 13px;
   font-weight: 650;
@@ -197,7 +209,7 @@
 }
 
 .sectionCount {
-  color: var(--emphasis-600);
+  color: var(--font-color-secondary);
   font-size: 12px;
   font-weight: 500;
 }
@@ -211,7 +223,7 @@
 .card {
   position: relative;
   min-width: 0;
-  border: 1px solid var(--emphasis-300);
+  border: 1px solid var(--emphasis-200);
   border-radius: var(--radius-panel);
   background: var(--card-background);
   transition:
@@ -221,7 +233,7 @@
 
 .card:hover {
   border-color: var(--emphasis-400);
-  background: var(--lui-color-surface-raised);
+  background: color-mix(in srgb, var(--emphasis-100) 38%, var(--card-background));
 }
 
 .card:focus-within {
@@ -247,11 +259,11 @@
 
 .cardIcon {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 36px;
   height: 36px;
-  margin-bottom: 14px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 13px;
   border-radius: 8px;
   background: var(--lui-color-accent-soft);
   color: var(--color-primary);
@@ -283,8 +295,8 @@
 
 .favorite {
   position: absolute;
-  top: 14px;
-  right: 12px;
+  top: 13px;
+  right: 11px;
   display: grid;
   width: 34px;
   height: 34px;
@@ -295,7 +307,7 @@
   background: transparent;
   color: var(--emphasis-600);
   font: inherit;
-  font-size: 16px;
+  font-size: 15px;
   transition:
     background-color var(--transition),
     color var(--transition),
@@ -320,14 +332,31 @@
 }
 
 .empty {
-  border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-lg);
-  background: var(--card-background);
+  padding: 24px 0;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
+  .filterRow {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .categories {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px), (pointer: coarse) {
+  .home {
+    padding-top: 0;
+  }
+
+  .hero {
+    padding: 28px 0 22px;
+  }
+
   .finder {
-    grid-template-columns: 1fr;
+    margin-bottom: 34px;
   }
 
   .viewTabs {
@@ -335,31 +364,11 @@
   }
 
   .viewTab {
+    min-height: 44px;
     flex: 1;
   }
 
-  .categories {
-    grid-column: 1;
-  }
-}
-
-@media (max-width: 600px) {
-  .home {
-    padding-top: 0;
-  }
-
-  .hero {
-    padding: 24px 0 20px;
-  }
-
-  .finder {
-    margin-inline: -2px;
-    margin-bottom: 28px;
-    padding: 12px;
-  }
-
   .search,
-  .viewTab,
   .category,
   .favorite {
     min-height: 44px;
@@ -367,6 +376,10 @@
 
   .favorite {
     width: 44px;
+  }
+
+  .category {
+    min-width: 44px;
   }
 
   .grid {

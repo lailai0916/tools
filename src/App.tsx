@@ -38,7 +38,7 @@ export default function App() {
     <I18nProvider>
       <div className={styles.shell}>
         <Header />
-        <main className={styles.main}>
+        <main id="main-content" className={styles.main}>
           <Routes>
             <Route path="/" element={<Home />} />
             {toolRoutes.map(({ id, Component }) => (

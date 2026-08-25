@@ -1,45 +1,32 @@
 <div align="center">
   <h1>lailai's Tools</h1>
-  <p><a href="README.md">English</a> | 简体中文</p>
+  <p><a href="README.md">English</a> · <strong>简体中文</strong></p>
   <p>
     <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/tools/deploy.yml?style=flat-square" alt="部署状态" />
     <img src="https://img.shields.io/github/last-commit/lailai0916/tools?style=flat-square" alt="最后提交" />
     <img src="https://img.shields.io/github/languages/top/lailai0916/tools?style=flat-square" alt="主要语言" />
     <img src="https://img.shields.io/github/repo-size/lailai0916/tools?style=flat-square" alt="仓库大小" />
+    <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="代码风格" />
     <img src="https://img.shields.io/github/license/lailai0916/tools?style=flat-square" alt="许可证" />
   </p>
 </div>
 
-## 网站简介
+## 项目简介
 
-[tools.lailai.one](https://tools.lailai.one) 上面向开发者的浏览器工具集。所有工具都在
-本地浏览器中运行，不需要账号，粘贴的文本不会离开设备。页面访问量使用自托管、无
-Cookie 的 Umami 统计。
+[tools.lailai.one](https://tools.lailai.one) 上注重隐私的浏览器开发工具集，共有 140
+项工具。网站无需账号，工具输入只在用户设备上处理；自托管、无 Cookie 的 Umami 实例仅统计
+页面访问量。
 
-## 工具列表
+## 项目特性
 
-共 $140$ 个工具，分为 $8$ 类。`src/tools/registry.ts` 是单一数据源，首页网格、路由与
-搜索都由它生成。
+🧰 **140 项浏览器工具** —— 覆盖转换、文本、密码学与 Web。也包含开发、数学与生成工具。
+全部使用同一份可搜索 registry。
 
-|  分类  | 数量 |                              示例                              |
-| :----: | :--: | :------------------------------------------------------------: |
-|  转换  | $16$ | JSON 格式化、进制、Base64、时间戳、JSON ⇄ YAML、温度与数据大小 |
-|  文本  | $16$ |  大小写、正则、文本差异、统计、排序、Slug、Unicode 与摩斯电码  |
-| 密码学 | $7$  |        SHA、HMAC、AES-GCM、JWT、TOTP、密码强度与 CRC-32        |
-|  Web   | $9$  | URL、查询参数、Basic Auth、User-Agent、IP、MIME 与 HTTP 状态码 |
-|  开发  | $8$  | JSON 转 TypeScript、CSS 渐变、阴影、单位、Crontab 与 Meta 标签 |
-|  数学  | $8$  |   表达式、百分比、统计、GCD / LCM、质因数、筛法、组合与模幂    |
-|  生成  | $12$ |    UUID、ULID、Nano ID、密码、随机值、二维码、MAC 与占位图     |
+🔒 **本地处理** —— 粘贴的文本与生成值由浏览器 API 处理。数据不提交至应用服务器。
 
-## 技术架构
+🌐 **双语界面** —— 默认使用英文，每项工具都提供完整的简体中文界面。
 
-- Vite 7、React 18 与严格模式 TypeScript。
-- 使用 [`@lailai/ui`](https://github.com/lailai0916/ui) 的共享设计令牌与无障碍组件。
-- 按工具路由拆包，仅在打开工具时加载对应代码。
-- `react-router` 为每个工具提供可直接访问的真实路由。
-- CSS Modules 与从 [lailai.one](https://lailai.one) 同步的设计 token。
-- 自建轻量 i18n，默认英文，完整支持简体中文。
-- 大部分工具仅使用浏览器原生 API；额外依赖仅有 `qrcode`、`diff` 与 `js-yaml`。
+⚡ **独立路由** —— 按路由拆包控制单项工具的体积。预渲染为每项工具提供可分享的真实页面。
 
 ## 快速开始
 
@@ -50,47 +37,48 @@ npm install
 npm run dev
 ```
 
-提交前运行：
+提交改动前运行完整的本地门禁：
 
 ```bash
-npm run build
 npm run check
+npm run build
 ```
-
-## 添加工具
-
-1. 在 `src/tools/<id>/index.tsx` 创建工具，需要样式时添加 `styles.module.css`；
-2. 复用 `ToolLayout`、共享组件与 `useI18n`；
-3. 在 `src/tools/registry.ts` 添加注册项；
-4. 在 `src/i18n/en.ts` 与 `src/i18n/zh-Hans.ts` 添加等价文案。
-
-首页、路由与搜索都从 registry 派生，不要在其他位置重复维护工具列表。
 
 ## 项目结构
 
 ```bash
 tools/
+├── design-system/                  # Tools 界面规范
 ├── public/                         # 静态资源
-├── scripts/                        # 构建与部署脚本
-├── src/                            # 源代码
+├── scripts/                        # 预渲染与部署脚本
+├── src/                            # 应用源代码
 │   ├── components/                 # 共享界面组件
 │   ├── hooks/                      # 共享 React Hook
 │   ├── i18n/                       # 中英文字典
-│   ├── pages/                      # 应用页面
+│   ├── pages/                      # 顶层页面
 │   ├── styles/                     # 全局样式与设计 token
 │   └── tools/                      # 独立浏览器工具
 ├── index.html                      # 应用入口页面
-├── package-lock.json               # 依赖锁定文件
-├── package.json                    # 依赖配置
+├── package-lock.json               # 锁定的依赖关系
+├── package.json                    # 脚本与依赖
 ├── tsconfig.json                   # TypeScript 配置
 └── vite.config.ts                  # Vite 配置
 ```
 
-## 网站部署
+## 添加工具
 
-推送到 `main` 后，工作流构建 `dist/` 并通过 rsync 发布到由 Caddy 托管的源站。每条路由
-都会预渲染为真实 `.html`，未知路径返回真实 $404$，而非 soft $200$。
+`src/tools/registry.ts` 是首页网格、路由和搜索的单一数据源。
+
+1. 创建 `src/tools/<id>/index.tsx`，按需添加 `styles.module.css`；
+2. 复用 `ToolLayout`、共享组件与 `useI18n`；
+3. 在 `src/tools/registry.ts` 注册工具；
+4. 在 `src/i18n/en.ts` 和 `src/i18n/zh-Hans.ts` 添加对应文案。
+
+## 部署
+
+推送到 `main` 后，工作流会构建并把 `dist/` 部署到由 Caddy 托管的源站。每项工具的路由
+都会预渲染为 HTML 文件，因此未知路径会返回真实的 404 响应。
 
 ## 许可协议
 
-本项目代码采用 [MIT 许可协议](LICENSE)。
+本项目代码采用 [MIT 许可协议](https://github.com/lailai0916/tools/blob/main/LICENSE)。

@@ -18,6 +18,7 @@ export const en = {
   'site.removeFavorite': 'Remove from favorites',
   'site.emptyFavorites': 'Favorite tools appear here.',
   'site.emptyRecent': 'Tools you open appear here.',
+  'site.skipToContent': 'Skip to content',
 
   'common.back': 'Back',
   'common.clear': 'Clear',

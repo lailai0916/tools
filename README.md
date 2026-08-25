@@ -1,94 +1,88 @@
 <div align="center">
   <h1>lailai's Tools</h1>
-  <p>English | <a href="README.zh-Hans.md">简体中文</a></p>
+  <p><strong>English</strong> · <a href="README.zh-Hans.md">简体中文</a></p>
   <p>
     <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/tools/deploy.yml?style=flat-square" alt="deployment" />
     <img src="https://img.shields.io/github/last-commit/lailai0916/tools?style=flat-square" alt="last commit" />
     <img src="https://img.shields.io/github/languages/top/lailai0916/tools?style=flat-square" alt="top language" />
     <img src="https://img.shields.io/github/repo-size/lailai0916/tools?style=flat-square" alt="repo size" />
+    <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style" />
     <img src="https://img.shields.io/github/license/lailai0916/tools?style=flat-square" alt="license" />
   </p>
 </div>
 
-## Website Introduction
+## Project Introduction
 
-Handy browser-based tools for developers at [tools.lailai.one](https://tools.lailai.one).
+A privacy-respecting collection of 140 browser-based developer tools at
+[tools.lailai.one](https://tools.lailai.one). No account is required, and tool inputs stay
+on the user's device. A self-hosted, cookieless Umami instance counts page views.
 
-A small, fast, privacy-respecting collection of developer utilities. Every tool runs
-entirely in your browser — no accounts, and the text you paste in never leaves your
-machine. Page views are counted with self-hosted, cookieless Umami analytics.
+## Project Features
 
-## Available Tools
+🧰 **140 browser tools** — conversion, text, cryptography, Web, development, maths and
+generation utilities share one searchable registry.
 
-140 tools across eight categories. The registry (`src/tools/registry.ts`) is the single
-source of truth; the home grid, routes and search all derive from it.
+🔒 **Local processing** — pasted text and generated values are handled by browser APIs
+instead of being submitted to an application server.
 
-| Category        | Tools                                                                                                                                                                                                                                    |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Converter (16)  | JSON Formatter, Base Converter, Base64, Base32, Color Converter, Timestamp, JSON ⇄ YAML, JSON ⇄ CSV, HTML Entities, Roman Numerals, Text ⇄ Binary, Temperature, Data Size, chmod Calculator, Duration, Angle                             |
-| Text (16)       | Case Converter, Regex Tester, Text Diff, Text Statistics, Sort Lines, Find & Replace, Slugify, Text Reverse, String Escape, Unicode Inspector, Remove Whitespace, Remove Accents, Line Endings, Caesar Cipher, Morse Code, NATO Alphabet |
-| Crypto (7)      | Text Hash (SHA-1/256/384/512), HMAC Generator, Text Encryption (AES-GCM), JWT Decoder, TOTP Generator, Password Strength, CRC-32                                                                                                         |
-| Web (9)         | URL Encoder, URL Parser, Query ⇄ JSON, Basic Auth Header, User-Agent Parser, IP Converter, MIME Lookup, HTTP Status Codes, Punycode                                                                                                      |
-| Development (8) | JSON to TypeScript, CSS Gradient, Box Shadow, Color Shades, CSS Unit Converter, Crontab Parser, SVG to Data URI, Meta Tags                                                                                                               |
-| Math (8)        | Math Evaluator, Percentage Calculator, Statistics, GCD & LCM, Prime Factorization, Prime Sieve, Combinatorics, Modular Exponentiation                                                                                                    |
-| Generator (12)  | UUID, ULID, Nano ID, Password Generator, Key Generator, Random Number, Random String, Random Color, QR Code, MAC Address, Placeholder Image, Lorem Ipsum                                                                                 |
+🌐 **Bilingual interface** — English is the default language and every tool includes a
+Simplified Chinese interface.
 
-## Tech Stack
-
-- **Vite 7** + **React 18** + **TypeScript** (strict)
-- Shared tokens and accessible primitives from [`@lailai/ui`](https://github.com/lailai0916/ui)
-- Route-level code splitting, so each tool loads only when opened
-- **react-router** — one real route per tool, deep-linkable
-- CSS Modules; design tokens are a hand-synced snapshot of [lailai.one](https://lailai.one)
-- Lightweight self-built i18n (English default, Simplified Chinese)
-- Almost every tool uses native browser APIs (`crypto.subtle`, `TextEncoder`, `URL`,
-  canvas, `Intl`…); the only added deps are `qrcode`, `diff` and `js-yaml`
+⚡ **Direct routes** — route-level code splitting keeps individual tools lightweight, and
+prerendering gives every tool a real shareable page.
 
 ## Getting Started
 
 ```bash
+git clone https://github.com/lailai0916/tools.git
+cd tools
 npm install
-npm run dev        # http://localhost:5173
-npm run build      # tsc + vite build + prerender one .html per route
-npm run check      # format + lint + typecheck
+npm run dev
 ```
 
-## Adding Tools
+Run the complete local gate before submitting changes:
 
-The registry is the single source of truth — the home grid, routes, and search all
-derive from it.
-
-1. Create `src/tools/<id>/index.tsx` (+ `styles.module.css`), following any existing
-   tool as a template. Use `ToolLayout`, the shared components, and `useI18n`.
-2. Add its entry to `src/tools/registry.ts`.
-3. Add its message keys to `src/i18n/en.ts` and `src/i18n/zh-Hans.ts`.
+```bash
+npm run check
+npm run build
+```
 
 ## Project Structure
 
 ```bash
 tools/
+├── design-system/                  # Tools interface specification
 ├── public/                         # Static assets
-├── scripts/                        # Build and deployment scripts
-├── src/                            # Source code
+├── scripts/                        # Prerendering and deployment scripts
+├── src/                            # Application source
 │   ├── components/                 # Shared interface components
 │   ├── hooks/                      # Shared React hooks
 │   ├── i18n/                       # English and Chinese dictionaries
-│   ├── pages/                      # Application pages
+│   ├── pages/                      # Top-level pages
 │   ├── styles/                     # Global styles and design tokens
 │   └── tools/                      # Individual browser tools
 ├── index.html                      # Application entry page
-├── package-lock.json               # Dependency lock file
-├── package.json                    # Dependency configuration
+├── package-lock.json               # Locked dependency graph
+├── package.json                    # Scripts and dependencies
 ├── tsconfig.json                   # TypeScript configuration
 └── vite.config.ts                  # Vite configuration
 ```
 
-## Site Deployment
+## Adding a Tool
 
-Pushing to `main` builds and rsyncs `dist/` to the origin server, served statically
-by Caddy. Each route is prerendered to a real `.html` so unknown paths return a true
-404 rather than a soft 200.
+The registry at `src/tools/registry.ts` is the single source for the home grid, routes and
+search.
+
+1. Create `src/tools/<id>/index.tsx` and an optional `styles.module.css`.
+2. Reuse `ToolLayout`, shared components and `useI18n`.
+3. Add the tool to `src/tools/registry.ts`.
+4. Add matching copy to `src/i18n/en.ts` and `src/i18n/zh-Hans.ts`.
+
+## Deployment
+
+Pushing to `main` builds and deploys `dist/` to the Caddy origin server. Every tool route
+is prerendered to an HTML file so unknown paths return a real 404 response.
 
 ## License
 
-This project's code is licensed under [MIT License](LICENSE).
+This project's code is licensed under [MIT License](https://github.com/lailai0916/tools/blob/main/LICENSE).
