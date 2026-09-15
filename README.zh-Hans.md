@@ -2,7 +2,7 @@
   <h1>lailai's Tools</h1>
   <p><a href="README.md">English</a> · <strong>简体中文</strong></p>
   <p>
-    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/tools/deploy.yml?style=flat-square" alt="部署状态" />
+    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/tools/deploy.yml?branch=main&style=flat-square" alt="部署状态" />
     <img src="https://img.shields.io/github/last-commit/lailai0916/tools?style=flat-square" alt="最后提交" />
     <img src="https://img.shields.io/github/languages/top/lailai0916/tools?style=flat-square" alt="主要语言" />
     <img src="https://img.shields.io/github/repo-size/lailai0916/tools?style=flat-square" alt="仓库大小" />
@@ -19,14 +19,14 @@
 
 ## 项目特性
 
-🧰 **140 项浏览器工具** —— 覆盖转换、文本、密码学与 Web。也包含开发、数学与生成工具。
+🧰 **140 项浏览器工具** — 覆盖转换、文本、密码学与 Web。也包含开发、数学与生成工具。
 全部使用同一份可搜索 registry。
 
-🔒 **本地处理** —— 粘贴的文本与生成值由浏览器 API 处理。数据不提交至应用服务器。
+🔒 **本地处理** — 粘贴的文本与生成值由浏览器 API 处理。数据不提交至应用服务器。
 
-🌐 **双语界面** —— 默认使用英文，每项工具都提供完整的简体中文界面。
+🌐 **双语界面** — 默认使用英文，每项工具都提供完整的简体中文界面。
 
-⚡ **独立路由** —— 按路由拆包控制单项工具的体积。预渲染为每项工具提供可分享的真实页面。
+⚡ **独立路由** — 按路由拆包控制单项工具的体积。预渲染为每项工具提供可分享的真实页面。
 
 ## 快速开始
 
@@ -53,7 +53,6 @@ tools/
 ├── scripts/                        # 预渲染与部署脚本
 ├── src/                            # 应用源代码
 │   ├── components/                 # 共享界面组件
-│   ├── hooks/                      # 共享 React Hook
 │   ├── i18n/                       # 中英文字典
 │   ├── pages/                      # 顶层页面
 │   ├── styles/                     # 全局样式与设计 token

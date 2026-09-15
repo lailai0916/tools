@@ -2,7 +2,7 @@
   <h1>lailai's Tools</h1>
   <p><strong>English</strong> · <a href="README.zh-Hans.md">简体中文</a></p>
   <p>
-    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/tools/deploy.yml?style=flat-square" alt="deployment" />
+    <img src="https://img.shields.io/github/actions/workflow/status/lailai0916/tools/deploy.yml?branch=main&style=flat-square" alt="deployment" />
     <img src="https://img.shields.io/github/last-commit/lailai0916/tools?style=flat-square" alt="last commit" />
     <img src="https://img.shields.io/github/languages/top/lailai0916/tools?style=flat-square" alt="top language" />
     <img src="https://img.shields.io/github/repo-size/lailai0916/tools?style=flat-square" alt="repo size" />
@@ -56,7 +56,6 @@ tools/
 ├── scripts/                        # Prerendering and deployment scripts
 ├── src/                            # Application source
 │   ├── components/                 # Shared interface components
-│   ├── hooks/                      # Shared React hooks
 │   ├── i18n/                       # English and Chinese dictionaries
 │   ├── pages/                      # Top-level pages
 │   ├── styles/                     # Global styles and design tokens
