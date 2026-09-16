@@ -3,7 +3,7 @@
 ## Project
 
 `tools.lailai.one` is a privacy-respecting collection of browser-only developer utilities.
-It uses Vite 7, React 18, strict TypeScript, React Router, CSS Modules, `@lailai/ui`, and a
+It uses Vite 7, React 18, strict TypeScript, React Router, CSS Modules, `@lailai0916/ui`, and a
 lightweight English/Simplified-Chinese i18n layer. Node.js 20 or newer is required.
 
 ## Commands
@@ -34,3 +34,6 @@ Run `npm run check` and `npm run build` before delivering code changes.
 This `AGENTS.md` file is the runtime-neutral source of repository instructions. `CLAUDE.md`
 is only a compatibility import. Claude-specific launch configuration remains in
 `.claude/launch.json`; durable project knowledge belongs here.
+
+Shared UI is maintained in `lailai0916/ui` and installed from npm. Import `theme.css` before
+`styles.css`, use `--lk-*` tokens, and customize supported `data-lk` hooks rather than generated classes.

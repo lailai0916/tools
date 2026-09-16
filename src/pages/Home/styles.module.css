@@ -146,8 +146,8 @@
 }
 
 .viewTab[aria-pressed='true'] {
-  background: var(--lui-color-accent-soft);
-  color: var(--lui-color-accent-label);
+  background: var(--lk-color-primary-soft);
+  color: var(--lk-color-primary-label);
 }
 
 .categories {
@@ -184,8 +184,8 @@
 }
 
 .category[aria-pressed='true'] {
-  background: var(--lui-color-accent-soft);
-  color: var(--lui-color-accent-label);
+  background: var(--lk-color-primary-soft);
+  color: var(--lk-color-primary-label);
 }
 
 .section {
@@ -264,7 +264,7 @@
   justify-content: center;
   margin-bottom: 11px;
   border-radius: 8px;
-  background: var(--lui-color-accent-soft);
+  background: var(--lk-color-primary-soft);
   color: var(--color-primary);
   font-size: 17px;
 }

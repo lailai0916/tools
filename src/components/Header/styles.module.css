@@ -23,7 +23,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  height: var(--lui-header-height);
+  height: var(--lk-header-height);
   padding-inline: 1.5rem;
   border-bottom: 1px solid var(--emphasis-200);
   background: var(--card-background);

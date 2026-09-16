@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { SelectField, TextField } from '@lailai/ui';
+import { SelectField, TextField } from '@lailai0916/ui';
 import Button from '@/components/Button';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';

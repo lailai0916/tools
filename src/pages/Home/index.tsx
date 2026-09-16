@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { Icon } from '@iconify/react';
-import { EmptyState } from '@lailai/ui';
+import { EmptyState } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
 import { CATEGORY_ORDER, TOOLS, type ToolCategory } from '@/tools/registry';
 import type { MessageKey } from '@/i18n/en';

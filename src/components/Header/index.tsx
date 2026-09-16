@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Brand, IconButton, ThemeControl } from '@lailai/ui';
+import { Brand, IconButton, ThemeControl } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
@@ -18,7 +18,7 @@ export default function Header() {
           </Link>
           <div className={styles.actions}>
             <IconButton
-              size="small"
+              size="sm"
               className={styles.languageButton}
               label={t('site.switchLanguage')}
               onClick={() => setLocale(locale === 'zh-Hans' ? 'en' : 'zh-Hans')}
