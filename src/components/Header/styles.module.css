@@ -43,12 +43,10 @@
   min-height: 44px;
   align-items: center;
   border-radius: var(--radius-control);
-  transition: color var(--transition);
 }
 
 .brand:hover {
   text-decoration: none;
-  color: var(--color-primary);
 }
 
 .actions {

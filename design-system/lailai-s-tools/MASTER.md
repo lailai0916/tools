@@ -37,7 +37,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 ### Search and Filters
 
-- Search is the primary control and remains centered.
+- Search is the primary control and remains centered; `/` focuses it and `Esc` clears or leaves it.
 - Favorites, recent tools, and categories are secondary controls below search.
 - Do not wrap the complete filter area in a large card.
 - Preserve filter state in the URL.

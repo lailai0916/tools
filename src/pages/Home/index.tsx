@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { Icon } from '@iconify/react';
-import { EmptyState } from '@lailai0916/ui';
+import { EmptyState, IconButton } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
 import { CATEGORY_ORDER, TOOLS, type ToolCategory } from '@/tools/registry';
 import type { MessageKey } from '@/i18n/en';
@@ -34,6 +34,8 @@ export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [favorites, setFavorites] = useState(() => readToolIds(FAVORITES_KEY));
   const [recent, setRecent] = useState(() => readToolIds(RECENT_KEY));
+  const searchRef = useRef<HTMLInputElement>(null);
+  const categoriesRef = useRef<HTMLDivElement>(null);
 
   const query = searchParams.get('q') ?? '';
   const requestedView = searchParams.get('view');
@@ -43,6 +45,49 @@ export default function Home() {
   const category = CATEGORY_ORDER.includes(requestedCategory as ToolCategory)
     ? (requestedCategory as ToolCategory)
     : null;
+
+  useEffect(() => {
+    const ownerWindow = searchRef.current?.ownerDocument.defaultView;
+    if (!ownerWindow) return;
+
+    const focusSearch = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (
+        event.defaultPrevented ||
+        event.isComposing ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.altKey ||
+        event.key !== '/' ||
+        target?.matches('input, textarea, select, [contenteditable="true"]')
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      searchRef.current?.focus();
+    };
+
+    ownerWindow.addEventListener('keydown', focusSearch);
+    return () => ownerWindow.removeEventListener('keydown', focusSearch);
+  }, []);
+
+  useEffect(() => {
+    const container = categoriesRef.current;
+    const active = container?.querySelector<HTMLElement>("[aria-pressed='true']");
+    if (!container || !active) return;
+
+    const activeLeft = active.offsetLeft;
+    const activeRight = activeLeft + active.offsetWidth;
+    const visibleLeft = container.scrollLeft;
+    const visibleRight = visibleLeft + container.clientWidth;
+
+    if (activeLeft < visibleLeft) {
+      container.scrollLeft = Math.max(0, activeLeft - 8);
+    } else if (activeRight > visibleRight) {
+      container.scrollLeft = activeRight - container.clientWidth + 8;
+    }
+  }, [category]);
 
   const updateParam = (key: string, value?: string | null) => {
     const next = new URLSearchParams(searchParams);
@@ -125,12 +170,27 @@ export default function Home() {
         <div className={styles.searchWrap}>
           <Icon icon="lucide:search" className={styles.searchIcon} />
           <input
+            ref={searchRef}
             className={styles.search}
             value={query}
             onChange={(event) => updateParam('q', event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key !== 'Escape' || event.nativeEvent.isComposing) return;
+              if (query) {
+                updateParam('q');
+              } else {
+                event.currentTarget.blur();
+              }
+            }}
             placeholder={t('site.searchPlaceholder')}
             aria-label={t('site.searchPlaceholder')}
+            aria-keyshortcuts="/"
           />
+          {!query && (
+            <kbd className={styles.searchShortcut} aria-hidden="true">
+              /
+            </kbd>
+          )}
           {query && (
             <button
               type="button"
@@ -167,7 +227,11 @@ export default function Home() {
             ))}
           </div>
 
-          <div className={styles.categories} aria-label={t('site.allCategories')}>
+          <div
+            ref={categoriesRef}
+            className={styles.categories}
+            aria-label={t('site.allCategories')}
+          >
             <button
               type="button"
               className={styles.category}
@@ -225,15 +289,15 @@ export default function Home() {
                         {t(`tools.${tool.key}.description` as MessageKey)}
                       </span>
                     </Link>
-                    <button
-                      type="button"
+                    <IconButton
+                      size="sm"
                       className={styles.favorite}
                       aria-pressed={favorite}
-                      aria-label={favorite ? t('site.removeFavorite') : t('site.addFavorite')}
+                      label={favorite ? t('site.removeFavorite') : t('site.addFavorite')}
                       onClick={() => toggleFavorite(tool.id)}
                     >
                       <Icon icon={favorite ? 'lucide:star' : 'lucide:star'} />
-                    </button>
+                    </IconButton>
                   </article>
                 );
               })}
