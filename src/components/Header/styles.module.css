@@ -24,8 +24,7 @@
   top: 0;
   z-index: 10;
   height: var(--lk-header-height);
-  padding-inline: 1.5rem;
-  border-bottom: 1px solid var(--emphasis-200);
+  border-bottom: 1px solid var(--emphasis-300);
   background: var(--card-background);
 }
 
@@ -34,8 +33,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  width: 100%;
-  max-width: 1100px;
+  width: min(100% - 40px, 1120px);
   height: 100%;
   margin-inline: auto;
 }
@@ -65,7 +63,13 @@
 }
 
 @media (max-width: 600px), (pointer: coarse) {
-  .header {
-    padding-inline: 1rem;
+  .inner {
+    width: min(100% - 24px, 1120px);
+  }
+}
+
+@media (max-width: 460px) {
+  .brand :global([data-lk='brand'] > span:last-child) {
+    display: none;
   }
 }

@@ -18,7 +18,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 - Header height: `56px`.
 - Brand logos have no border, ring, or decorative shadow.
-- Content width: `1100px` maximum.
+- Content width: `1120px` maximum.
 - Desktop page padding: `24px`; mobile page padding: `16px`.
 - Home search width: `520px` maximum.
 - Tool grid: `repeat(auto-fill, minmax(230px, 1fr))`.
