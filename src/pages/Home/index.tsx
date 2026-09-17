@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { Icon } from '@iconify/react';
-import { EmptyState, IconButton } from '@lailai0916/ui';
+import { Button, EmptyState, IconButton } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
 import { CATEGORY_ORDER, TOOLS, type ToolCategory } from '@/tools/registry';
 import type { MessageKey } from '@/i18n/en';
@@ -152,12 +152,21 @@ export default function Home() {
     [filtered]
   );
 
-  const emptyDescription =
-    view === 'favorites'
+  const hasFilter = Boolean(query.trim() || category);
+  const emptyTitle = hasFilter
+    ? t('site.noResults')
+    : view === 'favorites'
+      ? t('site.noFavorites')
+      : view === 'recent'
+        ? t('site.noRecent')
+        : t('site.noResults');
+  const emptyDescription = hasFilter
+    ? t('site.noResultsDescription')
+    : view === 'favorites'
       ? t('site.emptyFavorites')
       : view === 'recent'
         ? t('site.emptyRecent')
-        : t('site.noResults');
+        : t('site.noResultsDescription');
 
   return (
     <div className={styles.home}>
@@ -192,14 +201,14 @@ export default function Home() {
             </kbd>
           )}
           {query && (
-            <button
-              type="button"
+            <IconButton
+              size="sm"
               className={styles.clearSearch}
               onClick={() => updateParam('q')}
-              aria-label={t('common.clear')}
+              label={t('common.clear')}
             >
               <Icon icon="lucide:x" />
-            </button>
+            </IconButton>
           )}
         </div>
 
@@ -230,6 +239,7 @@ export default function Home() {
           <div
             ref={categoriesRef}
             className={styles.categories}
+            role="group"
             aria-label={t('site.allCategories')}
           >
             <button
@@ -255,12 +265,37 @@ export default function Home() {
         </div>
       </section>
 
+      <p className={styles.resultStatus} role="status" aria-live="polite" aria-atomic="true">
+        {filtered.length} {t(filtered.length === 1 ? 'site.toolAvailable' : 'site.toolsAvailable')}
+      </p>
+
       {sections.length === 0 ? (
         <div className={styles.empty}>
           <EmptyState
-            icon={<Icon icon="lucide:search-x" />}
-            title={t('site.noResults')}
+            icon={
+              <Icon
+                icon={
+                  hasFilter
+                    ? 'lucide:search-x'
+                    : view === 'favorites'
+                      ? 'lucide:star'
+                      : view === 'recent'
+                        ? 'lucide:history'
+                        : 'lucide:search-x'
+                }
+              />
+            }
+            title={emptyTitle}
             description={emptyDescription}
+            action={
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => setSearchParams({}, { replace: true })}
+              >
+                {t('site.showAllTools')}
+              </Button>
+            }
           />
         </div>
       ) : (

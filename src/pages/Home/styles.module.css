@@ -70,32 +70,17 @@
 
 .clearSearch {
   position: absolute;
-  top: 50%;
+  top: 5px;
   right: 5px;
-  display: grid;
   width: 34px;
   height: 34px;
-  padding: 0;
-  transform: translateY(-50%);
-  place-items: center;
-  border: 0;
   border-radius: 7px;
-  background: transparent;
   color: var(--font-color-secondary);
-  font: inherit;
-  transition:
-    background-color var(--transition),
-    color var(--transition),
-    transform var(--transition);
 }
 
 .clearSearch:hover {
   background: var(--emphasis-200);
   color: var(--font-color-base);
-}
-
-.clearSearch:active {
-  transform: translateY(-50%) scale(0.92);
 }
 
 .searchShortcut {
@@ -340,6 +325,17 @@
   padding: 24px 0;
 }
 
+.resultStatus {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 @media (max-width: 900px) {
   .filterRow {
     align-items: stretch;
@@ -380,6 +376,13 @@
     min-height: 44px;
   }
 
+  .clearSearch {
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+  }
+
   .searchShortcut {
     display: none;
   }
@@ -390,6 +393,10 @@
 
   .category {
     min-width: 44px;
+  }
+
+  .empty :global([data-lk='button']) {
+    min-height: 44px;
   }
 
   .grid {
