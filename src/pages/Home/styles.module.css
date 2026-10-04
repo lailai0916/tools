@@ -178,6 +178,10 @@
 }
 
 .favorite[aria-pressed='true'] svg {
+  color: var(--lk-color-primary-label);
+}
+
+.favorite[aria-pressed='true'] svg path {
   fill: currentColor;
 }
 
