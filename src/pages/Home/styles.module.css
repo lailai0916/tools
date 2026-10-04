@@ -165,6 +165,7 @@
   color: var(--font-color-secondary);
   font-size: 0.825rem;
   line-height: 1.55;
+  text-wrap: pretty;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
