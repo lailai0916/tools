@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -67,7 +67,7 @@ export default function SvgToDataUri() {
         placeholder={t('tools.svgDataUri.placeholder')}
         aria-label={t('common.input')}
       />
-      {result.ok === false && <p className={styles.error}>{t('tools.svgDataUri.invalid')}</p>}
+      {result.ok === false && <Alert variant="danger">{t('tools.svgDataUri.invalid')}</Alert>}
       {result.ok === null && <p className={styles.hint}>{t('tools.svgDataUri.empty')}</p>}
 
       {result.ok === true && (
@@ -77,12 +77,7 @@ export default function SvgToDataUri() {
               <label className={styles.paneLabel}>{t('tools.svgDataUri.output')}</label>
               <CopyButton value={uri} label={t('common.copy')} copiedLabel={t('common.copied')} />
             </div>
-            <TextArea
-              className={styles.short}
-              value={uri}
-              readOnly
-              aria-label={t('tools.svgDataUri.output')}
-            />
+            <TextArea value={uri} readOnly aria-label={t('tools.svgDataUri.output')} />
           </div>
 
           <div className={styles.pane}>
@@ -90,12 +85,7 @@ export default function SvgToDataUri() {
               <label className={styles.paneLabel}>{t('tools.svgDataUri.cssValue')}</label>
               <CopyButton value={css} label={t('common.copy')} copiedLabel={t('common.copied')} />
             </div>
-            <TextArea
-              className={styles.short}
-              value={css}
-              readOnly
-              aria-label={t('tools.svgDataUri.cssValue')}
-            />
+            <TextArea value={css} readOnly aria-label={t('tools.svgDataUri.cssValue')} />
           </div>
         </>
       )}

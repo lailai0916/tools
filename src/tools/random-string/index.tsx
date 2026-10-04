@@ -1,6 +1,6 @@
+import { Button, TextField } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -70,24 +70,20 @@ export default function RandomString() {
       backLabel={t('common.back')}
     >
       <div className={styles.options}>
-        <div className={styles.field}>
-          <label htmlFor="rs-length" className={styles.label}>
-            {t('tools.randomString.length')}
-          </label>
-          <input
-            id="rs-length"
-            type="number"
-            min={1}
-            max={MAX_LENGTH}
-            className={styles.input}
-            value={length}
-            onChange={(e) => {
-              setLength(e.target.value);
-              run(e.target.value, charset, custom);
-            }}
-            aria-label={t('tools.randomString.length')}
-          />
-        </div>
+        <TextField
+          wrapperClassName={styles.field}
+          label={t('tools.randomString.length')}
+          id="rs-length"
+          type="number"
+          min={1}
+          max={MAX_LENGTH}
+          value={length}
+          onChange={(e) => {
+            setLength(e.target.value);
+            run(e.target.value, charset, custom);
+          }}
+          aria-label={t('tools.randomString.length')}
+        />
 
         <div className={styles.field}>
           <span className={styles.label}>{t('tools.randomString.charset')}</span>

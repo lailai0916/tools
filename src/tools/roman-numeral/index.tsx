@@ -1,3 +1,4 @@
+import { Alert } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -113,7 +114,7 @@ export default function RomanNumeral() {
               placeholder={f.placeholder}
               aria-label={f.label}
             />
-            {invalid === f.key && <p className={styles.error}>{t('tools.romanNumeral.invalid')}</p>}
+            {invalid === f.key && <Alert variant="danger">{t('tools.romanNumeral.invalid')}</Alert>}
           </div>
         ))}
       </div>

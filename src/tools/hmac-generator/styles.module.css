@@ -17,11 +17,6 @@
   color: var(--font-color-secondary);
 }
 
-.input {
-  min-height: 0;
-  resize: none;
-}
-
 .algorithms {
   display: flex;
   gap: 0.5rem;

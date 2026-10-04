@@ -10,14 +10,7 @@
   gap: 0.5rem;
 }
 
-.label {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
 .input {
-  min-height: 0;
   resize: none;
 }
 
@@ -38,8 +31,4 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.output {
-  min-height: 12rem;
 }

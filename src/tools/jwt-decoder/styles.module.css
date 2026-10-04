@@ -35,13 +35,6 @@
   line-height: 1.5;
 }
 
-.error {
-  margin: 0;
-  font-size: var(--font-size-code);
-  color: var(--color-danger);
-  font-family: var(--font-family-mono);
-}
-
 .note {
   margin: 0;
   font-size: var(--font-size-label);

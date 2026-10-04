@@ -1,3 +1,4 @@
+import { Alert, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import CopyButton from '@/components/CopyButton';
@@ -66,32 +67,32 @@ export default function Combinatorics() {
       backLabel={t('common.back')}
     >
       <div className={styles.inputs}>
-        <label className={styles.field}>
-          <span className={styles.label}>{t('tools.combinatorics.n')}</span>
-          <input
-            className={styles.input}
-            type="number"
-            inputMode="numeric"
-            value={nStr}
-            onChange={(e) => setNStr(e.target.value)}
-            aria-label={t('tools.combinatorics.n')}
-          />
-        </label>
-        <label className={styles.field}>
-          <span className={styles.label}>{t('tools.combinatorics.r')}</span>
-          <input
-            className={styles.input}
-            type="number"
-            inputMode="numeric"
-            value={rStr}
-            onChange={(e) => setRStr(e.target.value)}
-            aria-label={t('tools.combinatorics.r')}
-          />
-        </label>
+        <TextField
+          wrapperClassName={styles.field}
+          label={t('tools.combinatorics.n')}
+          className={styles.input}
+          type="number"
+          inputMode="numeric"
+          value={nStr}
+          onChange={(e) => setNStr(e.target.value)}
+          aria-label={t('tools.combinatorics.n')}
+          monospace
+        />
+        <TextField
+          wrapperClassName={styles.field}
+          label={t('tools.combinatorics.r')}
+          className={styles.input}
+          type="number"
+          inputMode="numeric"
+          value={rStr}
+          onChange={(e) => setRStr(e.target.value)}
+          aria-label={t('tools.combinatorics.r')}
+          monospace
+        />
       </div>
 
       {result.kind === 'invalid' && (
-        <p className={styles.error}>{t('tools.combinatorics.invalid')}</p>
+        <Alert variant="danger">{t('tools.combinatorics.invalid')}</Alert>
       )}
 
       {rows.length > 0 && (

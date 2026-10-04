@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -100,7 +100,7 @@ export default function BaseConverter() {
             placeholder={t(b.labelKey)}
             aria-label={t(b.labelKey)}
           />
-          {invalid === b.key && <p className={styles.error}>{t('tools.baseConverter.invalid')}</p>}
+          {invalid === b.key && <Alert variant="danger">{t('tools.baseConverter.invalid')}</Alert>}
         </div>
       ))}
     </ToolLayout>

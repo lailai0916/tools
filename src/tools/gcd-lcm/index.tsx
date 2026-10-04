@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -76,7 +76,7 @@ export default function GcdLcm() {
         aria-label={t('common.input')}
       />
 
-      {result.kind === 'invalid' && <p className={styles.error}>{t('tools.gcdLcm.invalid')}</p>}
+      {result.kind === 'invalid' && <Alert variant="danger">{t('tools.gcdLcm.invalid')}</Alert>}
       {result.kind === 'empty' && <p className={styles.hint}>{t('tools.gcdLcm.empty')}</p>}
 
       {rows.length > 0 && (

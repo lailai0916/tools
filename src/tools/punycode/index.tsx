@@ -1,3 +1,4 @@
+import { Alert } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -176,7 +177,7 @@ export default function Punycode() {
               placeholder={f.placeholder}
               aria-label={t(f.labelKey)}
             />
-            {invalid === f.key && <p className={styles.error}>{t('tools.punycode.invalid')}</p>}
+            {invalid === f.key && <Alert variant="danger">{t('tools.punycode.invalid')}</Alert>}
           </div>
         ))}
       </div>

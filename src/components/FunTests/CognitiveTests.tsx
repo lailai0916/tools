@@ -1,3 +1,4 @@
+import { Button, Input, TextArea } from '@lailai0916/ui';
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import clsx from 'clsx';
 import { useI18n } from '@/i18n';
@@ -165,9 +166,9 @@ export function ArithmeticSprintTest() {
           <Instructions>
             {text('instructions').replace('{count}', String(questionCount))}
           </Instructions>
-          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+          <Button type="button" variant="primary" onClick={start}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <GamePanel>
@@ -176,7 +177,7 @@ export function ArithmeticSprintTest() {
           </strong>
           <form className={funStyles.answerForm} onSubmit={submit}>
             <label htmlFor="arithmetic-answer">{text('answer')}</label>
-            <input
+            <Input
               id="arithmetic-answer"
               className={funStyles.textInput}
               inputMode="numeric"
@@ -187,9 +188,9 @@ export function ArithmeticSprintTest() {
               }}
               autoFocus
             />
-            <button type="submit" className={funStyles.inlinePrimary} disabled={answer === ''}>
+            <Button type="submit" variant="primary" disabled={answer === ''}>
               {text('submit')}
-            </button>
+            </Button>
           </form>
           {lastResult && (
             <div className={funStyles.answerReveal} aria-live="polite">
@@ -372,9 +373,9 @@ export function GoNoGoTest() {
               <i className={funStyles.stopSignal} /> {text('stop')}
             </span>
           </div>
-          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+          <Button type="button" variant="primary" onClick={start}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <button type="button" className={funStyles.goPad} onPointerDown={respond}>
@@ -531,7 +532,7 @@ export function TypingSpeedTest() {
               </span>
             ))}
           </p>
-          <textarea
+          <TextArea
             className={funStyles.typingInput}
             value={input}
             onChange={(event) => update(event.target.value)}

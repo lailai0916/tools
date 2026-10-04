@@ -1,5 +1,6 @@
+import { Checkbox, TextField } from '@lailai0916/ui';
 import { Fragment, useState } from 'react';
-import clsx from 'clsx';
+
 import ToolLayout from '@/components/ToolLayout';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -72,36 +73,32 @@ export default function UnixPermission() {
           <Fragment key={r.key}>
             <span className={styles.rowHead}>{t(r.labelKey)}</span>
             {COLS.map((c) => (
-              <label key={c.key} className={styles.cell}>
-                <input
-                  type="checkbox"
-                  className={styles.check}
-                  checked={(bits[ri] & c.bit) !== 0}
-                  onChange={() => toggle(ri, c.bit)}
-                  aria-label={`${t(r.labelKey)} ${t(c.labelKey)}`}
-                />
-              </label>
+              <Checkbox
+                className={styles.cell}
+                key={c.key}
+                checked={(bits[ri] & c.bit) !== 0}
+                onChange={() => toggle(ri, c.bit)}
+                aria-label={`${t(r.labelKey)} ${t(c.labelKey)}`}
+                label={''}
+              />
             ))}
           </Fragment>
         ))}
       </div>
 
-      <div className={styles.field}>
-        <label className={styles.label} htmlFor="unix-octal-input">
-          {t('tools.unixPermission.octalInput')}
-        </label>
-        <input
-          id="unix-octal-input"
-          type="text"
-          inputMode="numeric"
-          maxLength={3}
-          className={clsx(styles.input, !octalValid && styles.invalid)}
-          value={octalText}
-          onChange={(e) => editOctal(e.target.value)}
-          placeholder="644"
-          aria-label={t('tools.unixPermission.octalInput')}
-        />
-      </div>
+      <TextField
+        wrapperClassName={styles.field}
+        label={t('tools.unixPermission.octalInput')}
+        id="unix-octal-input"
+        type="text"
+        inputMode="numeric"
+        maxLength={3}
+        invalid={!octalValid}
+        value={octalText}
+        onChange={(e) => editOctal(e.target.value)}
+        placeholder="644"
+        aria-label={t('tools.unixPermission.octalInput')}
+      />
 
       <div className={styles.results}>
         <div className={styles.row}>

@@ -1,3 +1,4 @@
+import { Checkbox, Slider, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import CopyButton from '@/components/CopyButton';
@@ -52,55 +53,43 @@ export default function BoxShadow() {
     >
       <div className={styles.grid}>
         {sliders.map((s) => (
-          <div className={styles.rangeField} key={s.key}>
-            <label className={styles.label}>
-              {t(`tools.boxShadow.${s.key}` as MessageKey)}
-              <span className={styles.value}>{s.value}px</span>
-            </label>
-            <input
-              className={styles.range}
-              type="range"
-              min={s.min}
-              max={s.max}
-              value={s.value}
-              onInput={(e) => s.set(Number(e.currentTarget.value))}
-              aria-label={t(`tools.boxShadow.${s.key}` as MessageKey)}
-            />
-          </div>
+          <Slider
+            key={s.key}
+            label={t(`tools.boxShadow.${s.key}` as MessageKey)}
+            valueLabel={`${s.value}px`}
+            value={s.value}
+            min={s.min}
+            max={s.max}
+            onChange={s.set}
+          />
         ))}
       </div>
 
       <div className={styles.row}>
-        <div className={styles.field}>
-          <label className={styles.label}>{t('tools.boxShadow.color')}</label>
-          <input
-            className={styles.color}
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            aria-label={t('tools.boxShadow.color')}
-          />
-        </div>
-        <div className={styles.rangeField}>
-          <label className={styles.label}>
-            {t('tools.boxShadow.opacity')}
-            <span className={styles.value}>{opacity.toFixed(2)}</span>
-          </label>
-          <input
-            className={styles.range}
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            value={opacity}
-            onInput={(e) => setOpacity(Number(e.currentTarget.value))}
-            aria-label={t('tools.boxShadow.opacity')}
-          />
-        </div>
-        <label className={styles.check}>
-          <input type="checkbox" checked={inset} onChange={(e) => setInset(e.target.checked)} />
-          {t('tools.boxShadow.inset')}
-        </label>
+        <TextField
+          wrapperClassName={styles.field}
+          label={t('tools.boxShadow.color')}
+          className={styles.color}
+          type="color"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+          aria-label={t('tools.boxShadow.color')}
+        />
+        <Slider
+          className={styles.rangeField}
+          label={t('tools.boxShadow.opacity')}
+          valueLabel={opacity.toFixed(2)}
+          value={opacity}
+          min={0}
+          max={1}
+          step={0.01}
+          onChange={setOpacity}
+        />
+        <Checkbox
+          checked={inset}
+          onChange={(e) => setInset(e.target.checked)}
+          label={t('tools.boxShadow.inset')}
+        />
       </div>
 
       <div className={styles.pane}>

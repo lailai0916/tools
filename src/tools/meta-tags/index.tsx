@@ -1,3 +1,4 @@
+import { TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -84,18 +85,18 @@ export default function MetaTags() {
     >
       <div className={styles.grid}>
         {fields.map((f) => (
-          <div className={styles.field} key={f.key}>
-            <label className={styles.label}>{f.label}</label>
-            <TextArea
-              className={styles.input}
-              rows={1}
-              monospace={false}
-              value={model[f.key]}
-              onChange={(e) => setModel((prev) => ({ ...prev, [f.key]: e.target.value }))}
-              placeholder={f.placeholder}
-              aria-label={f.label}
-            />
-          </div>
+          <TextAreaField
+            wrapperClassName={styles.field}
+            key={f.key}
+            label={f.label}
+            className={styles.input}
+            rows={1}
+
+            value={model[f.key]}
+            onChange={(e) => setModel((prev) => ({ ...prev, [f.key]: e.target.value }))}
+            placeholder={f.placeholder}
+            aria-label={f.label}
+          />
         ))}
       </div>
 
@@ -104,12 +105,7 @@ export default function MetaTags() {
           <label className={styles.paneLabel}>{t('tools.metaTags.output')}</label>
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
         </div>
-        <TextArea
-          className={styles.output}
-          value={output}
-          readOnly
-          aria-label={t('tools.metaTags.output')}
-        />
+        <TextArea value={output} readOnly aria-label={t('tools.metaTags.output')} />
       </div>
     </ToolLayout>
   );

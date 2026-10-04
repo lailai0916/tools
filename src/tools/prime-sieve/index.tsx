@@ -1,3 +1,4 @@
+import { Alert, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -55,22 +56,22 @@ export default function PrimeSieve() {
       description={t('tools.primeSieve.description')}
       backLabel={t('common.back')}
     >
-      <label className={styles.field}>
-        <span className={styles.label}>{t('tools.primeSieve.limitLabel')}</span>
-        <input
-          className={styles.input}
-          type="number"
-          inputMode="numeric"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={t('tools.primeSieve.placeholder')}
-          aria-label={t('tools.primeSieve.limitLabel')}
-        />
-      </label>
+      <TextField
+        wrapperClassName={styles.field}
+        label={t('tools.primeSieve.limitLabel')}
+        className={styles.input}
+        type="number"
+        inputMode="numeric"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder={t('tools.primeSieve.placeholder')}
+        aria-label={t('tools.primeSieve.limitLabel')}
+        monospace
+      />
 
-      {result.kind === 'invalid' && <p className={styles.error}>{t('tools.primeSieve.invalid')}</p>}
+      {result.kind === 'invalid' && <Alert variant="danger">{t('tools.primeSieve.invalid')}</Alert>}
       {result.kind === 'tooLarge' && (
-        <p className={styles.error}>{t('tools.primeSieve.tooLarge')}</p>
+        <Alert variant="danger">{t('tools.primeSieve.tooLarge')}</Alert>
       )}
       {result.kind === 'empty' && <p className={styles.hint}>{t('tools.primeSieve.empty')}</p>}
 

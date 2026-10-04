@@ -32,20 +32,6 @@
   background: var(--card-background);
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--font-size-code);
-}
-
-.table tbody tr {
-  transition: background-color var(--transition);
-}
-
-.table tbody tr:hover {
-  background: color-mix(in srgb, var(--emphasis-100) 55%, transparent);
-}
-
 .th {
   text-align: left;
   padding: 0.55rem 0.75rem;
@@ -77,11 +63,6 @@
   min-width: 1.75rem;
   font-size: 1.1rem;
   color: var(--font-color-base);
-}
-
-.table tbody tr:last-child .td,
-.table tbody tr:last-child .glyphCell {
-  border-bottom: none;
 }
 
 .truncated {

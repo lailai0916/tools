@@ -1,6 +1,6 @@
+import { Button, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -132,19 +132,18 @@ export default function MorseCode() {
         </Button>
       </div>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={
-            mode === 'toMorse'
-              ? t('tools.morseCode.textPlaceholder')
-              : t('tools.morseCode.morsePlaceholder')
-          }
-          aria-label={t('common.input')}
-        />
-      </div>
+      <TextAreaField
+        wrapperClassName={styles.pane}
+        label={t('common.input')}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder={
+          mode === 'toMorse'
+            ? t('tools.morseCode.textPlaceholder')
+            : t('tools.morseCode.morsePlaceholder')
+        }
+        aria-label={t('common.input')}
+      />
 
       <div className={styles.pane}>
         <div className={styles.outputHead}>

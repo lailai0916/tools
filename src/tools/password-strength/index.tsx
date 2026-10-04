@@ -1,7 +1,6 @@
+import { Button, PasswordInput } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
-import SecretInput from '@/components/SecretInput';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import styles from './styles.module.css';
@@ -123,7 +122,7 @@ export default function PasswordStrength() {
             {t('common.clear')}
           </Button>
         </div>
-        <SecretInput
+        <PasswordInput
           className={styles.input}
           value={password}
           onChange={(e) => setPassword(e.target.value)}

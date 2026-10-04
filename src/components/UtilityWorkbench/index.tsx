@@ -1,6 +1,5 @@
+import { Alert, Button, SelectField, TextAreaField, TextField } from '@lailai0916/ui';
 import { useEffect, useMemo, useState } from 'react';
-import { SelectField, TextField } from '@lailai0916/ui';
-import Button from '@/components/Button';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
 import ToolLayout from '@/components/ToolLayout';
@@ -84,19 +83,19 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
           const placeholder = t(placeholderKey) === placeholderKey ? '' : t(placeholderKey);
 
           return field.type === 'textarea' ? (
-            <label className={styles.wideField} key={field.key}>
-              <span className={styles.label}>{label}</span>
-              <TextArea
-                value={values[field.key] ?? ''}
-                onChange={(event) => update(field.key, event.target.value)}
-                placeholder={placeholder}
-                aria-label={label}
-              />
-            </label>
+            <TextAreaField
+              wrapperClassName={styles.wideField}
+              key={field.key}
+              label={label}
+              value={values[field.key] ?? ''}
+              onChange={(event) => update(field.key, event.target.value)}
+              placeholder={placeholder}
+              aria-label={label}
+            />
           ) : field.type === 'select' ? (
             <SelectField
               key={field.key}
-              className={styles.control}
+
               label={label}
               value={values[field.key] ?? ''}
               onChange={(event) => update(field.key, event.target.value)}
@@ -110,7 +109,7 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
           ) : (
             <TextField
               key={field.key}
-              className={styles.control}
+
               label={label}
               type={field.type ?? 'text'}
               value={values[field.key] ?? ''}
@@ -139,9 +138,9 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
       </div>
 
       {result.error ? (
-        <p className={styles.error} role="alert">
+        <Alert variant="danger" role="alert">
           {result.error}
-        </p>
+        </Alert>
       ) : definition.outputRows ? (
         <pre className={styles.result}>{result.output || t('common.waitingForInput')}</pre>
       ) : (

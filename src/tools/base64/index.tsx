@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -87,7 +87,7 @@ export default function Base64() {
           }
           aria-label={t('common.input')}
         />
-        {error && <p className={styles.error}>{t('tools.base64.decodeError')}</p>}
+        {error && <Alert variant="danger">{t('tools.base64.decodeError')}</Alert>}
       </div>
 
       <div className={styles.pane}>

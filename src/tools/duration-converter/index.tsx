@@ -1,7 +1,7 @@
+import { Alert, Button, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
-import clsx from 'clsx';
+
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -59,21 +59,18 @@ export default function DurationConverter() {
       description={t('tools.durationConverter.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.field}>
-        <label className={styles.label} htmlFor="duration-value">
-          {t('tools.durationConverter.valueLabel')}
-        </label>
-        <input
-          id="duration-value"
-          type="text"
-          inputMode="decimal"
-          className={clsx(styles.input, parsed.state === 'invalid' && styles.invalid)}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder={t('tools.durationConverter.placeholder')}
-          aria-label={t('tools.durationConverter.valueLabel')}
-        />
-      </div>
+      <TextField
+        wrapperClassName={styles.field}
+        label={t('tools.durationConverter.valueLabel')}
+        id="duration-value"
+        type="text"
+        inputMode="decimal"
+        invalid={parsed.state === 'invalid'}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={t('tools.durationConverter.placeholder')}
+        aria-label={t('tools.durationConverter.valueLabel')}
+      />
 
       <div className={styles.units}>
         {UNITS.map((u) => (
@@ -84,7 +81,7 @@ export default function DurationConverter() {
       </div>
 
       {parsed.state === 'invalid' && (
-        <p className={styles.error}>{t('tools.durationConverter.invalid')}</p>
+        <Alert variant="danger">{t('tools.durationConverter.invalid')}</Alert>
       )}
 
       <div className={styles.results}>

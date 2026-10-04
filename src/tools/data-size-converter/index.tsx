@@ -1,7 +1,7 @@
+import { Alert, Button, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
-import clsx from 'clsx';
+
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -68,21 +68,18 @@ export default function DataSizeConverter() {
       description={t('tools.dataSizeConverter.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.field}>
-        <label className={styles.label} htmlFor="data-size-value">
-          {t('tools.dataSizeConverter.valueLabel')}
-        </label>
-        <input
-          id="data-size-value"
-          type="text"
-          inputMode="decimal"
-          className={clsx(styles.input, parsed.state === 'invalid' && styles.invalid)}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder={t('tools.dataSizeConverter.placeholder')}
-          aria-label={t('tools.dataSizeConverter.valueLabel')}
-        />
-      </div>
+      <TextField
+        wrapperClassName={styles.field}
+        label={t('tools.dataSizeConverter.valueLabel')}
+        id="data-size-value"
+        type="text"
+        inputMode="decimal"
+        invalid={parsed.state === 'invalid'}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={t('tools.dataSizeConverter.placeholder')}
+        aria-label={t('tools.dataSizeConverter.valueLabel')}
+      />
 
       <div className={styles.controls}>
         <div
@@ -117,7 +114,7 @@ export default function DataSizeConverter() {
       </div>
 
       {parsed.state === 'invalid' && (
-        <p className={styles.error}>{t('tools.dataSizeConverter.invalid')}</p>
+        <Alert variant="danger">{t('tools.dataSizeConverter.invalid')}</Alert>
       )}
 
       <div className={styles.results}>

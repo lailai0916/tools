@@ -10,18 +10,6 @@
   color: var(--font-color-secondary);
 }
 
-.input {
-  min-height: 0;
-  resize: none;
-}
-
-.error {
-  margin: 0;
-  font-size: var(--font-size-code);
-  color: var(--color-danger);
-  font-family: var(--font-family-mono);
-}
-
 .codeCard {
   display: flex;
   flex-direction: column;

@@ -1,7 +1,7 @@
+import { PasswordInput, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
-import SecretInput from '@/components/SecretInput';
+
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -42,20 +42,19 @@ export default function BasicAuth() {
       backLabel={t('common.back')}
     >
       <div className={styles.fields}>
-        <div className={styles.field}>
-          <label className={styles.fieldLabel}>{t('tools.basicAuth.username')}</label>
-          <TextArea
-            className={styles.input}
-            rows={1}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder={t('tools.basicAuth.usernamePlaceholder')}
-            aria-label={t('tools.basicAuth.username')}
-          />
-        </div>
+        <TextAreaField
+          wrapperClassName={styles.field}
+          label={t('tools.basicAuth.username')}
+          className={styles.input}
+          rows={1}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder={t('tools.basicAuth.usernamePlaceholder')}
+          aria-label={t('tools.basicAuth.username')}
+        />
         <div className={styles.field}>
           <label className={styles.fieldLabel}>{t('tools.basicAuth.password')}</label>
-          <SecretInput
+          <PasswordInput
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t('tools.basicAuth.passwordPlaceholder')}

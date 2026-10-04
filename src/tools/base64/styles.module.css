@@ -30,13 +30,6 @@
   justify-content: space-between;
 }
 
-.error {
-  margin: 0;
-  font-size: var(--font-size-code);
-  color: var(--color-danger);
-  font-family: var(--font-family-mono);
-}
-
 @media (max-width: 600px) {
   .controls {
     align-items: stretch;

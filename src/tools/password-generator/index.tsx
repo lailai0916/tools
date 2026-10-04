@@ -1,6 +1,6 @@
+import { Alert, Button, Checkbox, Slider } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -106,44 +106,29 @@ export default function PasswordGenerator() {
       backLabel={t('common.back')}
     >
       <div className={styles.options}>
-        <div className={styles.field}>
-          <div className={styles.fieldHead}>
-            <label htmlFor="pw-length" className={styles.label}>
-              {t('tools.passwordGenerator.length')}
-            </label>
-            <span className={styles.value}>{opts.length}</span>
-          </div>
-          <input
-            id="pw-length"
-            type="range"
-            min={4}
-            max={64}
-            value={opts.length}
-            onInput={(e) => update({ length: Number(e.currentTarget.value) })}
-            className={styles.range}
-            aria-label={t('tools.passwordGenerator.length')}
-          />
-        </div>
+        <Slider
+          label={t('tools.passwordGenerator.length')}
+          valueLabel={opts.length}
+          value={opts.length}
+          min={4}
+          max={64}
+          onChange={(length) => update({ length })}
+        />
 
         <div className={styles.checks}>
           {CLASSES.map((c) => (
-            <label key={c} className={styles.check}>
-              <input
-                type="checkbox"
-                checked={opts[c]}
-                onChange={(e) => toggleClass(c, e.target.checked)}
-              />
-              {t(`tools.passwordGenerator.${c}` as MessageKey)}
-            </label>
-          ))}
-          <label className={styles.check}>
-            <input
-              type="checkbox"
-              checked={opts.excludeAmbiguous}
-              onChange={(e) => update({ excludeAmbiguous: e.target.checked })}
+            <Checkbox
+              key={c}
+              checked={opts[c]}
+              onChange={(e) => toggleClass(c, e.target.checked)}
+              label={t(`tools.passwordGenerator.${c}` as MessageKey)}
             />
-            {t('tools.passwordGenerator.excludeAmbiguous')}
-          </label>
+          ))}
+          <Checkbox
+            checked={opts.excludeAmbiguous}
+            onChange={(e) => update({ excludeAmbiguous: e.target.checked })}
+            label={t('tools.passwordGenerator.excludeAmbiguous')}
+          />
         </div>
       </div>
 
@@ -168,7 +153,7 @@ export default function PasswordGenerator() {
           </div>
         </div>
         {noCharset ? (
-          <p className={styles.error}>{t('tools.passwordGenerator.noCharset')}</p>
+          <Alert variant="danger">{t('tools.passwordGenerator.noCharset')}</Alert>
         ) : (
           <TextArea
             rows={1}

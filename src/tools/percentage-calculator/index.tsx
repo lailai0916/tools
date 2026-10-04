@@ -1,3 +1,4 @@
+import { TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import { useI18n } from '@/i18n';
@@ -104,28 +105,28 @@ export default function PercentageCalculator() {
           <div key={b.id} className={styles.block}>
             <h2 className={styles.blockTitle}>{t(b.titleKey)}</h2>
             <div className={styles.inputs}>
-              <label className={styles.field}>
-                <span className={styles.label}>{t(b.xKey)}</span>
-                <input
-                  className={styles.input}
-                  type="number"
-                  inputMode="decimal"
-                  value={b.x}
-                  onChange={(e) => b.setX(e.target.value)}
-                  aria-label={t(b.xKey)}
-                />
-              </label>
-              <label className={styles.field}>
-                <span className={styles.label}>{t(b.yKey)}</span>
-                <input
-                  className={styles.input}
-                  type="number"
-                  inputMode="decimal"
-                  value={b.y}
-                  onChange={(e) => b.setY(e.target.value)}
-                  aria-label={t(b.yKey)}
-                />
-              </label>
+              <TextField
+                wrapperClassName={styles.field}
+                label={t(b.xKey)}
+                className={styles.input}
+                type="number"
+                inputMode="decimal"
+                value={b.x}
+                onChange={(e) => b.setX(e.target.value)}
+                aria-label={t(b.xKey)}
+                monospace
+              />
+              <TextField
+                wrapperClassName={styles.field}
+                label={t(b.yKey)}
+                className={styles.input}
+                type="number"
+                inputMode="decimal"
+                value={b.y}
+                onChange={(e) => b.setY(e.target.value)}
+                aria-label={t(b.yKey)}
+                monospace
+              />
             </div>
             <div className={styles.row}>
               <span className={styles.rowLabel}>{t('tools.percentageCalculator.result')}</span>

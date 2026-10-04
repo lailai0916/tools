@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Brand, IconButton, ThemeControl } from '@lailai0916/ui';
+import { Brand, IconButton, PageContainer, ThemeControl } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
@@ -12,14 +12,13 @@ export default function Header() {
         {t('site.skipToContent')}
       </a>
       <header className={styles.header}>
-        <div className={styles.inner}>
+        <PageContainer className={styles.inner}>
           <Link to="/" className={styles.brand}>
             <Brand logoSrc="/logo.svg" name={t('site.title')} />
           </Link>
           <div className={styles.actions}>
             <IconButton
               size="sm"
-              className={styles.languageButton}
               label={t('site.switchLanguage')}
               onClick={() => setLocale(locale === 'zh-Hans' ? 'en' : 'zh-Hans')}
             >
@@ -34,7 +33,7 @@ export default function Header() {
               }}
             />
           </div>
-        </div>
+        </PageContainer>
       </header>
     </>
   );

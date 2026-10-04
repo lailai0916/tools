@@ -4,55 +4,10 @@
   gap: 1rem;
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.fieldHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.label {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
-.value {
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-control);
-  font-weight: 600;
-  color: var(--color-primary);
-}
-
-.range {
-  width: 100%;
-  accent-color: var(--color-primary);
-}
-
 .checks {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.25rem;
-}
-
-.check {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--font-color-base);
-  cursor: pointer;
-}
-
-.check input {
-  accent-color: var(--color-primary);
-  width: 16px;
-  height: 16px;
 }
 
 .pane {
@@ -79,11 +34,4 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.error {
-  margin: 0;
-  font-size: var(--font-size-code);
-  color: var(--color-danger);
-  font-family: var(--font-family-mono);
 }

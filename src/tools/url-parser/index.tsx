@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -63,7 +63,7 @@ export default function UrlParser() {
         placeholder={t('tools.urlParser.placeholder')}
         aria-label={t('common.input')}
       />
-      {result.ok === false && <p className={styles.error}>{t('tools.urlParser.invalid')}</p>}
+      {result.ok === false && <Alert variant="danger">{t('tools.urlParser.invalid')}</Alert>}
 
       {result.ok === true && (
         <>

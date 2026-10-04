@@ -45,27 +45,6 @@
 
 .search {
   width: 100%;
-  height: 44px;
-  padding: 0 42px 0 40px;
-  border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-panel);
-  background: var(--card-background);
-  color: var(--font-color-base);
-  font: inherit;
-  font-size: 14px;
-  appearance: none;
-  transition:
-    border-color var(--transition),
-    box-shadow var(--transition);
-}
-
-.search::placeholder {
-  color: var(--emphasis-600);
-}
-
-.search:focus-visible {
-  border-color: var(--color-primary);
-  box-shadow: var(--focus-ring);
 }
 
 .clearSearch {
@@ -73,14 +52,6 @@
   top: 5px;
   right: 5px;
   width: 34px;
-  height: 34px;
-  border-radius: 7px;
-  color: var(--font-color-secondary);
-}
-
-.clearSearch:hover {
-  background: var(--emphasis-200);
-  color: var(--font-color-base);
 }
 
 .searchShortcut {
@@ -111,47 +82,7 @@
 }
 
 .viewTabs {
-  display: inline-flex;
   flex: none;
-  align-items: center;
-  gap: 2px;
-  padding: 2px;
-  border: 1px solid var(--emphasis-300);
-  border-radius: 9px;
-  background: var(--emphasis-100);
-}
-
-.viewTab,
-.category {
-  border: 0;
-  font: inherit;
-  white-space: nowrap;
-}
-
-.viewTab {
-  display: inline-flex;
-  min-height: 32px;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 0 10px;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--font-color-secondary);
-  font-size: 12px;
-  font-weight: 600;
-  transition:
-    background-color var(--transition),
-    color var(--transition);
-}
-
-.viewTab svg {
-  font-size: 14px;
-}
-
-.viewTab[aria-pressed='true'] {
-  background: var(--lk-color-primary-soft);
-  color: var(--lk-color-primary-label);
 }
 
 .categories {
@@ -168,29 +99,6 @@
 
 .categories::-webkit-scrollbar {
   display: none;
-}
-
-.category {
-  min-height: 34px;
-  padding: 0 9px;
-  border-radius: 7px;
-  background: transparent;
-  color: var(--font-color-secondary);
-  font-size: 12px;
-  font-weight: 550;
-  transition:
-    background-color var(--transition),
-    color var(--transition);
-}
-
-.category:hover {
-  background: var(--emphasis-100);
-  color: var(--font-color-base);
-}
-
-.category[aria-pressed='true'] {
-  background: var(--lk-color-primary-soft);
-  color: var(--lk-color-primary-label);
 }
 
 .section {
@@ -212,12 +120,6 @@
   letter-spacing: 0.01em;
 }
 
-.sectionCount {
-  color: var(--font-color-secondary);
-  font-size: 12px;
-  font-weight: 500;
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -227,21 +129,6 @@
 .card {
   position: relative;
   min-width: 0;
-  border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-panel);
-  background: var(--card-background);
-  transition:
-    border-color var(--transition),
-    background-color var(--transition);
-}
-
-.card:hover {
-  border-color: var(--emphasis-400);
-  background: color-mix(in srgb, var(--emphasis-100) 38%, var(--card-background));
-}
-
-.card:focus-within {
-  border-color: var(--color-primary);
 }
 
 .cardLink {
@@ -259,19 +146,6 @@
 
 .cardLink:focus-visible {
   border-radius: inherit;
-}
-
-.cardIcon {
-  display: inline-flex;
-  width: 32px;
-  height: 32px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 11px;
-  border-radius: 8px;
-  background: var(--lk-color-primary-soft);
-  color: var(--color-primary);
-  font-size: 17px;
 }
 
 .cardName {
@@ -302,19 +176,6 @@
   top: 11px;
   right: 9px;
   width: 34px;
-  height: 34px;
-  border-radius: 7px;
-  color: var(--emphasis-600);
-  font-size: 15px;
-}
-
-.favorite:hover {
-  background: var(--emphasis-200);
-  color: var(--color-primary);
-}
-
-.favorite[aria-pressed='true'] {
-  color: var(--color-warning);
 }
 
 .favorite[aria-pressed='true'] svg {
@@ -365,22 +226,10 @@
     width: 100%;
   }
 
-  .viewTab {
-    min-height: 44px;
-    flex: 1;
-  }
-
-  .search,
-  .category,
-  .favorite {
-    min-height: 44px;
-  }
-
   .clearSearch {
     top: 0;
     right: 0;
     width: 44px;
-    height: 44px;
   }
 
   .searchShortcut {
@@ -389,10 +238,6 @@
 
   .favorite {
     width: 44px;
-  }
-
-  .category {
-    min-width: 44px;
   }
 
   .empty :global([data-lk='button']) {
@@ -406,4 +251,17 @@
   .cardLink {
     min-height: 140px;
   }
+}
+
+.search {
+  padding-inline: 40px 42px;
+}
+
+.clearSearch {
+  top: 4px;
+  right: 4px;
+}
+
+.categories > button {
+  flex: none;
 }

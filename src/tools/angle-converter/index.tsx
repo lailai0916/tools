@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -116,7 +116,7 @@ export default function AngleConverter() {
             placeholder={u.placeholder}
             aria-label={t(u.labelKey)}
           />
-          {invalid === u.key && <p className={styles.error}>{t('tools.angleConverter.invalid')}</p>}
+          {invalid === u.key && <Alert variant="danger">{t('tools.angleConverter.invalid')}</Alert>}
         </div>
       ))}
     </ToolLayout>

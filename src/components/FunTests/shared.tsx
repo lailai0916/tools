@@ -1,3 +1,4 @@
+import { Button, Icon } from '@lailai0916/ui';
 import {
   useEffect,
   useRef,
@@ -7,8 +8,6 @@ import {
   type ReactNode,
 } from 'react';
 import clsx from 'clsx';
-import { Icon } from '@iconify/react';
-import Button from '@/components/Button';
 import ToolLayout from '@/components/ToolLayout';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';

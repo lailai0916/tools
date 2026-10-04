@@ -1,7 +1,7 @@
+import { Button, Checkbox, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
-import TextArea from '@/components/TextArea';
+
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -62,33 +62,26 @@ export default function Slugify() {
       </div>
 
       <div className={styles.checks}>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={lowercase}
-            onChange={(e) => setLowercase(e.target.checked)}
-          />
-          {t('tools.slugify.lowercase')}
-        </label>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={stripDiacritics}
-            onChange={(e) => setStripDiacritics(e.target.checked)}
-          />
-          {t('tools.slugify.stripDiacritics')}
-        </label>
-      </div>
-
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={t('tools.slugify.placeholder')}
-          aria-label={t('common.input')}
+        <Checkbox
+          checked={lowercase}
+          onChange={(e) => setLowercase(e.target.checked)}
+          label={t('tools.slugify.lowercase')}
+        />
+        <Checkbox
+          checked={stripDiacritics}
+          onChange={(e) => setStripDiacritics(e.target.checked)}
+          label={t('tools.slugify.stripDiacritics')}
         />
       </div>
+
+      <TextAreaField
+        wrapperClassName={styles.pane}
+        label={t('common.input')}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder={t('tools.slugify.placeholder')}
+        aria-label={t('common.input')}
+      />
 
       <div className={styles.pane}>
         <div className={styles.outputHead}>

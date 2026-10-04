@@ -1,6 +1,6 @@
+import { Button, Input, Slider, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -36,7 +36,7 @@ export default function CaesarCipher() {
           <label className={styles.label} htmlFor="caesar-shift">
             {t('tools.caesarCipher.shift')}
           </label>
-          <input
+          <Input
             id="caesar-shift"
             type="number"
             className={styles.num}
@@ -44,14 +44,14 @@ export default function CaesarCipher() {
             max={25}
             value={shift}
             onChange={(e) => setShift(clampShift(Number(e.target.value)))}
+            monospace
           />
-          <input
-            type="range"
+          <Slider
             className={styles.range}
             min={0}
             max={25}
             value={shift}
-            onInput={(e) => setShift(Number(e.currentTarget.value))}
+            onChange={setShift}
             aria-label={t('tools.caesarCipher.shift')}
           />
           <Button size="sm" active={shift === 13} onClick={() => setShift(13)}>
@@ -63,15 +63,14 @@ export default function CaesarCipher() {
         </Button>
       </div>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={t('tools.caesarCipher.placeholder')}
-          aria-label={t('common.input')}
-        />
-      </div>
+      <TextAreaField
+        wrapperClassName={styles.pane}
+        label={t('common.input')}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder={t('tools.caesarCipher.placeholder')}
+        aria-label={t('common.input')}
+      />
 
       <div className={styles.pane}>
         <div className={styles.outputHead}>

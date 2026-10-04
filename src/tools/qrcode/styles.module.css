@@ -21,22 +21,10 @@
   gap: 0.5rem;
 }
 
-.settingHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.settingLabel,
-.settingValue {
+.settingLabel {
   color: var(--font-color-secondary);
   font-size: var(--font-size-label);
   font-weight: 600;
-}
-
-.settingValue {
-  font-family: var(--font-family-mono);
-  font-variant-numeric: tabular-nums;
 }
 
 .levels,
@@ -44,10 +32,6 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-}
-
-.range {
-  width: 100%;
 }
 
 .pane {
@@ -60,13 +44,6 @@
   font-size: var(--font-size-label);
   font-weight: 600;
   color: var(--font-color-secondary);
-}
-
-.error {
-  margin: 0;
-  font-size: var(--font-size-code);
-  color: var(--color-danger);
-  font-family: var(--font-family-mono);
 }
 
 .preview {

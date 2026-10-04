@@ -51,3 +51,20 @@ jobs:
           rsync -rlptz --delete --no-o --no-g \
             -e "ssh -i ~/.ssh/deploy_key" \
             dist/ "${SERVER_USER}@${SERVER_HOST}:/var/www/tools.lailai.one/"
+
+      - name: Verify deployed website
+        run: |
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 3 --max-time 30 \
+            "https://tools.lailai.one/?deployment=$GITHUB_SHA" -o "$RUNNER_TEMP/deployed-index.html"
+          cmp dist/index.html "$RUNNER_TEMP/deployed-index.html"
+          python3 - <<'PY' > "$RUNNER_TEMP/deployed-assets.txt"
+          import pathlib, re
+          html = pathlib.Path('dist/index.html').read_text()
+          for asset in sorted(set(re.findall(r'(?:src|href)=[\"\'](/assets/[^\"\']+)', html))):
+              print(asset)
+          PY
+          while IFS= read -r asset; do
+            curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 3 --max-time 30 \
+              "https://tools.lailai.one$asset?deployment=$GITHUB_SHA" -o "$RUNNER_TEMP/deployed-asset"
+            cmp "dist$asset" "$RUNNER_TEMP/deployed-asset"
+          done < "$RUNNER_TEMP/deployed-assets.txt"

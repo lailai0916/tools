@@ -1,3 +1,4 @@
+import { Alert } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -72,7 +73,7 @@ export default function CssUnit() {
           />
           <span className={styles.suffix}>px</span>
         </div>
-        {invalid === 'base' && <p className={styles.error}>{t('tools.cssUnit.invalid')}</p>}
+        {invalid === 'base' && <Alert variant="danger">{t('tools.cssUnit.invalid')}</Alert>}
       </div>
 
       <div className={styles.grid}>
@@ -90,7 +91,7 @@ export default function CssUnit() {
               />
               <span className={styles.suffix}>{f.suffix}</span>
             </div>
-            {invalid === f.key && <p className={styles.error}>{t('tools.cssUnit.invalid')}</p>}
+            {invalid === f.key && <Alert variant="danger">{t('tools.cssUnit.invalid')}</Alert>}
           </div>
         ))}
       </div>

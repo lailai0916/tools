@@ -1,6 +1,6 @@
+import { Button, Table } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -63,7 +63,7 @@ export default function UnicodeInspector() {
         <p className={styles.empty}>{t('tools.unicodeInspector.empty')}</p>
       ) : (
         <div className={styles.tableWrap}>
-          <table className={styles.table}>
+          <Table>
             <thead>
               <tr>
                 <th className={styles.th}>{t('tools.unicodeInspector.character')}</th>
@@ -84,7 +84,7 @@ export default function UnicodeInspector() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
           {truncated && <p className={styles.truncated}>{t('tools.unicodeInspector.truncated')}</p>}
         </div>
       )}

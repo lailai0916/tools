@@ -1,3 +1,4 @@
+import { TextAreaField, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -59,75 +60,64 @@ export default function PlaceholderImage() {
       backLabel={t('common.back')}
     >
       <div className={styles.fields}>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="ph-width">
-            {t('tools.placeholderImage.width')}
-          </label>
-          <input
-            id="ph-width"
-            className={styles.input}
-            type="number"
-            min={1}
-            max={MAX_DIMENSION}
-            value={width}
-            data-invalid={!wValid}
-            onChange={(e) => setWidth(e.target.value)}
-            aria-label={t('tools.placeholderImage.width')}
-          />
-        </div>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="ph-height">
-            {t('tools.placeholderImage.height')}
-          </label>
-          <input
-            id="ph-height"
-            className={styles.input}
-            type="number"
-            min={1}
-            max={MAX_DIMENSION}
-            value={height}
-            data-invalid={!hValid}
-            onChange={(e) => setHeight(e.target.value)}
-            aria-label={t('tools.placeholderImage.height')}
-          />
-        </div>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="ph-bg">
-            {t('tools.placeholderImage.background')}
-          </label>
-          <input
-            id="ph-bg"
-            className={styles.color}
-            type="color"
-            value={background}
-            onChange={(e) => setBackground(e.target.value)}
-            aria-label={t('tools.placeholderImage.background')}
-          />
-        </div>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="ph-fg">
-            {t('tools.placeholderImage.textColor')}
-          </label>
-          <input
-            id="ph-fg"
-            className={styles.color}
-            type="color"
-            value={textColor}
-            onChange={(e) => setTextColor(e.target.value)}
-            aria-label={t('tools.placeholderImage.textColor')}
-          />
-        </div>
-        <div className={styles.fieldWide}>
-          <label className={styles.label}>{t('tools.placeholderImage.text')}</label>
-          <TextArea
-            className={styles.line}
-            rows={1}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder={fallbackLabel}
-            aria-label={t('tools.placeholderImage.text')}
-          />
-        </div>
+        <TextField
+          wrapperClassName={styles.field}
+          label={t('tools.placeholderImage.width')}
+          id="ph-width"
+          className={styles.input}
+          type="number"
+          min={1}
+          max={MAX_DIMENSION}
+          value={width}
+          invalid={!wValid}
+          onChange={(e) => setWidth(e.target.value)}
+          aria-label={t('tools.placeholderImage.width')}
+          monospace
+        />
+        <TextField
+          wrapperClassName={styles.field}
+          label={t('tools.placeholderImage.height')}
+          id="ph-height"
+          className={styles.input}
+          type="number"
+          min={1}
+          max={MAX_DIMENSION}
+          value={height}
+          invalid={!hValid}
+          onChange={(e) => setHeight(e.target.value)}
+          aria-label={t('tools.placeholderImage.height')}
+          monospace
+        />
+        <TextField
+          wrapperClassName={styles.field}
+          label={t('tools.placeholderImage.background')}
+          id="ph-bg"
+          className={styles.color}
+          type="color"
+          value={background}
+          onChange={(e) => setBackground(e.target.value)}
+          aria-label={t('tools.placeholderImage.background')}
+        />
+        <TextField
+          wrapperClassName={styles.field}
+          label={t('tools.placeholderImage.textColor')}
+          id="ph-fg"
+          className={styles.color}
+          type="color"
+          value={textColor}
+          onChange={(e) => setTextColor(e.target.value)}
+          aria-label={t('tools.placeholderImage.textColor')}
+        />
+        <TextAreaField
+          wrapperClassName={styles.fieldWide}
+          label={t('tools.placeholderImage.text')}
+          className={styles.line}
+          rows={1}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={fallbackLabel}
+          aria-label={t('tools.placeholderImage.text')}
+        />
       </div>
 
       <div className={styles.pane}>
@@ -145,12 +135,7 @@ export default function PlaceholderImage() {
           <label className={styles.paneLabel}>{t('tools.placeholderImage.dataUri')}</label>
           <CopyButton value={dataUrl} label={t('common.copy')} copiedLabel={t('common.copied')} />
         </div>
-        <TextArea
-          className={styles.uri}
-          value={dataUrl}
-          readOnly
-          aria-label={t('tools.placeholderImage.dataUri')}
-        />
+        <TextArea value={dataUrl} readOnly aria-label={t('tools.placeholderImage.dataUri')} />
       </div>
     </ToolLayout>
   );

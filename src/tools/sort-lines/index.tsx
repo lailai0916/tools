@@ -1,6 +1,6 @@
+import { Button, Checkbox, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -96,49 +96,41 @@ export default function SortLines() {
       </div>
 
       <div className={styles.checks}>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={caseInsensitive}
-            onChange={(e) => setCaseInsensitive(e.target.checked)}
-          />
-          {t('tools.sortLines.caseInsensitive')}
-        </label>
-        <label className={styles.check}>
-          <input type="checkbox" checked={numeric} onChange={(e) => setNumeric(e.target.checked)} />
-          {t('tools.sortLines.numeric')}
-        </label>
-        <label className={styles.check}>
-          <input type="checkbox" checked={dedupe} onChange={(e) => setDedupe(e.target.checked)} />
-          {t('tools.sortLines.dedupe')}
-        </label>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={removeEmpty}
-            onChange={(e) => setRemoveEmpty(e.target.checked)}
-          />
-          {t('tools.sortLines.removeEmpty')}
-        </label>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={trimLines}
-            onChange={(e) => setTrimLines(e.target.checked)}
-          />
-          {t('tools.sortLines.trimLines')}
-        </label>
-      </div>
-
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={t('tools.sortLines.placeholder')}
-          aria-label={t('common.input')}
+        <Checkbox
+          checked={caseInsensitive}
+          onChange={(e) => setCaseInsensitive(e.target.checked)}
+          label={t('tools.sortLines.caseInsensitive')}
+        />
+        <Checkbox
+          checked={numeric}
+          onChange={(e) => setNumeric(e.target.checked)}
+          label={t('tools.sortLines.numeric')}
+        />
+        <Checkbox
+          checked={dedupe}
+          onChange={(e) => setDedupe(e.target.checked)}
+          label={t('tools.sortLines.dedupe')}
+        />
+        <Checkbox
+          checked={removeEmpty}
+          onChange={(e) => setRemoveEmpty(e.target.checked)}
+          label={t('tools.sortLines.removeEmpty')}
+        />
+        <Checkbox
+          checked={trimLines}
+          onChange={(e) => setTrimLines(e.target.checked)}
+          label={t('tools.sortLines.trimLines')}
         />
       </div>
+
+      <TextAreaField
+        wrapperClassName={styles.pane}
+        label={t('common.input')}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder={t('tools.sortLines.placeholder')}
+        aria-label={t('common.input')}
+      />
 
       <div className={styles.pane}>
         <div className={styles.outputHead}>

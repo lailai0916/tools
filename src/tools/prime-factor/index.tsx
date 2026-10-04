@@ -1,6 +1,6 @@
+import { Alert, Button, Input } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -81,7 +81,7 @@ export default function PrimeFactor() {
         </Button>
       </div>
 
-      <input
+      <Input
         className={styles.input}
         type="number"
         inputMode="numeric"
@@ -89,13 +89,14 @@ export default function PrimeFactor() {
         onChange={(e) => setInput(e.target.value)}
         placeholder={t('tools.primeFactor.placeholder')}
         aria-label={t('common.input')}
+        monospace
       />
 
       {result.kind === 'invalid' && (
-        <p className={styles.error}>{t('tools.primeFactor.invalid')}</p>
+        <Alert variant="danger">{t('tools.primeFactor.invalid')}</Alert>
       )}
       {result.kind === 'tooLarge' && (
-        <p className={styles.error}>{t('tools.primeFactor.tooLarge')}</p>
+        <Alert variant="danger">{t('tools.primeFactor.tooLarge')}</Alert>
       )}
       {result.kind === 'empty' && <p className={styles.hint}>{t('tools.primeFactor.empty')}</p>}
 

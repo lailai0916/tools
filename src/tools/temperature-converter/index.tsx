@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -112,7 +112,7 @@ export default function TemperatureConverter() {
             aria-label={t(u.labelKey)}
           />
           {invalid === u.key && (
-            <p className={styles.error}>{t('tools.temperatureConverter.invalid')}</p>
+            <Alert variant="danger">{t('tools.temperatureConverter.invalid')}</Alert>
           )}
         </div>
       ))}

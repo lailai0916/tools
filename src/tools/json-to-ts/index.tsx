@@ -1,3 +1,4 @@
+import { Alert, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -142,16 +143,15 @@ export default function JsonToTs() {
       description={t('tools.jsonToTs.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.field}>
-        <label className={styles.paneLabel}>{t('tools.jsonToTs.rootName')}</label>
-        <TextArea
-          className={styles.name}
-          rows={1}
-          value={rootName}
-          onChange={(e) => setRootName(e.target.value)}
-          aria-label={t('tools.jsonToTs.rootName')}
-        />
-      </div>
+      <TextAreaField
+        wrapperClassName={styles.field}
+        label={t('tools.jsonToTs.rootName')}
+        className={styles.name}
+        rows={1}
+        value={rootName}
+        onChange={(e) => setRootName(e.target.value)}
+        aria-label={t('tools.jsonToTs.rootName')}
+      />
 
       <div className={styles.pane}>
         <label className={styles.paneLabel}>{t('common.input')}</label>
@@ -163,10 +163,10 @@ export default function JsonToTs() {
           aria-label={t('common.input')}
         />
         {result.ok === false && (
-          <p className={styles.error}>
+          <Alert variant="danger">
             {t('tools.jsonToTs.error')}
             {error ? `: ${error}` : ''}
-          </p>
+          </Alert>
         )}
       </div>
 

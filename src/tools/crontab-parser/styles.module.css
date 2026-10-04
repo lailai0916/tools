@@ -1,15 +1,5 @@
 .expr {
-  min-height: 0;
-  height: 3rem;
   resize: none;
-  font-size: 1rem;
-}
-
-.error {
-  margin: 0.75rem 0 0;
-  font-size: var(--font-size-code);
-  color: var(--color-danger);
-  font-family: var(--font-family-mono);
 }
 
 .summary {

@@ -33,9 +33,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  width: min(100% - 40px, 1120px);
   height: 100%;
-  margin-inline: auto;
 }
 
 .brand {
@@ -53,17 +51,6 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-}
-
-.languageButton {
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-@media (max-width: 600px), (pointer: coarse) {
-  .inner {
-    width: min(100% - 24px, 1120px);
-  }
 }
 
 @media (max-width: 460px) {

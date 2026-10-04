@@ -1,3 +1,4 @@
+import { Button, Input } from '@lailai0916/ui';
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import clsx from 'clsx';
 import { useI18n } from '@/i18n';
@@ -142,9 +143,9 @@ export function SequenceMemoryTest() {
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
-          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+          <Button type="button" variant="primary" onClick={start}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <GamePanel>
@@ -249,9 +250,9 @@ export function NumberMemoryTest() {
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
-          <button type="button" className={funStyles.inlinePrimary} onClick={() => showLevel(3)}>
+          <Button type="button" variant="primary" onClick={() => showLevel(3)}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : status === 'show' ? (
         <GamePanel>
@@ -262,7 +263,7 @@ export function NumberMemoryTest() {
         <GamePanel>
           <form className={funStyles.answerForm} onSubmit={submit}>
             <label htmlFor="number-memory-answer">{text('enterNumber')}</label>
-            <input
+            <Input
               id="number-memory-answer"
               className={funStyles.textInput}
               inputMode="numeric"
@@ -271,9 +272,9 @@ export function NumberMemoryTest() {
               onChange={(event) => setAnswer(event.target.value.replace(/\D/g, ''))}
               autoFocus
             />
-            <button type="submit" className={funStyles.inlinePrimary} disabled={!answer}>
+            <Button type="submit" variant="primary" disabled={!answer}>
               {text('submit')}
-            </button>
+            </Button>
           </form>
         </GamePanel>
       )}
@@ -373,9 +374,9 @@ export function VisualMemoryTest() {
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
-          <button type="button" className={funStyles.inlinePrimary} onClick={() => showLevel(3)}>
+          <Button type="button" variant="primary" onClick={() => showLevel(3)}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <GamePanel>
@@ -572,9 +573,9 @@ export function VerbalMemoryTest() {
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
-          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+          <Button type="button" variant="primary" onClick={start}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <GamePanel>

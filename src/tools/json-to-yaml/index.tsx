@@ -1,7 +1,7 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { dump, load } from 'js-yaml';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -67,7 +67,7 @@ export default function JsonToYaml() {
           }
           aria-label={t('common.input')}
         />
-        {result.ok === false && <p className={styles.error}>{t('tools.jsonToYaml.error')}</p>}
+        {result.ok === false && <Alert variant="danger">{t('tools.jsonToYaml.error')}</Alert>}
       </div>
 
       <div className={styles.pane}>

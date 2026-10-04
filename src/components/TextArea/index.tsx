@@ -1,28 +1,19 @@
-import { forwardRef, type TextareaHTMLAttributes } from 'react';
+import { forwardRef } from 'react';
+import { TextArea as SharedTextArea, type TextAreaProps } from '@lailai0916/ui';
 import clsx from 'clsx';
 import styles from './styles.module.css';
 
-type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  monospace?: boolean;
-  invalid?: boolean;
-};
-
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function TextArea(
-  { monospace = true, invalid = false, className, spellCheck = false, ...rest },
+  { monospace = true, className, spellCheck = false, ...props },
   ref
 ) {
   return (
-    <textarea
+    <SharedTextArea
+      {...props}
       ref={ref}
+      monospace={monospace}
       spellCheck={spellCheck}
-      aria-invalid={rest['aria-invalid'] ?? (invalid || undefined)}
-      className={clsx(
-        styles.textarea,
-        monospace && styles.mono,
-        invalid && styles.invalid,
-        className
-      )}
-      {...rest}
+      className={clsx(styles.editor, className)}
     />
   );
 });

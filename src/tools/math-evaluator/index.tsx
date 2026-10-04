@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -325,7 +325,7 @@ export default function MathEvaluator() {
         aria-label={t('common.input')}
       />
 
-      {result.kind === 'error' && <p className={styles.error}>{t('tools.mathEvaluator.error')}</p>}
+      {result.kind === 'error' && <Alert variant="danger">{t('tools.mathEvaluator.error')}</Alert>}
       {result.kind === 'empty' && <p className={styles.hint}>{t('tools.mathEvaluator.empty')}</p>}
 
       {result.kind === 'ok' && (

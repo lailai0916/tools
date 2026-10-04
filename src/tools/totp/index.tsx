@@ -1,6 +1,6 @@
+import { Alert, PasswordInput } from '@lailai0916/ui';
 import { useEffect, useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import SecretInput from '@/components/SecretInput';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -134,7 +134,7 @@ export default function Totp() {
     >
       <div className={styles.pane}>
         <label className={styles.paneLabel}>{t('tools.totp.secret')}</label>
-        <SecretInput
+        <PasswordInput
           value={secret}
           onChange={(e) => setSecret(e.target.value)}
           invalid={invalid}
@@ -143,7 +143,7 @@ export default function Totp() {
           showLabel={t('common.show')}
           hideLabel={t('common.hide')}
         />
-        {invalid && <p className={styles.error}>{t('tools.totp.invalid')}</p>}
+        {invalid && <Alert variant="danger">{t('tools.totp.invalid')}</Alert>}
       </div>
 
       {!invalid && (

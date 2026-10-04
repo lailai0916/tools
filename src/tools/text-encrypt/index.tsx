@@ -1,8 +1,7 @@
+import { Alert, Button, PasswordInput, TextAreaField } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
-import SecretInput from '@/components/SecretInput';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -129,24 +128,23 @@ export default function TextEncrypt() {
         </Button>
       </div>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          invalid={error}
-          placeholder={
-            mode === 'encrypt'
-              ? t('tools.textEncrypt.textPlaceholder')
-              : t('tools.textEncrypt.cipherPlaceholder')
-          }
-          aria-label={t('common.input')}
-        />
-      </div>
+      <TextAreaField
+        wrapperClassName={styles.pane}
+        label={t('common.input')}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        invalid={error}
+        placeholder={
+          mode === 'encrypt'
+            ? t('tools.textEncrypt.textPlaceholder')
+            : t('tools.textEncrypt.cipherPlaceholder')
+        }
+        aria-label={t('common.input')}
+      />
 
       <div className={styles.pane}>
         <label className={styles.paneLabel}>{t('tools.textEncrypt.passphrase')}</label>
-        <SecretInput
+        <PasswordInput
           value={passphrase}
           onChange={(e) => setPassphrase(e.target.value)}
           invalid={error}
@@ -155,7 +153,7 @@ export default function TextEncrypt() {
           showLabel={t('common.show')}
           hideLabel={t('common.hide')}
         />
-        {error && <p className={styles.error}>{t('tools.textEncrypt.error')}</p>}
+        {error && <Alert variant="danger">{t('tools.textEncrypt.error')}</Alert>}
       </div>
 
       <div className={styles.pane}>

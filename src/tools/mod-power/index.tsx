@@ -1,3 +1,4 @@
+import { Alert, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import CopyButton from '@/components/CopyButton';
@@ -62,21 +63,20 @@ export default function ModPower() {
     >
       <div className={styles.inputs}>
         {fields.map((f) => (
-          <label key={f.key} className={styles.field}>
-            <span className={styles.label}>{t(f.key)}</span>
-            <input
-              className={styles.input}
-              type="text"
-              inputMode="numeric"
-              value={f.value}
-              onChange={(e) => f.set(e.target.value)}
-              aria-label={t(f.key)}
-            />
-          </label>
+          <TextField
+            key={f.key}
+            wrapperClassName={styles.field}
+            label={t(f.key)}
+            type="text"
+            inputMode="numeric"
+            value={f.value}
+            onChange={(e) => f.set(e.target.value)}
+            aria-label={t(f.key)}
+          />
         ))}
       </div>
 
-      {result.kind === 'invalid' && <p className={styles.error}>{t('tools.modPower.invalid')}</p>}
+      {result.kind === 'invalid' && <Alert variant="danger">{t('tools.modPower.invalid')}</Alert>}
 
       {result.kind === 'ok' && (
         <div className={styles.row}>

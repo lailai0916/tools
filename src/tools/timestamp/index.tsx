@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useEffect, useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -168,9 +168,9 @@ export default function Timestamp() {
           placeholder={t('tools.timestamp.tsPlaceholder')}
         />
         {tsResult.ok === false && (
-          <p id="timestamp-input-error" className={styles.error} role="alert">
+          <Alert id="timestamp-input-error" variant="danger" role="alert">
             {t('tools.timestamp.invalidTs')}
-          </p>
+          </Alert>
         )}
       </div>
 
@@ -202,9 +202,9 @@ export default function Timestamp() {
           placeholder={t('tools.timestamp.datePlaceholder')}
         />
         {dateResult.ok === false && (
-          <p id="timestamp-date-error" className={styles.error} role="alert">
+          <Alert id="timestamp-date-error" variant="danger" role="alert">
             {t('tools.timestamp.invalidDate')}
-          </p>
+          </Alert>
         )}
       </div>
 

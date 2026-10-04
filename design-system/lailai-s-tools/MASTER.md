@@ -2,6 +2,8 @@
 
 ## Product Intent
 
+laikit UI, extracted from lailai's Home, is the visual source of truth. Tools imports its components directly and keeps app CSS for content arrangement, domain-specific visualizations, and game surfaces. Existing shared components use their defaults.
+
 Tools is a compact browser utility collection. The interface should disappear behind the task:
 find a tool, complete one operation, and leave. Preserve the original product's quiet density.
 
@@ -17,9 +19,9 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 ## Layout
 
 - Header height: `56px`.
-- Brand logos have no border, ring, or decorative shadow.
+- Brand appearance comes from the shared `Brand` component.
 - Content width: `1120px` maximum.
-- Desktop page padding: `24px`; mobile page padding: `16px`.
+- Page gutters and centering come from `PageContainer`; tool reading widths are `820px` or `980px`.
 - Home search width: `520px` maximum.
 - Tool grid: `repeat(auto-fill, minmax(230px, 1fr))`.
 - Card gap: `10px`; section gap: `44px`.
@@ -33,12 +35,15 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - The theme button is `34px` visually and `44px` on mobile.
 - Theme choices appear only in an anchored menu.
 - Do not place a segmented theme card in the header.
-- Inputs and selects use the shared control geometry, custom select chevron, and unified states.
+- Inputs, fields, selects, passwords, checkboxes, sliders, copy feedback, and errors come from laikit UI.
+- `ToolLayout` uses `PageContainer`, `Stack`, and `ButtonLink`; home cards and counts use `Card`, `IconBlock`, and `Badge`.
 
 ### Search and Filters
 
 - Search is the primary control and remains centered; `/` focuses it and `Esc` clears or leaves it.
 - Favorites, recent tools, and categories are secondary controls below search.
+- Use the shared `Segmented` with `size="sm"` and `stackAt={0}` for All / Favorites / Recent;
+  keep its shared surfaces and keyboard behavior, and let it fill the row on mobile.
 - Empty filtered views explain the state and provide one action that restores all tools.
 - Do not wrap the complete filter area in a large card.
 - Preserve filter state in the URL.
@@ -52,7 +57,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 ## Motion
 
-- Use `140ms` control feedback.
+- Use shared component feedback and transition tokens.
 - Animate color, opacity, and small icon movement only.
 - Press feedback may use `scale(0.92–0.98)` on the control itself.
 - Respect `prefers-reduced-motion` globally.

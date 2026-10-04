@@ -27,8 +27,6 @@
 }
 
 .pattern {
-  min-height: 0;
-  height: 3rem;
   resize: none;
 }
 
@@ -44,13 +42,6 @@
   color: var(--font-color-base);
   font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
-}
-
-.error {
-  margin: 0;
-  font-size: var(--font-size-code);
-  color: var(--color-danger);
-  font-family: var(--font-family-mono);
 }
 
 .list {

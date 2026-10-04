@@ -25,18 +25,6 @@
   justify-content: space-between;
 }
 
-.short {
-  min-height: 0;
-  height: 5rem;
-}
-
-.error {
-  margin: 0.5rem 0 0;
-  font-size: var(--font-size-code);
-  color: var(--color-danger);
-  font-family: var(--font-family-mono);
-}
-
 .hint {
   margin: 0.75rem 0 0;
   font-size: var(--font-size-code);

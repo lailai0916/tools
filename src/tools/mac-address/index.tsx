@@ -1,6 +1,6 @@
+import { Button, Checkbox } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -80,10 +80,11 @@ export default function MacAddress() {
               ))}
             </div>
           </div>
-          <label className={styles.check}>
-            <input type="checkbox" checked={upper} onChange={(e) => editUpper(e.target.checked)} />
-            {t('tools.macAddress.uppercase')}
-          </label>
+          <Checkbox
+            checked={upper}
+            onChange={(e) => editUpper(e.target.checked)}
+            label={t('tools.macAddress.uppercase')}
+          />
         </div>
         <Button size="sm" variant="primary" onClick={regenerate}>
           {t('tools.macAddress.regenerate')}

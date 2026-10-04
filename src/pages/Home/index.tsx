@@ -1,7 +1,16 @@
+import {
+  Badge,
+  Button,
+  Card,
+  EmptyState,
+  Icon,
+  IconBlock,
+  IconButton,
+  Input,
+  Segmented,
+} from '@lailai0916/ui';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
-import { Icon } from '@iconify/react';
-import { Button, EmptyState, IconButton } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
 import { CATEGORY_ORDER, TOOLS, type ToolCategory } from '@/tools/registry';
 import type { MessageKey } from '@/i18n/en';
@@ -178,7 +187,7 @@ export default function Home() {
       <section className={styles.finder} aria-label={t('site.searchPlaceholder')}>
         <div className={styles.searchWrap}>
           <Icon icon="lucide:search" className={styles.searchIcon} />
-          <input
+          <Input
             ref={searchRef}
             className={styles.search}
             value={query}
@@ -213,28 +222,20 @@ export default function Home() {
         </div>
 
         <div className={styles.filterRow}>
-          <div className={styles.viewTabs} role="group" aria-label={t('site.allTools')}>
-            {(['all', 'favorites', 'recent'] as const).map((item) => (
-              <button
-                key={item}
-                type="button"
-                className={styles.viewTab}
-                aria-pressed={view === item}
-                onClick={() => updateParam('view', item === 'all' ? null : item)}
-              >
-                <Icon
-                  icon={
-                    item === 'all'
-                      ? 'lucide:grid-2x2'
-                      : item === 'favorites'
-                        ? 'lucide:star'
-                        : 'lucide:history'
-                  }
-                />
-                {t(`site.view${item[0].toUpperCase()}${item.slice(1)}` as MessageKey)}
-              </button>
-            ))}
-          </div>
+          <Segmented<View>
+            size="sm"
+            orientation="horizontal"
+            stackAt={0}
+            className={styles.viewTabs}
+            ariaLabel={t('site.allTools')}
+            value={view}
+            onChange={(next) => updateParam('view', next === 'all' ? null : next)}
+            items={[
+              { value: 'all', label: t('site.viewAll'), icon: 'lucide:grid-2x2' },
+              { value: 'favorites', label: t('site.viewFavorites'), icon: 'lucide:star' },
+              { value: 'recent', label: t('site.viewRecent'), icon: 'lucide:history' },
+            ]}
+          />
 
           <div
             ref={categoriesRef}
@@ -242,24 +243,19 @@ export default function Home() {
             role="group"
             aria-label={t('site.allCategories')}
           >
-            <button
-              type="button"
-              className={styles.category}
-              aria-pressed={!category}
-              onClick={() => updateParam('category')}
-            >
+            <Button size="sm" rounded active={!category} onClick={() => updateParam('category')}>
               {t('site.allCategories')}
-            </button>
+            </Button>
             {CATEGORY_ORDER.map((item) => (
-              <button
+              <Button
                 key={item}
-                type="button"
-                className={styles.category}
-                aria-pressed={category === item}
+                size="sm"
+                rounded
+                active={category === item}
                 onClick={() => updateParam('category', item)}
               >
                 {t(`category.${item}` as MessageKey)}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -303,22 +299,20 @@ export default function Home() {
           <section key={sectionCategory} className={styles.section}>
             <h2 className={styles.sectionTitle}>
               <span>{t(`category.${sectionCategory}` as MessageKey)}</span>
-              <span className={styles.sectionCount}>{items.length}</span>
+              <Badge count={items.length} />
             </h2>
             <div className={styles.grid}>
               {items.map((tool) => {
                 const name = t(`tools.${tool.key}.name` as MessageKey);
                 const favorite = favorites.includes(tool.id);
                 return (
-                  <article key={tool.id} className={styles.card}>
+                  <Card as="article" padding={0} key={tool.id} className={styles.card}>
                     <Link
                       to={`/${tool.id}`}
                       className={styles.cardLink}
                       onClick={() => rememberTool(tool.id)}
                     >
-                      <span className={styles.cardIcon}>
-                        <Icon icon={tool.icon} />
-                      </span>
+                      <IconBlock icon={tool.icon} variant="accent" />
                       <span className={styles.cardName}>{name}</span>
                       <span className={styles.cardDesc}>
                         {t(`tools.${tool.key}.description` as MessageKey)}
@@ -333,7 +327,7 @@ export default function Home() {
                     >
                       <Icon icon={favorite ? 'lucide:star' : 'lucide:star'} />
                     </IconButton>
-                  </article>
+                  </Card>
                 );
               })}
             </div>

@@ -17,6 +17,8 @@ npm run check     # format + lint + typecheck
 ```
 
 Run `npm run check` and `npm run build` before delivering code changes.
+The deployment workflow checks the public homepage and entry assets against the exact build after
+syncing the server.
 
 ## Adding or changing tools
 

@@ -1,3 +1,4 @@
+import { Alert } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -136,7 +137,7 @@ export default function IpConverter() {
               placeholder={f.placeholder}
               aria-label={t(f.labelKey)}
             />
-            {invalid === f.key && <p className={styles.error}>{t('tools.ipConverter.invalid')}</p>}
+            {invalid === f.key && <Alert variant="danger">{t('tools.ipConverter.invalid')}</Alert>}
           </div>
         ))}
       </div>

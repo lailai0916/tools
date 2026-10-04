@@ -1,8 +1,8 @@
+import { Button, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { diffLines } from 'diff';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
-import TextArea from '@/components/TextArea';
+
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -64,24 +64,22 @@ export default function TextDiff() {
       </div>
 
       <div className={styles.inputs}>
-        <div className={styles.pane}>
-          <label className={styles.paneLabel}>{t('tools.textDiff.original')}</label>
-          <TextArea
-            value={original}
-            onChange={(e) => setOriginal(e.target.value)}
-            placeholder={t('tools.textDiff.originalPlaceholder')}
-            aria-label={t('tools.textDiff.original')}
-          />
-        </div>
-        <div className={styles.pane}>
-          <label className={styles.paneLabel}>{t('tools.textDiff.modified')}</label>
-          <TextArea
-            value={modified}
-            onChange={(e) => setModified(e.target.value)}
-            placeholder={t('tools.textDiff.modifiedPlaceholder')}
-            aria-label={t('tools.textDiff.modified')}
-          />
-        </div>
+        <TextAreaField
+          wrapperClassName={styles.pane}
+          label={t('tools.textDiff.original')}
+          value={original}
+          onChange={(e) => setOriginal(e.target.value)}
+          placeholder={t('tools.textDiff.originalPlaceholder')}
+          aria-label={t('tools.textDiff.original')}
+        />
+        <TextAreaField
+          wrapperClassName={styles.pane}
+          label={t('tools.textDiff.modified')}
+          value={modified}
+          onChange={(e) => setModified(e.target.value)}
+          placeholder={t('tools.textDiff.modifiedPlaceholder')}
+          aria-label={t('tools.textDiff.modified')}
+        />
       </div>
 
       <div className={styles.pane}>

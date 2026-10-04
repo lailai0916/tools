@@ -16,27 +16,6 @@
   color: var(--font-color-secondary);
 }
 
-.input {
-  height: var(--control-height);
-  padding: 0 0.9rem;
-  background: var(--background);
-  border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-control);
-  color: var(--font-color-base);
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-control);
-  appearance: none;
-  transition:
-    border-color var(--transition),
-    box-shadow var(--transition);
-}
-
-.input:focus-visible {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: var(--focus-ring);
-}
-
 .group {
   display: flex;
   gap: 0.5rem;

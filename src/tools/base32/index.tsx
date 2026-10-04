@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -119,7 +119,7 @@ export default function Base32() {
           }
           aria-label={t('common.input')}
         />
-        {result.ok === false && <p className={styles.error}>{t('tools.base32.error')}</p>}
+        {result.ok === false && <Alert variant="danger">{t('tools.base32.error')}</Alert>}
       </div>
 
       <div className={styles.pane}>

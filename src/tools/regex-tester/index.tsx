@@ -1,6 +1,6 @@
+import { Alert, Button, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -87,18 +87,17 @@ export default function RegexTester() {
           aria-label={t('tools.regexTester.pattern')}
           className={styles.pattern}
         />
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <Alert variant="danger">{error}</Alert>}
       </div>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('tools.regexTester.testText')}</label>
-        <TextArea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder={t('tools.regexTester.textPlaceholder')}
-          aria-label={t('tools.regexTester.testText')}
-        />
-      </div>
+      <TextAreaField
+        wrapperClassName={styles.pane}
+        label={t('tools.regexTester.testText')}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder={t('tools.regexTester.textPlaceholder')}
+        aria-label={t('tools.regexTester.testText')}
+      />
 
       <div className={styles.pane}>
         <label className={styles.paneLabel}>

@@ -1,3 +1,4 @@
+import { Button } from '@lailai0916/ui';
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import {
@@ -283,9 +284,9 @@ export function TimePerceptionTest() {
         <GamePanel>
           <span className={funStyles.eyebrow}>{text('roundResult')}</span>
           <strong className={funStyles.resultValue}>{errors.at(-1)?.toFixed(2)} s</strong>
-          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+          <Button type="button" variant="primary" onClick={start}>
             {text('nextRound')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <button
@@ -415,9 +416,9 @@ export function StroopTest() {
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
-          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+          <Button type="button" variant="primary" onClick={start}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <GamePanel>
@@ -536,9 +537,9 @@ export function ColorHueTest() {
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
-          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+          <Button type="button" variant="primary" onClick={start}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <GamePanel>
@@ -659,9 +660,9 @@ export function OddOneOutTest() {
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
-          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+          <Button type="button" variant="primary" onClick={start}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <GamePanel>
@@ -799,9 +800,9 @@ export function RhythmTest() {
       ) : status === 'idle' ? (
         <GamePanel>
           <Instructions>{text('instructions')}</Instructions>
-          <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+          <Button type="button" variant="primary" onClick={start}>
             {text('start')}
-          </button>
+          </Button>
         </GamePanel>
       ) : (
         <button

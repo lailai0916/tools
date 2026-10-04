@@ -1,4 +1,5 @@
-import { useState, type CSSProperties } from 'react';
+import { Alert, Slider, TextField } from '@lailai0916/ui';
+import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
@@ -221,21 +222,20 @@ export default function ColorConverter() {
           />
           <div className={styles.previewMeta}>
             <span className={styles.previewLabel}>{t('tools.colorConverter.preview')}</span>
-            <label className={styles.pickerLabel}>
-              <span>{t('tools.colorConverter.pickColor')}</span>
-              <input
-                type="color"
-                className={styles.picker}
-                value={preview}
-                onChange={(event) => {
-                  const next = parseHex(event.target.value);
-                  if (next) {
-                    commit(next);
-                  }
-                }}
-                aria-label={t('tools.colorConverter.pickColor')}
-              />
-            </label>
+            <TextField
+              wrapperClassName={styles.pickerLabel}
+              label={t('tools.colorConverter.pickColor')}
+              type="color"
+              className={styles.picker}
+              value={preview}
+              onChange={(event) => {
+                const next = parseHex(event.target.value);
+                if (next) {
+                  commit(next);
+                }
+              }}
+              aria-label={t('tools.colorConverter.pickColor')}
+            />
           </div>
         </div>
 
@@ -264,9 +264,9 @@ export default function ColorConverter() {
                 />
               </div>
               {invalid === f.key && (
-                <p id={`color-${f.key}-error`} className={styles.error} role="alert">
+                <Alert id={`color-${f.key}-error`} variant="danger" role="alert">
                   {t('tools.colorConverter.invalid')}
-                </p>
+                </Alert>
               )}
             </div>
           ))}
@@ -282,27 +282,21 @@ export default function ColorConverter() {
         </div>
         <div className={styles.sliders}>
           {channels.map((channel) => {
-            const id = `color-channel-${channel.key}`;
             return (
               <div key={channel.key} className={styles.sliderRow}>
-                <label htmlFor={id} className={styles.channelLabel}>
+                <span className={styles.channelLabel}>
                   {channel.key.toUpperCase()}
                   <span className={styles.srOnly}>{channel.label}</span>
-                </label>
-                <input
-                  id={id}
-                  type="range"
+                </span>
+                <Slider
                   className={styles.slider}
                   min={0}
                   max={255}
                   value={channel.value}
-                  onInput={(event) => editChannel(channel.key, Number(event.currentTarget.value))}
+                  onChange={(value) => editChannel(channel.key, value)}
                   aria-label={channel.label}
-                  style={{ '--slider-gradient': channel.gradient } as CSSProperties}
                 />
-                <output htmlFor={id} className={styles.channelValue}>
-                  {channel.value}
-                </output>
+                <output className={styles.channelValue}>{channel.value}</output>
               </div>
             );
           })}

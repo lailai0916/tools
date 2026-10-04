@@ -1,7 +1,7 @@
+import { Alert, Button, Slider } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -102,25 +102,15 @@ export default function QrCode() {
             ))}
           </div>
         </div>
-        <div className={styles.marginSetting}>
-          <div className={styles.settingHead}>
-            <label className={styles.settingLabel} htmlFor="qrcode-margin">
-              {t('tools.qrcode.margin')}
-            </label>
-            <output className={styles.settingValue} htmlFor="qrcode-margin">
-              {margin}
-            </output>
-          </div>
-          <input
-            id="qrcode-margin"
-            className={styles.range}
-            type="range"
-            min={0}
-            max={8}
-            value={margin}
-            onInput={(event) => setMargin(Number(event.currentTarget.value))}
-          />
-        </div>
+        <Slider
+          className={styles.marginSetting}
+          label={t('tools.qrcode.margin')}
+          valueLabel={margin}
+          value={margin}
+          min={0}
+          max={8}
+          onChange={setMargin}
+        />
       </div>
 
       <div className={styles.pane}>
@@ -140,7 +130,7 @@ export default function QrCode() {
           placeholder={t('tools.qrcode.placeholder')}
           aria-label={t('common.input')}
         />
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <Alert variant="danger">{error}</Alert>}
       </div>
 
       <div className={styles.pane}>

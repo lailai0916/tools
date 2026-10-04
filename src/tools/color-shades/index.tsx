@@ -1,6 +1,6 @@
+import { Alert, Button, Input } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -90,7 +90,7 @@ export default function ColorShades() {
             {t('tools.colorShades.baseColor')}
           </label>
           <div className={styles.inputRow}>
-            <input
+            <Input
               className={styles.color}
               type="color"
               value={color}
@@ -110,9 +110,9 @@ export default function ColorShades() {
             />
           </div>
           {invalid && (
-            <p id="color-shades-error" className={styles.error} role="alert">
+            <Alert id="color-shades-error" variant="danger" role="alert">
               {t('tools.colorShades.invalid')}
-            </p>
+            </Alert>
           )}
         </div>
         <div className={styles.stepField}>

@@ -1,6 +1,6 @@
+import { Alert, Card } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Card from '@/components/Card';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import type { Locale } from '@/i18n';
@@ -272,7 +272,7 @@ export default function CrontabParser() {
         aria-label={t('tools.crontabParser.name')}
       />
 
-      {parsed.ok === false && <p className={styles.error}>{t('tools.crontabParser.invalid')}</p>}
+      {parsed.ok === false && <Alert variant="danger">{t('tools.crontabParser.invalid')}</Alert>}
 
       {parsed.ok === true && (
         <>

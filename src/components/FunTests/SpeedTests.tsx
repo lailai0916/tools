@@ -1,3 +1,4 @@
+import { Button } from '@lailai0916/ui';
 import {
   useCallback,
   useEffect,
@@ -774,9 +775,9 @@ export function AimTrainer() {
           {status === 'idle' ? (
             <GamePanel className={funStyles.areaOverlay}>
               <Instructions>{text('instructions')}</Instructions>
-              <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+              <Button type="button" variant="primary" onClick={start}>
                 {text('start')}
-              </button>
+              </Button>
             </GamePanel>
           ) : (
             <button
@@ -913,9 +914,9 @@ export function MouseAccuracyTest() {
           {status === 'idle' ? (
             <GamePanel className={funStyles.areaOverlay}>
               <Instructions>{text('instructions')}</Instructions>
-              <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+              <Button type="button" variant="primary" onClick={start}>
                 {text('start')}
-              </button>
+              </Button>
             </GamePanel>
           ) : (
             <span
@@ -1054,9 +1055,9 @@ export function ScrollSpeedTest() {
             <strong>{status === 'idle' ? text('ready') : text('scrollNow')}</strong>
             <span>{text('instructions')}</span>
             {status === 'idle' && (
-              <button type="button" className={funStyles.inlinePrimary} onClick={start}>
+              <Button type="button" variant="primary" onClick={start}>
                 {text('start')}
-              </button>
+              </Button>
             )}
           </div>
           <TelemetryGrid>

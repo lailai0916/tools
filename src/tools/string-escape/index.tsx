@@ -1,6 +1,6 @@
+import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -63,7 +63,7 @@ export default function StringEscape() {
           placeholder={t('tools.stringEscape.placeholder')}
           aria-label={t('common.input')}
         />
-        {invalid && <p className={styles.error}>{t('tools.stringEscape.error')}</p>}
+        {invalid && <Alert variant="danger">{t('tools.stringEscape.error')}</Alert>}
       </div>
 
       <div className={styles.pane}>

@@ -1,6 +1,6 @@
+import { Button, TextField } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -73,22 +73,20 @@ export default function Nanoid() {
     >
       <div className={styles.controls}>
         <div className={styles.options}>
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="nanoid-length">
-              {t('tools.nanoid.length')}
-            </label>
-            <input
-              id="nanoid-length"
-              className={styles.input}
-              type="number"
-              min={1}
-              max={MAX_LENGTH}
-              value={length}
-              data-invalid={!validSize}
-              onChange={(e) => editLength(e.target.value)}
-              aria-label={t('tools.nanoid.length')}
-            />
-          </div>
+          <TextField
+            wrapperClassName={styles.field}
+            label={t('tools.nanoid.length')}
+            id="nanoid-length"
+            className={styles.input}
+            type="number"
+            min={1}
+            max={MAX_LENGTH}
+            value={length}
+            invalid={!validSize}
+            onChange={(e) => editLength(e.target.value)}
+            aria-label={t('tools.nanoid.length')}
+            monospace
+          />
           <div className={styles.field}>
             <span className={styles.label}>{t('tools.nanoid.count')}</span>
             <div className={styles.counts}>

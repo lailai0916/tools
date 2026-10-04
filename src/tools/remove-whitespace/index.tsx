@@ -1,6 +1,6 @@
+import { Button, Checkbox, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -81,66 +81,51 @@ export default function RemoveWhitespace() {
       </div>
 
       <div className={styles.options}>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={trimLines}
-            disabled={removeAll}
-            onChange={(e) => setTrimLines(e.target.checked)}
-          />
-          {t('tools.removeWhitespace.trimLines')}
-        </label>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={collapseSpaces}
-            disabled={removeAll}
-            onChange={(e) => setCollapseSpaces(e.target.checked)}
-          />
-          {t('tools.removeWhitespace.collapseSpaces')}
-        </label>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={removeBlankLines}
-            disabled={removeAll}
-            onChange={(e) => setRemoveBlankLines(e.target.checked)}
-          />
-          {t('tools.removeWhitespace.removeBlankLines')}
-        </label>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={tabsToSpaces}
-            disabled={removeAll}
-            onChange={(e) => setTabsToSpaces(e.target.checked)}
-          />
-          {t('tools.removeWhitespace.tabsToSpaces')}
-        </label>
-        <label className={styles.tabWidth}>
-          <span>{t('tools.removeWhitespace.tabWidth')}</span>
-          <input
-            type="number"
-            className={styles.num}
-            min={0}
-            max={8}
-            value={tabWidth}
-            disabled={removeAll || !tabsToSpaces}
-            onChange={(e) => {
-              const n = Number(e.target.value);
-              setTabWidth(Number.isFinite(n) ? Math.min(8, Math.max(0, Math.round(n))) : 0);
-            }}
-            aria-label={t('tools.removeWhitespace.tabWidth')}
-          />
-        </label>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={removeAll}
-            onChange={(e) => setRemoveAll(e.target.checked)}
-          />
-          {t('tools.removeWhitespace.removeAll')}
-        </label>
+        <Checkbox
+          checked={trimLines}
+          disabled={removeAll}
+          onChange={(e) => setTrimLines(e.target.checked)}
+          label={t('tools.removeWhitespace.trimLines')}
+        />
+        <Checkbox
+          checked={collapseSpaces}
+          disabled={removeAll}
+          onChange={(e) => setCollapseSpaces(e.target.checked)}
+          label={t('tools.removeWhitespace.collapseSpaces')}
+        />
+        <Checkbox
+          checked={removeBlankLines}
+          disabled={removeAll}
+          onChange={(e) => setRemoveBlankLines(e.target.checked)}
+          label={t('tools.removeWhitespace.removeBlankLines')}
+        />
+        <Checkbox
+          checked={tabsToSpaces}
+          disabled={removeAll}
+          onChange={(e) => setTabsToSpaces(e.target.checked)}
+          label={t('tools.removeWhitespace.tabsToSpaces')}
+        />
+        <TextField
+          wrapperClassName={styles.tabWidth}
+          label={t('tools.removeWhitespace.tabWidth')}
+          type="number"
+          className={styles.num}
+          min={0}
+          max={8}
+          value={tabWidth}
+          disabled={removeAll || !tabsToSpaces}
+          onChange={(e) => {
+            const n = Number(e.target.value);
+            setTabWidth(Number.isFinite(n) ? Math.min(8, Math.max(0, Math.round(n))) : 0);
+          }}
+          aria-label={t('tools.removeWhitespace.tabWidth')}
+          monospace
+        />
+        <Checkbox
+          checked={removeAll}
+          onChange={(e) => setRemoveAll(e.target.checked)}
+          label={t('tools.removeWhitespace.removeAll')}
+        />
       </div>
 
       <div className={styles.pane}>

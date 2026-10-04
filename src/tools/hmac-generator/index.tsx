@@ -1,8 +1,7 @@
+import { Button, PasswordInput } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
-import SecretInput from '@/components/SecretInput';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -71,7 +70,7 @@ export default function HmacGenerator() {
 
       <div className={styles.pane}>
         <label className={styles.paneLabel}>{t('tools.hmacGenerator.secret')}</label>
-        <SecretInput
+        <PasswordInput
           value={secret}
           onChange={(e) => setSecret(e.target.value)}
           placeholder={t('tools.hmacGenerator.secretPlaceholder')}

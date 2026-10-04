@@ -1,25 +1,5 @@
-.layout {
-  max-width: 820px;
-  margin-inline: auto;
-}
-
-.wide {
-  max-width: 980px;
-}
-
 .back {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  color: var(--font-color-secondary);
-  font-size: 0.875rem;
   margin-bottom: 1.4rem;
-  transition: color var(--transition);
-}
-
-.back:hover {
-  color: var(--color-primary);
-  text-decoration: none;
 }
 
 .header {
@@ -40,15 +20,8 @@
   line-height: 1.6;
 }
 
-.body {
-  display: flex;
-  flex-direction: column;
-  gap: 1.125rem;
-}
-
 @media (max-width: 600px) {
   .back {
-    min-width: 44px;
     min-height: 44px;
     margin-bottom: 1rem;
   }

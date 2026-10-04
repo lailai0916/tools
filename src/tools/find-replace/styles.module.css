@@ -19,7 +19,6 @@
 }
 
 .line {
-  min-height: 0;
   resize: none;
 }
 
@@ -27,21 +26,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem 1.25rem;
-}
-
-.check {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--font-color-base);
-  cursor: pointer;
-}
-
-.check input {
-  accent-color: var(--color-primary);
-  width: 16px;
-  height: 16px;
 }
 
 .pane {
@@ -88,11 +72,4 @@
   background: var(--emphasis-200);
   color: var(--font-color-base);
   font-variant-numeric: tabular-nums;
-}
-
-.error {
-  margin: 0;
-  font-size: var(--font-size-code);
-  color: var(--color-danger);
-  font-family: var(--font-family-mono);
 }

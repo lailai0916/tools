@@ -1,3 +1,4 @@
+import { Alert, Checkbox, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -69,49 +70,41 @@ export default function FindReplace() {
             placeholder={t('tools.findReplace.findPlaceholder')}
             aria-label={t('tools.findReplace.find')}
           />
-          {!result.ok && <p className={styles.error}>{t('tools.findReplace.invalidRegex')}</p>}
+          {!result.ok && <Alert variant="danger">{t('tools.findReplace.invalidRegex')}</Alert>}
         </div>
-        <div className={styles.field}>
-          <label className={styles.label}>{t('tools.findReplace.replace')}</label>
-          <TextArea
-            className={styles.line}
-            rows={1}
-            value={replace}
-            onChange={(e) => setReplace(e.target.value)}
-            placeholder={t('tools.findReplace.replacePlaceholder')}
-            aria-label={t('tools.findReplace.replace')}
-          />
-        </div>
+        <TextAreaField
+          wrapperClassName={styles.field}
+          label={t('tools.findReplace.replace')}
+          className={styles.line}
+          rows={1}
+          value={replace}
+          onChange={(e) => setReplace(e.target.value)}
+          placeholder={t('tools.findReplace.replacePlaceholder')}
+          aria-label={t('tools.findReplace.replace')}
+        />
       </div>
 
       <div className={styles.options}>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={useRegex}
-            onChange={(e) => setUseRegex(e.target.checked)}
-          />
-          {t('tools.findReplace.regex')}
-        </label>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={caseInsensitive}
-            onChange={(e) => setCaseInsensitive(e.target.checked)}
-          />
-          {t('tools.findReplace.caseInsensitive')}
-        </label>
-      </div>
-
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder={t('tools.findReplace.textPlaceholder')}
-          aria-label={t('common.input')}
+        <Checkbox
+          checked={useRegex}
+          onChange={(e) => setUseRegex(e.target.checked)}
+          label={t('tools.findReplace.regex')}
+        />
+        <Checkbox
+          checked={caseInsensitive}
+          onChange={(e) => setCaseInsensitive(e.target.checked)}
+          label={t('tools.findReplace.caseInsensitive')}
         />
       </div>
+
+      <TextAreaField
+        wrapperClassName={styles.pane}
+        label={t('common.input')}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder={t('tools.findReplace.textPlaceholder')}
+        aria-label={t('common.input')}
+      />
 
       <div className={styles.pane}>
         <div className={styles.outputHead}>

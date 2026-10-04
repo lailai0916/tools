@@ -1,6 +1,6 @@
+import { Alert, Button, Checkbox, TextField } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -115,68 +115,53 @@ export default function RandomNumber() {
     >
       <div className={styles.options}>
         <div className={styles.fields}>
-          <div className={styles.field}>
-            <label htmlFor="rn-min" className={styles.label}>
-              {t('tools.randomNumber.min')}
-            </label>
-            <input
-              id="rn-min"
-              type="number"
-              className={styles.input}
-              value={min}
-              onChange={(e) => {
-                setMin(e.target.value);
-                run(e.target.value, max, count, unique);
-              }}
-              aria-label={t('tools.randomNumber.min')}
-            />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="rn-max" className={styles.label}>
-              {t('tools.randomNumber.max')}
-            </label>
-            <input
-              id="rn-max"
-              type="number"
-              className={styles.input}
-              value={max}
-              onChange={(e) => {
-                setMax(e.target.value);
-                run(min, e.target.value, count, unique);
-              }}
-              aria-label={t('tools.randomNumber.max')}
-            />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="rn-count" className={styles.label}>
-              {t('tools.randomNumber.count')}
-            </label>
-            <input
-              id="rn-count"
-              type="number"
-              min={1}
-              max={MAX_COUNT}
-              className={styles.input}
-              value={count}
-              onChange={(e) => {
-                setCount(e.target.value);
-                run(min, max, e.target.value, unique);
-              }}
-              aria-label={t('tools.randomNumber.count')}
-            />
-          </div>
-        </div>
-        <label className={styles.check}>
-          <input
-            type="checkbox"
-            checked={unique}
+          <TextField
+            wrapperClassName={styles.field}
+            label={t('tools.randomNumber.min')}
+            id="rn-min"
+            type="number"
+            value={min}
             onChange={(e) => {
-              setUnique(e.target.checked);
-              run(min, max, count, e.target.checked);
+              setMin(e.target.value);
+              run(e.target.value, max, count, unique);
             }}
+            aria-label={t('tools.randomNumber.min')}
           />
-          {t('tools.randomNumber.unique')}
-        </label>
+          <TextField
+            wrapperClassName={styles.field}
+            label={t('tools.randomNumber.max')}
+            id="rn-max"
+            type="number"
+            value={max}
+            onChange={(e) => {
+              setMax(e.target.value);
+              run(min, e.target.value, count, unique);
+            }}
+            aria-label={t('tools.randomNumber.max')}
+          />
+          <TextField
+            wrapperClassName={styles.field}
+            label={t('tools.randomNumber.count')}
+            id="rn-count"
+            type="number"
+            min={1}
+            max={MAX_COUNT}
+            value={count}
+            onChange={(e) => {
+              setCount(e.target.value);
+              run(min, max, e.target.value, unique);
+            }}
+            aria-label={t('tools.randomNumber.count')}
+          />
+        </div>
+        <Checkbox
+          checked={unique}
+          onChange={(e) => {
+            setUnique(e.target.checked);
+            run(min, max, count, e.target.checked);
+          }}
+          label={t('tools.randomNumber.unique')}
+        />
       </div>
 
       <div className={styles.pane}>
@@ -195,7 +180,7 @@ export default function RandomNumber() {
           </div>
         </div>
         {invalid ? (
-          <p className={styles.error}>{t('tools.randomNumber.invalidRange')}</p>
+          <Alert variant="danger">{t('tools.randomNumber.invalidRange')}</Alert>
         ) : (
           <TextArea value={output} readOnly rows={6} aria-label={t('tools.randomNumber.output')} />
         )}

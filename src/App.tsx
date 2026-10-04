@@ -1,5 +1,6 @@
+import { LaikitProvider, PageContainer, Skeleton, type LinkProps } from '@lailai0916/ui';
 import { lazy, Suspense, type ComponentType } from 'react';
-import { Route, Routes } from 'react-router';
+import { Link as RouterLink, Route, Routes } from 'react-router';
 import { I18nProvider } from './i18n';
 import { useI18n } from './i18n';
 import Header from './components/Header';
@@ -23,7 +24,7 @@ function ToolRoute({ Component }: { Component: ComponentType }) {
     <Suspense
       fallback={
         <div className={styles.loading} role="status">
-          <span className={styles.loadingIndicator} />
+          <Skeleton width={80} height={20} />
           <span className={styles.srOnly}>{t('common.loading')}</span>
         </div>
       }
@@ -33,21 +34,41 @@ function ToolRoute({ Component }: { Component: ComponentType }) {
   );
 }
 
-export default function App() {
+function Application() {
+  const { locale } = useI18n();
   return (
-    <I18nProvider>
+    <LaikitProvider locale={locale} linkComponent={AppLink}>
       <div className={styles.shell}>
         <Header />
         <main id="main-content" className={styles.main}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            {toolRoutes.map(({ id, Component }) => (
-              <Route key={id} path={`/${id}`} element={<ToolRoute Component={Component} />} />
-            ))}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <PageContainer>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              {toolRoutes.map(({ id, Component }) => (
+                <Route key={id} path={`/${id}`} element={<ToolRoute Component={Component} />} />
+              ))}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </PageContainer>
         </main>
       </div>
+    </LaikitProvider>
+  );
+}
+
+function AppLink({ to, href, ...props }: LinkProps) {
+  const target = to ?? href ?? '/';
+  return target.startsWith('/') && !target.startsWith('//') ? (
+    <RouterLink {...props} to={target} />
+  ) : (
+    <a {...props} href={target} />
+  );
+}
+
+export default function App() {
+  return (
+    <I18nProvider>
+      <Application />
     </I18nProvider>
   );
 }
