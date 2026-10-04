@@ -24,7 +24,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Page gutters and centering come from `PageContainer`; tool reading widths are `820px` or `980px`.
 - Home search width: `520px` maximum.
 - Tool grid: `repeat(auto-fill, minmax(230px, 1fr))`.
-- Card gap: `10px`; section gap: `44px`.
+- Card gap: shared `--lk-space-3` (`12px`); section gap: `44px`.
 - Primary breakpoints: `600px` and `900px`.
 
 ## Components
@@ -37,6 +37,8 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Do not place a segmented theme card in the header.
 - Inputs, fields, selects, passwords, checkboxes, sliders, copy feedback, and errors come from laikit UI.
 - `ToolLayout` uses `PageContainer`, `Stack`, and `ButtonLink`; home cards and counts use `Card`, `IconBlock`, and `Badge`.
+- Single-choice modes use `Segmented`; allow the shared narrow-screen stacking behavior when labels need it.
+- Action groups may wrap. Mixed field and slider rows align their labels and control centers.
 
 ### Search and Filters
 
@@ -47,11 +49,15 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Empty filtered views explain the state and provide one action that restores all tools.
 - Do not wrap the complete filter area in a large card.
 - Preserve filter state in the URL.
+- Wrap category buttons onto additional rows so every choice stays visible at narrow widths.
 
 ### Tool Cards
 
 - Keep cards equal height with a two-line description clamp.
+- Separate the icon row from the title and description with `--lk-space-3`; keep text spacing at
+  `--lk-space-1` and card padding at `--lk-space-4`.
 - Use one Lucide icon treatment and one favorite action.
+- Align the favorite button with the icon row; use `44px` touch targets on mobile and touch devices.
 - Hover may change border and background only.
 - Keep the entire card keyboard reachable.
 
@@ -74,5 +80,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Text contrast must meet WCAG AA.
 - Every control needs a visible focus state and accessible name.
 - Mobile touch targets must be at least `44px`.
-- Verify `375px`, `768px`, `1024px`, and `1440px` widths.
+- Verify `320px`, `375px`, `768px`, `1024px`, and `1440px` widths in English and Simplified Chinese.
 - Verify both themes, keyboard navigation, no horizontal overflow, and no console errors.
+- Inspect screenshots and measure card spacing, equal heights, and icon alignment; include populated,
+  empty, and filtered views. Overflow checks alone do not verify the layout.

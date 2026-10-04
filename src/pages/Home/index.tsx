@@ -44,7 +44,6 @@ export default function Home() {
   const [favorites, setFavorites] = useState(() => readToolIds(FAVORITES_KEY));
   const [recent, setRecent] = useState(() => readToolIds(RECENT_KEY));
   const searchRef = useRef<HTMLInputElement>(null);
-  const categoriesRef = useRef<HTMLDivElement>(null);
 
   const query = searchParams.get('q') ?? '';
   const requestedView = searchParams.get('view');
@@ -80,23 +79,6 @@ export default function Home() {
     ownerWindow.addEventListener('keydown', focusSearch);
     return () => ownerWindow.removeEventListener('keydown', focusSearch);
   }, []);
-
-  useEffect(() => {
-    const container = categoriesRef.current;
-    const active = container?.querySelector<HTMLElement>("[aria-pressed='true']");
-    if (!container || !active) return;
-
-    const activeLeft = active.offsetLeft;
-    const activeRight = activeLeft + active.offsetWidth;
-    const visibleLeft = container.scrollLeft;
-    const visibleRight = visibleLeft + container.clientWidth;
-
-    if (activeLeft < visibleLeft) {
-      container.scrollLeft = Math.max(0, activeLeft - 8);
-    } else if (activeRight > visibleRight) {
-      container.scrollLeft = activeRight - container.clientWidth + 8;
-    }
-  }, [category]);
 
   const updateParam = (key: string, value?: string | null) => {
     const next = new URLSearchParams(searchParams);
@@ -211,7 +193,7 @@ export default function Home() {
           )}
           {query && (
             <IconButton
-              size="sm"
+              size="md"
               className={styles.clearSearch}
               onClick={() => updateParam('q')}
               label={t('common.clear')}
@@ -237,12 +219,7 @@ export default function Home() {
             ]}
           />
 
-          <div
-            ref={categoriesRef}
-            className={styles.categories}
-            role="group"
-            aria-label={t('site.allCategories')}
-          >
+          <div className={styles.categories} role="group" aria-label={t('site.allCategories')}>
             <Button size="sm" rounded active={!category} onClick={() => updateParam('category')}>
               {t('site.allCategories')}
             </Button>
@@ -313,19 +290,23 @@ export default function Home() {
                       onClick={() => rememberTool(tool.id)}
                     >
                       <IconBlock icon={tool.icon} variant="accent" />
-                      <span className={styles.cardName}>{name}</span>
-                      <span className={styles.cardDesc}>
-                        {t(`tools.${tool.key}.description` as MessageKey)}
+                      <span className={styles.cardCopy}>
+                        <span className={styles.cardName} title={name}>
+                          {name}
+                        </span>
+                        <span className={styles.cardDesc}>
+                          {t(`tools.${tool.key}.description` as MessageKey)}
+                        </span>
                       </span>
                     </Link>
                     <IconButton
-                      size="sm"
+                      size="md"
                       className={styles.favorite}
                       aria-pressed={favorite}
                       label={favorite ? t('site.removeFavorite') : t('site.addFavorite')}
                       onClick={() => toggleFavorite(tool.id)}
                     >
-                      <Icon icon={favorite ? 'lucide:star' : 'lucide:star'} />
+                      <Icon icon="lucide:star" />
                     </IconButton>
                   </Card>
                 );

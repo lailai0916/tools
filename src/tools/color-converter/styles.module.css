@@ -136,15 +136,6 @@
   cursor: pointer;
 }
 
-.slider.slider::-webkit-slider-thumb {
-  width: 16px;
-  margin-top: -6px;
-}
-
-.slider.slider::-moz-range-thumb {
-  width: 12px;
-}
-
 .channelValue {
   color: var(--font-color-base);
   font-family: var(--font-family-mono);

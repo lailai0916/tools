@@ -45,13 +45,15 @@
 
 .search {
   width: 100%;
+  padding-inline: 40px var(--lk-space-12);
 }
 
 .clearSearch {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 34px;
+  top: 0;
+  right: 2px;
+  bottom: 0;
+  margin-block: auto;
 }
 
 .searchShortcut {
@@ -89,16 +91,9 @@
   display: flex;
   min-width: 0;
   flex: 1;
+  flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 2px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  overscroll-behavior-x: none;
-  scroll-padding-inline: 8px;
-}
-
-.categories::-webkit-scrollbar {
-  display: none;
+  gap: var(--lk-space-1);
 }
 
 .section {
@@ -123,7 +118,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 10px;
+  gap: var(--lk-space-3);
 }
 
 .card {
@@ -134,9 +129,9 @@
 .cardLink {
   display: flex;
   height: 100%;
-  min-height: 134px;
   flex-direction: column;
-  padding: 16px;
+  gap: var(--lk-space-3);
+  padding: var(--lk-space-4);
   color: var(--font-color-base);
 }
 
@@ -148,10 +143,14 @@
   border-radius: inherit;
 }
 
+.cardCopy {
+  display: grid;
+  min-width: 0;
+  gap: var(--lk-space-1);
+}
+
 .cardName {
   overflow: hidden;
-  margin-right: 28px;
-  margin-bottom: 4px;
   font-size: 15px;
   font-weight: 650;
   line-height: 1.4;
@@ -173,9 +172,8 @@
 
 .favorite {
   position: absolute;
-  top: 11px;
-  right: 9px;
-  width: 34px;
+  top: var(--lk-space-4);
+  right: var(--lk-space-4);
 }
 
 .favorite[aria-pressed='true'] svg {
@@ -204,7 +202,6 @@
   }
 
   .categories {
-    gap: 6px;
     justify-content: flex-start;
   }
 }
@@ -227,9 +224,9 @@
   }
 
   .clearSearch {
-    top: 0;
     right: 0;
     width: 44px;
+    min-height: 44px;
   }
 
   .searchShortcut {
@@ -237,7 +234,10 @@
   }
 
   .favorite {
+    top: calc(var(--lk-space-4) - 2px);
+    right: calc(var(--lk-space-4) - 2px);
     width: 44px;
+    min-height: 44px;
   }
 
   .empty :global([data-lk='button']) {
@@ -247,19 +247,6 @@
   .grid {
     grid-template-columns: 1fr;
   }
-
-  .cardLink {
-    min-height: 140px;
-  }
-}
-
-.search {
-  padding-inline: 40px 42px;
-}
-
-.clearSearch {
-  top: 4px;
-  right: 4px;
 }
 
 .categories > button {

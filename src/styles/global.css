@@ -81,6 +81,16 @@ input[type='color'] {
   cursor: pointer;
 }
 
+@media (max-width: 600px), (pointer: coarse) {
+  [data-lk='button'] {
+    min-height: 44px;
+  }
+
+  [data-lk='button'][aria-label] {
+    min-width: 44px;
+  }
+}
+
 /* One global guard so CSS animations need no per-component handling.
    JS-driven motion must still check the media query itself. */
 @media (prefers-reduced-motion: reduce) {

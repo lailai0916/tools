@@ -1,4 +1,4 @@
-import { Alert, Button, SelectField, TextAreaField, TextField } from '@lailai0916/ui';
+import { Alert, Button, Cluster, SelectField, TextAreaField, TextField } from '@lailai0916/ui';
 import { useEffect, useMemo, useState } from 'react';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
@@ -95,7 +95,6 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
           ) : field.type === 'select' ? (
             <SelectField
               key={field.key}
-
               label={label}
               value={values[field.key] ?? ''}
               onChange={(event) => update(field.key, event.target.value)}
@@ -109,7 +108,6 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
           ) : (
             <TextField
               key={field.key}
-
               label={label}
               type={field.type ?? 'text'}
               value={values[field.key] ?? ''}
@@ -123,9 +121,9 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
         })}
       </div>
 
-      <div className={styles.outputHeader}>
+      <Cluster className={styles.outputHeader}>
         <span className={styles.label}>{t('common.output')}</span>
-        <div className={styles.actions}>
+        <Cluster gap={8}>
           <Button size="sm" variant="ghost" onClick={reset}>
             {t('common.reset')}
           </Button>
@@ -134,8 +132,8 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
             label={t('common.copy')}
             copiedLabel={t('common.copied')}
           />
-        </div>
-      </div>
+        </Cluster>
+      </Cluster>
 
       {result.error ? (
         <Alert variant="danger" role="alert">

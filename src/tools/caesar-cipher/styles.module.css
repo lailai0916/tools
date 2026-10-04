@@ -7,11 +7,12 @@
 }
 
 .shiftGroup {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 4rem minmax(120px, 1fr) auto;
   align-items: center;
   gap: 0.75rem;
   flex: 1 1 320px;
-  min-width: 260px;
+  min-width: 0;
 }
 
 .label {
@@ -26,8 +27,7 @@
 }
 
 .range {
-  flex: 1 1 120px;
-  min-width: 120px;
+  min-width: 0;
 }
 
 .pane {
@@ -46,4 +46,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  .shiftGroup {
+    grid-template-columns: auto 4rem auto;
+  }
+
+  .range {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .shiftGroup > button {
+    grid-column: 3;
+    grid-row: 1;
+  }
 }

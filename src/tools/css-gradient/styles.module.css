@@ -1,6 +1,6 @@
 .controls {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 1.25rem;
   flex-wrap: wrap;
 }
@@ -17,6 +17,10 @@
   gap: 0.5rem;
   flex: 1 1 220px;
   min-width: 200px;
+}
+
+.rangeField > div:last-child {
+  min-height: var(--lk-control-height);
 }
 
 .color {
@@ -60,4 +64,10 @@
   color: var(--font-color-base);
   overflow-x: auto;
   white-space: nowrap;
+}
+
+@media (max-width: 600px), (pointer: coarse) {
+  .rangeField > div:last-child {
+    min-height: 44px;
+  }
 }

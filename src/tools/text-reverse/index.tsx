@@ -1,4 +1,4 @@
-import { Button, TextAreaField } from '@lailai0916/ui';
+import { Button, Segmented, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -37,17 +37,20 @@ export default function TextReverse() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          <Button size="sm" active={mode === 'char'} onClick={() => setMode('char')}>
-            {t('tools.textReverse.byChar')}
-          </Button>
-          <Button size="sm" active={mode === 'word'} onClick={() => setMode('word')}>
-            {t('tools.textReverse.byWord')}
-          </Button>
-          <Button size="sm" active={mode === 'line'} onClick={() => setMode('line')}>
-            {t('tools.textReverse.byLine')}
-          </Button>
-        </div>
+        <Segmented<Mode>
+          className={styles.modes}
+          value={mode}
+          onChange={setMode}
+          size="sm"
+          orientation="horizontal"
+          stackAt={360}
+          ariaLabel={t('tools.textReverse.name')}
+          items={[
+            { value: 'char', label: t('tools.textReverse.byChar') },
+            { value: 'word', label: t('tools.textReverse.byWord') },
+            { value: 'line', label: t('tools.textReverse.byLine') },
+          ]}
+        />
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}
         </Button>
