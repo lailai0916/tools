@@ -14,7 +14,7 @@ if (!root) {
 
 createRoot(root).render(
   <StrictMode>
-    <ThemeProvider>
+    <ThemeProvider mode="system">
       <BrowserRouter>
         <App />
       </BrowserRouter>

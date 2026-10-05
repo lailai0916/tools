@@ -32,6 +32,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 ### Header
 
 - `SiteHeader` and `SkipLink` own the common header layout and keyboard skip navigation.
+- `LanguageButton` and `ThemeButton` share the Prispect header controls. Language state stays in Tools; appearance follows the system on load and system changes, with a temporary one-click light/dark choice through `ThemeProvider mode="system"`.
 - Tools supplies its brand link, language switch, and theme control; header surfaces, gutters,
   responsive brand names, spacing, and touch targets use the shared defaults.
 - Show the avatar, product name, language button, and one compact theme button.
