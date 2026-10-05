@@ -11,8 +11,6 @@ import {
 } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
 import ToolSearch from '@/components/ToolSearch';
-import { useToolNavigation } from '@/hooks/useToolNavigation';
-import type { MessageKey } from '@/i18n/en';
 import styles from './styles.module.css';
 
 export default function Header({
@@ -28,7 +26,6 @@ export default function Header({
 }) {
   const { locale, setLocale, t } = useI18n();
   const { resolvedTheme, setPreference } = useTheme();
-  const { tool, title } = useToolNavigation();
 
   return (
     <>
@@ -49,14 +46,9 @@ export default function Header({
           </IconButton>
         }
         brand={
-          <>
-            <Link to="/" className={styles.brand} aria-label={t('site.title')}>
-              <Brand logoSrc="/logo.svg" name={t('site.title')} />
-            </Link>
-            <span className={styles.context}>
-              {tool ? t(`tools.${tool.key}.name` as MessageKey) : title}
-            </span>
-          </>
+          <Link to="/" aria-label={t('site.title')}>
+            <Brand logoSrc="/logo.svg" name={t('site.title')} />
+          </Link>
         }
         actions={
           <>

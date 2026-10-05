@@ -24,7 +24,8 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Page gutters and centering come from `PageContainer`; tool reading widths are `820px` or `980px`.
 - Tool grid: `repeat(auto-fill, minmax(230px, 1fr))`.
 - Card gap: shared `--lk-space-3` (`12px`); section gap: `44px`.
-- Desktop uses a persistent `224px` left sidebar, following Prispect's workspace layout.
+- The header spans the full viewport width. Desktop uses a persistent `224px` left sidebar below it,
+  following Prispect's navigation layout.
 - At `980px` and below, navigation opens in a left drawer and the header shows the brand and menu button.
 - Primary breakpoints: `600px` and `980px`.
 
@@ -34,8 +35,8 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 - `SiteHeader` and `SkipLink` own the common header layout and keyboard skip navigation.
 - `LanguageButton` and `ThemeButton` share the Prispect header controls. Language state stays in Tools; appearance follows the system on load and system changes, with a temporary one-click light/dark choice through `ThemeProvider mode="system"`.
-- The brand lives in the sidebar on desktop; the header shows the current view or tool name. On mobile,
-  show the menu button and brand in the header. Search, language, and theme controls use shared defaults.
+- The brand always belongs to the header; omit the current-view/tool context label. On mobile,
+  show the menu button beside the brand. Search, language, and theme controls use shared defaults.
 - The mobile menu and drawer close controls also use `IconButton variant="header"`.
 - Search, language, and theme buttons are `32px` on desktop and `44px` at widths up to `980px` or on touch devices.
 - Search uses `IconButton variant="header"`, the same base primitive as the language and theme controls, including borders, icon strokes, focus and press feedback.
@@ -55,6 +56,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Keep All tools, Favorites, Recent, and eight tool categories in one sidebar navigation on every route.
 - Compose links with shared `ButtonLink`, `Icon`, and theme tokens. Mark the selected view with
   `aria-current="page"`; on individual tool routes, mark its category with `aria-current="location"`.
+- A fine separator divides saved views from tool categories, in both the sidebar and mobile drawer.
 - Category counts derive from the registry. Selecting a category shows only its tools; Favorites and
   Recent show a single grid, with recent tools ordered by most recently opened.
 - Compose the mobile drawer with shared `Dialog`. Trap focus, lock background scrolling, support Escape

@@ -1,6 +1,6 @@
-import { Brand, ButtonLink, Dialog, Icon, IconButton } from '@lailai0916/ui';
+import { ButtonLink, Dialog, Icon, IconButton } from '@lailai0916/ui';
 import type { MouseEvent } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router';
+import { useLocation, useSearchParams } from 'react-router';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import { useToolNavigation, type ToolView } from '@/hooks/useToolNavigation';
@@ -114,16 +114,10 @@ export default function ToolNavigation({
       window.scrollTo(0, 0);
     });
   };
-  const brand = (
-    <Link to="/" className={styles.brand} aria-label={t('site.title')} onClick={navigate}>
-      <Brand logoSrc="/logo.svg" name={t('site.title')} />
-    </Link>
-  );
 
   return (
     <>
       <aside className={styles.sidebar} aria-label={t('site.toolNavigation')}>
-        <div className={styles.heading}>{brand}</div>
         <NavigationLinks onNavigate={navigate} />
       </aside>
       {open && (
@@ -135,7 +129,7 @@ export default function ToolNavigation({
           className={styles.drawer}
         >
           <div className={styles.heading}>
-            {brand}
+            <span>{t('site.toolNavigation')}</span>
             <IconButton variant="header" label={t('site.closeNavigation')} onClick={onClose}>
               <Icon icon="lucide:x" width={17} />
             </IconButton>

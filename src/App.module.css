@@ -6,9 +6,15 @@
   grid-template-rows: var(--lk-header-height) 1fr;
 }
 
-.header,
+.header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-width: 0;
+}
+
 .main {
   grid-column: 2;
+  grid-row: 2;
   min-width: 0;
 }
 
@@ -38,7 +44,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .header,
   .main {
     grid-column: 1;
   }
