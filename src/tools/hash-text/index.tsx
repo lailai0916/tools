@@ -1,5 +1,5 @@
 import { ToolPane } from '@/components/ToolWorkspace';
-import { Button } from '@lailai0916/ui';
+import { Alert, Button } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -23,24 +23,37 @@ export default function HashText() {
   const { t } = useI18n();
   const [input, setInput] = useState('');
   const [digests, setDigests] = useState<Digests>(EMPTY);
+  const [pending, setPending] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    setDigests(EMPTY);
+    setFailed(false);
     if (!input) {
-      setDigests(EMPTY);
+      setPending(false);
       return;
     }
     let cancelled = false;
+    setPending(true);
     const data = new TextEncoder().encode(input);
-    Promise.all(ALGORITHMS.map((algo) => crypto.subtle.digest(algo, data))).then((buffers) => {
-      if (cancelled) {
-        return;
-      }
-      const next = { ...EMPTY };
-      ALGORITHMS.forEach((algo, i) => {
-        next[algo] = toHex(buffers[i]);
+    Promise.all(ALGORITHMS.map((algo) => crypto.subtle.digest(algo, data)))
+      .then((buffers) => {
+        if (cancelled) {
+          return;
+        }
+        const next = { ...EMPTY };
+        ALGORITHMS.forEach((algo, i) => {
+          next[algo] = toHex(buffers[i]);
+        });
+        setDigests(next);
+        setPending(false);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setFailed(true);
+          setPending(false);
+        }
       });
-      setDigests(next);
-    });
     return () => {
       cancelled = true;
     };
@@ -70,6 +83,12 @@ export default function HashText() {
         />
       </ToolPane>
 
+      {failed && (
+        <Alert variant="danger" role="alert">
+          {t('common.processingFailed')}
+        </Alert>
+      )}
+
       <div className={styles.results}>
         {ALGORITHMS.map((algo) => (
           <div key={algo} className={styles.row}>
@@ -82,7 +101,11 @@ export default function HashText() {
               />
             </div>
             <output className={styles.hash}>
-              {digests[algo] || <span className={styles.empty}>{t('tools.hashText.empty')}</span>}
+              {digests[algo] || (
+                <span className={styles.empty}>
+                  {t(pending ? 'common.processing' : 'tools.hashText.empty')}
+                </span>
+              )}
             </output>
           </div>
         ))}

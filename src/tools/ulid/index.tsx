@@ -65,7 +65,7 @@ export default function Ulid() {
             orientation="horizontal"
             size="sm"
             stackAt={0}
-            ariaLabel={t('common.options')}
+            ariaLabel={t('tools.ulid.count')}
           />
         </div>
         <Button size="sm" variant="primary" onClick={() => regenerate(count)}>
@@ -79,7 +79,12 @@ export default function Ulid() {
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
         }
       >
-        <TextArea value={output} readOnly aria-label={t('tools.ulid.output')} />
+        <TextArea
+          rows={count === 1 ? 2 : count}
+          value={output}
+          readOnly
+          aria-label={t('tools.ulid.output')}
+        />
       </ToolPane>
     </ToolLayout>
   );

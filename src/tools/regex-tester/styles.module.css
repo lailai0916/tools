@@ -9,6 +9,7 @@
 .flags {
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .pattern {
@@ -34,6 +35,19 @@
   font-size: var(--font-size-code);
   white-space: pre-wrap;
   word-break: break-all;
+}
+
+.matchCopy {
+  display: grid;
+  min-width: 0;
+  gap: var(--lk-space-1);
+}
+
+.capture {
+  color: var(--lk-font-color-secondary);
+  font: 12px / 1.6 var(--lk-font-mono);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .pos {

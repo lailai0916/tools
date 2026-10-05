@@ -42,7 +42,7 @@ export default function RandomColor() {
             orientation="horizontal"
             size="sm"
             stackAt={0}
-            ariaLabel={t('common.options')}
+            ariaLabel={t('tools.randomColor.count')}
           />
         </div>
         <Button size="sm" variant="primary" onClick={() => regenerate(count)}>

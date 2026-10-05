@@ -1,12 +1,15 @@
 import { ToolPane } from '@/components/ToolWorkspace';
-import { Alert, Badge, Button, TextAreaField, Input } from '@lailai0916/ui';
+import { Alert, Badge, Button, Hint, TextAreaField, Input } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
-type Match = { text: string; index: number };
-type Result = { ok: true; matches: Match[] } | { ok: false; error: string } | { ok: null };
+type Match = { text: string; index: number; groups: string[] };
+type Result =
+  { ok: true; matches: Match[]; truncated: boolean } | { ok: false; error: string } | { ok: null };
+
+const MAX_MATCHES = 2000;
 
 function run(pattern: string, flags: string, text: string): Result {
   if (!pattern) {
@@ -14,18 +17,19 @@ function run(pattern: string, flags: string, text: string): Result {
   }
   let regex: RegExp;
   try {
-    regex = new RegExp(pattern, flags.includes('g') ? flags : flags + 'g');
+    regex = new RegExp(pattern, flags);
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : String(e) };
   }
   const matches: Match[] = [];
-  for (const m of text.matchAll(regex)) {
-    matches.push({ text: m[0], index: m.index ?? 0 });
-    if (m[0] === '') {
-      regex.lastIndex++;
-    }
+  const scan = flags.includes('g')
+    ? text.matchAll(regex)
+    : [regex.exec(text)].filter((m) => m !== null);
+  for (const m of scan) {
+    if (matches.length === MAX_MATCHES) return { ok: true, matches, truncated: true };
+    matches.push({ text: m[0], index: m.index ?? 0, groups: m.slice(1) });
   }
-  return { ok: true, matches };
+  return { ok: true, matches, truncated: false };
 }
 
 const FLAGS = ['g', 'i', 'm', 's'] as const;
@@ -52,17 +56,19 @@ export default function RegexTester() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.flags}>
+        <div className={styles.flags} role="group" aria-label={t('tools.regexTester.flags')}>
           {FLAGS.map((flag) => (
-            <Button
-              key={flag}
-              size="sm"
-              active={flags.includes(flag)}
-              aria-pressed={flags.includes(flag)}
-              onClick={() => toggleFlag(flag)}
-            >
-              {flag}
-            </Button>
+            <Hint key={flag} label={t(`tools.regexTester.flag.${flag}`)}>
+              <Button
+                size="sm"
+                active={flags.includes(flag)}
+                aria-pressed={flags.includes(flag)}
+                aria-label={`${flag}: ${t(`tools.regexTester.flag.${flag}`)}`}
+                onClick={() => toggleFlag(flag)}
+              >
+                {flag}
+              </Button>
+            </Hint>
           ))}
         </div>
       </div>
@@ -89,11 +95,16 @@ export default function RegexTester() {
           value={pattern}
           onChange={(e) => setPattern(e.target.value)}
           invalid={result.ok === false}
+          aria-describedby={error ? 'regex-error' : undefined}
           placeholder={t('tools.regexTester.patternPlaceholder')}
           aria-label={t('tools.regexTester.pattern')}
           className={styles.pattern}
         />
-        {error && <Alert variant="danger">{error}</Alert>}
+        {error && (
+          <Alert id="regex-error" variant="danger" role="alert">
+            {error}
+          </Alert>
+        )}
       </ToolPane>
 
       <TextAreaField
@@ -114,12 +125,27 @@ export default function RegexTester() {
           </>
         }
       >
+        {result.ok === null && <p className={styles.empty}>{t('common.waitingForInput')}</p>}
+        {result.ok === true && result.truncated && (
+          <Alert variant="warning" role="status">
+            {t('tools.regexTester.limit')}
+          </Alert>
+        )}
         {result.ok === true &&
           (matches.length > 0 ? (
             <ul className={styles.list}>
               {matches.map((m, i) => (
                 <li key={i} className={styles.item}>
-                  <span className={styles.matchText}>{m.text}</span>
+                  <div className={styles.matchCopy}>
+                    <span className={styles.matchText}>
+                      {m.text || t('tools.regexTester.emptyMatch')}
+                    </span>
+                    {m.groups.map((group, index) => (
+                      <span className={styles.capture} key={index}>
+                        ${index + 1}: {group ?? '—'}
+                      </span>
+                    ))}
+                  </div>
                   <span className={styles.pos}>
                     {t('tools.regexTester.at')} {m.index}
                   </span>

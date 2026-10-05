@@ -1,5 +1,5 @@
 import { ToolPane } from '@/components/ToolWorkspace';
-import { Button, TextField, Input } from '@lailai0916/ui';
+import { Alert, Button, Segmented, TextField, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -32,22 +32,21 @@ function randomBelow(n: number): number {
   return x % n;
 }
 
-function alphabetFor(charset: Charset, custom: string): string {
+function alphabetFor(charset: Charset, custom: string): string[] {
   if (charset === 'custom') {
-    return [...new Set([...custom])].join('');
+    return [...new Set([...custom])];
   }
-  return PRESETS[charset];
+  return [...PRESETS[charset]];
 }
 
 function build(lengthS: string, charset: Charset, custom: string): string {
   const alphabet = alphabetFor(charset, custom);
   const len = Number(lengthS.trim());
-  if (!alphabet || !Number.isInteger(len) || len < 1) {
+  if (!alphabet.length || !Number.isInteger(len) || len < 1 || len > MAX_LENGTH) {
     return '';
   }
-  const n = Math.min(len, MAX_LENGTH);
   let out = '';
-  for (let i = 0; i < n; i++) {
+  for (let i = 0; i < len; i++) {
     out += alphabet[randomBelow(alphabet.length)];
   }
   return out;
@@ -59,6 +58,14 @@ export default function RandomString() {
   const [charset, setCharset] = useState<Charset>('hex');
   const [custom, setCustom] = useState('');
   const [output, setOutput] = useState(() => build('32', 'hex', ''));
+  const validLength =
+    Number.isInteger(Number(length)) && Number(length) >= 1 && Number(length) <= MAX_LENGTH;
+  const emptyAlphabet = charset === 'custom' && !custom;
+  const error = !validLength
+    ? t('tools.randomString.invalidLength')
+    : emptyAlphabet
+      ? t('tools.randomString.emptyAlphabet')
+      : '';
 
   const run = (lengthS = length, cs = charset, cu = custom) => {
     setOutput(build(lengthS, cs, cu));
@@ -79,6 +86,8 @@ export default function RandomString() {
           min={1}
           max={MAX_LENGTH}
           value={length}
+          invalid={!validLength}
+          aria-describedby={!validLength ? 'random-string-error' : undefined}
           onChange={(e) => {
             setLength(e.target.value);
             run(e.target.value, charset, custom);
@@ -88,21 +97,21 @@ export default function RandomString() {
 
         <div className={styles.field}>
           <span className={styles.label}>{t('tools.randomString.charset')}</span>
-          <div className={styles.group}>
-            {CHARSETS.map((cs) => (
-              <Button
-                key={cs}
-                size="sm"
-                active={charset === cs}
-                onClick={() => {
-                  setCharset(cs);
-                  run(length, cs, custom);
-                }}
-              >
-                {t(`tools.randomString.${cs}` as MessageKey)}
-              </Button>
-            ))}
-          </div>
+          <Segmented<Charset>
+            value={charset}
+            onChange={(cs) => {
+              setCharset(cs);
+              run(length, cs, custom);
+            }}
+            items={CHARSETS.map((cs) => ({
+              value: cs,
+              label: t(`tools.randomString.${cs}` as MessageKey),
+            }))}
+            size="sm"
+            orientation="horizontal"
+            stackAt={0}
+            ariaLabel={t('tools.randomString.charset')}
+          />
         </div>
 
         {charset === 'custom' && (
@@ -111,6 +120,8 @@ export default function RandomString() {
               monospace
               spellCheck={false}
               value={custom}
+              invalid={emptyAlphabet}
+              aria-describedby={emptyAlphabet ? 'random-string-error' : undefined}
               onChange={(e) => {
                 setCustom(e.target.value);
                 run(length, charset, e.target.value);
@@ -122,18 +133,29 @@ export default function RandomString() {
         )}
       </div>
 
+      {error && (
+        <Alert id="random-string-error" variant="danger" role="alert">
+          {error}
+        </Alert>
+      )}
+
       <ToolPane
         title={t('tools.randomString.output')}
         actions={
           <div className={styles.actions}>
-            <Button size="sm" variant="primary" onClick={() => run()}>
+            <Button size="sm" variant="primary" onClick={() => run()} disabled={!!error}>
               {t('tools.randomString.regenerate')}
             </Button>
             <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
           </div>
         }
       >
-        <TextArea rows={2} value={output} readOnly aria-label={t('tools.randomString.output')} />
+        <TextArea
+          rows={Math.min(10, Math.max(2, Math.ceil([...output].length / 24)))}
+          value={output}
+          readOnly
+          aria-label={t('tools.randomString.output')}
+        />
       </ToolPane>
     </ToolLayout>
   );

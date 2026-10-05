@@ -1,7 +1,8 @@
 import { ToolPane } from '@/components/ToolWorkspace';
-import { Alert, Button, Checkbox, Slider, Input } from '@lailai0916/ui';
+import { Alert, Button, Checkbox, Slider } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -156,9 +157,8 @@ export default function PasswordGenerator() {
         {noCharset ? (
           <Alert variant="danger">{t('tools.passwordGenerator.noCharset')}</Alert>
         ) : (
-          <Input
-            monospace
-            spellCheck={false}
+          <TextArea
+            rows={opts.length > 48 ? 3 : 2}
             value={output}
             readOnly
             aria-label={t('tools.passwordGenerator.output')}

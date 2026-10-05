@@ -5,6 +5,7 @@ import { I18nProvider } from './i18n';
 import { useI18n } from './i18n';
 import Header from './components/Header';
 import ToolNavigation from './components/ToolNavigation';
+import RouteEffects from './components/RouteEffects';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { TOOLS } from './tools/registry';
@@ -57,6 +58,7 @@ function Application() {
   }, []);
   return (
     <LaikitProvider locale={locale} linkComponent={AppLink}>
+      <RouteEffects />
       <div className={styles.shell}>
         <Header
           navigationOpen={navigationOpen}

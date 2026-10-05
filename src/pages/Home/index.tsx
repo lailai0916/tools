@@ -9,6 +9,7 @@ import type { MessageKey } from '@/i18n/en';
 import { useToolNavigation } from '@/hooks/useToolNavigation';
 import { useSavedTools } from '@/hooks/useSavedTools';
 import { toggleToolFavorite, rememberTool } from '@/utils/toolStorage';
+import { matchesToolSearch } from '@/utils/toolSearch';
 import styles from './styles.module.css';
 
 export default function Home() {
@@ -35,24 +36,13 @@ export default function Home() {
         : view === 'recent'
           ? recent.flatMap((id) => TOOLS.filter((tool) => tool.id === id))
           : TOOLS;
-    const normalizedQuery = query.trim().toLowerCase();
-
     return source.filter((tool) => {
       if (category && tool.category !== category) {
         return false;
       }
-      if (!normalizedQuery) {
-        return true;
-      }
-      const name = t(`tools.${tool.key}.name` as MessageKey).toLowerCase();
-      const description = t(`tools.${tool.key}.description` as MessageKey).toLowerCase();
-      return (
-        name.includes(normalizedQuery) ||
-        description.includes(normalizedQuery) ||
-        tool.id.includes(normalizedQuery)
-      );
+      return matchesToolSearch(tool.id, query);
     });
-  }, [category, favorites, query, recent, t, view]);
+  }, [category, favorites, query, recent, view]);
 
   const sections = useMemo(
     () =>
@@ -164,6 +154,7 @@ export default function Home() {
                         </span>
                       </Link>
                       <FavoriteButton
+                        name={name}
                         className={styles.favorite}
                         active={favorite}
                         onClick={() => toggleToolFavorite(tool.id)}

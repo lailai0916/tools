@@ -94,7 +94,13 @@
   font-variant-numeric: tabular-nums;
 }
 
-@container tools-content (max-width: 760px) {
+@media (max-width: 600px), (pointer: coarse) {
+  .paneHeader {
+    min-height: 44px;
+  }
+}
+
+@container tools-content (max-width: 680px) {
   .grid {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--lk-space-6);

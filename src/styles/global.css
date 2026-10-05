@@ -82,12 +82,14 @@ input[type='color'] {
 }
 
 @media (max-width: 600px), (pointer: coarse) {
-  [data-lk='button'] {
+  [data-lk='button'],
+  [data-lk='segmented'][data-size='sm'] [data-lk='segmented-item'] {
     min-height: 44px;
+    min-width: 44px;
   }
 
-  [data-lk='button'][aria-label] {
-    min-width: 44px;
+  [data-lk='field-control'] {
+    font-size: 16px;
   }
 }
 

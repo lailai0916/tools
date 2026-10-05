@@ -1,6 +1,7 @@
 import { Alert, Slider, TextField, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { ToolPane } from '@/components/ToolWorkspace';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -240,35 +241,36 @@ export default function ColorConverter() {
 
         <div className={styles.fields}>
           {fields.map((f) => (
-            <div key={f.key} className={styles.field}>
-              <label className={styles.fieldLabel} htmlFor={`color-${f.key}`}>
-                {f.label}
-              </label>
-              <div className={styles.fieldControl}>
-                <Input
-                  monospace
-                  spellCheck={false}
-                  id={`color-${f.key}`}
-                  className={styles.input}
-                  value={f.value}
-                  onChange={(e) => edit(f.key, e.target.value)}
-                  invalid={invalid === f.key}
-                  aria-describedby={invalid === f.key ? `color-${f.key}-error` : undefined}
-                  placeholder={f.placeholder}
-                  aria-label={f.label}
-                />
+            <ToolPane
+              key={f.key}
+              title={<label htmlFor={`color-${f.key}`}>{f.label}</label>}
+              actions={
                 <CopyButton
                   value={f.value}
+                  disabled={invalid !== null}
                   label={t('common.copy')}
                   copiedLabel={t('common.copied')}
                 />
-              </div>
+              }
+            >
+              <Input
+                monospace
+                spellCheck={false}
+                id={`color-${f.key}`}
+                className={styles.input}
+                value={f.value}
+                onChange={(e) => edit(f.key, e.target.value)}
+                invalid={invalid === f.key}
+                aria-describedby={invalid === f.key ? `color-${f.key}-error` : undefined}
+                placeholder={f.placeholder}
+                aria-label={f.label}
+              />
               {invalid === f.key && (
                 <Alert id={`color-${f.key}-error`} variant="danger" role="alert">
                   {t('tools.colorConverter.invalid')}
                 </Alert>
               )}
-            </div>
+            </ToolPane>
           ))}
         </div>
       </div>

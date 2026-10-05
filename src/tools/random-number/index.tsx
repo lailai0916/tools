@@ -77,19 +77,21 @@ function validate(minS: string, maxS: string, countS: string): Params | null {
     k === null ||
     lo > hi ||
     k < 1 ||
+    k > MAX_COUNT ||
     !Number.isSafeInteger(hi - lo + 1)
   ) {
     return null;
   }
-  return { lo, hi, k: Math.min(k, MAX_COUNT) };
+  return { lo, hi, k };
 }
 
 function build(minS: string, maxS: string, countS: string, unique: boolean): string {
   const p = validate(minS, maxS, countS);
   if (!p) return '';
   const size = p.hi - p.lo + 1;
+  if (unique && p.k > size) return '';
   const nums = unique
-    ? drawUnique(p.lo, size, Math.min(p.k, size))
+    ? drawUnique(p.lo, size, p.k)
     : Array.from({ length: p.k }, () => p.lo + randomBelow(size));
   return nums.join('\n');
 }
@@ -102,7 +104,18 @@ export default function RandomNumber() {
   const [unique, setUnique] = useState(false);
   const [output, setOutput] = useState(() => build('1', '100', '5', false));
 
-  const invalid = validate(min, max, count) === null;
+  const validCount =
+    Number.isInteger(Number(count)) && Number(count) >= 1 && Number(count) <= MAX_COUNT;
+  const params = validate(min, max, count);
+  const tooManyUnique = !!params && unique && params.k > params.hi - params.lo + 1;
+  const error = !validCount
+    ? t('tools.randomNumber.invalidCount')
+    : !params
+      ? t('tools.randomNumber.invalidRange')
+      : tooManyUnique
+        ? t('tools.randomNumber.tooManyUnique')
+        : '';
+  const invalid = !!error;
 
   const run = (minS = min, maxS = max, countS = count, uniq = unique) => {
     setOutput(build(minS, maxS, countS, uniq));
@@ -122,6 +135,8 @@ export default function RandomNumber() {
             id="rn-min"
             type="number"
             value={min}
+            invalid={validCount && !params}
+            aria-describedby={invalid ? 'random-number-error' : undefined}
             onChange={(e) => {
               setMin(e.target.value);
               run(e.target.value, max, count, unique);
@@ -134,6 +149,8 @@ export default function RandomNumber() {
             id="rn-max"
             type="number"
             value={max}
+            invalid={validCount && !params}
+            aria-describedby={invalid ? 'random-number-error' : undefined}
             onChange={(e) => {
               setMax(e.target.value);
               run(min, e.target.value, count, unique);
@@ -148,6 +165,8 @@ export default function RandomNumber() {
             min={1}
             max={MAX_COUNT}
             value={count}
+            invalid={!validCount || tooManyUnique}
+            aria-describedby={invalid ? 'random-number-error' : undefined}
             onChange={(e) => {
               setCount(e.target.value);
               run(min, max, e.target.value, unique);
@@ -182,7 +201,9 @@ export default function RandomNumber() {
         }
       >
         {invalid ? (
-          <Alert variant="danger">{t('tools.randomNumber.invalidRange')}</Alert>
+          <Alert id="random-number-error" variant="danger" role="alert">
+            {error}
+          </Alert>
         ) : (
           <TextArea value={output} readOnly rows={6} aria-label={t('tools.randomNumber.output')} />
         )}

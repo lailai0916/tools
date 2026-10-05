@@ -49,7 +49,7 @@ export default function BaseConverter() {
       return;
     }
     if (!pattern.test(value.trim())) {
-      setFields((prev) => ({ ...prev, [source]: value }));
+      setFields({ ...EMPTY, [source]: value });
       setInvalid(source);
       return;
     }
@@ -90,22 +90,27 @@ export default function BaseConverter() {
             actions={
               <CopyButton
                 value={fields[b.key]}
+                disabled={invalid !== null}
                 label={t('common.copy')}
                 copiedLabel={t('common.copied')}
               />
             }
           >
             <Input
+              id={`base-${b.key}`}
               monospace
               spellCheck={false}
               value={fields[b.key]}
               onChange={(e) => handleChange(b.key, b.base, b.pattern, e.target.value)}
               invalid={invalid === b.key}
+              aria-describedby={invalid === b.key ? `base-${b.key}-error` : undefined}
               placeholder={t(b.labelKey)}
               aria-label={t(b.labelKey)}
             />
             {invalid === b.key && (
-              <Alert variant="danger">{t('tools.baseConverter.invalid')}</Alert>
+              <Alert id={`base-${b.key}-error`} variant="danger" role="alert">
+                {t('tools.baseConverter.invalid')}
+              </Alert>
             )}
           </ToolPane>
         ))}

@@ -51,19 +51,18 @@ export default function Uuid() {
         <div className={styles.options}>
           <div className={styles.optionGroup}>
             <span className={styles.optionLabel}>{t('tools.uuid.version')}</span>
-            <div className={styles.counts} role="group" aria-label={t('tools.uuid.version')}>
-              {(['v4', 'v7'] as const).map((item) => (
-                <Button
-                  key={item}
-                  size="sm"
-                  active={version === item}
-                  onClick={() => regenerate(count, item)}
-                  aria-pressed={version === item}
-                >
-                  {item.toUpperCase()}
-                </Button>
-              ))}
-            </div>
+            <Segmented<Version>
+              value={version}
+              onChange={(value) => regenerate(count, value)}
+              items={(['v4', 'v7'] as const).map((value) => ({
+                value,
+                label: value.toUpperCase(),
+              }))}
+              size="sm"
+              orientation="horizontal"
+              stackAt={0}
+              ariaLabel={t('tools.uuid.version')}
+            />
           </div>
           <div className={styles.optionGroup}>
             <span className={styles.optionLabel}>{t('tools.uuid.count')}</span>
@@ -89,7 +88,12 @@ export default function Uuid() {
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
         }
       >
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
+        <TextArea
+          rows={count === 1 ? 2 : Math.min(count, 10)}
+          value={output}
+          readOnly
+          aria-label={t('common.output')}
+        />
       </ToolPane>
     </ToolLayout>
   );

@@ -99,7 +99,7 @@
 }
 
 .footer kbd {
-  font-family: var(--lk-font-family-mono);
+  font-family: var(--lk-font-mono);
 }
 
 .status {

@@ -2,6 +2,10 @@
   min-height: 240px;
 }
 
+.editor[rows] {
+  min-height: var(--lk-control-height);
+}
+
 .editor[rows='1'] {
   min-height: var(--lk-control-height);
   height: var(--lk-control-height);

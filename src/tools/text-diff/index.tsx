@@ -1,8 +1,9 @@
 import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
-import { Button, TextAreaField } from '@lailai0916/ui';
+import { Badge, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { diffLines } from 'diff';
 import ToolLayout from '@/components/ToolLayout';
+import TextArea from '@/components/TextArea';
 
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -40,7 +41,7 @@ export default function TextDiff() {
 
   const lines = useMemo(() => computeDiff(original, modified), [original, modified]);
 
-  const hasInput = original.trim() !== '' || modified.trim() !== '';
+  const hasInput = original !== '' || modified !== '';
   const noChange = hasInput && lines.every((l) => l.type === 'same');
   const copyText = lines.map((l) => SIGN[l.type] + (l.text ? ' ' + l.text : '')).join('\n');
 
@@ -50,45 +51,59 @@ export default function TextDiff() {
       description={t('tools.textDiff.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.controls}>
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => {
-            setOriginal('');
-            setModified('');
-          }}
-          disabled={!original && !modified}
-        >
-          {t('common.clear')}
-        </Button>
-      </div>
-
       <ToolGrid>
-        <TextAreaField
-          wrapperClassName={styles.pane}
-          monospace
-          label={t('tools.textDiff.original')}
-          value={original}
-          onChange={(e) => setOriginal(e.target.value)}
-          placeholder={t('tools.textDiff.originalPlaceholder')}
-          aria-label={t('tools.textDiff.original')}
-        />
-        <TextAreaField
-          wrapperClassName={styles.pane}
-          monospace
-          label={t('tools.textDiff.modified')}
-          value={modified}
-          onChange={(e) => setModified(e.target.value)}
-          placeholder={t('tools.textDiff.modifiedPlaceholder')}
-          aria-label={t('tools.textDiff.modified')}
-        />
+        <ToolPane
+          title={<label htmlFor="diff-original">{t('tools.textDiff.original')}</label>}
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setOriginal('')} disabled={!original}>
+              {t('common.clear')}
+            </Button>
+          }
+        >
+          <TextArea
+            id="diff-original"
+            value={original}
+            onChange={(e) => setOriginal(e.target.value)}
+            placeholder={t('tools.textDiff.originalPlaceholder')}
+            aria-label={t('tools.textDiff.original')}
+          />
+        </ToolPane>
+        <ToolPane
+          title={<label htmlFor="diff-modified">{t('tools.textDiff.modified')}</label>}
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setModified('')} disabled={!modified}>
+              {t('common.clear')}
+            </Button>
+          }
+        >
+          <TextArea
+            id="diff-modified"
+            value={modified}
+            onChange={(e) => setModified(e.target.value)}
+            placeholder={t('tools.textDiff.modifiedPlaceholder')}
+            aria-label={t('tools.textDiff.modified')}
+          />
+        </ToolPane>
       </ToolGrid>
 
       <ToolPane
-        title={t('common.output')}
+        title={
+          <>
+            {t('common.output')}
+            {hasInput && !noChange && (
+              <>
+                <Badge>{`+${lines.filter((l) => l.type === 'add').length}`}</Badge>
+                <Badge>{`−${lines.filter((l) => l.type === 'del').length}`}</Badge>
+              </>
+            )}
+          </>
+        }
         actions={
-          <CopyButton value={copyText} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          <CopyButton
+            value={hasInput ? copyText : ''}
+            label={t('common.copy')}
+            copiedLabel={t('common.copied')}
+          />
         }
       >
         <div className={styles.diff}>

@@ -55,6 +55,7 @@ export default function ToolLayout({
         </div>
         {tool && (
           <FavoriteButton
+            name={title}
             active={favorites.includes(tool.id)}
             onClick={() => toggleToolFavorite(tool.id)}
           />

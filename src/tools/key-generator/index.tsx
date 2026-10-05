@@ -1,4 +1,4 @@
-import { Button } from '@lailai0916/ui';
+import { Button, Segmented } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import CopyButton from '@/components/CopyButton';
@@ -52,11 +52,15 @@ export default function KeyGenerator() {
       <div className={styles.controls}>
         <div className={styles.group}>
           <span className={styles.label}>{t('tools.keyGenerator.bits')}</span>
-          {BITS.map((b) => (
-            <Button key={b} size="sm" active={bits === b} onClick={() => regenerate(b)}>
-              {b}
-            </Button>
-          ))}
+          <Segmented<Bits>
+            value={bits}
+            onChange={regenerate}
+            items={BITS.map((value) => ({ value, label: String(value) }))}
+            size="sm"
+            orientation="horizontal"
+            stackAt={0}
+            ariaLabel={t('tools.keyGenerator.bits')}
+          />
         </div>
         <Button size="sm" variant="primary" onClick={() => regenerate(bits)}>
           {t('tools.keyGenerator.regenerate')}

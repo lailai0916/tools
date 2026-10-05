@@ -37,28 +37,28 @@ export const textGuides = {
       summary: 'Inspect matches and capture groups produced by a JavaScript regular expression.',
       steps: [
         'Enter the pattern without surrounding / delimiters, then the test text.',
-        'Adjust the available flags and inspect the highlighted matches and match details.',
+        'Adjust g (all matches), i (ignore case), m (multiline anchors) and s (dot matches line breaks); inspect matches, positions and capture groups.',
       ],
       example: {
         input: 'Pattern: \\d+\nText: item 12, item 34',
         output: 'Matches: 12, 34',
       },
       notes: [
-        'Uses JavaScript RegExp syntax and scans all matches. Match offsets use UTF-16 indexes; complex patterns can take time on long input.',
+        'Uses JavaScript RegExp syntax. Without g, only the first match is shown; with g, up to 2000 matches are displayed. Match offsets use UTF-16 indexes; complex patterns can take time on long input.',
       ],
     },
     'zh-Hans': {
       summary: '查看 JavaScript 正则表达式的匹配结果与捕获组。',
       steps: [
         '输入不带两侧 / 分隔符的表达式，再填写测试文本。',
-        '调整可用标志，查看高亮匹配与详细信息。',
+        '按需调整 g（全部匹配）、i（忽略大小写）、m（多行起止）与 s（点号匹配换行），查看结果、位置与捕获组。',
       ],
       example: {
         input: '表达式：\\d+\n文本：item 12, item 34',
         output: '匹配：12、34',
       },
       notes: [
-        '采用 JavaScript RegExp 语法并扫描全部匹配。位置以 UTF-16 下标计数，复杂表达式处理长文本时可能耗时较长。',
+        '采用 JavaScript RegExp 语法；关闭 g 时只显示首个匹配，开启时最多显示 2000 个匹配。位置以 UTF-16 下标计数，复杂表达式处理长文本时可能耗时较长。',
       ],
     },
   },

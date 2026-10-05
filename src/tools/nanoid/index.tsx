@@ -1,5 +1,5 @@
 import { ToolPane } from '@/components/ToolWorkspace';
-import { Button, TextField, Segmented } from '@lailai0916/ui';
+import { Alert, Button, TextField, Segmented } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -50,6 +50,8 @@ export default function Nanoid() {
     const n = Number(value);
     if (Number.isInteger(n) && n >= 1 && n <= MAX_LENGTH) {
       setOutput(generate(n, count));
+    } else {
+      setOutput('');
     }
   };
 
@@ -84,6 +86,7 @@ export default function Nanoid() {
             max={MAX_LENGTH}
             value={length}
             invalid={!validSize}
+            aria-describedby={!validSize ? 'nanoid-length-error' : undefined}
             onChange={(e) => editLength(e.target.value)}
             aria-label={t('tools.nanoid.length')}
             monospace
@@ -97,7 +100,7 @@ export default function Nanoid() {
               orientation="horizontal"
               size="sm"
               stackAt={0}
-              ariaLabel={t('common.options')}
+              ariaLabel={t('tools.nanoid.count')}
             />
           </div>
         </div>
@@ -106,13 +109,29 @@ export default function Nanoid() {
         </Button>
       </div>
 
+      {!validSize && (
+        <Alert id="nanoid-length-error" variant="danger" role="alert">
+          {t('tools.nanoid.invalidLength')}
+        </Alert>
+      )}
+
       <ToolPane
         title={t('tools.nanoid.output')}
         actions={
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          <CopyButton
+            value={output}
+            disabled={!validSize}
+            label={t('common.copy')}
+            copiedLabel={t('common.copied')}
+          />
         }
       >
-        <TextArea value={output} readOnly aria-label={t('tools.nanoid.output')} />
+        <TextArea
+          rows={validSize ? Math.min(10, Math.max(2, count * Math.ceil(size / 32))) : 2}
+          value={output}
+          readOnly
+          aria-label={t('tools.nanoid.output')}
+        />
       </ToolPane>
     </ToolLayout>
   );

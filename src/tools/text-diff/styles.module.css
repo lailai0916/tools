@@ -1,11 +1,3 @@
-.pane {
-  composes: pane from '../../components/ToolWorkspace/styles.module.css';
-}
-
-.controls {
-  composes: toolbar from '../../components/ToolWorkspace/styles.module.css';
-}
-
 .diff {
   min-height: 8rem;
   max-height: 28rem;

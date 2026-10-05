@@ -22,6 +22,7 @@
 }
 
 .swatch {
+  container: color-swatch / inline-size;
   display: flex;
   flex-direction: column;
   background: var(--card-background);
@@ -47,4 +48,15 @@
   font-size: var(--font-size-code);
   color: var(--font-color-base);
   text-transform: uppercase;
+}
+
+@container color-swatch (max-width: 190px) {
+  .meta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hex {
+    text-align: center;
+  }
 }

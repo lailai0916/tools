@@ -85,9 +85,9 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 ### Tool Cards
 
-- Keep cards equal height with a two-line description clamp and a `112px` minimum height.
+- Keep cards equal height within each row, with a two-line description clamp on desktop and up to three lines on mobile.
 - Place the `40px` icon beside the title and description, with a `12px` gap and `16px` card padding.
-- Reserve a separate `44px` strip for the favorite action so its target cannot cover the link text.
+- Reserve the favorite target beside the title; let descriptions use the full text column below the `40px` icon/title row.
 - Use one Lucide icon treatment and one favorite action.
 - Align the favorite button with the icon; use `44px` touch targets on mobile and touch devices.
 - Hover may change border and background only.
@@ -98,7 +98,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - `ToolGrid`, `ToolPane`, and `ToolResults` are Tools-specific compositions; primitive control styles
   continue to come from laikit UI. Tool CSS composes their layout rules instead of repeating them.
 - Normal workspaces use a shared `Panel` with `24px` padding, reduced to `16px` below `560px` of content width.
-- Pair input and output panes in a two-column grid with a `24px` gap; stack below `760px` of content width.
+- Pair input and output panes in a two-column grid with a `24px` gap; stack below `680px` of content width, so tablet comparisons remain side by side.
   Use container queries so the persistent sidebar is included in available-space calculations.
 - Pane headings and their clear/reset/copy actions share one header row. Errors stay beside the relevant input.
 - Code/text editors start at `240px`, or `176px` in narrow workspaces; single-line values use explicit rows or `TextField`.

@@ -1,5 +1,5 @@
 import { ToolPane } from '@/components/ToolWorkspace';
-import { Button } from '@lailai0916/ui';
+import { Button, Segmented } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -173,11 +173,15 @@ export default function LoremIpsum() {
       <div className={styles.controls}>
         <div className={styles.group}>
           <span className={styles.label}>{t('tools.loremIpsum.paragraphs')}</span>
-          {COUNTS.map((n) => (
-            <Button key={n} size="sm" active={count === n} onClick={() => regenerate(n)}>
-              {n}
-            </Button>
-          ))}
+          <Segmented<typeof count>
+            value={count}
+            onChange={regenerate}
+            items={COUNTS.map((value) => ({ value, label: String(value) }))}
+            size="sm"
+            orientation="horizontal"
+            stackAt={0}
+            ariaLabel={t('tools.loremIpsum.paragraphs')}
+          />
         </div>
         <Button size="sm" variant="primary" onClick={() => regenerate(count)}>
           {t('tools.loremIpsum.regenerate')}

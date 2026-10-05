@@ -147,7 +147,7 @@ export const generatorGuides = {
         output: 'One possible result:\n2, 6, 1',
       },
       notes: [
-        'Both bounds are included. Count is capped at 1000; unique output cannot exceed the number of distinct integers in the range.',
+        'Both bounds are included. Count must be 1–1000; unique output cannot exceed the number of distinct integers in the range. Invalid settings show an error instead of silently reducing the count.',
       ],
     },
     'zh-Hans': {
@@ -157,7 +157,9 @@ export const generatorGuides = {
         input: '最小值：1；最大值：6；数量：3',
         output: '一种可能的结果：\n2, 6, 1',
       },
-      notes: ['结果包含两个边界；数量最多 1000，不重复结果不能超过范围内不同整数的数量。'],
+      notes: [
+        '结果包含两个边界；数量为 1–1000，不重复结果不能超过范围内不同整数的数量。无效参数会提示错误，不会悄悄减少生成数量。',
+      ],
     },
   },
   randomString: {
@@ -172,7 +174,7 @@ export const generatorGuides = {
         output: 'One possible result:\na7c09e3f',
       },
       notes: [
-        'The URL-safe Base64 character set creates random characters; it does not Base64-encode an input value. A custom alphabet controls which characters can appear.',
+        'The URL-safe Base64 character set creates random characters; it does not Base64-encode an input value. Custom alphabets support Unicode code points, including emoji; duplicate code points are removed.',
       ],
     },
     'zh-Hans': {
@@ -186,7 +188,7 @@ export const generatorGuides = {
         output: '一种可能的结果：\na7c09e3f',
       },
       notes: [
-        'URL 安全 Base64 字符集只用于抽取随机字符，并不是对某个输入值进行 Base64 编码；自定义字符集决定可出现的字符。',
+        'URL 安全 Base64 字符集只用于抽取随机字符，并不是对某个输入值进行 Base64 编码；自定义字符集支持 emoji 等 Unicode 码点，并去除重复码点。',
       ],
     },
   },

@@ -1,5 +1,5 @@
 import { ToolPane } from '@/components/ToolWorkspace';
-import { Button, PasswordInput, Segmented } from '@lailai0916/ui';
+import { Alert, Button, PasswordInput, Segmented } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -22,13 +22,18 @@ export default function HmacGenerator() {
   const [secret, setSecret] = useState('');
   const [algorithm, setAlgorithm] = useState<Algorithm>('SHA-256');
   const [digest, setDigest] = useState('');
+  const [pending, setPending] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    setDigest('');
+    setFailed(false);
     if (!message || !secret) {
-      setDigest('');
+      setPending(false);
       return;
     }
     let cancelled = false;
+    setPending(true);
     const encoder = new TextEncoder();
     crypto.subtle
       .importKey('raw', encoder.encode(secret), { name: 'HMAC', hash: algorithm }, false, ['sign'])
@@ -36,11 +41,14 @@ export default function HmacGenerator() {
       .then((signature) => {
         if (!cancelled) {
           setDigest(toHex(signature));
+          setPending(false);
         }
       })
       .catch(() => {
         if (!cancelled) {
           setDigest('');
+          setPending(false);
+          setFailed(true);
         }
       });
     return () => {
@@ -98,8 +106,17 @@ export default function HmacGenerator() {
           <CopyButton value={digest} label={t('common.copy')} copiedLabel={t('common.copied')} />
         }
       >
+        {failed && (
+          <Alert variant="danger" role="alert">
+            {t('common.processingFailed')}
+          </Alert>
+        )}
         <output className={styles.hash}>
-          {digest || <span className={styles.empty}>{t('tools.hmacGenerator.empty')}</span>}
+          {digest || (
+            <span className={styles.empty}>
+              {t(pending ? 'common.processing' : 'tools.hmacGenerator.empty')}
+            </span>
+          )}
         </output>
       </ToolPane>
     </ToolLayout>

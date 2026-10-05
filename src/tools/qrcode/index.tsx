@@ -28,16 +28,19 @@ export default function QrCode() {
   const [dataUrl, setDataUrl] = useState('');
   const [svgUrl, setSvgUrl] = useState('');
   const [error, setError] = useState('');
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
+    setDataUrl('');
+    setSvgUrl('');
+    setError('');
     const text = input.trim();
     if (!text) {
-      setDataUrl('');
-      setSvgUrl('');
-      setError('');
+      setPending(false);
       return;
     }
     let active = true;
+    setPending(true);
     const options = { errorCorrectionLevel: level, margin, width: size };
     Promise.all([
       QRCode.toDataURL(text, options),
@@ -48,12 +51,14 @@ export default function QrCode() {
         setDataUrl(url);
         setSvgUrl(`data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`);
         setError('');
+        setPending(false);
       })
       .catch((e: unknown) => {
         if (!active) return;
         setDataUrl('');
         setSvgUrl('');
         setError(e instanceof Error ? e.message : String(e));
+        setPending(false);
       });
     return () => {
       active = false;
@@ -136,7 +141,9 @@ export default function QrCode() {
               </div>
             </div>
           ) : (
-            <p className={styles.empty}>{t('tools.qrcode.empty')}</p>
+            <p className={styles.empty} role="status">
+              {t(pending ? 'common.processing' : 'tools.qrcode.empty')}
+            </p>
           )}
         </ToolPane>
       </ToolGrid>

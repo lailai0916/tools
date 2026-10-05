@@ -23,6 +23,11 @@
   padding-block: var(--lk-space-8) var(--lk-space-16);
 }
 
+.main:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .loading {
   display: grid;
   min-height: 240px;

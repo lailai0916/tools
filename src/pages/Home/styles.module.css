@@ -95,13 +95,15 @@
 }
 
 .cardCopy {
-  padding-right: 44px;
   display: grid;
+  grid-template-rows: minmax(40px, auto) auto;
   min-width: 0;
   gap: var(--lk-space-1);
 }
 
 .cardName {
+  align-self: center;
+  margin-right: 40px;
   overflow: hidden;
   font-size: 14px;
   font-weight: 650;
@@ -112,7 +114,7 @@
 
 .cardDesc {
   display: -webkit-box;
-  height: calc(2 * 1.55 * 0.825rem);
+  min-height: calc(2 * 1.55 * 0.825rem);
   overflow: hidden;
   color: var(--font-color-secondary);
   font-size: 0.825rem;
@@ -162,5 +164,16 @@
 
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .cardName {
+    margin-right: 44px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .cardDesc {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 }

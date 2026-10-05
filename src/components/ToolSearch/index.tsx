@@ -5,6 +5,7 @@ import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import { TOOLS } from '@/tools/registry';
 import { rememberTool } from '@/utils/toolStorage';
+import { matchesToolSearch } from '@/utils/toolSearch';
 import styles from './styles.module.css';
 
 export default function ToolSearch() {
@@ -61,14 +62,7 @@ function SearchDialog({ id, onClose }: { id: string; onClose: () => void }) {
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState(0);
   const resultsRef = useRef<HTMLDivElement>(null);
-  const results = useMemo(() => {
-    const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    return TOOLS.filter((tool) => {
-      const text =
-        `${t(`tools.${tool.key}.name` as MessageKey)} ${t(`tools.${tool.key}.description` as MessageKey)} ${tool.id}`.toLowerCase();
-      return terms.every((term) => text.includes(term));
-    });
-  }, [query, t]);
+  const results = useMemo(() => TOOLS.filter((tool) => matchesToolSearch(tool.id, query)), [query]);
   const active = Math.min(selected, Math.max(0, results.length - 1));
   const resultsId = `${id}-results`;
 

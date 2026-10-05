@@ -6,10 +6,12 @@ export default function FavoriteButton({
   active,
   onClick,
   className = '',
+  name,
 }: {
   active: boolean;
   onClick: () => void;
   className?: string;
+  name?: string;
 }) {
   const { t } = useI18n();
   return (
@@ -17,7 +19,9 @@ export default function FavoriteButton({
       size="md"
       className={`${styles.button} ${className}`}
       aria-pressed={active}
-      label={t(active ? 'site.removeFavorite' : 'site.addFavorite')}
+      label={[t(active ? 'site.removeFavorite' : 'site.addFavorite'), name]
+        .filter(Boolean)
+        .join(': ')}
       onClick={onClick}
     >
       <Icon icon="lucide:star" />
