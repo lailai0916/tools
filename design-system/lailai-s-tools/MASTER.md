@@ -24,7 +24,9 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Page gutters and centering come from `PageContainer`; tool reading widths are `820px` or `980px`.
 - Tool grid: `repeat(auto-fill, minmax(230px, 1fr))`.
 - Card gap: shared `--lk-space-3` (`12px`); section gap: `44px`.
-- Primary breakpoints: `600px` and `900px`.
+- Desktop uses a persistent `224px` left sidebar, following Prispect's workspace layout.
+- At `980px` and below, navigation opens in a left drawer and the header shows the brand and menu button.
+- Primary breakpoints: `600px` and `980px`.
 
 ## Components
 
@@ -32,9 +34,9 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 - `SiteHeader` and `SkipLink` own the common header layout and keyboard skip navigation.
 - `LanguageButton` and `ThemeButton` share the Prispect header controls. Language state stays in Tools; appearance follows the system on load and system changes, with a temporary one-click light/dark choice through `ThemeProvider mode="system"`.
-- Tools supplies its brand link, search action, language switch, and theme control; header surfaces, gutters,
-  responsive brand names, spacing, and touch targets use the shared defaults.
-- Show the avatar, product name, search icon, language button, and one compact theme button.
+- The brand lives in the sidebar on desktop; the header shows the current view or tool name. On mobile,
+  show the menu button and brand in the header. Search, language, and theme controls use shared defaults.
+- The mobile menu and drawer close controls also use `IconButton variant="header"`.
 - Search, language, and theme buttons are `32px` on desktop and `44px` at widths up to `980px` or on touch devices.
 - Search uses `IconButton variant="header"`, the same base primitive as the language and theme controls, including borders, icon strokes, focus and press feedback.
 - Theme changes immediately on click.
@@ -50,13 +52,21 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Search opens from the header icon or `⌘K`, `Ctrl+K`, and `/` on every route, following Prispect's command-menu interaction.
 - Use shared `IconButton`, `Dialog`, `Input`, `ButtonLink`, and `EmptyState` components. Search stays local and derives its results from the tool registry.
 - Focus the search input on open; arrow keys select a result, `Enter` opens it, and `Esc` closes the dialog and restores focus. Tool selection also updates recent tools.
-- Keep favorites, recent tools, and categories on the home page without an inline search field.
-- Use the shared `Segmented` with `size="sm"` and `stackAt={0}` for All / Favorites / Recent;
-  keep its shared surfaces and keyboard behavior, and let it fill the row on mobile.
+- Keep All tools, Favorites, Recent, and eight tool categories in one sidebar navigation on every route.
+- Compose links with shared `ButtonLink`, `Icon`, and theme tokens. Mark the selected view with
+  `aria-current="page"`; on individual tool routes, mark its category with `aria-current="location"`.
+- Category counts derive from the registry. Selecting a category shows only its tools; Favorites and
+  Recent show a single grid, with recent tools ordered by most recently opened.
+- Compose the mobile drawer with shared `Dialog`. Trap focus, lock background scrolling, support Escape
+  and backdrop dismissal, restore the trigger on close, and focus main content after a selection.
+- Close the drawer on browser history navigation or when resizing to desktop.
 - Empty filtered views explain the state and provide one action that restores all tools.
 - Do not wrap the complete filter area in a large card.
 - Preserve filter state in the URL; existing `q` links show a removable query filter.
-- Wrap category buttons onto additional rows so every choice stays visible at narrow widths.
+- Category and view links are real URLs, preserving refresh, browser history, and opening in a new tab.
+- Switching categories resets the saved view; switching saved views resets the category. Preserve legacy
+  query filters until explicitly cleared, and continue accepting combined category/view links.
+- The sidebar and drawer navigation scroll independently on short screens; mobile rows are at least `44px`.
 
 ### Tool Cards
 
@@ -71,7 +81,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 ## Motion
 
 - Use shared component feedback and transition tokens.
-- Animate color, opacity, and small icon movement only.
+- Animate color, opacity, and small icon movement; the navigation drawer may enter with a subtle horizontal slide.
 - Press feedback may use `scale(0.92–0.98)` on the control itself.
 - Respect `prefers-reduced-motion` globally.
 

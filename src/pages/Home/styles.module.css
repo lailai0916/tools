@@ -3,12 +3,11 @@
 }
 
 .hero {
-  padding: 36px 0 24px;
-  text-align: center;
+  padding: 8px 0 28px;
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 2.6rem);
+  font-size: clamp(1.55rem, 3vw, 1.8rem);
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.035em;
@@ -17,19 +16,13 @@
 .tagline {
   margin: 10px 0 0;
   color: var(--font-color-secondary);
-  font-size: 1rem;
+  font-size: 0.875rem;
   line-height: 1.55;
-}
-
-.finder {
-  display: grid;
-  gap: 16px;
-  margin-bottom: 38px;
 }
 
 .queryFilter {
   max-width: 100%;
-  justify-self: start;
+  margin-bottom: 24px;
 }
 
 .queryFilter > span,
@@ -41,27 +34,6 @@
 
 .queryFilter svg {
   flex: none;
-}
-
-.filterRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  min-width: 0;
-}
-
-.viewTabs {
-  flex: none;
-}
-
-.categories {
-  display: flex;
-  min-width: 0;
-  flex: 1;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: var(--lk-space-1);
 }
 
 .section {
@@ -168,32 +140,13 @@
   border: 0;
 }
 
-@media (max-width: 900px) {
-  .filterRow {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .categories {
-    justify-content: flex-start;
-  }
-}
-
 @media (max-width: 600px), (pointer: coarse) {
   .home {
     padding-top: 0;
   }
 
   .hero {
-    padding: 28px 0 22px;
-  }
-
-  .finder {
-    margin-bottom: 34px;
-  }
-
-  .viewTabs {
-    width: 100%;
+    padding: 4px 0 24px;
   }
 
   .favorite {
@@ -210,8 +163,4 @@
   .grid {
     grid-template-columns: 1fr;
   }
-}
-
-.categories > button {
-  flex: none;
 }

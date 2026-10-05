@@ -1,11 +1,18 @@
 .shell {
+  --tools-sidebar-width: 224px;
+  display: grid;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: var(--tools-sidebar-width) minmax(0, 1fr);
+  grid-template-rows: var(--lk-header-height) 1fr;
+}
+
+.header,
+.main {
+  grid-column: 2;
+  min-width: 0;
 }
 
 .main {
-  flex: 1;
   width: 100%;
   padding-block: 1.5rem 4rem;
 }
@@ -24,6 +31,17 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   clip-path: inset(50%);
+}
+
+@media (max-width: 980px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .header,
+  .main {
+    grid-column: 1;
+  }
 }
 
 @media (max-width: 600px) {

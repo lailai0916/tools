@@ -1,9 +1,10 @@
 import { LaikitProvider, PageContainer, Skeleton, type LinkProps } from '@lailai0916/ui';
-import { lazy, Suspense, type ComponentType } from 'react';
-import { Link as RouterLink, Route, Routes } from 'react-router';
+import { lazy, Suspense, useEffect, useId, useState, type ComponentType } from 'react';
+import { Link as RouterLink, Route, Routes, useLocation } from 'react-router';
 import { I18nProvider } from './i18n';
 import { useI18n } from './i18n';
 import Header from './components/Header';
+import ToolNavigation from './components/ToolNavigation';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { TOOLS } from './tools/registry';
@@ -36,10 +37,38 @@ function ToolRoute({ Component }: { Component: ComponentType }) {
 
 function Application() {
   const { locale } = useI18n();
+  const location = useLocation();
+  const [navigationLocation, setNavigationLocation] = useState<string | null>(null);
+  const dialogId = useId();
+  const navigationOpen = navigationLocation === location.key;
+
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 981px)');
+    const closeNavigation = () => setNavigationLocation(null);
+    const onResize = () => {
+      if (desktop.matches) closeNavigation();
+    };
+    window.addEventListener('popstate', closeNavigation);
+    desktop.addEventListener('change', onResize);
+    return () => {
+      window.removeEventListener('popstate', closeNavigation);
+      desktop.removeEventListener('change', onResize);
+    };
+  }, []);
   return (
     <LaikitProvider locale={locale} linkComponent={AppLink}>
       <div className={styles.shell}>
-        <Header />
+        <Header
+          navigationOpen={navigationOpen}
+          onOpenNavigation={() => setNavigationLocation(location.key)}
+          navigationId={dialogId}
+          className={styles.header}
+        />
+        <ToolNavigation
+          open={navigationOpen}
+          onClose={() => setNavigationLocation(null)}
+          dialogId={dialogId}
+        />
         <main id="main-content" className={styles.main} tabIndex={-1}>
           <PageContainer>
             <Routes>

@@ -1,19 +1,11 @@
 import Hint from '@lailai0916/ui/Hint';
-import {
-  Badge,
-  Button,
-  Card,
-  EmptyState,
-  Icon,
-  IconBlock,
-  IconButton,
-  Segmented,
-} from '@lailai0916/ui';
+import { Badge, Button, Card, EmptyState, Icon, IconBlock, IconButton } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { useI18n } from '@/i18n';
-import { CATEGORY_ORDER, TOOLS, type ToolCategory } from '@/tools/registry';
+import { CATEGORY_ORDER, TOOLS } from '@/tools/registry';
 import type { MessageKey } from '@/i18n/en';
+import { useToolNavigation } from '@/hooks/useToolNavigation';
 import {
   FAVORITES_KEY,
   RECENT_KEY,
@@ -23,22 +15,13 @@ import {
 } from '@/utils/toolStorage';
 import styles from './styles.module.css';
 
-type View = 'all' | 'favorites' | 'recent';
-
 export default function Home() {
   const { t } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
   const [favorites, setFavorites] = useState(() => readToolIds(FAVORITES_KEY));
   const [recent, setRecent] = useState(() => readToolIds(RECENT_KEY));
 
-  const query = searchParams.get('q') ?? '';
-  const requestedView = searchParams.get('view');
-  const view: View =
-    requestedView === 'favorites' || requestedView === 'recent' ? requestedView : 'all';
-  const requestedCategory = searchParams.get('category');
-  const category = CATEGORY_ORDER.includes(requestedCategory as ToolCategory)
-    ? (requestedCategory as ToolCategory)
-    : null;
+  const { query, view, category, title } = useToolNavigation();
 
   const updateParam = (key: string, value?: string | null) => {
     const next = new URLSearchParams(searchParams);
@@ -88,11 +71,13 @@ export default function Home() {
 
   const sections = useMemo(
     () =>
-      CATEGORY_ORDER.map((sectionCategory) => ({
-        category: sectionCategory,
-        items: filtered.filter((tool) => tool.category === sectionCategory),
-      })).filter((section) => section.items.length > 0),
-    [filtered]
+      view !== 'all' || category
+        ? [{ category: null, items: filtered }]
+        : CATEGORY_ORDER.map((sectionCategory) => ({
+            category: sectionCategory,
+            items: filtered.filter((tool) => tool.category === sectionCategory),
+          })).filter((section) => section.items.length > 0),
+    [category, filtered, view]
   );
 
   const hasFilter = Boolean(query.trim() || category);
@@ -114,62 +99,31 @@ export default function Home() {
   return (
     <div className={styles.home}>
       <header className={styles.hero}>
-        <h1 className={styles.title}>{t('site.title')}</h1>
-        <p className={styles.tagline}>{t('site.tagline')}</p>
+        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.tagline}>
+          {filtered.length}{' '}
+          {t(filtered.length === 1 ? 'site.toolAvailable' : 'site.toolsAvailable')}
+          {view !== 'all' && category && ` · ${t(`category.${category}` as MessageKey)}`}
+        </p>
       </header>
 
-      <section className={styles.finder} aria-label={t('site.allTools')}>
-        <div className={styles.filterRow}>
-          <Segmented<View>
-            size="sm"
-            orientation="horizontal"
-            stackAt={0}
-            className={styles.viewTabs}
-            ariaLabel={t('site.allTools')}
-            value={view}
-            onChange={(next) => updateParam('view', next === 'all' ? null : next)}
-            items={[
-              { value: 'all', label: t('site.viewAll'), icon: 'lucide:grid-2x2' },
-              { value: 'favorites', label: t('site.viewFavorites'), icon: 'lucide:star' },
-              { value: 'recent', label: t('site.viewRecent'), icon: 'lucide:history' },
-            ]}
-          />
-
-          <div className={styles.categories} role="group" aria-label={t('site.allCategories')}>
-            <Button size="sm" rounded active={!category} onClick={() => updateParam('category')}>
-              {t('site.allCategories')}
-            </Button>
-            {CATEGORY_ORDER.map((item) => (
-              <Button
-                key={item}
-                size="sm"
-                rounded
-                active={category === item}
-                onClick={() => updateParam('category', item)}
-              >
-                {t(`category.${item}` as MessageKey)}
-              </Button>
-            ))}
-          </div>
-        </div>
-        {query && (
-          <Button
-            size="sm"
-            className={styles.queryFilter}
-            aria-label={`${t('site.clearSearch')}: ${query}`}
-            onClick={() => updateParam('q')}
-          >
-            <span>{query}</span>
-            <Icon icon="lucide:x" />
-          </Button>
-        )}
-      </section>
+      {query && (
+        <Button
+          size="sm"
+          className={styles.queryFilter}
+          aria-label={`${t('site.clearSearch')}: ${query}`}
+          onClick={() => updateParam('q')}
+        >
+          <span>{query}</span>
+          <Icon icon="lucide:x" />
+        </Button>
+      )}
 
       <p className={styles.resultStatus} role="status" aria-live="polite" aria-atomic="true">
         {filtered.length} {t(filtered.length === 1 ? 'site.toolAvailable' : 'site.toolsAvailable')}
       </p>
 
-      {sections.length === 0 ? (
+      {filtered.length === 0 ? (
         <div className={styles.empty}>
           <EmptyState
             icon={
@@ -200,11 +154,13 @@ export default function Home() {
         </div>
       ) : (
         sections.map(({ category: sectionCategory, items }) => (
-          <section key={sectionCategory} className={styles.section}>
-            <h2 className={styles.sectionTitle}>
-              <span>{t(`category.${sectionCategory}` as MessageKey)}</span>
-              <Badge count={items.length} />
-            </h2>
+          <section key={sectionCategory ?? view} className={styles.section}>
+            {sectionCategory && (
+              <h2 className={styles.sectionTitle}>
+                <span>{t(`category.${sectionCategory}` as MessageKey)}</span>
+                <Badge count={items.length} />
+              </h2>
+            )}
             <div className={styles.grid}>
               {items.map((tool) => {
                 const name = t(`tools.${tool.key}.name` as MessageKey);

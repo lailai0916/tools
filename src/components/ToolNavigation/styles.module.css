@@ -1,0 +1,145 @@
+.sidebar,
+.drawer {
+  background: color-mix(in srgb, var(--lk-color-emphasis-100) 65%, var(--lk-background-color));
+}
+
+.sidebar {
+  position: fixed;
+  z-index: 45;
+  inset: 0 auto 0 0;
+  display: flex;
+  width: var(--tools-sidebar-width);
+  flex-direction: column;
+  border-right: 1px solid var(--lk-color-emphasis-200);
+}
+
+.heading {
+  display: flex;
+  min-height: var(--lk-header-height);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lk-space-2);
+  padding-inline: var(--lk-space-4);
+}
+
+.brand {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-radius: var(--lk-radius-sm);
+  text-decoration: none;
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+.navigation {
+  min-height: 0;
+  padding: var(--lk-space-4) var(--lk-space-3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.links {
+  display: grid;
+  gap: var(--lk-space-1);
+}
+
+.link {
+  min-height: 38px;
+  justify-content: flex-start;
+  gap: var(--lk-space-2);
+  padding-inline: var(--lk-space-3);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.link > span:last-child {
+  min-width: 0;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.link[aria-current] {
+  border-color: var(--lk-color-emphasis-200);
+  background: var(--lk-card-background-color);
+  color: var(--lk-font-color-base);
+  font-weight: 600;
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.count {
+  flex: none;
+  color: var(--lk-font-color-secondary);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.group {
+  margin-top: var(--lk-space-6);
+}
+
+.groupTitle {
+  margin: 0 0 var(--lk-space-2);
+  padding-inline: var(--lk-space-3);
+  color: var(--lk-font-color-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.drawer {
+  inset: 0 auto 0 0;
+  width: min(288px, calc(100vw - 32px));
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid var(--lk-color-emphasis-200);
+  border-radius: 0;
+}
+
+.drawer[open] {
+  display: flex;
+  flex-direction: column;
+  animation: slide-in 160ms ease-out;
+}
+
+.drawer .heading {
+  flex: none;
+  border-bottom: 1px solid var(--lk-color-emphasis-200);
+}
+
+.drawer .link {
+  min-height: 44px;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 980px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .link {
+    min-height: 44px;
+  }
+}

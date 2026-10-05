@@ -1,0 +1,25 @@
+.header :global([data-lk='header-brand']) > .brand {
+  display: none;
+}
+
+.context {
+  overflow: hidden;
+  color: var(--lk-font-color-secondary);
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .header :global([data-lk='header-mobile-action']) {
+    display: flex;
+  }
+
+  .header :global([data-lk='header-brand']) > .brand {
+    display: inline-flex;
+  }
+
+  .context {
+    display: none;
+  }
+}
