@@ -39,8 +39,7 @@ export default function ToolSearch() {
   return (
     <>
       <IconButton
-        size="sm"
-        className={styles.trigger}
+        variant="header"
         label={t('site.searchPlaceholder')}
         title={t('site.searchHint')}
         aria-haspopup="dialog"

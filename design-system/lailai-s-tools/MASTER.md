@@ -36,6 +36,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
   responsive brand names, spacing, and touch targets use the shared defaults.
 - Show the avatar, product name, search icon, language button, and one compact theme button.
 - Search, language, and theme buttons are `32px` on desktop and `44px` at widths up to `980px` or on touch devices.
+- Search uses `IconButton variant="header"`, the same base primitive as the language and theme controls, including borders, icon strokes, focus and press feedback.
 - Theme changes immediately on click.
 - Icon-only controls use the shared `Hint` from laikit UI through `IconButton`, `LanguageButton`, and `ThemeButton`. Supplemental text can use `Hint`; structured data points continue to use `Tooltip`.
 - Do not place a segmented theme card in the header.

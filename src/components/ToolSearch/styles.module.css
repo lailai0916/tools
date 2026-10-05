@@ -110,10 +110,3 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
-
-@media (max-width: 980px), (pointer: coarse) {
-  .trigger {
-    width: 44px;
-    min-height: 44px;
-  }
-}
