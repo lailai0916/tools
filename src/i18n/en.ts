@@ -50,6 +50,13 @@ export const en = {
   'common.hide': 'Hide',
   'common.loading': 'Loading tool',
 
+  'guide.title': 'Tool guide',
+  'guide.steps': 'How to use',
+  'guide.example': 'Example',
+  'guide.notes': 'Notes',
+  'guide.input': 'Setup / input',
+  'guide.output': 'Result',
+
   'category.converter': 'Converter',
   'category.crypto': 'Crypto',
   'category.web': 'Web',

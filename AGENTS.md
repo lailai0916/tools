@@ -26,6 +26,9 @@ syncing the server.
 - Add a tool under `src/tools/<id>/index.tsx`, with `styles.module.css` when needed.
 - Follow an existing tool and reuse `ToolLayout`, shared components, and `useI18n`.
 - Add matching messages to both `src/i18n/en.ts` and `src/i18n/zh-Hans.ts`.
+- Add a tool-specific English and Simplified-Chinese guide in `src/content/toolGuides/<category>.ts`.
+  Check steps, examples and limitations against the actual tool behavior. `ToolLayout` renders the
+  guide after the workspace; `npm run check:guides` checks registry coverage and complete content.
 - Keep tools client-side. Text and secrets entered by users must not be sent to a server.
 - Preserve real per-tool routes and prerendering so unknown paths keep returning a true 404.
 - Reuse existing design tokens and interaction patterns instead of introducing one-off UI.

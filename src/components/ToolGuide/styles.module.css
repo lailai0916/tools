@@ -1,0 +1,124 @@
+.guide {
+  min-width: 0;
+  margin-top: var(--lk-space-10);
+  padding-top: var(--lk-space-8);
+  border-top: 1px solid var(--lk-color-emphasis-200);
+  color: var(--lk-font-color-secondary);
+  font-size: 14px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--lk-space-2);
+  margin: 0;
+  color: var(--lk-font-color-base);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+}
+
+.title > svg {
+  flex: none;
+  color: var(--lk-font-color-secondary);
+}
+
+.summary {
+  max-width: 800px;
+  margin: var(--lk-space-2) 0 var(--lk-space-6);
+}
+
+.grid {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--lk-space-8);
+}
+
+.instructions {
+  display: grid;
+  min-width: 0;
+  gap: var(--lk-space-6);
+}
+
+.subtitle {
+  margin: 0 0 var(--lk-space-3);
+  color: var(--lk-font-color-base);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.list {
+  display: grid;
+  gap: var(--lk-space-2);
+  margin: 0;
+  padding-left: 1.5em;
+}
+
+.list li {
+  padding-left: var(--lk-space-1);
+}
+
+.list li::marker {
+  color: var(--lk-font-color-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.example {
+  min-width: 0;
+}
+
+.exampleBody {
+  padding: var(--lk-space-4);
+}
+
+.exampleList {
+  display: grid;
+  gap: var(--lk-space-4);
+  margin: 0;
+}
+
+.exampleList > div + div {
+  padding-top: var(--lk-space-4);
+  border-top: 1px solid var(--lk-color-emphasis-200);
+}
+
+.exampleList dt {
+  margin-bottom: var(--lk-space-2);
+  color: var(--lk-font-color-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.exampleList dd,
+.exampleList pre {
+  min-width: 0;
+  margin: 0;
+}
+
+.exampleList pre {
+  color: var(--lk-font-color-base);
+  font: 13px / 1.75 var(--lk-font-mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+@container tools-content (max-width: 760px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--lk-space-6);
+  }
+}
+
+@container tools-content (max-width: 560px) {
+  .guide {
+    margin-top: var(--lk-space-8);
+    padding-top: var(--lk-space-6);
+  }
+}

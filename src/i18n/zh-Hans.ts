@@ -51,6 +51,13 @@ export const zhHans: Record<MessageKey, string> = {
   'common.hide': '隐藏',
   'common.loading': '正在加载工具',
 
+  'guide.title': '工具指南',
+  'guide.steps': '如何使用',
+  'guide.example': '示例',
+  'guide.notes': '注意事项',
+  'guide.input': '操作或输入',
+  'guide.output': '结果',
+
   'category.converter': '转换',
   'category.crypto': '加密',
   'category.web': '网络',

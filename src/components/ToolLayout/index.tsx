@@ -1,6 +1,7 @@
 import { ButtonLink, Icon, Panel, PanelBody, Stack } from '@lailai0916/ui';
 import type { ReactNode } from 'react';
 import FavoriteButton from '@/components/FavoriteButton';
+import ToolGuide from '@/components/ToolGuide';
 import { useToolNavigation } from '@/hooks/useToolNavigation';
 import { useSavedTools } from '@/hooks/useSavedTools';
 import { useI18n } from '@/i18n';
@@ -66,6 +67,7 @@ export default function ToolLayout({
           <PanelBody className={styles.body}>{content}</PanelBody>
         </Panel>
       )}
+      {tool && <ToolGuide toolKey={tool.key} />}
     </div>
   );
 }
