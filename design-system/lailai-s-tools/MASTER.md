@@ -22,7 +22,6 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Brand appearance comes from the shared `Brand` component.
 - Content width: `1120px` maximum.
 - Page gutters and centering come from `PageContainer`; tool reading widths are `820px` or `980px`.
-- Home search width: `520px` maximum.
 - Tool grid: `repeat(auto-fill, minmax(230px, 1fr))`.
 - Card gap: shared `--lk-space-3` (`12px`); section gap: `44px`.
 - Primary breakpoints: `600px` and `900px`.
@@ -33,10 +32,10 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 - `SiteHeader` and `SkipLink` own the common header layout and keyboard skip navigation.
 - `LanguageButton` and `ThemeButton` share the Prispect header controls. Language state stays in Tools; appearance follows the system on load and system changes, with a temporary one-click light/dark choice through `ThemeProvider mode="system"`.
-- Tools supplies its brand link, language switch, and theme control; header surfaces, gutters,
+- Tools supplies its brand link, search action, language switch, and theme control; header surfaces, gutters,
   responsive brand names, spacing, and touch targets use the shared defaults.
-- Show the avatar, product name, language button, and one compact theme button.
-- Language and theme buttons are `32px` on desktop and `44px` at widths up to `980px` or on touch devices.
+- Show the avatar, product name, search icon, language button, and one compact theme button.
+- Search, language, and theme buttons are `32px` on desktop and `44px` at widths up to `980px` or on touch devices.
 - Theme changes immediately on click.
 - Icon-only controls use the shared `Hint` from laikit UI through `IconButton`, `LanguageButton`, and `ThemeButton`. Supplemental text can use `Hint`; structured data points continue to use `Tooltip`.
 - Do not place a segmented theme card in the header.
@@ -47,13 +46,15 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 ### Search and Filters
 
-- Search is the primary control and remains centered; `/` focuses it and `Esc` clears or leaves it.
-- Favorites, recent tools, and categories are secondary controls below search.
+- Search opens from the header icon or `⌘K`, `Ctrl+K`, and `/` on every route, following Prispect's command-menu interaction.
+- Use shared `IconButton`, `Dialog`, `Input`, `ButtonLink`, and `EmptyState` components. Search stays local and derives its results from the tool registry.
+- Focus the search input on open; arrow keys select a result, `Enter` opens it, and `Esc` closes the dialog and restores focus. Tool selection also updates recent tools.
+- Keep favorites, recent tools, and categories on the home page without an inline search field.
 - Use the shared `Segmented` with `size="sm"` and `stackAt={0}` for All / Favorites / Recent;
   keep its shared surfaces and keyboard behavior, and let it fill the row on mobile.
 - Empty filtered views explain the state and provide one action that restores all tools.
 - Do not wrap the complete filter area in a large card.
-- Preserve filter state in the URL.
+- Preserve filter state in the URL; existing `q` links show a removable query filter.
 - Wrap category buttons onto additional rows so every choice stays visible at narrow widths.
 
 ### Tool Cards

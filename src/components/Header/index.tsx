@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Brand, LanguageButton, SiteHeader, SkipLink, ThemeButton, useTheme } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
+import ToolSearch from '@/components/ToolSearch';
 
 export default function Header() {
   const { locale, setLocale, t } = useI18n();
@@ -17,6 +18,7 @@ export default function Header() {
         }
         actions={
           <>
+            <ToolSearch />
             <LanguageButton locale={locale} onLocaleChange={setLocale} />
             <ThemeButton theme={resolvedTheme} onThemeChange={setPreference} />
           </>

@@ -1,0 +1,119 @@
+.searchBox {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--lk-space-3);
+  padding-bottom: var(--lk-space-3);
+  border-bottom: 1px solid var(--lk-color-emphasis-300);
+}
+
+.searchBox > svg {
+  color: var(--lk-font-color-secondary);
+}
+
+.searchBox input {
+  min-width: 0;
+}
+
+.results {
+  max-height: min(390px, calc(100dvh - 240px));
+  margin-block: var(--lk-space-2);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.results:empty {
+  margin: 0;
+}
+
+.result {
+  width: 100%;
+  height: auto;
+  min-height: 64px;
+  justify-content: flex-start;
+  gap: var(--lk-space-3);
+  padding: var(--lk-space-2);
+  color: var(--lk-font-color-secondary);
+  text-align: left;
+  white-space: normal;
+  letter-spacing: normal;
+}
+
+.result[aria-selected='true'] {
+  background: var(--lk-color-emphasis-100);
+}
+
+.result > span:last-child {
+  min-width: 0;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.resultCopy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.resultCopy strong {
+  color: var(--lk-font-color-base);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.resultCopy small {
+  overflow: hidden;
+  color: var(--lk-font-color-secondary);
+  font-size: 12px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resultArrow {
+  flex: none;
+  opacity: 0;
+}
+
+.result[aria-selected='true'] .resultArrow {
+  opacity: 1;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lk-space-2);
+  padding-top: var(--lk-space-3);
+  border-top: 1px solid var(--lk-color-emphasis-300);
+  color: var(--lk-font-color-secondary);
+  font-size: 12px;
+}
+
+.footer > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lk-space-1);
+}
+
+.footer kbd {
+  font-family: var(--lk-font-family-mono);
+}
+
+.status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 980px), (pointer: coarse) {
+  .trigger {
+    width: 44px;
+    min-height: 44px;
+  }
+}

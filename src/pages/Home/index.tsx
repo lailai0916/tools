@@ -7,44 +7,29 @@ import {
   Icon,
   IconBlock,
   IconButton,
-  Input,
   Segmented,
 } from '@lailai0916/ui';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { useI18n } from '@/i18n';
 import { CATEGORY_ORDER, TOOLS, type ToolCategory } from '@/tools/registry';
 import type { MessageKey } from '@/i18n/en';
+import {
+  FAVORITES_KEY,
+  RECENT_KEY,
+  readToolIds,
+  writeToolIds,
+  rememberTool,
+} from '@/utils/toolStorage';
 import styles from './styles.module.css';
 
 type View = 'all' | 'favorites' | 'recent';
-
-const FAVORITES_KEY = 'tools.favorites';
-const RECENT_KEY = 'tools.recent';
-
-function readToolIds(key: string): string[] {
-  try {
-    const value = JSON.parse(localStorage.getItem(key) ?? '[]');
-    return Array.isArray(value) ? value.filter((item) => typeof item === 'string') : [];
-  } catch {
-    return [];
-  }
-}
-
-function writeToolIds(key: string, ids: string[]) {
-  try {
-    localStorage.setItem(key, JSON.stringify(ids));
-  } catch {
-    // Browser storage can be unavailable in private contexts.
-  }
-}
 
 export default function Home() {
   const { t } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
   const [favorites, setFavorites] = useState(() => readToolIds(FAVORITES_KEY));
   const [recent, setRecent] = useState(() => readToolIds(RECENT_KEY));
-  const searchRef = useRef<HTMLInputElement>(null);
 
   const query = searchParams.get('q') ?? '';
   const requestedView = searchParams.get('view');
@@ -54,32 +39,6 @@ export default function Home() {
   const category = CATEGORY_ORDER.includes(requestedCategory as ToolCategory)
     ? (requestedCategory as ToolCategory)
     : null;
-
-  useEffect(() => {
-    const ownerWindow = searchRef.current?.ownerDocument.defaultView;
-    if (!ownerWindow) return;
-
-    const focusSearch = (event: KeyboardEvent) => {
-      const target = event.target as HTMLElement | null;
-      if (
-        event.defaultPrevented ||
-        event.isComposing ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.altKey ||
-        event.key !== '/' ||
-        target?.matches('input, textarea, select, [contenteditable="true"]')
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-      searchRef.current?.focus();
-    };
-
-    ownerWindow.addEventListener('keydown', focusSearch);
-    return () => ownerWindow.removeEventListener('keydown', focusSearch);
-  }, []);
 
   const updateParam = (key: string, value?: string | null) => {
     const next = new URLSearchParams(searchParams);
@@ -97,14 +56,6 @@ export default function Home() {
         ? current.filter((id) => id !== toolId)
         : [toolId, ...current];
       writeToolIds(FAVORITES_KEY, next);
-      return next;
-    });
-  };
-
-  const rememberTool = (toolId: string) => {
-    setRecent((current) => {
-      const next = [toolId, ...current.filter((id) => id !== toolId)].slice(0, 18);
-      writeToolIds(RECENT_KEY, next);
       return next;
     });
   };
@@ -167,43 +118,7 @@ export default function Home() {
         <p className={styles.tagline}>{t('site.tagline')}</p>
       </header>
 
-      <section className={styles.finder} aria-label={t('site.searchPlaceholder')}>
-        <div className={styles.searchWrap}>
-          <Icon icon="lucide:search" className={styles.searchIcon} />
-          <Input
-            ref={searchRef}
-            className={styles.search}
-            value={query}
-            onChange={(event) => updateParam('q', event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key !== 'Escape' || event.nativeEvent.isComposing) return;
-              if (query) {
-                updateParam('q');
-              } else {
-                event.currentTarget.blur();
-              }
-            }}
-            placeholder={t('site.searchPlaceholder')}
-            aria-label={t('site.searchPlaceholder')}
-            aria-keyshortcuts="/"
-          />
-          {!query && (
-            <kbd className={styles.searchShortcut} aria-hidden="true">
-              /
-            </kbd>
-          )}
-          {query && (
-            <IconButton
-              size="md"
-              className={styles.clearSearch}
-              onClick={() => updateParam('q')}
-              label={t('common.clear')}
-            >
-              <Icon icon="lucide:x" />
-            </IconButton>
-          )}
-        </div>
-
+      <section className={styles.finder} aria-label={t('site.allTools')}>
         <div className={styles.filterRow}>
           <Segmented<View>
             size="sm"
@@ -237,6 +152,17 @@ export default function Home() {
             ))}
           </div>
         </div>
+        {query && (
+          <Button
+            size="sm"
+            className={styles.queryFilter}
+            aria-label={`${t('site.clearSearch')}: ${query}`}
+            onClick={() => updateParam('q')}
+          >
+            <span>{query}</span>
+            <Icon icon="lucide:x" />
+          </Button>
+        )}
       </section>
 
       <p className={styles.resultStatus} role="status" aria-live="polite" aria-atomic="true">
@@ -288,7 +214,7 @@ export default function Home() {
                     <Link
                       to={`/${tool.id}`}
                       className={styles.cardLink}
-                      onClick={() => rememberTool(tool.id)}
+                      onClick={() => setRecent(rememberTool(tool.id))}
                     >
                       <IconBlock icon={tool.icon} variant="accent" />
                       <span className={styles.cardCopy}>
