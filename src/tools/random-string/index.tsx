@@ -1,4 +1,5 @@
-import { Button, TextField } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { Button, TextField, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -106,8 +107,9 @@ export default function RandomString() {
 
         {charset === 'custom' && (
           <div className={styles.field}>
-            <TextArea
-              rows={1}
+            <Input
+              monospace
+              spellCheck={false}
               value={custom}
               onChange={(e) => {
                 setCustom(e.target.value);
@@ -120,18 +122,19 @@ export default function RandomString() {
         )}
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.randomString.output')}</label>
+      <ToolPane
+        title={t('tools.randomString.output')}
+        actions={
           <div className={styles.actions}>
             <Button size="sm" variant="primary" onClick={() => run()}>
               {t('tools.randomString.regenerate')}
             </Button>
             <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
           </div>
-        </div>
+        }
+      >
         <TextArea rows={2} value={output} readOnly aria-label={t('tools.randomString.output')} />
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

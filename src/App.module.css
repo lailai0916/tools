@@ -20,7 +20,7 @@
 
 .main {
   width: 100%;
-  padding-block: 1.5rem 4rem;
+  padding-block: var(--lk-space-8) var(--lk-space-16);
 }
 
 .loading {
@@ -51,6 +51,6 @@
 
 @media (max-width: 600px) {
   .main {
-    padding-block: 1.25rem 3rem;
+    padding-block: var(--lk-space-6) var(--lk-space-12);
   }
 }

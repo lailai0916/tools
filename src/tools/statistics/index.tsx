@@ -1,4 +1,4 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { Alert, Button, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -113,28 +113,18 @@ export default function Statistics() {
       <div className={styles.controls}>
         <div className={styles.controlLeft}>
           <label className={styles.paneLabel}>{t('common.input')}</label>
-          <div
-            className={styles.modes}
-            role="group"
-            aria-label={t('tools.statistics.varianceMode')}
-          >
-            <Button
-              size="sm"
-              active={varianceMode === 'population'}
-              onClick={() => setVarianceMode('population')}
-              aria-pressed={varianceMode === 'population'}
-            >
-              {t('tools.statistics.population')}
-            </Button>
-            <Button
-              size="sm"
-              active={varianceMode === 'sample'}
-              onClick={() => setVarianceMode('sample')}
-              aria-pressed={varianceMode === 'sample'}
-            >
-              {t('tools.statistics.sample')}
-            </Button>
-          </div>
+          <Segmented<typeof varianceMode>
+            value={varianceMode}
+            onChange={setVarianceMode}
+            items={[
+              { value: 'population', label: t('tools.statistics.population') },
+              { value: 'sample', label: t('tools.statistics.sample') },
+            ]}
+            orientation="horizontal"
+            size="sm"
+            stackAt={0}
+            ariaLabel={t('tools.statistics.varianceMode')}
+          />
         </div>
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}

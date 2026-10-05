@@ -1,3 +1,4 @@
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
 import { Button, Segmented, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -43,7 +44,7 @@ export default function TextReverse() {
           onChange={setMode}
           size="sm"
           orientation="horizontal"
-          stackAt={360}
+          stackAt={0}
           ariaLabel={t('tools.textReverse.name')}
           items={[
             { value: 'char', label: t('tools.textReverse.byChar') },
@@ -56,22 +57,25 @@ export default function TextReverse() {
         </Button>
       </div>
 
-      <TextAreaField
-        wrapperClassName={styles.pane}
-        label={t('common.input')}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t('tools.textReverse.placeholder')}
-        aria-label={t('common.input')}
-      />
+      <ToolGrid>
+        <TextAreaField
+          wrapperClassName={styles.pane}
+          label={t('common.input')}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={t('tools.textReverse.placeholder')}
+          aria-label={t('common.input')}
+        />
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+        <ToolPane
+          title={t('common.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

@@ -1,7 +1,6 @@
-import { Alert, Card } from '@lailai0916/ui';
+import { Alert, Card, Input } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import type { Locale } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -262,9 +261,10 @@ export default function CrontabParser() {
       description={t('tools.crontabParser.description')}
       backLabel={t('common.back')}
     >
-      <TextArea
+      <Input
+        monospace
+        spellCheck={false}
         className={styles.expr}
-        rows={1}
         value={expr}
         onChange={(e) => setExpr(e.target.value)}
         invalid={parsed.ok === false}

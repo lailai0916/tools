@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Button } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -183,13 +184,14 @@ export default function LoremIpsum() {
         </Button>
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.loremIpsum.output')}</label>
+      <ToolPane
+        title={t('tools.loremIpsum.output')}
+        actions={
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <TextArea value={output} readOnly rows={10} aria-label={t('tools.loremIpsum.output')} />
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

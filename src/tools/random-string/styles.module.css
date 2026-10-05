@@ -1,3 +1,7 @@
+.actions {
+  composes: actions from '../../components/ToolWorkspace/styles.module.css';
+}
+
 .options {
   display: flex;
   flex-direction: column;
@@ -11,39 +15,11 @@
 }
 
 .label {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
+  composes: label from '../../components/ToolWorkspace/styles.module.css';
 }
 
 .group {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-}
-
-.pane {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.paneLabel {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
-.outputHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }

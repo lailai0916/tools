@@ -1,3 +1,4 @@
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
 import { Button, Input, Slider, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -63,22 +64,25 @@ export default function CaesarCipher() {
         </Button>
       </div>
 
-      <TextAreaField
-        wrapperClassName={styles.pane}
-        label={t('common.input')}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t('tools.caesarCipher.placeholder')}
-        aria-label={t('common.input')}
-      />
+      <ToolGrid>
+        <TextAreaField
+          wrapperClassName={styles.pane}
+          label={t('common.input')}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={t('tools.caesarCipher.placeholder')}
+          aria-label={t('common.input')}
+        />
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.caesarCipher.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('tools.caesarCipher.output')} />
-      </div>
+        <ToolPane
+          title={t('tools.caesarCipher.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('tools.caesarCipher.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

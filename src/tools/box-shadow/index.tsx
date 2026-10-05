@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Checkbox, Slider, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -92,20 +93,20 @@ export default function BoxShadow() {
         />
       </div>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('tools.boxShadow.preview')}</label>
+      <ToolPane title={t('tools.boxShadow.preview')}>
         <div className={styles.stage}>
           <div className={styles.previewBox} style={{ boxShadow: shadow }} />
         </div>
-      </div>
+      </ToolPane>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.boxShadow.output')}</label>
+      <ToolPane
+        title={t('tools.boxShadow.output')}
+        actions={
           <CopyButton value={css} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <code className={styles.output}>{css}</code>
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

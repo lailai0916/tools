@@ -1,7 +1,6 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { Alert, Button, Segmented, Input } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -288,36 +287,27 @@ export default function MathEvaluator() {
       <div className={styles.controls}>
         <div className={styles.controlLeft}>
           <label className={styles.paneLabel}>{t('common.input')}</label>
-          <div
-            className={styles.modes}
-            role="group"
-            aria-label={t('tools.mathEvaluator.angleMode')}
-          >
-            <Button
-              size="sm"
-              active={angleMode === 'radians'}
-              onClick={() => setAngleMode('radians')}
-              aria-pressed={angleMode === 'radians'}
-            >
-              {t('tools.mathEvaluator.radians')}
-            </Button>
-            <Button
-              size="sm"
-              active={angleMode === 'degrees'}
-              onClick={() => setAngleMode('degrees')}
-              aria-pressed={angleMode === 'degrees'}
-            >
-              {t('tools.mathEvaluator.degrees')}
-            </Button>
-          </div>
+          <Segmented<typeof angleMode>
+            value={angleMode}
+            onChange={setAngleMode}
+            items={[
+              { value: 'radians', label: t('tools.mathEvaluator.radians') },
+              { value: 'degrees', label: t('tools.mathEvaluator.degrees') },
+            ]}
+            orientation="horizontal"
+            size="sm"
+            stackAt={0}
+            ariaLabel={t('tools.mathEvaluator.angleMode')}
+          />
         </div>
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}
         </Button>
       </div>
 
-      <TextArea
-        rows={1}
+      <Input
+        monospace
+        spellCheck={false}
         value={input}
         onChange={(e) => setInput(e.target.value)}
         invalid={result.kind === 'error'}

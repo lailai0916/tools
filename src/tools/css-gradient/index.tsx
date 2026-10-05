@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Slider, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -53,22 +54,22 @@ export default function CssGradient() {
         />
       </div>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('tools.cssGradient.preview')}</label>
+      <ToolPane title={t('tools.cssGradient.preview')}>
         <div
           className={styles.preview}
           style={{ backgroundImage: gradient }}
           aria-label={t('tools.cssGradient.preview')}
         />
-      </div>
+      </ToolPane>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.cssGradient.output')}</label>
+      <ToolPane
+        title={t('tools.cssGradient.output')}
+        actions={
           <CopyButton value={css} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <code className={styles.output}>{css}</code>
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

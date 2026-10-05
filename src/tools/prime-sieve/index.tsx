@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -81,17 +82,18 @@ export default function PrimeSieve() {
             <span className={styles.rowLabel}>{t('tools.primeSieve.count')}</span>
             <code className={styles.rowValue}>{result.count}</code>
           </div>
-          <div className={styles.pane}>
-            <div className={styles.outputHead}>
-              <label className={styles.paneLabel}>{t('tools.primeSieve.primes')}</label>
+          <ToolPane
+            title={t('tools.primeSieve.primes')}
+            actions={
               <CopyButton
                 value={result.primes}
                 label={t('common.copy')}
                 copiedLabel={t('common.copied')}
               />
-            </div>
+            }
+          >
             <TextArea value={result.primes} readOnly aria-label={t('tools.primeSieve.primes')} />
-          </div>
+          </ToolPane>
         </>
       )}
     </ToolLayout>

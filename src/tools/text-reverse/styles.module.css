@@ -1,29 +1,9 @@
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+.pane {
+  composes: pane from '../../components/ToolWorkspace/styles.module.css';
 }
-
+.controls {
+  composes: toolbar from '../../components/ToolWorkspace/styles.module.css';
+}
 .modes {
   max-width: 100%;
-}
-
-.pane {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.paneLabel {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
-.outputHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }

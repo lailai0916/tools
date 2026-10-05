@@ -1,7 +1,6 @@
-import { Alert, Button, Input } from '@lailai0916/ui';
+import { Alert, Input, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -97,10 +96,11 @@ export default function ColorShades() {
               onInput={(e) => editColor(e.currentTarget.value)}
               aria-label={t('tools.colorShades.baseColor')}
             />
-            <TextArea
+            <Input
+              monospace
+              spellCheck={false}
               id="color-shades-hex"
               className={styles.input}
-              rows={1}
               value={hex}
               onChange={(e) => editHex(e.target.value)}
               invalid={invalid}
@@ -117,23 +117,15 @@ export default function ColorShades() {
         </div>
         <div className={styles.stepField}>
           <span className={styles.label}>{t('tools.colorShades.steps')}</span>
-          <div
-            className={styles.stepOptions}
-            role="group"
-            aria-label={t('tools.colorShades.steps')}
-          >
-            {STEP_COUNTS.map((count) => (
-              <Button
-                key={count}
-                size="sm"
-                active={stepCount === count}
-                onClick={() => setStepCount(count)}
-                aria-pressed={stepCount === count}
-              >
-                {count}
-              </Button>
-            ))}
-          </div>
+          <Segmented<typeof stepCount>
+            value={stepCount}
+            onChange={setStepCount}
+            items={STEP_COUNTS.map((count) => ({ value: count, label: String(count) }))}
+            orientation="horizontal"
+            size="sm"
+            stackAt={0}
+            ariaLabel={t('tools.colorShades.steps')}
+          />
         </div>
       </div>
 

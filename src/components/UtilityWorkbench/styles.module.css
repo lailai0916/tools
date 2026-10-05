@@ -1,7 +1,16 @@
 .fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.875rem;
+  gap: var(--lk-space-4);
+  min-width: 0;
+}
+
+.fields > * {
+  min-width: 0;
+}
+
+.fields > :global(textarea) {
+  grid-column: 1 / -1;
 }
 
 .wideField {
@@ -15,31 +24,21 @@
   grid-column: 1 / -1;
 }
 
-.label {
-  color: var(--font-color-secondary);
-  font-size: var(--font-size-label);
-  font-weight: 600;
-}
-
-.outputHeader {
-  justify-content: space-between;
-  margin-top: 0.25rem;
-}
-
 .result {
   min-height: 5rem;
   margin: 0;
-  padding: 0.8rem;
+  padding: var(--lk-space-4);
   overflow-x: auto;
-  border: 1px solid var(--emphasis-200);
+  border: 1px solid var(--lk-color-emphasis-300);
   border-radius: var(--radius-panel);
   background: var(--card-background);
   color: var(--font-color-base);
   font: var(--font-size-code) / 1.65 var(--font-family-mono);
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
-@media (max-width: 600px) {
+@container tools-content (max-width: 560px) {
   .fields {
     grid-template-columns: 1fr;
   }

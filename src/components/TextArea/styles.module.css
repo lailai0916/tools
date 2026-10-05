@@ -1,7 +1,17 @@
+.editor:not([rows]) {
+  min-height: 240px;
+}
+
 .editor[rows='1'] {
   min-height: var(--lk-control-height);
   height: var(--lk-control-height);
   resize: none;
+}
+
+@media (max-width: 600px) {
+  .editor:not([rows]) {
+    min-height: 176px;
+  }
 }
 
 .editor[rows='2'] {

@@ -1,4 +1,5 @@
-import { Button, Checkbox, TextAreaField } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { Button, Checkbox, TextAreaField, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 
@@ -47,14 +48,18 @@ export default function Slugify() {
       <div className={styles.controls}>
         <div className={styles.optionGroup}>
           <span className={styles.groupLabel}>{t('tools.slugify.separator')}</span>
-          <div className={styles.modes}>
-            <Button size="sm" active={separator === '-'} onClick={() => setSeparator('-')}>
-              -
-            </Button>
-            <Button size="sm" active={separator === '_'} onClick={() => setSeparator('_')}>
-              _
-            </Button>
-          </div>
+          <Segmented<typeof separator>
+            value={separator}
+            onChange={setSeparator}
+            items={[
+              { value: '-', label: ['-'].join(' ') },
+              { value: '_', label: ['_'].join(' ') },
+            ]}
+            orientation="horizontal"
+            size="sm"
+            stackAt={0}
+            ariaLabel={t('common.mode')}
+          />
         </div>
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}
@@ -83,15 +88,16 @@ export default function Slugify() {
         aria-label={t('common.input')}
       />
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.slugify.output')}</label>
+      <ToolPane
+        title={t('tools.slugify.output')}
+        actions={
           <CopyButton value={slug} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <code className={styles.output} data-empty={!slug}>
           {slug || t('tools.slugify.empty')}
         </code>
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

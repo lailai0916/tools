@@ -1,8 +1,5 @@
 .controls {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-  flex-wrap: wrap;
+  composes: toolbar from '../../components/ToolWorkspace/styles.module.css';
 }
 
 .field {
@@ -28,29 +25,10 @@
   cursor: pointer;
 }
 
-.pane {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.paneLabel {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
 .preview {
   height: 180px;
   border-radius: var(--radius-panel);
   border: 1px solid var(--emphasis-300);
-}
-
-.outputHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .output {

@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Button, Checkbox, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -65,20 +66,21 @@ export default function RemoveWhitespace() {
       description={t('tools.removeWhitespace.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.pane}>
-        <div className={styles.paneHead}>
-          <label className={styles.paneLabel}>{t('common.input')}</label>
+      <ToolPane
+        title={t('common.input')}
+        actions={
           <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
             {t('common.clear')}
           </Button>
-        </div>
+        }
+      >
         <TextArea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={t('tools.removeWhitespace.placeholder')}
           aria-label={t('common.input')}
         />
-      </div>
+      </ToolPane>
 
       <div className={styles.options}>
         <Checkbox
@@ -128,13 +130,14 @@ export default function RemoveWhitespace() {
         />
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.paneHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
+      <ToolPane
+        title={t('common.output')}
+        actions={
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

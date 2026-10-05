@@ -1,4 +1,5 @@
-import { Button } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Button, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -65,41 +66,47 @@ export default function LineEndings() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          {MODES.map((m) => (
-            <Button key={m} size="sm" active={mode === m} onClick={() => setMode(m)}>
-              {modeLabel(m)}
-            </Button>
-          ))}
-        </div>
+        <Segmented<typeof mode>
+          value={mode}
+          onChange={setMode}
+          items={MODES.map((m) => ({ value: m, label: modeLabel(m) }))}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.mode')}
+        />
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}
         </Button>
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.paneHead}>
-          <label className={styles.paneLabel}>{t('common.input')}</label>
-          <span className={styles.detected}>
-            {t('tools.lineEndings.detected')}
-            <span className={styles.badge}>{detectedLabel}</span>
-          </span>
-        </div>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={t('tools.lineEndings.placeholder')}
-          aria-label={t('common.input')}
-        />
-      </div>
+      <ToolGrid>
+        <ToolPane
+          title={t('common.input')}
+          actions={
+            <span className={styles.detected}>
+              {t('tools.lineEndings.detected')}
+              <span className={styles.badge}>{detectedLabel}</span>
+            </span>
+          }
+        >
+          <TextArea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={t('tools.lineEndings.placeholder')}
+            aria-label={t('common.input')}
+          />
+        </ToolPane>
 
-      <div className={styles.pane}>
-        <div className={styles.paneHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+        <ToolPane
+          title={t('common.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

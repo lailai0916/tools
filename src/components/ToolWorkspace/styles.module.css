@@ -1,0 +1,122 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--lk-space-6);
+  min-width: 0;
+}
+
+.grid > * {
+  min-width: 0;
+}
+
+.pane {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--lk-space-3);
+}
+
+.paneHeader,
+.toolbar {
+  display: flex;
+  min-width: 0;
+  min-height: var(--lk-control-height-compact);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lk-space-3);
+  flex-wrap: wrap;
+}
+
+.actions {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--lk-space-2);
+  flex-wrap: wrap;
+}
+
+.toolbar > button:only-child {
+  margin-left: auto;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--lk-space-2);
+  min-width: 0;
+  margin: 0;
+  color: var(--lk-font-color-base);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.resultList {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--lk-color-emphasis-300);
+  border-radius: var(--lk-radius-md);
+  background: var(--lk-card-background-color);
+}
+
+.resultRow {
+  display: grid;
+  min-width: 0;
+  min-height: 52px;
+  grid-template-columns: minmax(110px, 1fr) minmax(0, 2fr) auto;
+  align-items: center;
+  gap: var(--lk-space-3);
+  padding: var(--lk-space-3) var(--lk-space-4);
+  border-bottom: 1px solid var(--lk-color-emphasis-200);
+}
+
+.resultRow:last-child {
+  border-bottom: 0;
+}
+
+.resultLabel {
+  min-width: 0;
+  color: var(--lk-font-color-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.resultValue {
+  min-width: 0;
+  margin: 0;
+  color: var(--lk-font-color-base);
+  font: 14px / 1.6 var(--lk-font-mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+@container tools-content (max-width: 760px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--lk-space-6);
+  }
+}
+
+@container tools-content (max-width: 560px) {
+  .resultRow {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--lk-space-1) var(--lk-space-3);
+  }
+
+  .resultLabel {
+    grid-column: 1;
+  }
+
+  .resultValue {
+    grid-column: 1;
+  }
+
+  .resultRow > :nth-child(3) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}

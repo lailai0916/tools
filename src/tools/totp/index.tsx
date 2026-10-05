@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, PasswordInput } from '@lailai0916/ui';
 import { useEffect, useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -132,8 +133,7 @@ export default function Totp() {
       description={t('tools.totp.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('tools.totp.secret')}</label>
+      <ToolPane title={t('tools.totp.secret')}>
         <PasswordInput
           value={secret}
           onChange={(e) => setSecret(e.target.value)}
@@ -144,7 +144,7 @@ export default function Totp() {
           hideLabel={t('common.hide')}
         />
         {invalid && <Alert variant="danger">{t('tools.totp.invalid')}</Alert>}
-      </div>
+      </ToolPane>
 
       {!invalid && (
         <div className={styles.codeCard}>

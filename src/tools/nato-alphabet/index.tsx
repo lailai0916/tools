@@ -1,3 +1,4 @@
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
 import { Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -75,36 +76,43 @@ export default function NatoAlphabet() {
       description={t('tools.natoAlphabet.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.controls}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <TextArea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t('tools.natoAlphabet.placeholder')}
-        aria-label={t('common.input')}
-      />
-
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.natoAlphabet.output')}</label>
-          <CopyButton
-            value={output}
-            label={t('common.copy')}
-            copiedLabel={t('common.copied')}
-            disabled={empty}
+      <ToolGrid>
+        <ToolPane
+          title={t('common.input')}
+          actions={
+            <>
+              <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+                {t('common.clear')}
+              </Button>
+            </>
+          }
+        >
+          <TextArea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={t('tools.natoAlphabet.placeholder')}
+            aria-label={t('common.input')}
           />
-        </div>
-        {empty ? (
-          <p className={styles.empty}>{t('tools.natoAlphabet.empty')}</p>
-        ) : (
-          <TextArea value={output} readOnly aria-label={t('tools.natoAlphabet.output')} />
-        )}
-      </div>
+        </ToolPane>
+
+        <ToolPane
+          title={t('tools.natoAlphabet.output')}
+          actions={
+            <CopyButton
+              value={output}
+              label={t('common.copy')}
+              copiedLabel={t('common.copied')}
+              disabled={empty}
+            />
+          }
+        >
+          {empty ? (
+            <p className={styles.empty}>{t('tools.natoAlphabet.empty')}</p>
+          ) : (
+            <TextArea value={output} readOnly aria-label={t('tools.natoAlphabet.output')} />
+          )}
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

@@ -582,12 +582,12 @@ export function VerbalMemoryTest() {
           <span className={funStyles.eyebrow}>{text('haveSeen')}</span>
           <strong className={funStyles.verbalWord}>{word}</strong>
           <div className={funStyles.buttonRow}>
-            <button type="button" className={funStyles.choiceButton} onClick={() => answer(true)}>
+            <Button size="md" className={funStyles.choiceButton} onClick={() => answer(true)}>
               {text('seen')}
-            </button>
-            <button type="button" className={funStyles.choiceButton} onClick={() => answer(false)}>
+            </Button>
+            <Button size="md" className={funStyles.choiceButton} onClick={() => answer(false)}>
               {text('new')}
-            </button>
+            </Button>
           </div>
         </GamePanel>
       )}

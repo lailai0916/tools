@@ -1,33 +1,5 @@
 .controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.modes {
-  display: flex;
-  gap: 0.35rem;
-}
-
-.pane {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.paneLabel {
-  font-size: var(--font-size-label);
-  font-weight: 650;
-  letter-spacing: 0.01em;
-  color: var(--font-color-secondary);
-}
-
-.outputHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  composes: toolbar from '../../components/ToolWorkspace/styles.module.css';
 }
 
 @media (max-width: 600px) {

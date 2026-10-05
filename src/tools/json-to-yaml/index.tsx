@@ -1,4 +1,5 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Alert, Button, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { dump, load } from 'js-yaml';
 import ToolLayout from '@/components/ToolLayout';
@@ -41,42 +42,52 @@ export default function JsonToYaml() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          <Button size="sm" active={direction === 'toYaml'} onClick={() => setDirection('toYaml')}>
-            {t('tools.jsonToYaml.toYaml')}
-          </Button>
-          <Button size="sm" active={direction === 'toJson'} onClick={() => setDirection('toJson')}>
-            {t('tools.jsonToYaml.toJson')}
-          </Button>
-        </div>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          invalid={result.ok === false}
-          placeholder={
-            direction === 'toYaml'
-              ? t('tools.jsonToYaml.jsonPlaceholder')
-              : t('tools.jsonToYaml.yamlPlaceholder')
-          }
-          aria-label={t('common.input')}
+        <Segmented<typeof direction>
+          value={direction}
+          onChange={setDirection}
+          items={[
+            { value: 'toYaml', label: t('tools.jsonToYaml.toYaml') },
+            { value: 'toJson', label: t('tools.jsonToYaml.toJson') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.mode')}
         />
-        {result.ok === false && <Alert variant="danger">{t('tools.jsonToYaml.error')}</Alert>}
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+      <ToolGrid>
+        <ToolPane
+          title={t('common.input')}
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          }
+        >
+          <TextArea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            invalid={result.ok === false}
+            placeholder={
+              direction === 'toYaml'
+                ? t('tools.jsonToYaml.jsonPlaceholder')
+                : t('tools.jsonToYaml.yamlPlaceholder')
+            }
+            aria-label={t('common.input')}
+          />
+          {result.ok === false && <Alert variant="danger">{t('tools.jsonToYaml.error')}</Alert>}
+        </ToolPane>
+
+        <ToolPane
+          title={t('common.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

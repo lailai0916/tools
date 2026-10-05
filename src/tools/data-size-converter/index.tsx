@@ -1,4 +1,4 @@
-import { Alert, Button, TextField } from '@lailai0916/ui';
+import { Alert, TextField, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 
 import ToolLayout from '@/components/ToolLayout';
@@ -82,35 +82,27 @@ export default function DataSizeConverter() {
       />
 
       <div className={styles.controls}>
-        <div
-          className={styles.systems}
-          role="group"
-          aria-label={t('tools.dataSizeConverter.system')}
-        >
-          <Button
-            size="sm"
-            active={system === 'binary'}
-            onClick={() => changeSystem('binary')}
-            aria-pressed={system === 'binary'}
-          >
-            {t('tools.dataSizeConverter.binary')}
-          </Button>
-          <Button
-            size="sm"
-            active={system === 'decimal'}
-            onClick={() => changeSystem('decimal')}
-            aria-pressed={system === 'decimal'}
-          >
-            {t('tools.dataSizeConverter.decimal')}
-          </Button>
-        </div>
-        <div className={styles.units} role="group" aria-label={t('tools.dataSizeConverter.unit')}>
-          {unitsFor(system).map((u) => (
-            <Button key={u} size="sm" active={unit === u} onClick={() => setUnit(u)}>
-              {u}
-            </Button>
-          ))}
-        </div>
+        <Segmented<typeof system>
+          value={system}
+          onChange={changeSystem}
+          items={[
+            { value: 'binary', label: t('tools.dataSizeConverter.binary') },
+            { value: 'decimal', label: t('tools.dataSizeConverter.decimal') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={360}
+          ariaLabel={t('tools.dataSizeConverter.system')}
+        />
+        <Segmented<typeof unit>
+          value={unit}
+          onChange={setUnit}
+          items={unitsFor(system).map((u) => ({ value: u, label: String(u) }))}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('tools.dataSizeConverter.unit')}
+        />
       </div>
 
       {parsed.state === 'invalid' && (

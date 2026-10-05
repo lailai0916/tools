@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Button, Checkbox, TextField } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -164,9 +165,9 @@ export default function RandomNumber() {
         />
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.randomNumber.output')}</label>
+      <ToolPane
+        title={t('tools.randomNumber.output')}
+        actions={
           <div className={styles.actions}>
             <Button size="sm" variant="primary" onClick={() => run()} disabled={invalid}>
               {t('tools.randomNumber.regenerate')}
@@ -178,13 +179,14 @@ export default function RandomNumber() {
               disabled={invalid}
             />
           </div>
-        </div>
+        }
+      >
         {invalid ? (
           <Alert variant="danger">{t('tools.randomNumber.invalidRange')}</Alert>
         ) : (
           <TextArea value={output} readOnly rows={6} aria-label={t('tools.randomNumber.output')} />
         )}
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

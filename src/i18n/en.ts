@@ -36,6 +36,9 @@ export const en = {
   'site.emptyRecent': 'Tools you open appear here.',
   'site.showAllTools': 'Show all tools',
   'site.skipToContent': 'Skip to content',
+  'site.breadcrumb': 'Breadcrumb',
+  'common.mode': 'Mode',
+  'common.options': 'Options',
 
   'common.back': 'Back',
   'common.clear': 'Clear',

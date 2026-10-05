@@ -1,5 +1,6 @@
 import Hint from '@lailai0916/ui/Hint';
-import { Badge, Button, Card, EmptyState, Icon, IconBlock, IconButton } from '@lailai0916/ui';
+import { Badge, Button, EmptyState, Icon, IconBlock, Panel } from '@lailai0916/ui';
+import FavoriteButton from '@/components/FavoriteButton';
 import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { useI18n } from '@/i18n';
@@ -7,7 +8,7 @@ import { CATEGORY_ORDER, TOOLS } from '@/tools/registry';
 import type { MessageKey } from '@/i18n/en';
 import { useToolNavigation } from '@/hooks/useToolNavigation';
 import { useSavedTools } from '@/hooks/useSavedTools';
-import { FAVORITES_KEY, writeToolIds, rememberTool } from '@/utils/toolStorage';
+import { toggleToolFavorite, rememberTool } from '@/utils/toolStorage';
 import styles from './styles.module.css';
 
 export default function Home() {
@@ -25,13 +26,6 @@ export default function Home() {
       next.delete(key);
     }
     setSearchParams(next, { replace: true });
-  };
-
-  const toggleFavorite = (toolId: string) => {
-    const next = favorites.includes(toolId)
-      ? favorites.filter((id) => id !== toolId)
-      : [toolId, ...favorites];
-    writeToolIds(FAVORITES_KEY, next);
   };
 
   const filtered = useMemo(() => {
@@ -152,32 +146,30 @@ export default function Home() {
                 const name = t(`tools.${tool.key}.name` as MessageKey);
                 const favorite = favorites.includes(tool.id);
                 return (
-                  <Card as="article" padding={0} key={tool.id} className={styles.card}>
-                    <Link
-                      to={`/${tool.id}`}
-                      className={styles.cardLink}
-                      onClick={() => rememberTool(tool.id)}
-                    >
-                      <IconBlock icon={tool.icon} variant="accent" />
-                      <span className={styles.cardCopy}>
-                        <Hint label={name}>
-                          <span className={styles.cardName}>{name}</span>
-                        </Hint>
-                        <span className={styles.cardDesc}>
-                          {t(`tools.${tool.key}.description` as MessageKey)}
+                  <article key={tool.id} className={styles.card}>
+                    <Panel className={styles.cardSurface}>
+                      <Link
+                        to={`/${tool.id}`}
+                        className={styles.cardLink}
+                        onClick={() => rememberTool(tool.id)}
+                      >
+                        <IconBlock icon={tool.icon} variant="muted" />
+                        <span className={styles.cardCopy}>
+                          <Hint label={name}>
+                            <span className={styles.cardName}>{name}</span>
+                          </Hint>
+                          <span className={styles.cardDesc}>
+                            {t(`tools.${tool.key}.description` as MessageKey)}
+                          </span>
                         </span>
-                      </span>
-                    </Link>
-                    <IconButton
-                      size="md"
-                      className={styles.favorite}
-                      aria-pressed={favorite}
-                      label={favorite ? t('site.removeFavorite') : t('site.addFavorite')}
-                      onClick={() => toggleFavorite(tool.id)}
-                    >
-                      <Icon icon="lucide:star" />
-                    </IconButton>
-                  </Card>
+                      </Link>
+                      <FavoriteButton
+                        className={styles.favorite}
+                        active={favorite}
+                        onClick={() => toggleToolFavorite(tool.id)}
+                      />
+                    </Panel>
+                  </article>
                 );
               })}
             </div>

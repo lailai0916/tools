@@ -1,7 +1,6 @@
-import { Alert } from '@lailai0916/ui';
+import { Alert, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -128,9 +127,10 @@ export default function IpConverter() {
         {fields.map((f) => (
           <div key={f.key} className={styles.field}>
             <label className={styles.fieldLabel}>{t(f.labelKey)}</label>
-            <TextArea
+            <Input
+              monospace
+              spellCheck={false}
               className={styles.input}
-              rows={1}
               value={f.value}
               onChange={(e) => edit(f.key, e.target.value)}
               invalid={invalid === f.key}

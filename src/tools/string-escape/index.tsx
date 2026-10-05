@@ -1,4 +1,5 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Alert, Button, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -41,38 +42,48 @@ export default function StringEscape() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          <Button size="sm" active={mode === 'escape'} onClick={() => setMode('escape')}>
-            {t('tools.stringEscape.escape')}
-          </Button>
-          <Button size="sm" active={mode === 'unescape'} onClick={() => setMode('unescape')}>
-            {t('tools.stringEscape.unescape')}
-          </Button>
-        </div>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          invalid={invalid}
-          placeholder={t('tools.stringEscape.placeholder')}
-          aria-label={t('common.input')}
+        <Segmented<typeof mode>
+          value={mode}
+          onChange={setMode}
+          items={[
+            { value: 'escape', label: t('tools.stringEscape.escape') },
+            { value: 'unescape', label: t('tools.stringEscape.unescape') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.mode')}
         />
-        {invalid && <Alert variant="danger">{t('tools.stringEscape.error')}</Alert>}
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+      <ToolGrid>
+        <ToolPane
+          title={t('common.input')}
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          }
+        >
+          <TextArea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            invalid={invalid}
+            placeholder={t('tools.stringEscape.placeholder')}
+            aria-label={t('common.input')}
+          />
+          {invalid && <Alert variant="danger">{t('tools.stringEscape.error')}</Alert>}
+        </ToolPane>
+
+        <ToolPane
+          title={t('common.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

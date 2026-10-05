@@ -1,4 +1,5 @@
-import { Button, TextField } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { Button, TextField, Segmented } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -89,13 +90,15 @@ export default function Nanoid() {
           />
           <div className={styles.field}>
             <span className={styles.label}>{t('tools.nanoid.count')}</span>
-            <div className={styles.counts}>
-              {COUNTS.map((n) => (
-                <Button key={n} size="sm" active={count === n} onClick={() => editCount(n)}>
-                  {n}
-                </Button>
-              ))}
-            </div>
+            <Segmented<typeof count>
+              value={count}
+              onChange={editCount}
+              items={COUNTS.map((n) => ({ value: n, label: String(n) }))}
+              orientation="horizontal"
+              size="sm"
+              stackAt={0}
+              ariaLabel={t('common.options')}
+            />
           </div>
         </div>
         <Button size="sm" variant="primary" onClick={regenerate} disabled={!validSize}>
@@ -103,13 +106,14 @@ export default function Nanoid() {
         </Button>
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.nanoid.output')}</label>
+      <ToolPane
+        title={t('tools.nanoid.output')}
+        actions={
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <TextArea value={output} readOnly aria-label={t('tools.nanoid.output')} />
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

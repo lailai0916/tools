@@ -1,9 +1,9 @@
+.pane {
+  composes: pane from '../../components/ToolWorkspace/styles.module.css';
+}
+
 .controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  composes: toolbar from '../../components/ToolWorkspace/styles.module.css';
 }
 
 .flags {
@@ -11,57 +11,20 @@
   gap: 0.5rem;
 }
 
-.pane {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.paneLabel {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
 .pattern {
   resize: none;
 }
 
-.count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.5rem;
-  height: 1.5rem;
-  padding: 0 0.4rem;
-  border-radius: var(--radius-control);
-  background: var(--emphasis-200);
-  color: var(--font-color-base);
-  font-size: 0.75rem;
-  font-variant-numeric: tabular-nums;
-}
-
 .list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  composes: resultList from '../../components/ToolWorkspace/styles.module.css';
   margin: 0;
   padding: 0;
   list-style: none;
 }
-
 .item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.5rem 0.75rem;
-  background: var(--card-background);
-  border: 1px solid var(--emphasis-300);
-  border-radius: var(--radius-control);
+  composes: resultRow from '../../components/ToolWorkspace/styles.module.css';
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 44px;
 }
 
 .matchText {

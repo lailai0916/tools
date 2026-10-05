@@ -1,7 +1,7 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Alert, Button, Segmented, Input } from '@lailai0916/ui';
 import { useEffect, useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -121,19 +121,15 @@ export default function Timestamp() {
       <div className={styles.toolbar}>
         <div className={styles.optionGroup} role="group" aria-label={t('tools.timestamp.timeZone')}>
           <span className={styles.optionLabel}>{t('tools.timestamp.timeZone')}</span>
-          <div className={styles.options}>
-            {ZONES.map((item) => (
-              <Button
-                key={item.value}
-                size="sm"
-                active={zone === item.value}
-                onClick={() => setZone(item.value)}
-                aria-pressed={zone === item.value}
-              >
-                {t(item.label)}
-              </Button>
-            ))}
-          </div>
+          <Segmented<typeof zone>
+            value={zone}
+            onChange={setZone}
+            items={ZONES.map((item) => ({ value: item.value, label: t(item.label) }))}
+            orientation="horizontal"
+            size="sm"
+            stackAt={0}
+            ariaLabel={t('tools.timestamp.timeZone')}
+          />
         </div>
       </div>
 
@@ -150,96 +146,112 @@ export default function Timestamp() {
         <span className={styles.currentDate}>{formatDate(now, zone)}</span>
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel} htmlFor="timestamp-input">
-            {t('tools.timestamp.tsInputLabel')}
-          </label>
-          <Button size="sm" variant="ghost" onClick={() => setTsInput(nowSeconds)}>
-            {t('tools.timestamp.useNow')}
-          </Button>
-        </div>
-        <TextArea
-          id="timestamp-input"
-          value={tsInput}
-          onChange={(event) => setTsInput(event.target.value)}
-          invalid={tsResult.ok === false}
-          aria-describedby={tsResult.ok === false ? 'timestamp-input-error' : undefined}
-          placeholder={t('tools.timestamp.tsPlaceholder')}
-        />
-        {tsResult.ok === false && (
-          <Alert id="timestamp-input-error" variant="danger" role="alert">
-            {t('tools.timestamp.invalidTs')}
-          </Alert>
-        )}
-      </div>
-
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel} htmlFor="timestamp-date-output">
-            {t('tools.timestamp.tsOutputLabel')}
-          </label>
-          <CopyButton value={tsOutput} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea id="timestamp-date-output" value={tsOutput} readOnly />
-      </div>
-
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel} htmlFor="timestamp-date-input">
-            {t('tools.timestamp.dateInputLabel')}
-          </label>
-          <Button size="sm" variant="ghost" onClick={() => setDateInput(formatDate(now, zone))}>
-            {t('tools.timestamp.useNow')}
-          </Button>
-        </div>
-        <TextArea
-          id="timestamp-date-input"
-          value={dateInput}
-          onChange={(event) => setDateInput(event.target.value)}
-          invalid={dateResult.ok === false}
-          aria-describedby={dateResult.ok === false ? 'timestamp-date-error' : undefined}
-          placeholder={t('tools.timestamp.datePlaceholder')}
-        />
-        {dateResult.ok === false && (
-          <Alert id="timestamp-date-error" variant="danger" role="alert">
-            {t('tools.timestamp.invalidDate')}
-          </Alert>
-        )}
-      </div>
-
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <div className={styles.outputLabelGroup}>
-            <label className={styles.paneLabel} htmlFor="timestamp-value-output">
-              {t('tools.timestamp.dateOutputLabel')}
-            </label>
-            <div
-              className={styles.options}
-              role="group"
-              aria-label={t('tools.timestamp.outputUnit')}
-            >
-              {UNITS.map((item) => (
-                <Button
-                  key={item.value}
-                  size="sm"
-                  active={unit === item.value}
-                  onClick={() => setUnit(item.value)}
-                  aria-pressed={unit === item.value}
-                >
-                  {t(item.label)}
-                </Button>
-              ))}
-            </div>
-          </div>
-          <CopyButton
-            value={dateOutput}
-            label={t('common.copy')}
-            copiedLabel={t('common.copied')}
+      <ToolGrid>
+        <ToolPane
+          title={<label htmlFor="timestamp-input">{t('tools.timestamp.tsInputLabel')}</label>}
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setTsInput(nowSeconds)}>
+              {t('tools.timestamp.useNow')}
+            </Button>
+          }
+        >
+          <Input
+            monospace
+            spellCheck={false}
+            id="timestamp-input"
+            value={tsInput}
+            onChange={(event) => setTsInput(event.target.value)}
+            invalid={tsResult.ok === false}
+            aria-describedby={tsResult.ok === false ? 'timestamp-input-error' : undefined}
+            placeholder={t('tools.timestamp.tsPlaceholder')}
           />
-        </div>
-        <TextArea id="timestamp-value-output" value={dateOutput} readOnly />
-      </div>
+          {tsResult.ok === false && (
+            <Alert id="timestamp-input-error" variant="danger" role="alert">
+              {t('tools.timestamp.invalidTs')}
+            </Alert>
+          )}
+        </ToolPane>
+
+        <ToolPane
+          title={
+            <label htmlFor="timestamp-date-output">{t('tools.timestamp.tsOutputLabel')}</label>
+          }
+          actions={
+            <CopyButton
+              value={tsOutput}
+              label={t('common.copy')}
+              copiedLabel={t('common.copied')}
+            />
+          }
+        >
+          <Input
+            monospace
+            spellCheck={false}
+            id="timestamp-date-output"
+            value={tsOutput}
+            readOnly
+          />
+        </ToolPane>
+      </ToolGrid>
+
+      <ToolGrid>
+        <ToolPane
+          title={
+            <label htmlFor="timestamp-date-input">{t('tools.timestamp.dateInputLabel')}</label>
+          }
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setDateInput(formatDate(now, zone))}>
+              {t('tools.timestamp.useNow')}
+            </Button>
+          }
+        >
+          <Input
+            monospace
+            spellCheck={false}
+            id="timestamp-date-input"
+            value={dateInput}
+            onChange={(event) => setDateInput(event.target.value)}
+            invalid={dateResult.ok === false}
+            aria-describedby={dateResult.ok === false ? 'timestamp-date-error' : undefined}
+            placeholder={t('tools.timestamp.datePlaceholder')}
+          />
+          {dateResult.ok === false && (
+            <Alert id="timestamp-date-error" variant="danger" role="alert">
+              {t('tools.timestamp.invalidDate')}
+            </Alert>
+          )}
+        </ToolPane>
+
+        <ToolPane
+          title={
+            <label htmlFor="timestamp-value-output">{t('tools.timestamp.dateOutputLabel')}</label>
+          }
+          actions={
+            <CopyButton
+              value={dateOutput}
+              label={t('common.copy')}
+              copiedLabel={t('common.copied')}
+            />
+          }
+        >
+          <Input
+            monospace
+            spellCheck={false}
+            id="timestamp-value-output"
+            value={dateOutput}
+            readOnly
+          />
+          <Segmented
+            value={unit}
+            onChange={setUnit}
+            items={UNITS.map((item) => ({ value: item.value, label: t(item.label) }))}
+            orientation="horizontal"
+            size="sm"
+            stackAt={0}
+            ariaLabel={t('tools.timestamp.outputUnit')}
+          />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

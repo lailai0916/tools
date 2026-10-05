@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { ButtonLink } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
@@ -7,9 +7,9 @@ export default function NotFound() {
   return (
     <div className={styles.wrap}>
       <h1 className={styles.code}>404</h1>
-      <Link to="/" className={styles.link}>
+      <ButtonLink to="/" variant="primary">
         {t('common.back')}
-      </Link>
+      </ButtonLink>
     </div>
   );
 }

@@ -1,6 +1,6 @@
+import { Input } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -103,9 +103,10 @@ export default function MimeLookup() {
       description={t('tools.mimeLookup.description')}
       backLabel={t('common.back')}
     >
-      <TextArea
+      <Input
+        monospace
+        spellCheck={false}
         className={styles.input}
-        rows={1}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t('tools.mimeLookup.placeholder')}

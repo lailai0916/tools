@@ -1,4 +1,5 @@
-import { TextAreaField, TextField } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -108,11 +109,10 @@ export default function PlaceholderImage() {
           onChange={(e) => setTextColor(e.target.value)}
           aria-label={t('tools.placeholderImage.textColor')}
         />
-        <TextAreaField
+        <TextField
           wrapperClassName={styles.fieldWide}
           label={t('tools.placeholderImage.text')}
           className={styles.line}
-          rows={1}
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={fallbackLabel}
@@ -120,23 +120,23 @@ export default function PlaceholderImage() {
         />
       </div>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('tools.placeholderImage.preview')}</label>
+      <ToolPane title={t('tools.placeholderImage.preview')}>
         <div className={styles.previewBox}>
           <img className={styles.image} src={dataUrl} alt={label} />
         </div>
         <a className={styles.download} href={dataUrl} download="placeholder.png">
           {t('tools.placeholderImage.download')}
         </a>
-      </div>
+      </ToolPane>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.placeholderImage.dataUri')}</label>
+      <ToolPane
+        title={t('tools.placeholderImage.dataUri')}
+        actions={
           <CopyButton value={dataUrl} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <TextArea value={dataUrl} readOnly aria-label={t('tools.placeholderImage.dataUri')} />
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

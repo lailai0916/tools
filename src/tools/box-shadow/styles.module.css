@@ -31,19 +31,6 @@
   cursor: pointer;
 }
 
-.pane {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.paneLabel {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
 .stage {
   display: flex;
   align-items: center;
@@ -60,12 +47,6 @@
   height: 120px;
   background: var(--card-background);
   border-radius: var(--radius-control);
-}
-
-.outputHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .output {

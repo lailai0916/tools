@@ -37,6 +37,9 @@ export const zhHans: Record<MessageKey, string> = {
   'site.emptyRecent': '打开过的工具会显示在这里。',
   'site.showAllTools': '查看全部工具',
   'site.skipToContent': '跳到主要内容',
+  'site.breadcrumb': '页面路径',
+  'common.mode': '模式',
+  'common.options': '选项',
 
   'common.back': '返回',
   'common.clear': '清空',

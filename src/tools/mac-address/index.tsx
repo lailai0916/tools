@@ -1,4 +1,5 @@
-import { Button, Checkbox } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { Button, Checkbox, Segmented } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -57,28 +58,27 @@ export default function MacAddress() {
         <div className={styles.options}>
           <div className={styles.field}>
             <span className={styles.label}>{t('tools.macAddress.separator')}</span>
-            <div className={styles.group}>
-              {SEPARATORS.map((sep) => (
-                <Button
-                  key={sep}
-                  size="sm"
-                  active={separator === sep}
-                  onClick={() => editSeparator(sep)}
-                >
-                  {sep}
-                </Button>
-              ))}
-            </div>
+            <Segmented<typeof separator>
+              value={separator}
+              onChange={editSeparator}
+              items={SEPARATORS.map((sep) => ({ value: sep, label: String(sep) }))}
+              orientation="horizontal"
+              size="sm"
+              stackAt={0}
+              ariaLabel={t('common.options')}
+            />
           </div>
           <div className={styles.field}>
             <span className={styles.label}>{t('tools.macAddress.count')}</span>
-            <div className={styles.group}>
-              {COUNTS.map((n) => (
-                <Button key={n} size="sm" active={count === n} onClick={() => editCount(n)}>
-                  {n}
-                </Button>
-              ))}
-            </div>
+            <Segmented<typeof count>
+              value={count}
+              onChange={editCount}
+              items={COUNTS.map((n) => ({ value: n, label: String(n) }))}
+              orientation="horizontal"
+              size="sm"
+              stackAt={0}
+              ariaLabel={t('common.options')}
+            />
           </div>
           <Checkbox
             checked={upper}
@@ -91,13 +91,14 @@ export default function MacAddress() {
         </Button>
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.macAddress.output')}</label>
+      <ToolPane
+        title={t('tools.macAddress.output')}
+        actions={
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <TextArea value={output} readOnly aria-label={t('tools.macAddress.output')} />
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

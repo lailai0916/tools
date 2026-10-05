@@ -1,3 +1,4 @@
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
 import { Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -26,36 +27,43 @@ export default function RemoveAccents() {
       description={t('tools.removeAccents.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.controls}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <TextArea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t('tools.removeAccents.placeholder')}
-        aria-label={t('common.input')}
-      />
-
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.removeAccents.output')}</label>
-          <CopyButton
-            value={output}
-            label={t('common.copy')}
-            copiedLabel={t('common.copied')}
-            disabled={empty}
+      <ToolGrid>
+        <ToolPane
+          title={t('common.input')}
+          actions={
+            <>
+              <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+                {t('common.clear')}
+              </Button>
+            </>
+          }
+        >
+          <TextArea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={t('tools.removeAccents.placeholder')}
+            aria-label={t('common.input')}
           />
-        </div>
-        {empty ? (
-          <p className={styles.empty}>{t('tools.removeAccents.empty')}</p>
-        ) : (
-          <TextArea value={output} readOnly aria-label={t('tools.removeAccents.output')} />
-        )}
-      </div>
+        </ToolPane>
+
+        <ToolPane
+          title={t('tools.removeAccents.output')}
+          actions={
+            <CopyButton
+              value={output}
+              label={t('common.copy')}
+              copiedLabel={t('common.copied')}
+              disabled={empty}
+            />
+          }
+        >
+          {empty ? (
+            <p className={styles.empty}>{t('tools.removeAccents.empty')}</p>
+          ) : (
+            <TextArea value={output} readOnly aria-label={t('tools.removeAccents.output')} />
+          )}
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

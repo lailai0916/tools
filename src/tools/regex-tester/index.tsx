@@ -1,7 +1,7 @@
-import { Alert, Button, TextAreaField } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { Alert, Badge, Button, TextAreaField, Input } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
@@ -58,28 +58,34 @@ export default function RegexTester() {
               key={flag}
               size="sm"
               active={flags.includes(flag)}
+              aria-pressed={flags.includes(flag)}
               onClick={() => toggleFlag(flag)}
             >
               {flag}
             </Button>
           ))}
         </div>
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => {
-            setPattern('');
-            setText('');
-          }}
-          disabled={!pattern && !text}
-        >
-          {t('common.clear')}
-        </Button>
       </div>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('tools.regexTester.pattern')}</label>
-        <TextArea
+      <ToolPane
+        title={t('tools.regexTester.pattern')}
+        actions={
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => {
+              setPattern('');
+              setText('');
+            }}
+            disabled={!pattern && !text}
+          >
+            {t('common.clear')}
+          </Button>
+        }
+      >
+        <Input
+          monospace
+          spellCheck={false}
           value={pattern}
           onChange={(e) => setPattern(e.target.value)}
           invalid={result.ok === false}
@@ -88,9 +94,10 @@ export default function RegexTester() {
           className={styles.pattern}
         />
         {error && <Alert variant="danger">{error}</Alert>}
-      </div>
+      </ToolPane>
 
       <TextAreaField
+        monospace
         wrapperClassName={styles.pane}
         label={t('tools.regexTester.testText')}
         value={text}
@@ -99,11 +106,14 @@ export default function RegexTester() {
         aria-label={t('tools.regexTester.testText')}
       />
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>
-          {t('tools.regexTester.matches')}
-          {result.ok === true && <span className={styles.count}>{matches.length}</span>}
-        </label>
+      <ToolPane
+        title={
+          <>
+            {t('tools.regexTester.matches')}
+            {result.ok === true && <Badge count={matches.length} />}
+          </>
+        }
+      >
         {result.ok === true &&
           (matches.length > 0 ? (
             <ul className={styles.list}>
@@ -119,7 +129,7 @@ export default function RegexTester() {
           ) : (
             <p className={styles.empty}>{t('tools.regexTester.noMatch')}</p>
           ))}
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

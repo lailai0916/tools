@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -61,22 +62,25 @@ export default function GcdLcm() {
       description={t('tools.gcdLcm.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.controls}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <TextArea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        invalid={result.kind === 'invalid'}
-        placeholder={t('tools.gcdLcm.placeholder')}
-        aria-label={t('common.input')}
-      />
-
-      {result.kind === 'invalid' && <Alert variant="danger">{t('tools.gcdLcm.invalid')}</Alert>}
+      <ToolPane
+        title={t('common.input')}
+        actions={
+          <>
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          </>
+        }
+      >
+        <TextArea
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          invalid={result.kind === 'invalid'}
+          placeholder={t('tools.gcdLcm.placeholder')}
+          aria-label={t('common.input')}
+        />
+        {result.kind === 'invalid' && <Alert variant="danger">{t('tools.gcdLcm.invalid')}</Alert>}
+      </ToolPane>
       {result.kind === 'empty' && <p className={styles.hint}>{t('tools.gcdLcm.empty')}</p>}
 
       {rows.length > 0 && (

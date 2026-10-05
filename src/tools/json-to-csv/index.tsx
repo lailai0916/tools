@@ -1,4 +1,5 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Alert, Button, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -140,46 +141,56 @@ export default function JsonToCsv() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          <Button size="sm" active={direction === 'toCsv'} onClick={() => setDirection('toCsv')}>
-            {t('tools.jsonToCsv.toCsv')}
-          </Button>
-          <Button size="sm" active={direction === 'toJson'} onClick={() => setDirection('toJson')}>
-            {t('tools.jsonToCsv.toJson')}
-          </Button>
-        </div>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          invalid={result.ok === false}
-          placeholder={
-            direction === 'toCsv'
-              ? t('tools.jsonToCsv.jsonPlaceholder')
-              : t('tools.jsonToCsv.csvPlaceholder')
-          }
-          aria-label={t('common.input')}
+        <Segmented<typeof direction>
+          value={direction}
+          onChange={setDirection}
+          items={[
+            { value: 'toCsv', label: t('tools.jsonToCsv.toCsv') },
+            { value: 'toJson', label: t('tools.jsonToCsv.toJson') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.mode')}
         />
-        {result.ok === false && (
-          <Alert variant="danger">
-            {result.notArray ? t('tools.jsonToCsv.notArray') : t('tools.jsonToCsv.error')}
-          </Alert>
-        )}
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+      <ToolGrid>
+        <ToolPane
+          title={t('common.input')}
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          }
+        >
+          <TextArea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            invalid={result.ok === false}
+            placeholder={
+              direction === 'toCsv'
+                ? t('tools.jsonToCsv.jsonPlaceholder')
+                : t('tools.jsonToCsv.csvPlaceholder')
+            }
+            aria-label={t('common.input')}
+          />
+          {result.ok === false && (
+            <Alert variant="danger">
+              {result.notArray ? t('tools.jsonToCsv.notArray') : t('tools.jsonToCsv.error')}
+            </Alert>
+          )}
+        </ToolPane>
+
+        <ToolPane
+          title={t('common.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

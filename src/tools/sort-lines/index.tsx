@@ -1,4 +1,5 @@
-import { Button, Checkbox, TextAreaField } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Button, Checkbox, TextAreaField, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -82,14 +83,18 @@ export default function SortLines() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          <Button size="sm" active={direction === 'asc'} onClick={() => setDirection('asc')}>
-            {t('tools.sortLines.asc')}
-          </Button>
-          <Button size="sm" active={direction === 'desc'} onClick={() => setDirection('desc')}>
-            {t('tools.sortLines.desc')}
-          </Button>
-        </div>
+        <Segmented<typeof direction>
+          value={direction}
+          onChange={setDirection}
+          items={[
+            { value: 'asc', label: t('tools.sortLines.asc') },
+            { value: 'desc', label: t('tools.sortLines.desc') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.mode')}
+        />
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}
         </Button>
@@ -123,22 +128,25 @@ export default function SortLines() {
         />
       </div>
 
-      <TextAreaField
-        wrapperClassName={styles.pane}
-        label={t('common.input')}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t('tools.sortLines.placeholder')}
-        aria-label={t('common.input')}
-      />
+      <ToolGrid>
+        <TextAreaField
+          wrapperClassName={styles.pane}
+          label={t('common.input')}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={t('tools.sortLines.placeholder')}
+          aria-label={t('common.input')}
+        />
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+        <ToolPane
+          title={t('common.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

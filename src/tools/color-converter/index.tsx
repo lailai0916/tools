@@ -1,7 +1,6 @@
-import { Alert, Slider, TextField } from '@lailai0916/ui';
+import { Alert, Slider, TextField, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -246,10 +245,11 @@ export default function ColorConverter() {
                 {f.label}
               </label>
               <div className={styles.fieldControl}>
-                <TextArea
+                <Input
+                  monospace
+                  spellCheck={false}
                   id={`color-${f.key}`}
                   className={styles.input}
-                  rows={1}
                   value={f.value}
                   onChange={(e) => edit(f.key, e.target.value)}
                   invalid={invalid === f.key}

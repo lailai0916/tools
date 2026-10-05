@@ -1,8 +1,8 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import Hint from '@lailai0916/ui/Hint';
-import { Alert, Button } from '@lailai0916/ui';
+import { Alert, Button, Input } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -48,23 +48,28 @@ export default function UrlParser() {
       description={t('tools.urlParser.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.controls}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <TextArea
-        className={styles.input}
-        rows={1}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        invalid={result.ok === false}
-        placeholder={t('tools.urlParser.placeholder')}
-        aria-label={t('common.input')}
-      />
-      {result.ok === false && <Alert variant="danger">{t('tools.urlParser.invalid')}</Alert>}
+      <ToolPane
+        title={t('common.input')}
+        actions={
+          <>
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          </>
+        }
+      >
+        <Input
+          monospace
+          spellCheck={false}
+          className={styles.input}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          invalid={result.ok === false}
+          placeholder={t('tools.urlParser.placeholder')}
+          aria-label={t('common.input')}
+        />
+        {result.ok === false && <Alert variant="danger">{t('tools.urlParser.invalid')}</Alert>}
+      </ToolPane>
 
       {result.ok === true && (
         <>

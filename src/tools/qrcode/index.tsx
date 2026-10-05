@@ -1,4 +1,5 @@
-import { Alert, Button, Slider } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Alert, Button, ButtonLink, Slider, Segmented } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 import ToolLayout from '@/components/ToolLayout';
@@ -68,39 +69,27 @@ export default function QrCode() {
       <div className={styles.settings}>
         <div className={styles.setting}>
           <span className={styles.settingLabel}>{t('tools.qrcode.errorCorrection')}</span>
-          <div
-            className={styles.levels}
-            role="group"
-            aria-label={t('tools.qrcode.errorCorrection')}
-          >
-            {LEVELS.map((lv) => (
-              <Button
-                key={lv.value}
-                size="sm"
-                active={level === lv.value}
-                onClick={() => setLevel(lv.value)}
-                aria-pressed={level === lv.value}
-              >
-                {t(lv.label)}
-              </Button>
-            ))}
-          </div>
+          <Segmented<typeof level>
+            value={level}
+            onChange={setLevel}
+            items={LEVELS.map((lv) => ({ value: lv.value, label: t(lv.label) }))}
+            orientation="horizontal"
+            size="sm"
+            stackAt={0}
+            ariaLabel={t('tools.qrcode.errorCorrection')}
+          />
         </div>
         <div className={styles.setting}>
           <span className={styles.settingLabel}>{t('tools.qrcode.size')}</span>
-          <div className={styles.levels} role="group" aria-label={t('tools.qrcode.size')}>
-            {SIZES.map((value) => (
-              <Button
-                key={value}
-                size="sm"
-                active={size === value}
-                onClick={() => setSize(value)}
-                aria-pressed={size === value}
-              >
-                {value}
-              </Button>
-            ))}
-          </div>
+          <Segmented<typeof size>
+            value={size}
+            onChange={setSize}
+            items={SIZES.map((value) => ({ value: value, label: String(value) }))}
+            orientation="horizontal"
+            size="sm"
+            stackAt={0}
+            ariaLabel={t('tools.qrcode.size')}
+          />
         </div>
         <Slider
           className={styles.marginSetting}
@@ -113,44 +102,44 @@ export default function QrCode() {
         />
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.controls}>
-          <label className={styles.paneLabel} htmlFor="qrcode-input">
-            {t('common.input')}
-          </label>
-          <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-            {t('common.clear')}
-          </Button>
-        </div>
-        <TextArea
-          id="qrcode-input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          invalid={!!error}
-          placeholder={t('tools.qrcode.placeholder')}
-          aria-label={t('common.input')}
-        />
-        {error && <Alert variant="danger">{error}</Alert>}
-      </div>
+      <ToolGrid>
+        <ToolPane
+          title={<label htmlFor="qrcode-input">{t('common.input')}</label>}
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          }
+        >
+          <TextArea
+            id="qrcode-input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            invalid={!!error}
+            placeholder={t('tools.qrcode.placeholder')}
+            aria-label={t('common.input')}
+          />
+          {error && <Alert variant="danger">{error}</Alert>}
+        </ToolPane>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.output')}</label>
-        {dataUrl ? (
-          <div className={styles.preview}>
-            <img className={styles.image} src={dataUrl} alt={t('tools.qrcode.alt')} />
-            <div className={styles.downloads}>
-              <a className={styles.download} href={dataUrl} download={`qrcode-${size}.png`}>
-                {t('tools.qrcode.downloadPng')}
-              </a>
-              <a className={styles.download} href={svgUrl} download="qrcode.svg">
-                {t('tools.qrcode.downloadSvg')}
-              </a>
+        <ToolPane title={t('common.output')}>
+          {dataUrl ? (
+            <div className={styles.preview}>
+              <img className={styles.image} src={dataUrl} alt={t('tools.qrcode.alt')} />
+              <div className={styles.downloads}>
+                <ButtonLink size="sm" to={dataUrl} download={`qrcode-${size}.png`}>
+                  {t('tools.qrcode.downloadPng')}
+                </ButtonLink>
+                <ButtonLink size="sm" to={svgUrl} download="qrcode.svg">
+                  {t('tools.qrcode.downloadSvg')}
+                </ButtonLink>
+              </div>
             </div>
-          </div>
-        ) : (
-          <p className={styles.empty}>{t('tools.qrcode.empty')}</p>
-        )}
-      </div>
+          ) : (
+            <p className={styles.empty}>{t('tools.qrcode.empty')}</p>
+          )}
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

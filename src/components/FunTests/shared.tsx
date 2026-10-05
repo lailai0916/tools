@@ -1,4 +1,4 @@
-import { Button, Icon } from '@lailai0916/ui';
+import { Button, Icon, Segmented as SharedSegmented } from '@lailai0916/ui';
 import {
   useEffect,
   useRef,
@@ -154,20 +154,18 @@ export function Segmented<T extends string | number>({
   return (
     <div className={styles.segmentedWrap}>
       <span className={styles.eyebrow}>{label}</span>
-      <div className={styles.segmented} role="group" aria-label={label}>
-        {options.map((option) => (
-          <button
-            key={option}
-            type="button"
-            className={clsx(styles.segment, value === option && styles.segmentActive)}
-            aria-pressed={value === option}
-            disabled={disabled}
-            onClick={() => onChange(option)}
-          >
-            {format(option)}
-          </button>
-        ))}
-      </div>
+      <fieldset disabled={disabled} className={styles.segmentedField}>
+        <SharedSegmented
+          value={value}
+          items={options.map((option) => ({ value: option, label: format(option) }))}
+          onChange={onChange}
+          ariaLabel={label}
+          orientation="horizontal"
+          stackAt={0}
+          size="sm"
+          className={styles.testSegments}
+        />
+      </fieldset>
     </div>
   );
 }

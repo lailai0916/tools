@@ -1,4 +1,5 @@
-import { Button, PasswordInput } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { Button, PasswordInput, Segmented } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -68,8 +69,7 @@ export default function HmacGenerator() {
         />
       </div>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('tools.hmacGenerator.secret')}</label>
+      <ToolPane title={t('tools.hmacGenerator.secret')}>
         <PasswordInput
           value={secret}
           onChange={(e) => setSecret(e.target.value)}
@@ -78,33 +78,30 @@ export default function HmacGenerator() {
           showLabel={t('common.show')}
           hideLabel={t('common.hide')}
         />
-      </div>
+      </ToolPane>
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('tools.hmacGenerator.algorithm')}</label>
-        <div className={styles.algorithms}>
-          {ALGORITHMS.map((algo) => (
-            <Button
-              key={algo}
-              size="sm"
-              active={algorithm === algo}
-              onClick={() => setAlgorithm(algo)}
-            >
-              {algo}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <ToolPane title={t('tools.hmacGenerator.algorithm')}>
+        <Segmented<typeof algorithm>
+          value={algorithm}
+          onChange={setAlgorithm}
+          items={ALGORITHMS.map((algo) => ({ value: algo, label: String(algo) }))}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.options')}
+        />
+      </ToolPane>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.hmacGenerator.output')}</label>
+      <ToolPane
+        title={t('tools.hmacGenerator.output')}
+        actions={
           <CopyButton value={digest} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <output className={styles.hash}>
           {digest || <span className={styles.empty}>{t('tools.hmacGenerator.empty')}</span>}
         </output>
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -53,40 +54,46 @@ export default function SvgToDataUri() {
       description={t('tools.svgDataUri.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.controls}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <TextArea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        invalid={result.ok === false}
-        placeholder={t('tools.svgDataUri.placeholder')}
-        aria-label={t('common.input')}
-      />
-      {result.ok === false && <Alert variant="danger">{t('tools.svgDataUri.invalid')}</Alert>}
+      <ToolPane
+        title={t('common.input')}
+        actions={
+          <>
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          </>
+        }
+      >
+        <TextArea
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          invalid={result.ok === false}
+          placeholder={t('tools.svgDataUri.placeholder')}
+          aria-label={t('common.input')}
+        />
+        {result.ok === false && <Alert variant="danger">{t('tools.svgDataUri.invalid')}</Alert>}
+      </ToolPane>
       {result.ok === null && <p className={styles.hint}>{t('tools.svgDataUri.empty')}</p>}
 
       {result.ok === true && (
         <>
-          <div className={styles.pane}>
-            <div className={styles.outputHead}>
-              <label className={styles.paneLabel}>{t('tools.svgDataUri.output')}</label>
+          <ToolPane
+            title={t('tools.svgDataUri.output')}
+            actions={
               <CopyButton value={uri} label={t('common.copy')} copiedLabel={t('common.copied')} />
-            </div>
+            }
+          >
             <TextArea value={uri} readOnly aria-label={t('tools.svgDataUri.output')} />
-          </div>
+          </ToolPane>
 
-          <div className={styles.pane}>
-            <div className={styles.outputHead}>
-              <label className={styles.paneLabel}>{t('tools.svgDataUri.cssValue')}</label>
+          <ToolPane
+            title={t('tools.svgDataUri.cssValue')}
+            actions={
               <CopyButton value={css} label={t('common.copy')} copiedLabel={t('common.copied')} />
-            </div>
+            }
+          >
             <TextArea value={css} readOnly aria-label={t('tools.svgDataUri.cssValue')} />
-          </div>
+          </ToolPane>
         </>
       )}
     </ToolLayout>

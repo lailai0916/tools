@@ -1,4 +1,5 @@
-import { Button, TextAreaField } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Button, TextAreaField, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -42,35 +43,42 @@ export default function HtmlEntities() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          <Button size="sm" active={mode === 'encode'} onClick={() => setMode('encode')}>
-            {t('tools.htmlEntities.encode')}
-          </Button>
-          <Button size="sm" active={mode === 'decode'} onClick={() => setMode('decode')}>
-            {t('tools.htmlEntities.decode')}
-          </Button>
-        </div>
+        <Segmented<typeof mode>
+          value={mode}
+          onChange={setMode}
+          items={[
+            { value: 'encode', label: t('tools.htmlEntities.encode') },
+            { value: 'decode', label: t('tools.htmlEntities.decode') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.mode')}
+        />
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}
         </Button>
       </div>
 
-      <TextAreaField
-        wrapperClassName={styles.pane}
-        label={t('common.input')}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t('tools.htmlEntities.placeholder')}
-        aria-label={t('common.input')}
-      />
+      <ToolGrid>
+        <TextAreaField
+          wrapperClassName={styles.pane}
+          label={t('common.input')}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={t('tools.htmlEntities.placeholder')}
+          aria-label={t('common.input')}
+        />
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+        <ToolPane
+          title={t('common.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

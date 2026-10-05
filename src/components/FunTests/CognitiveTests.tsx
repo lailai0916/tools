@@ -378,7 +378,14 @@ export function GoNoGoTest() {
           </Button>
         </GamePanel>
       ) : (
-        <button type="button" className={funStyles.goPad} onPointerDown={respond}>
+        <button
+          type="button"
+          className={funStyles.goPad}
+          onPointerDown={respond}
+          onClick={(event) => {
+            if (event.detail === 0) respond();
+          }}
+        >
           <span
             className={clsx(
               funStyles.goOrb,

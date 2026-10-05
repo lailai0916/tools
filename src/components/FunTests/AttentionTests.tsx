@@ -154,7 +154,7 @@ export function SchulteTableTest() {
           <Instructions>{text('instructions')}</Instructions>
           <div
             className={funStyles.schulteGrid}
-            style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
+            style={{ gridTemplateColumns: `repeat(${size}, minmax(44px, 1fr))` }}
           >
             {numbers.map((value) => (
               <button
@@ -809,6 +809,9 @@ export function RhythmTest() {
           type="button"
           className={clsx(funStyles.rhythmPad, beat > 0 && funStyles.rhythmPulse)}
           onPointerDown={tap}
+          onClick={(event) => {
+            if (event.detail === 0) tap();
+          }}
           disabled={status === 'demo'}
         >
           <span key={beat} className={funStyles.metronome} aria-hidden="true">

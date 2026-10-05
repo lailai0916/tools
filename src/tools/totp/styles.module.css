@@ -1,13 +1,5 @@
-.pane {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
 .paneLabel {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
+  composes: label from '../../components/ToolWorkspace/styles.module.css';
 }
 
 .codeCard {

@@ -1,3 +1,4 @@
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
 import { Button, TextAreaField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { diffLines } from 'diff';
@@ -63,9 +64,10 @@ export default function TextDiff() {
         </Button>
       </div>
 
-      <div className={styles.inputs}>
+      <ToolGrid>
         <TextAreaField
           wrapperClassName={styles.pane}
+          monospace
           label={t('tools.textDiff.original')}
           value={original}
           onChange={(e) => setOriginal(e.target.value)}
@@ -74,19 +76,21 @@ export default function TextDiff() {
         />
         <TextAreaField
           wrapperClassName={styles.pane}
+          monospace
           label={t('tools.textDiff.modified')}
           value={modified}
           onChange={(e) => setModified(e.target.value)}
           placeholder={t('tools.textDiff.modifiedPlaceholder')}
           aria-label={t('tools.textDiff.modified')}
         />
-      </div>
+      </ToolGrid>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
+      <ToolPane
+        title={t('common.output')}
+        actions={
           <CopyButton value={copyText} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <div className={styles.diff}>
           {!hasInput && <p className={styles.hint}>{t('tools.textDiff.empty')}</p>}
           {noChange && <p className={styles.hint}>{t('tools.textDiff.identical')}</p>}
@@ -99,7 +103,7 @@ export default function TextDiff() {
               </div>
             ))}
         </div>
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

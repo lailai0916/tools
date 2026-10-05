@@ -1,4 +1,5 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Alert, Button, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -38,41 +39,49 @@ export default function JsonFormat() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.indents}>
-          <Button size="sm" active={indent === 2} onClick={() => setIndent(2)}>
-            2 {t('tools.jsonFormat.spaces')}
-          </Button>
-          <Button size="sm" active={indent === 4} onClick={() => setIndent(4)}>
-            4 {t('tools.jsonFormat.spaces')}
-          </Button>
-          <Button size="sm" active={indent === 0} onClick={() => setIndent(0)}>
-            {t('tools.jsonFormat.minify')}
-          </Button>
-        </div>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          invalid={result.ok === false}
-          placeholder={t('tools.jsonFormat.placeholder')}
-          aria-label={t('common.input')}
+        <Segmented<typeof indent>
+          value={indent}
+          onChange={setIndent}
+          items={[
+            { value: 2, label: ['2', t('tools.jsonFormat.spaces')].join(' ') },
+            { value: 4, label: ['4', t('tools.jsonFormat.spaces')].join(' ') },
+            { value: 0, label: t('tools.jsonFormat.minify') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.options')}
         />
-        {error && <Alert variant="danger">{error}</Alert>}
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+      <ToolGrid>
+        <ToolPane
+          title={t('common.input')}
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          }
+        >
+          <TextArea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            invalid={result.ok === false}
+            placeholder={t('tools.jsonFormat.placeholder')}
+            aria-label={t('common.input')}
+          />
+          {error && <Alert variant="danger">{error}</Alert>}
+        </ToolPane>
+
+        <ToolPane
+          title={t('common.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

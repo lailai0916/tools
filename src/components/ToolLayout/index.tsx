@@ -1,5 +1,11 @@
-import { ButtonLink, Icon, PageContainer, Stack } from '@lailai0916/ui';
+import { ButtonLink, Icon, Panel, PanelBody, Stack } from '@lailai0916/ui';
 import type { ReactNode } from 'react';
+import FavoriteButton from '@/components/FavoriteButton';
+import { useToolNavigation } from '@/hooks/useToolNavigation';
+import { useSavedTools } from '@/hooks/useSavedTools';
+import { useI18n } from '@/i18n';
+import type { MessageKey } from '@/i18n/en';
+import { toggleToolFavorite } from '@/utils/toolStorage';
 import styles from './styles.module.css';
 
 type ToolLayoutProps = {
@@ -17,22 +23,49 @@ export default function ToolLayout({
   children,
   wide = false,
 }: ToolLayoutProps) {
+  const { tool } = useToolNavigation();
+  const { favorites } = useSavedTools();
+  const { t } = useI18n();
+  const content = <Stack gap={24}>{children}</Stack>;
   return (
-    <PageContainer width={wide ? 980 : 820}>
-      <ButtonLink
-        to="/"
-        size="sm"
-        variant="ghost"
-        className={styles.back}
-        leftIcon={<Icon icon="lucide:arrow-left" />}
-      >
-        {backLabel}
-      </ButtonLink>
+    <div className={styles.layout} data-tool="page" data-wide={wide || undefined}>
+      <nav className={styles.breadcrumb} aria-label={t('site.breadcrumb')}>
+        <ButtonLink
+          to="/"
+          size="sm"
+          variant="ghost"
+          leftIcon={<Icon icon="lucide:arrow-left" width={14} />}
+        >
+          {backLabel}
+        </ButtonLink>
+        {tool && (
+          <>
+            <Icon icon="lucide:chevron-right" width={14} />
+            <ButtonLink to={`/?category=${tool.category}`} size="sm" variant="ghost">
+              {t(`category.${tool.category}` as MessageKey)}
+            </ButtonLink>
+          </>
+        )}
+      </nav>
       <header className={styles.header}>
-        <h1 className={styles.title}>{title}</h1>
-        {description && <p className={styles.description}>{description}</p>}
+        <div className={styles.heading}>
+          <h1 className={styles.title}>{title}</h1>
+          {description && <p className={styles.description}>{description}</p>}
+        </div>
+        {tool && (
+          <FavoriteButton
+            active={favorites.includes(tool.id)}
+            onClick={() => toggleToolFavorite(tool.id)}
+          />
+        )}
       </header>
-      <Stack gap={18}>{children}</Stack>
-    </PageContainer>
+      {tool?.category === 'fun' ? (
+        content
+      ) : (
+        <Panel className={styles.workspace}>
+          <PanelBody className={styles.body}>{content}</PanelBody>
+        </Panel>
+      )}
+    </div>
   );
 }

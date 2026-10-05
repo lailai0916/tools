@@ -1,4 +1,4 @@
-import { Alert, Checkbox, TextAreaField } from '@lailai0916/ui';
+import { Alert, Checkbox, TextAreaField, Input, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -61,9 +61,10 @@ export default function FindReplace() {
       <div className={styles.fields}>
         <div className={styles.field}>
           <label className={styles.label}>{t('tools.findReplace.find')}</label>
-          <TextArea
+          <Input
+            monospace
+            spellCheck={false}
             className={styles.line}
-            rows={1}
             value={find}
             onChange={(e) => setFind(e.target.value)}
             invalid={!result.ok}
@@ -72,11 +73,10 @@ export default function FindReplace() {
           />
           {!result.ok && <Alert variant="danger">{t('tools.findReplace.invalidRegex')}</Alert>}
         </div>
-        <TextAreaField
+        <TextField
           wrapperClassName={styles.field}
           label={t('tools.findReplace.replace')}
           className={styles.line}
-          rows={1}
           value={replace}
           onChange={(e) => setReplace(e.target.value)}
           placeholder={t('tools.findReplace.replacePlaceholder')}

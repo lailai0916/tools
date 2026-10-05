@@ -59,3 +59,11 @@ export function rememberTool(toolId: string): string[] {
   writeToolIds(RECENT_KEY, next);
   return readToolIds(RECENT_KEY);
 }
+
+export function toggleToolFavorite(toolId: string) {
+  const favorites = readToolIds(FAVORITES_KEY);
+  writeToolIds(
+    FAVORITES_KEY,
+    favorites.includes(toolId) ? favorites.filter((id) => id !== toolId) : [toolId, ...favorites]
+  );
+}

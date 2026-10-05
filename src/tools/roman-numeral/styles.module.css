@@ -1,3 +1,7 @@
+.fieldLabel {
+  composes: label from '../../components/ToolWorkspace/styles.module.css';
+}
+
 .fields {
   display: flex;
   flex-direction: column;
@@ -8,12 +12,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-}
-
-.fieldLabel {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
 }
 
 .input {

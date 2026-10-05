@@ -4,26 +4,6 @@
   gap: 0.5rem;
 }
 
-.name {
-  resize: none;
-  max-width: 20rem;
-}
-
-.pane {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.paneLabel {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
-.outputHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.field {
+  max-width: 320px;
 }

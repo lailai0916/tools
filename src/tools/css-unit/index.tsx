@@ -1,7 +1,6 @@
-import { Alert } from '@lailai0916/ui';
+import { Alert, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
@@ -63,9 +62,10 @@ export default function CssUnit() {
       <div className={styles.field}>
         <label className={styles.label}>{t('tools.cssUnit.base')}</label>
         <div className={styles.inputRow}>
-          <TextArea
+          <Input
+            monospace
+            spellCheck={false}
             className={styles.input}
-            rows={1}
             value={base}
             onChange={(e) => edit('base', e.target.value)}
             invalid={invalid === 'base'}
@@ -81,9 +81,10 @@ export default function CssUnit() {
           <div className={styles.field} key={f.key}>
             <label className={styles.label}>{f.label}</label>
             <div className={styles.inputRow}>
-              <TextArea
+              <Input
+                monospace
+                spellCheck={false}
                 className={styles.input}
-                rows={1}
                 value={f.value}
                 onChange={(e) => edit(f.key, e.target.value)}
                 invalid={invalid === f.key}

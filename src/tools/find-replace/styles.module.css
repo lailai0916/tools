@@ -1,3 +1,15 @@
+.outputHead {
+  composes: paneHeader from '../../components/ToolWorkspace/styles.module.css';
+}
+
+.paneLabel {
+  composes: label from '../../components/ToolWorkspace/styles.module.css';
+}
+
+.pane {
+  composes: pane from '../../components/ToolWorkspace/styles.module.css';
+}
+
 .fields {
   display: flex;
   gap: 1rem;
@@ -13,9 +25,7 @@
 }
 
 .label {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
+  composes: label from '../../components/ToolWorkspace/styles.module.css';
 }
 
 .line {
@@ -26,25 +36,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem 1.25rem;
-}
-
-.pane {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.paneLabel {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
-.outputHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
 }
 
 .headLeft {

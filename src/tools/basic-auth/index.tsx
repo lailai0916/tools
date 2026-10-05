@@ -1,4 +1,4 @@
-import { PasswordInput, TextAreaField } from '@lailai0916/ui';
+import { PasswordInput, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 
@@ -42,11 +42,10 @@ export default function BasicAuth() {
       backLabel={t('common.back')}
     >
       <div className={styles.fields}>
-        <TextAreaField
+        <TextField
           wrapperClassName={styles.field}
           label={t('tools.basicAuth.username')}
           className={styles.input}
-          rows={1}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder={t('tools.basicAuth.usernamePlaceholder')}

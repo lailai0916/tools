@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Button } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -51,19 +52,23 @@ export default function HashText() {
       description={t('tools.hashText.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.controls}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <TextArea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t('tools.hashText.placeholder')}
-        aria-label={t('common.input')}
-      />
+      <ToolPane
+        title={t('common.input')}
+        actions={
+          <>
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          </>
+        }
+      >
+        <TextArea
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={t('tools.hashText.placeholder')}
+          aria-label={t('common.input')}
+        />
+      </ToolPane>
 
       <div className={styles.results}>
         {ALGORITHMS.map((algo) => (

@@ -1,7 +1,6 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { Alert, Button, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import styles from './styles.module.css';
@@ -102,9 +101,10 @@ export default function TemperatureConverter() {
       {UNITS.map((u) => (
         <div key={u.key} className={styles.field}>
           <label className={styles.fieldLabel}>{t(u.labelKey)}</label>
-          <TextArea
+          <Input
+            monospace
+            spellCheck={false}
             className={styles.input}
-            rows={1}
             value={fields[u.key]}
             onChange={(e) => edit(u.key, e.target.value)}
             invalid={invalid === u.key}

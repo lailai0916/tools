@@ -1,3 +1,7 @@
+.fieldLabel {
+  composes: label from '../../components/ToolWorkspace/styles.module.css';
+}
+
 .layout {
   display: flex;
   gap: 1rem;
@@ -10,7 +14,7 @@
   flex-direction: column;
   gap: 0.45rem;
   flex: 1 1 180px;
-  min-width: 180px;
+  min-width: 0;
 }
 
 .preview {
@@ -52,7 +56,7 @@
   flex-direction: column;
   gap: 0.75rem;
   flex: 2 1 320px;
-  min-width: 260px;
+  min-width: 0;
 }
 
 .field {
@@ -66,13 +70,6 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.5rem;
   align-items: center;
-}
-
-.fieldLabel {
-  font-size: var(--font-size-label);
-  font-weight: 650;
-  letter-spacing: 0.01em;
-  color: var(--font-color-secondary);
 }
 
 .input {

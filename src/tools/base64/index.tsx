@@ -1,4 +1,5 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Alert, Button, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -58,47 +59,53 @@ export default function Base64() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          <Button size="sm" active={mode === 'encode'} onClick={() => setMode('encode')}>
-            {t('tools.base64.encode')}
-          </Button>
-          <Button size="sm" active={mode === 'decode'} onClick={() => setMode('decode')}>
-            {t('tools.base64.decode')}
-          </Button>
-        </div>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <div className={styles.pane}>
-        <label className={styles.paneLabel} htmlFor="base64-input">
-          {t('common.input')}
-        </label>
-        <TextArea
-          id="base64-input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          invalid={result.ok === false}
-          placeholder={
-            mode === 'encode'
-              ? t('tools.base64.encodePlaceholder')
-              : t('tools.base64.decodePlaceholder')
-          }
-          aria-label={t('common.input')}
+        <Segmented<typeof mode>
+          value={mode}
+          onChange={setMode}
+          items={[
+            { value: 'encode', label: t('tools.base64.encode') },
+            { value: 'decode', label: t('tools.base64.decode') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.mode')}
         />
-        {error && <Alert variant="danger">{t('tools.base64.decodeError')}</Alert>}
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel} htmlFor="base64-output">
-            {t('common.output')}
-          </label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea id="base64-output" value={output} readOnly aria-label={t('common.output')} />
-      </div>
+      <ToolGrid>
+        <ToolPane
+          title={<label htmlFor="base64-input">{t('common.input')}</label>}
+          actions={
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          }
+        >
+          <TextArea
+            id="base64-input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            invalid={result.ok === false}
+            placeholder={
+              mode === 'encode'
+                ? t('tools.base64.encodePlaceholder')
+                : t('tools.base64.decodePlaceholder')
+            }
+            aria-label={t('common.input')}
+          />
+          {error && <Alert variant="danger">{t('tools.base64.decodeError')}</Alert>}
+        </ToolPane>
+
+        <ToolPane
+          title={<label htmlFor="base64-output">{t('common.output')}</label>}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea id="base64-output" value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

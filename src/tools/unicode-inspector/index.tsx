@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Button, Table } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -45,19 +46,23 @@ export default function UnicodeInspector() {
       description={t('tools.unicodeInspector.description')}
       backLabel={t('common.back')}
     >
-      <div className={styles.controls}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
-          {t('common.clear')}
-        </Button>
-      </div>
-
-      <TextArea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t('tools.unicodeInspector.placeholder')}
-        aria-label={t('common.input')}
-      />
+      <ToolPane
+        title={t('common.input')}
+        actions={
+          <>
+            <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
+              {t('common.clear')}
+            </Button>
+          </>
+        }
+      >
+        <TextArea
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={t('tools.unicodeInspector.placeholder')}
+          aria-label={t('common.input')}
+        />
+      </ToolPane>
 
       {rows.length === 0 ? (
         <p className={styles.empty}>{t('tools.unicodeInspector.empty')}</p>

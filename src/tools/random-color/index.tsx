@@ -1,4 +1,4 @@
-import { Button } from '@lailai0916/ui';
+import { Button, Segmented } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import CopyButton from '@/components/CopyButton';
@@ -35,13 +35,15 @@ export default function RandomColor() {
       <div className={styles.controls}>
         <div className={styles.group}>
           <span className={styles.groupLabel}>{t('tools.randomColor.count')}</span>
-          <div className={styles.counts}>
-            {COUNTS.map((n) => (
-              <Button key={n} size="sm" active={count === n} onClick={() => regenerate(n)}>
-                {n}
-              </Button>
-            ))}
-          </div>
+          <Segmented<typeof count>
+            value={count}
+            onChange={regenerate}
+            items={COUNTS.map((n) => ({ value: n, label: String(n) }))}
+            orientation="horizontal"
+            size="sm"
+            stackAt={0}
+            ariaLabel={t('common.options')}
+          />
         </div>
         <Button size="sm" variant="primary" onClick={() => regenerate(count)}>
           {t('tools.randomColor.regenerate')}

@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
   type PointerEvent,
+  type MouseEvent,
   type WheelEvent,
 } from 'react';
 import clsx from 'clsx';
@@ -149,7 +150,9 @@ export function CpsTest() {
     startedAt.current = 0;
   };
 
-  const registerClick = (event: PointerEvent<HTMLButtonElement>) => {
+  const registerClick = (
+    event: PointerEvent<HTMLButtonElement> | MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
     if (status === 'done') return;
     if (status === 'idle') {
@@ -164,8 +167,8 @@ export function CpsTest() {
     const rect = event.currentTarget.getBoundingClientRect();
     const nextRipple = {
       id: (rippleId.current += 1),
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
+      x: event.type === 'click' ? rect.width / 2 : event.clientX - rect.left,
+      y: event.type === 'click' ? rect.height / 2 : event.clientY - rect.top,
     };
     setRipples((current) => [...current.slice(-3), nextRipple]);
   };
@@ -303,6 +306,9 @@ export function CpsTest() {
             type="button"
             className={clsx(funStyles.cpsArena, status === 'running' && funStyles.cpsArenaLive)}
             onPointerDown={registerClick}
+            onClick={(event) => {
+              if (event.detail === 0) registerClick(event);
+            }}
             onContextMenu={(event) => event.preventDefault()}
           >
             {ripples.map((ripple) => (
@@ -654,6 +660,9 @@ export function ReactionTimeTest() {
           type="button"
           className={clsx(funStyles.reactionPad, stateClass)}
           onPointerDown={respond}
+          onClick={(event) => {
+            if (event.detail === 0) respond();
+          }}
         >
           <strong className={funStyles.reactionPrompt}>{prompt}</strong>
           <span>
@@ -788,6 +797,9 @@ export function AimTrainer() {
                 event.preventDefault();
                 event.stopPropagation();
                 hit();
+              }}
+              onClick={(event) => {
+                if (event.detail === 0) hit();
               }}
               aria-label={text('target')}
             >

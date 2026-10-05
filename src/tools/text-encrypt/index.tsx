@@ -1,4 +1,5 @@
-import { Alert, Button, PasswordInput, TextAreaField } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { Alert, Button, PasswordInput, TextAreaField, Segmented } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -115,14 +116,18 @@ export default function TextEncrypt() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          <Button size="sm" active={mode === 'encrypt'} onClick={() => setMode('encrypt')}>
-            {t('tools.textEncrypt.encrypt')}
-          </Button>
-          <Button size="sm" active={mode === 'decrypt'} onClick={() => setMode('decrypt')}>
-            {t('tools.textEncrypt.decrypt')}
-          </Button>
-        </div>
+        <Segmented<typeof mode>
+          value={mode}
+          onChange={setMode}
+          items={[
+            { value: 'encrypt', label: t('tools.textEncrypt.encrypt') },
+            { value: 'decrypt', label: t('tools.textEncrypt.decrypt') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.mode')}
+        />
         <Button size="sm" variant="ghost" onClick={() => setText('')} disabled={!text}>
           {t('common.clear')}
         </Button>
@@ -142,8 +147,7 @@ export default function TextEncrypt() {
         aria-label={t('common.input')}
       />
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('tools.textEncrypt.passphrase')}</label>
+      <ToolPane title={t('tools.textEncrypt.passphrase')}>
         <PasswordInput
           value={passphrase}
           onChange={(e) => setPassphrase(e.target.value)}
@@ -154,20 +158,21 @@ export default function TextEncrypt() {
           hideLabel={t('common.hide')}
         />
         {error && <Alert variant="danger">{t('tools.textEncrypt.error')}</Alert>}
-      </div>
+      </ToolPane>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
+      <ToolPane
+        title={t('common.output')}
+        actions={
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <TextArea
           value={waiting ? '' : output}
           readOnly
           placeholder={t('tools.textEncrypt.empty')}
           aria-label={t('common.output')}
         />
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

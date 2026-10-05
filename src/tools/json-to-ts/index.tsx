@@ -1,4 +1,5 @@
-import { Alert, TextAreaField } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Alert, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -143,40 +144,40 @@ export default function JsonToTs() {
       description={t('tools.jsonToTs.description')}
       backLabel={t('common.back')}
     >
-      <TextAreaField
+      <TextField
         wrapperClassName={styles.field}
         label={t('tools.jsonToTs.rootName')}
-        className={styles.name}
-        rows={1}
         value={rootName}
         onChange={(e) => setRootName(e.target.value)}
         aria-label={t('tools.jsonToTs.rootName')}
       />
 
-      <div className={styles.pane}>
-        <label className={styles.paneLabel}>{t('common.input')}</label>
-        <TextArea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          invalid={result.ok === false}
-          placeholder={t('tools.jsonToTs.placeholder')}
-          aria-label={t('common.input')}
-        />
-        {result.ok === false && (
-          <Alert variant="danger">
-            {t('tools.jsonToTs.error')}
-            {error ? `: ${error}` : ''}
-          </Alert>
-        )}
-      </div>
+      <ToolGrid>
+        <ToolPane title={t('common.input')}>
+          <TextArea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            invalid={result.ok === false}
+            placeholder={t('tools.jsonToTs.placeholder')}
+            aria-label={t('common.input')}
+          />
+          {result.ok === false && (
+            <Alert variant="danger">
+              {t('tools.jsonToTs.error')}
+              {error ? `: ${error}` : ''}
+            </Alert>
+          )}
+        </ToolPane>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.jsonToTs.output')}</label>
-          <CopyButton value={code} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={code} readOnly aria-label={t('tools.jsonToTs.output')} />
-      </div>
+        <ToolPane
+          title={t('tools.jsonToTs.output')}
+          actions={
+            <CopyButton value={code} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={code} readOnly aria-label={t('tools.jsonToTs.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

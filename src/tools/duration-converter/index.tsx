@@ -1,4 +1,4 @@
-import { Alert, Button, TextField } from '@lailai0916/ui';
+import { Alert, TextField, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 
 import ToolLayout from '@/components/ToolLayout';
@@ -72,13 +72,15 @@ export default function DurationConverter() {
         aria-label={t('tools.durationConverter.valueLabel')}
       />
 
-      <div className={styles.units}>
-        {UNITS.map((u) => (
-          <Button key={u.key} size="sm" active={unit === u.key} onClick={() => setUnit(u.key)}>
-            {t(u.labelKey)}
-          </Button>
-        ))}
-      </div>
+      <Segmented<typeof unit>
+        value={unit}
+        onChange={setUnit}
+        items={UNITS.map((u) => ({ value: u.key, label: t(u.labelKey) }))}
+        orientation="horizontal"
+        size="sm"
+        stackAt={0}
+        ariaLabel={t('common.options')}
+      />
 
       {parsed.state === 'invalid' && (
         <Alert variant="danger">{t('tools.durationConverter.invalid')}</Alert>

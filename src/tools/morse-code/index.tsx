@@ -1,4 +1,5 @@
-import { Button, TextAreaField } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Button, TextAreaField, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -119,39 +120,46 @@ export default function MorseCode() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <div className={styles.modes}>
-          <Button size="sm" active={mode === 'toMorse'} onClick={() => setMode('toMorse')}>
-            {t('tools.morseCode.toMorse')}
-          </Button>
-          <Button size="sm" active={mode === 'toText'} onClick={() => setMode('toText')}>
-            {t('tools.morseCode.toText')}
-          </Button>
-        </div>
+        <Segmented<typeof mode>
+          value={mode}
+          onChange={setMode}
+          items={[
+            { value: 'toMorse', label: t('tools.morseCode.toMorse') },
+            { value: 'toText', label: t('tools.morseCode.toText') },
+          ]}
+          orientation="horizontal"
+          size="sm"
+          stackAt={0}
+          ariaLabel={t('common.mode')}
+        />
         <Button size="sm" variant="ghost" onClick={() => setInput('')} disabled={!input}>
           {t('common.clear')}
         </Button>
       </div>
 
-      <TextAreaField
-        wrapperClassName={styles.pane}
-        label={t('common.input')}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={
-          mode === 'toMorse'
-            ? t('tools.morseCode.textPlaceholder')
-            : t('tools.morseCode.morsePlaceholder')
-        }
-        aria-label={t('common.input')}
-      />
+      <ToolGrid>
+        <TextAreaField
+          wrapperClassName={styles.pane}
+          label={t('common.input')}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={
+            mode === 'toMorse'
+              ? t('tools.morseCode.textPlaceholder')
+              : t('tools.morseCode.morsePlaceholder')
+          }
+          aria-label={t('common.input')}
+        />
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
-          <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
-        <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+        <ToolPane
+          title={t('common.output')}
+          actions={
+            <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          }
+        >
+          <TextArea value={output} readOnly aria-label={t('common.output')} />
+        </ToolPane>
+      </ToolGrid>
     </ToolLayout>
   );
 }

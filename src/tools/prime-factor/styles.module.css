@@ -1,16 +1,25 @@
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-bottom: 0.5rem;
+.rowValue {
+  composes: resultValue from '../../components/ToolWorkspace/styles.module.css';
+}
+
+.rowLabel {
+  composes: resultLabel from '../../components/ToolWorkspace/styles.module.css';
+}
+
+.row {
+  composes: resultRow from '../../components/ToolWorkspace/styles.module.css';
+}
+
+.results {
+  composes: resultList from '../../components/ToolWorkspace/styles.module.css';
 }
 
 .paneLabel {
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
+  composes: label from '../../components/ToolWorkspace/styles.module.css';
+}
+
+.controls {
+  composes: toolbar from '../../components/ToolWorkspace/styles.module.css';
 }
 
 .input {
@@ -26,13 +35,6 @@
   margin: 0.5rem 0 0;
   font-size: var(--font-size-code);
   color: var(--font-color-secondary);
-}
-
-.results {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1rem;
 }
 
 .verdict {
@@ -51,32 +53,4 @@
 
 .verdict[data-prime='true'] {
   color: var(--color-success);
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 0.75rem;
-  background: var(--card-background);
-  border: 1px solid var(--emphasis-200);
-  border-radius: var(--radius-control);
-}
-
-.rowLabel {
-  flex: 0 0 auto;
-  width: 8.5rem;
-  font-size: var(--font-size-label);
-  font-weight: 600;
-  color: var(--font-color-secondary);
-}
-
-.rowValue {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow-x: auto;
-  white-space: nowrap;
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-control);
-  color: var(--font-color-base);
 }

@@ -1,3 +1,4 @@
+import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -78,34 +79,35 @@ export default function JwtDecoder() {
 
       {result.ok === true && (
         <>
-          <div className={styles.pane}>
-            <div className={styles.outputHead}>
-              <label className={styles.paneLabel}>{t('tools.jwtDecoder.header')}</label>
+          <ToolPane
+            title={t('tools.jwtDecoder.header')}
+            actions={
               <CopyButton
                 value={result.header}
                 label={t('common.copy')}
                 copiedLabel={t('common.copied')}
               />
-            </div>
+            }
+          >
             <TextArea value={result.header} readOnly aria-label={t('tools.jwtDecoder.header')} />
-          </div>
+          </ToolPane>
 
-          <div className={styles.pane}>
-            <div className={styles.outputHead}>
-              <label className={styles.paneLabel}>{t('tools.jwtDecoder.payload')}</label>
+          <ToolPane
+            title={t('tools.jwtDecoder.payload')}
+            actions={
               <CopyButton
                 value={result.payload}
                 label={t('common.copy')}
                 copiedLabel={t('common.copied')}
               />
-            </div>
+            }
+          >
             <TextArea value={result.payload} readOnly aria-label={t('tools.jwtDecoder.payload')} />
-          </div>
+          </ToolPane>
 
-          <div className={styles.pane}>
-            <label className={styles.paneLabel}>{t('tools.jwtDecoder.signature')}</label>
+          <ToolPane title={t('tools.jwtDecoder.signature')}>
             <code className={styles.signature}>{result.signature}</code>
-          </div>
+          </ToolPane>
 
           <p className={styles.note}>{t('tools.jwtDecoder.note')}</p>
         </>

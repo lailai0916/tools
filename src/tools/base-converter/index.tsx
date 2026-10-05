@@ -1,7 +1,7 @@
-import { Alert, Button } from '@lailai0916/ui';
+import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
+import { Alert, Button, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
-import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -82,27 +82,34 @@ export default function BaseConverter() {
         </Button>
       </div>
 
-      {BASES.map((b) => (
-        <div key={b.key} className={styles.pane}>
-          <div className={styles.paneHead}>
-            <label className={styles.paneLabel}>{t(b.labelKey)}</label>
-            <CopyButton
+      <ToolGrid>
+        {BASES.map((b) => (
+          <ToolPane
+            key={b.key}
+            title={t(b.labelKey)}
+            actions={
+              <CopyButton
+                value={fields[b.key]}
+                label={t('common.copy')}
+                copiedLabel={t('common.copied')}
+              />
+            }
+          >
+            <Input
+              monospace
+              spellCheck={false}
               value={fields[b.key]}
-              label={t('common.copy')}
-              copiedLabel={t('common.copied')}
+              onChange={(e) => handleChange(b.key, b.base, b.pattern, e.target.value)}
+              invalid={invalid === b.key}
+              placeholder={t(b.labelKey)}
+              aria-label={t(b.labelKey)}
             />
-          </div>
-          <TextArea
-            value={fields[b.key]}
-            onChange={(e) => handleChange(b.key, b.base, b.pattern, e.target.value)}
-            invalid={invalid === b.key}
-            rows={1}
-            placeholder={t(b.labelKey)}
-            aria-label={t(b.labelKey)}
-          />
-          {invalid === b.key && <Alert variant="danger">{t('tools.baseConverter.invalid')}</Alert>}
-        </div>
-      ))}
+            {invalid === b.key && (
+              <Alert variant="danger">{t('tools.baseConverter.invalid')}</Alert>
+            )}
+          </ToolPane>
+        ))}
+      </ToolGrid>
     </ToolLayout>
   );
 }

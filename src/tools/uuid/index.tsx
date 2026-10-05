@@ -1,4 +1,5 @@
-import { Button } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { Button, Segmented } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -66,13 +67,15 @@ export default function Uuid() {
           </div>
           <div className={styles.optionGroup}>
             <span className={styles.optionLabel}>{t('tools.uuid.count')}</span>
-            <div className={styles.counts} role="group" aria-label={t('tools.uuid.count')}>
-              {COUNTS.map((n) => (
-                <Button key={n} size="sm" active={count === n} onClick={() => regenerate(n)}>
-                  {n}
-                </Button>
-              ))}
-            </div>
+            <Segmented<typeof count>
+              value={count}
+              onChange={regenerate}
+              items={COUNTS.map((n) => ({ value: n, label: String(n) }))}
+              orientation="horizontal"
+              size="sm"
+              stackAt={0}
+              ariaLabel={t('tools.uuid.count')}
+            />
           </div>
         </div>
         <Button size="sm" variant="primary" onClick={() => regenerate(count)}>
@@ -80,13 +83,14 @@ export default function Uuid() {
         </Button>
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('common.output')}</label>
+      <ToolPane
+        title={t('common.output')}
+        actions={
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <TextArea value={output} readOnly aria-label={t('common.output')} />
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

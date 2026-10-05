@@ -1,4 +1,5 @@
-import { TextAreaField } from '@lailai0916/ui';
+import { ToolPane } from '@/components/ToolWorkspace';
+import { TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
@@ -85,12 +86,11 @@ export default function MetaTags() {
     >
       <div className={styles.grid}>
         {fields.map((f) => (
-          <TextAreaField
+          <TextField
             wrapperClassName={styles.field}
             key={f.key}
             label={f.label}
             className={styles.input}
-            rows={1}
 
             value={model[f.key]}
             onChange={(e) => setModel((prev) => ({ ...prev, [f.key]: e.target.value }))}
@@ -100,13 +100,14 @@ export default function MetaTags() {
         ))}
       </div>
 
-      <div className={styles.pane}>
-        <div className={styles.outputHead}>
-          <label className={styles.paneLabel}>{t('tools.metaTags.output')}</label>
+      <ToolPane
+        title={t('tools.metaTags.output')}
+        actions={
           <CopyButton value={output} label={t('common.copy')} copiedLabel={t('common.copied')} />
-        </div>
+        }
+      >
         <TextArea value={output} readOnly aria-label={t('tools.metaTags.output')} />
-      </div>
+      </ToolPane>
     </ToolLayout>
   );
 }
