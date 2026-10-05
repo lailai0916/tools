@@ -54,7 +54,7 @@ export const en = {
   'category.development': 'Development',
   'category.math': 'Math',
   'category.generator': 'Generator',
-  'category.fun': 'Fun & Tests',
+  'category.fun': 'Tests',
 
   'fun.report': 'Performance report',
   'fun.rating': 'Rating',

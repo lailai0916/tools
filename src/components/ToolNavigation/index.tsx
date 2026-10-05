@@ -1,9 +1,10 @@
-import { ButtonLink, Dialog, Icon, IconButton } from '@lailai0916/ui';
+import { ButtonLink, Dialog, Icon, IconButton, Link } from '@lailai0916/ui';
 import type { MouseEvent } from 'react';
 import { useLocation, useSearchParams } from 'react-router';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import { useToolNavigation, type ToolView } from '@/hooks/useToolNavigation';
+import { useSavedTools } from '@/hooks/useSavedTools';
 import { CATEGORY_ORDER, TOOLS, type ToolCategory } from '@/tools/registry';
 import styles from './styles.module.css';
 
@@ -27,6 +28,12 @@ function NavigationLinks({
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
   const { view, category, tool } = useToolNavigation();
+  const { favorites, recent } = useSavedTools();
+  const counts: Record<ToolView, number> = {
+    all: TOOLS.length,
+    favorites: favorites.length,
+    recent: recent.length,
+  };
   const home = pathname === '/';
   const target = (nextView: ToolView, nextCategory?: ToolCategory) => {
     const params = new URLSearchParams(home ? searchParams : undefined);
@@ -62,7 +69,7 @@ function NavigationLinks({
             onClick={onNavigate}
           >
             <span className={styles.label}>{t(label)}</span>
-            {item === 'all' && <span className={styles.count}>{TOOLS.length}</span>}
+            <span className={styles.count}>{counts[item]}</span>
           </ButtonLink>
         ))}
       </div>
@@ -95,6 +102,15 @@ function NavigationLinks({
   );
 }
 
+function Copyright() {
+  return (
+    <footer className={styles.footer}>
+      <span>Copyright © 2026</span>
+      <Link href="https://lailai.one">lailai</Link>
+    </footer>
+  );
+}
+
 export default function ToolNavigation({
   open,
   onClose,
@@ -119,6 +135,7 @@ export default function ToolNavigation({
     <>
       <aside className={styles.sidebar} aria-label={t('site.toolNavigation')}>
         <NavigationLinks onNavigate={navigate} />
+        <Copyright />
       </aside>
       {open && (
         <Dialog
@@ -135,6 +152,7 @@ export default function ToolNavigation({
             </IconButton>
           </div>
           <NavigationLinks onNavigate={navigate} />
+          <Copyright />
         </Dialog>
       )}
     </>

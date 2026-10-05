@@ -24,9 +24,29 @@
 
 .navigation {
   min-height: 0;
+  flex: 1;
   padding: var(--lk-space-4) var(--lk-space-3);
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+.footer {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--lk-space-1);
+  padding: var(--lk-space-2) var(--lk-space-4);
+  border-top: 1px solid var(--lk-color-emphasis-200);
+  color: var(--lk-font-color-secondary);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.footer a {
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
 }
 
 .links {

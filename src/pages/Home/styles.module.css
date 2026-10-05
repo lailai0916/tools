@@ -13,13 +13,6 @@
   letter-spacing: -0.035em;
 }
 
-.tagline {
-  margin: 10px 0 0;
-  color: var(--font-color-secondary);
-  font-size: 0.875rem;
-  line-height: 1.55;
-}
-
 .queryFilter {
   max-width: 100%;
   margin-bottom: 24px;

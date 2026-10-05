@@ -57,6 +57,11 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Compose links with shared `ButtonLink`, `Icon`, and theme tokens. Mark the selected view with
   `aria-current="page"`; on individual tool routes, mark its category with `aria-current="location"`.
 - A fine separator divides saved views from tool categories, in both the sidebar and mobile drawer.
+- All tools, Favorites, and Recent show counts; saved counts and card state share a reactive storage source.
+  Update immediately after starring or opening a tool, across browser tabs, and in memory if storage is blocked.
+- Keep `Copyright © 2026 lailai` at the bottom of the sidebar/drawer, linking lailai to `https://lailai.one`.
+- The `fun` category is labelled Tests / 测试; its registry key and URLs stay stable.
+- Page titles do not have a visible browser-only-tool count subtitle.
 - Category counts derive from the registry. Selecting a category shows only its tools; Favorites and
   Recent show a single grid, with recent tools ordered by most recently opened.
 - Compose the mobile drawer with shared `Dialog`. Trap focus, lock background scrolling, support Escape

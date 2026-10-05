@@ -55,7 +55,7 @@ export const zhHans: Record<MessageKey, string> = {
   'category.development': '开发',
   'category.math': '数学',
   'category.generator': '生成',
-  'category.fun': '娱乐测试',
+  'category.fun': '测试',
 
   'fun.report': '表现报告',
   'fun.rating': '评级',

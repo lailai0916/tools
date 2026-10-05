@@ -1,25 +1,19 @@
 import Hint from '@lailai0916/ui/Hint';
 import { Badge, Button, Card, EmptyState, Icon, IconBlock, IconButton } from '@lailai0916/ui';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { useI18n } from '@/i18n';
 import { CATEGORY_ORDER, TOOLS } from '@/tools/registry';
 import type { MessageKey } from '@/i18n/en';
 import { useToolNavigation } from '@/hooks/useToolNavigation';
-import {
-  FAVORITES_KEY,
-  RECENT_KEY,
-  readToolIds,
-  writeToolIds,
-  rememberTool,
-} from '@/utils/toolStorage';
+import { useSavedTools } from '@/hooks/useSavedTools';
+import { FAVORITES_KEY, writeToolIds, rememberTool } from '@/utils/toolStorage';
 import styles from './styles.module.css';
 
 export default function Home() {
   const { t } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [favorites, setFavorites] = useState(() => readToolIds(FAVORITES_KEY));
-  const [recent, setRecent] = useState(() => readToolIds(RECENT_KEY));
+  const { favorites, recent } = useSavedTools();
 
   const { query, view, category, title } = useToolNavigation();
 
@@ -34,13 +28,10 @@ export default function Home() {
   };
 
   const toggleFavorite = (toolId: string) => {
-    setFavorites((current) => {
-      const next = current.includes(toolId)
-        ? current.filter((id) => id !== toolId)
-        : [toolId, ...current];
-      writeToolIds(FAVORITES_KEY, next);
-      return next;
-    });
+    const next = favorites.includes(toolId)
+      ? favorites.filter((id) => id !== toolId)
+      : [toolId, ...favorites];
+    writeToolIds(FAVORITES_KEY, next);
   };
 
   const filtered = useMemo(() => {
@@ -100,11 +91,6 @@ export default function Home() {
     <div className={styles.home}>
       <header className={styles.hero}>
         <h1 className={styles.title}>{title}</h1>
-        <p className={styles.tagline}>
-          {filtered.length}{' '}
-          {t(filtered.length === 1 ? 'site.toolAvailable' : 'site.toolsAvailable')}
-          {view !== 'all' && category && ` · ${t(`category.${category}` as MessageKey)}`}
-        </p>
       </header>
 
       {query && (
@@ -120,7 +106,7 @@ export default function Home() {
       )}
 
       <p className={styles.resultStatus} role="status" aria-live="polite" aria-atomic="true">
-        {filtered.length} {t(filtered.length === 1 ? 'site.toolAvailable' : 'site.toolsAvailable')}
+        {t('site.searchResults')}: {filtered.length}
       </p>
 
       {filtered.length === 0 ? (
@@ -170,7 +156,7 @@ export default function Home() {
                     <Link
                       to={`/${tool.id}`}
                       className={styles.cardLink}
-                      onClick={() => setRecent(rememberTool(tool.id))}
+                      onClick={() => rememberTool(tool.id)}
                     >
                       <IconBlock icon={tool.icon} variant="accent" />
                       <span className={styles.cardCopy}>
