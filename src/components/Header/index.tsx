@@ -1,22 +1,21 @@
 import { Link } from 'react-router';
-import { Brand, IconButton, PageContainer, ThemeControl } from '@lailai0916/ui';
+import { Brand, IconButton, SiteHeader, SkipLink, ThemeControl } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
-import styles from './styles.module.css';
 
 export default function Header() {
   const { locale, setLocale, t } = useI18n();
 
   return (
     <>
-      <a className={styles.skipLink} href="#main-content">
-        {t('site.skipToContent')}
-      </a>
-      <header className={styles.header}>
-        <PageContainer className={styles.inner}>
-          <Link to="/" className={styles.brand}>
+      <SkipLink>{t('site.skipToContent')}</SkipLink>
+      <SiteHeader
+        brand={
+          <Link to="/" aria-label={t('site.title')}>
             <Brand logoSrc="/logo.svg" name={t('site.title')} />
           </Link>
-          <div className={styles.actions}>
+        }
+        actions={
+          <>
             <IconButton
               size="sm"
               label={t('site.switchLanguage')}
@@ -32,9 +31,9 @@ export default function Header() {
                 dark: t('site.themeDark'),
               }}
             />
-          </div>
-        </PageContainer>
-      </header>
+          </>
+        }
+      />
     </>
   );
 }

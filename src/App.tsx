@@ -40,7 +40,7 @@ function Application() {
     <LaikitProvider locale={locale} linkComponent={AppLink}>
       <div className={styles.shell}>
         <Header />
-        <main id="main-content" className={styles.main}>
+        <main id="main-content" className={styles.main} tabIndex={-1}>
           <PageContainer>
             <Routes>
               <Route path="/" element={<Home />} />

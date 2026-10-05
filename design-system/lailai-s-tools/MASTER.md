@@ -18,7 +18,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 ## Layout
 
-- Header height: `56px`.
+- Header height comes from `SiteHeader` and `--lk-header-height`.
 - Brand appearance comes from the shared `Brand` component.
 - Content width: `1120px` maximum.
 - Page gutters and centering come from `PageContainer`; tool reading widths are `820px` or `980px`.
@@ -31,6 +31,9 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 ### Header
 
+- `SiteHeader` and `SkipLink` own the common header layout and keyboard skip navigation.
+- Tools supplies its brand link, language switch, and theme control; header surfaces, gutters,
+  responsive brand names, spacing, and touch targets use the shared defaults.
 - Show the avatar, product name, language button, and one compact theme button.
 - The theme button is `34px` visually and `44px` on mobile.
 - Theme choices appear only in an anchored menu.
