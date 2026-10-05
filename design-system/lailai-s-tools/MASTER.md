@@ -35,8 +35,12 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 - `SiteHeader` and `SkipLink` own the common header layout and keyboard skip navigation.
 - `LanguageButton` and `ThemeButton` share the Prispect header controls. Language state stays in Tools; appearance follows the system on load and system changes, with a temporary one-click light/dark choice through `ThemeProvider mode="system"`.
-- The brand always belongs to the header; omit the current-view/tool context label. On mobile,
-  show the menu button beside the brand. Search, language, and theme controls use shared defaults.
+- The brand always belongs to the header; omit the current-view/tool context label. Keep the brand on
+  the left and group search, language, theme, and the mobile menu on the right, following Prispect.
+  Keep the title on one line and hide it only when the brand's available space is `8.5rem` or less.
+- Header gutters are `24px` on desktop, `18px` at widths up to `980px`, and `12px` at widths up to
+  `480px`; respect horizontal safe-area insets. Action gaps are `8px`, `2px` on mobile/touch devices,
+  and `0px` at widths up to `640px`. Keep the shared button visuals and header height.
 - The mobile menu and drawer close controls also use `IconButton variant="header"`.
 - Search, language, and theme buttons are `32px` on desktop and `44px` at widths up to `980px` or on touch devices.
 - Search uses `IconButton variant="header"`, the same base primitive as the language and theme controls, including borders, icon strokes, focus and press feedback.

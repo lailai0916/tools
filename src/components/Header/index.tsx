@@ -33,18 +33,6 @@ export default function Header({
       <SiteHeader
         fullWidth
         className={`${styles.header} ${className}`}
-        mobileAction={
-          <IconButton
-            variant="header"
-            label={t('site.openNavigation')}
-            aria-haspopup="dialog"
-            aria-expanded={navigationOpen}
-            aria-controls={navigationOpen ? navigationId : undefined}
-            onClick={onOpenNavigation}
-          >
-            <Icon icon="lucide:menu" width={17} />
-          </IconButton>
-        }
         brand={
           <Link to="/" aria-label={t('site.title')}>
             <Brand logoSrc="/logo.svg" name={t('site.title')} />
@@ -55,6 +43,17 @@ export default function Header({
             <ToolSearch />
             <LanguageButton locale={locale} onLocaleChange={setLocale} />
             <ThemeButton theme={resolvedTheme} onThemeChange={setPreference} />
+            <IconButton
+              className={styles.menuButton}
+              variant="header"
+              label={t('site.openNavigation')}
+              aria-haspopup="dialog"
+              aria-expanded={navigationOpen}
+              aria-controls={navigationOpen ? navigationId : undefined}
+              onClick={onOpenNavigation}
+            >
+              <Icon icon="lucide:menu" width={17} />
+            </IconButton>
           </>
         }
       />
