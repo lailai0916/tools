@@ -36,8 +36,9 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Tools supplies its brand link, language switch, and theme control; header surfaces, gutters,
   responsive brand names, spacing, and touch targets use the shared defaults.
 - Show the avatar, product name, language button, and one compact theme button.
-- The theme button is `34px` visually and `44px` on mobile.
-- Theme choices appear only in an anchored menu.
+- Language and theme buttons are `32px` on desktop and `44px` at widths up to `980px` or on touch devices.
+- Theme changes immediately on click.
+- Icon-only controls use the shared `Hint` from laikit UI through `IconButton`, `LanguageButton`, and `ThemeButton`. Supplemental text can use `Hint`; structured data points continue to use `Tooltip`.
 - Do not place a segmented theme card in the header.
 - Inputs, fields, selects, passwords, checkboxes, sliders, copy feedback, and errors come from laikit UI.
 - `ToolLayout` uses `PageContainer`, `Stack`, and `ButtonLink`; home cards and counts use `Card`, `IconBlock`, and `Badge`.

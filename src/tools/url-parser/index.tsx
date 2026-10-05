@@ -1,3 +1,4 @@
+import Hint from '@lailai0916/ui/Hint';
 import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
@@ -90,9 +91,9 @@ export default function UrlParser() {
               <div className={styles.results}>
                 {result.data.params.map(({ key, value }, i) => (
                   <div className={styles.row} key={`${key}-${i}`}>
-                    <span className={styles.rowLabel} title={key}>
-                      {key}
-                    </span>
+                    <Hint label={key}>
+                      <span className={styles.rowLabel}>{key}</span>
+                    </Hint>
                     <code className={styles.rowValue}>{value}</code>
                     <CopyButton
                       value={value}

@@ -1,3 +1,4 @@
+import Hint from '@lailai0916/ui/Hint';
 import {
   Badge,
   Button,
@@ -291,9 +292,9 @@ export default function Home() {
                     >
                       <IconBlock icon={tool.icon} variant="accent" />
                       <span className={styles.cardCopy}>
-                        <span className={styles.cardName} title={name}>
-                          {name}
-                        </span>
+                        <Hint label={name}>
+                          <span className={styles.cardName}>{name}</span>
+                        </Hint>
                         <span className={styles.cardDesc}>
                           {t(`tools.${tool.key}.description` as MessageKey)}
                         </span>
