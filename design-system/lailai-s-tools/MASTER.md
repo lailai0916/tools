@@ -49,8 +49,10 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Icon-only controls use the shared `Hint` from laikit UI through `IconButton`, `LanguageButton`, and `ThemeButton`. Supplemental text can use `Hint`; structured data points continue to use `Tooltip`.
 - Do not place a segmented theme card in the header.
 - Inputs, fields, selects, passwords, checkboxes, sliders, copy feedback, and errors come from laikit UI.
-- `ToolLayout` composes `Stack`, `ButtonLink`, `Panel`, and `PanelBody` into a consistent tool workspace.
-  It includes category breadcrumbs and the same favorite action as the catalogue.
+- `ToolLayout` composes `Stack`, `Link`, `Panel`, and `PanelBody` into a consistent tool workspace.
+  Its breadcrumbs follow Home: a house icon linking home, a category link, and the current tool name.
+  Breadcrumbs use an ordered list, muted chevrons, and a stronger current label; long labels truncate
+  on narrow screens. It includes the same favorite action as the catalogue.
 - Catalogue cards use `Panel`, muted `IconBlock`, and `Badge`, with a flat border and no elevation.
 - Single-choice modes, quantities, and test settings use the shared `Segmented`. Short groups remain
   horizontal; longer groups wrap into a grid on narrow containers. Long labels may use supported stacking.

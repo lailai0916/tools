@@ -5,17 +5,118 @@
 }
 
 .breadcrumb {
+  min-width: 0;
+  min-height: 44px;
+  margin-bottom: var(--lk-space-4);
+  padding-bottom: var(--lk-space-2);
+  border-bottom: 1px solid var(--lk-color-emphasis-200);
+}
+
+.breadcrumbs {
   display: flex;
   min-width: 0;
+  min-height: 32px;
   align-items: center;
   gap: var(--lk-space-1);
-  margin-bottom: var(--lk-space-4);
-  margin-left: -8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   color: var(--lk-font-color-secondary);
 }
 
-.breadcrumb > svg {
+.homeItem {
   flex: none;
+}
+
+.homeLink {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--lk-radius-md);
+  color: var(--lk-color-emphasis-600);
+  vertical-align: middle;
+}
+
+.breadcrumbItem {
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
+  align-items: center;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.breadcrumbItem:not(.currentItem) {
+  flex: none;
+}
+
+.breadcrumbItem::before {
+  flex: none;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-inline: var(--lk-space-1) 6px;
+  border-top: 1.5px solid var(--lk-color-emphasis-500);
+  border-right: 1.5px solid var(--lk-color-emphasis-500);
+  transform: rotate(45deg);
+  content: '';
+}
+
+.breadcrumbLink,
+.currentLabel {
+  display: block;
+  min-width: 0;
+  height: 32px;
+  padding-inline: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 32px;
+}
+
+.breadcrumbLink {
+  border-radius: var(--lk-radius-md);
+  color: var(--lk-font-color-secondary);
+  font-weight: 500;
+}
+
+.homeLink,
+.breadcrumbLink {
+  transition:
+    color var(--lk-transition),
+    background-color var(--lk-transition);
+}
+
+.homeLink:hover,
+.breadcrumbLink:hover {
+  color: var(--lk-color-primary-label);
+  background: var(--lk-color-emphasis-100);
+  text-decoration: none;
+}
+
+.currentLabel {
+  color: var(--lk-font-color-base);
+  font-weight: 600;
+}
+
+@media (max-width: 600px), (pointer: coarse) {
+  .breadcrumb {
+    margin-bottom: var(--lk-space-3);
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .homeLink {
+    width: 44px;
+    height: 44px;
+  }
+
+  .breadcrumbLink,
+  .currentLabel {
+    height: 44px;
+    line-height: 44px;
+  }
 }
 
 .header {

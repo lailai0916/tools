@@ -37,6 +37,7 @@ export const en = {
   'site.showAllTools': 'Show all tools',
   'site.skipToContent': 'Skip to content',
   'site.breadcrumb': 'Breadcrumb',
+  'site.home': 'Home page',
   'common.mode': 'Mode',
   'common.options': 'Options',
 

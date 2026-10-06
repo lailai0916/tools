@@ -38,6 +38,7 @@ export const zhHans: Record<MessageKey, string> = {
   'site.showAllTools': '查看全部工具',
   'site.skipToContent': '跳到主要内容',
   'site.breadcrumb': '页面路径',
+  'site.home': '首页',
   'common.mode': '模式',
   'common.options': '选项',
 
