@@ -1,1433 +1,766 @@
-// English is the source of truth. zh-Hans.ts mirrors these keys.
-export const en = {
+import { curatedDataEn } from './curated/data';
+
+import { curatedTextEn } from './curated/text';
+
+import { curatedCryptoEn } from './curated/crypto';
+
+import { curatedWebEn } from './curated/web';
+
+import { curatedCoreEn } from './curated/core';
+import { curatedTimeUnitsEn } from './curated/timeUnits';
+
+const baseEn = {
   'site.title': "lailai's Tools",
+
   'site.tagline': 'Handy tools for developers.',
+
   'site.toolAvailable': 'browser-only tool',
+
   'site.toolsAvailable': 'browser-only tools',
+
   'site.openNavigation': 'Open navigation',
+
   'site.closeNavigation': 'Close navigation',
+
   'site.toolNavigation': 'Tool navigation',
+
   'site.toolCategories': 'Categories',
+
   'site.allTools': 'All tools',
+
   'site.searchPlaceholder': 'Search tools',
+
   'site.searchHint': 'Search tools (⌘K / Ctrl+K)',
+
   'site.closeSearch': 'Close search',
+
   'site.clearSearch': 'Clear search filter',
+
   'site.searchResults': 'Search results',
+
   'site.searchNoResultsDescription': 'Try a tool name or keyword.',
+
   'site.searchLocal': 'Searches tools locally',
+
   'site.searchSelect': 'select',
+
   'site.searchOpen': 'open',
+
   'site.noResults': 'No matching tools.',
+
   'site.noResultsDescription': 'Try another search or show all tools.',
+
   'site.switchLanguage': 'Switch language',
+
   'site.themeSystem': 'Auto',
+
   'site.themeLight': 'Light',
+
   'site.themeDark': 'Dark',
+
   'site.viewAll': 'All',
+
   'site.viewFavorites': 'Favorites',
+
   'site.viewRecent': 'Recent',
+
   'site.allCategories': 'All categories',
+
   'site.addFavorite': 'Add to favorites',
+
   'site.removeFavorite': 'Remove from favorites',
+
   'site.noFavorites': 'No favorites yet.',
+
   'site.noRecent': 'No recent tools yet.',
+
   'site.emptyFavorites': 'Favorite tools appear here.',
+
   'site.emptyRecent': 'Tools you open appear here.',
+
   'site.showAllTools': 'Show all tools',
+
   'site.skipToContent': 'Skip to content',
+
   'site.breadcrumb': 'Breadcrumb',
+
   'site.home': 'Home page',
+
   'common.mode': 'Mode',
+
   'common.options': 'Options',
 
   'common.back': 'Back',
+
   'common.clear': 'Clear',
+
   'common.copy': 'Copy',
+
   'common.copied': 'Copied',
+
   'common.input': 'Input',
+
   'common.output': 'Output',
+
   'common.show': 'Show',
+
   'common.hide': 'Hide',
+
   'common.loading': 'Loading tool',
+
   'common.processing': 'Processing…',
+
   'common.processingFailed': 'Processing failed. Please try again.',
 
   'guide.title': 'Tool guide',
+
   'guide.steps': 'How to use',
+
   'guide.example': 'Example',
+
   'guide.notes': 'Notes',
+
   'guide.input': 'Setup / input',
+
   'guide.output': 'Result',
 
   'category.converter': 'Converter',
+
   'category.crypto': 'Crypto',
+
   'category.web': 'Web',
+
   'category.text': 'Text',
+
   'category.development': 'Development',
+
   'category.math': 'Math',
+
   'category.generator': 'Generator',
+
   'category.fun': 'Tests',
 
   'fun.report': 'Performance report',
+
   'fun.rating': 'Rating',
+
   'fun.personalBest': 'Personal best',
+
   'fun.newBest': 'New personal best',
+
   'fun.replayHint': 'Quick replay',
+
   'fun.status.ready': 'Ready',
+
   'fun.status.running': 'Session in progress',
+
   'fun.status.done': 'Session complete',
+
   'fun.total': 'Total',
+
   'fun.average': 'Average',
+
   'fun.bestRound': 'Best round',
+
   'fun.accuracy': 'Accuracy',
+
   'fun.mistakes': 'Mistakes',
+
   'fun.time': 'Time',
+
   'fun.rounds': 'Rounds',
+
   'fun.consistency': 'Consistency',
+
   'fun.insight': 'Review the detailed metrics, then repeat the test to track improvement.',
 
-  'tools.jsonFormat.name': 'JSON Formatter',
-  'tools.jsonFormat.description': 'Prettify or minify JSON, with error reporting.',
-  'tools.jsonFormat.placeholder': 'Paste JSON here…',
-  'tools.jsonFormat.spaces': 'spaces',
-  'tools.jsonFormat.minify': 'Minify',
-
   'tools.baseConverter.name': 'Base Converter',
+
   'tools.baseConverter.description':
     'Convert integers of any size between binary, octal, decimal and hexadecimal.',
+
   'tools.baseConverter.binary': 'Binary',
+
   'tools.baseConverter.octal': 'Octal',
+
   'tools.baseConverter.decimal': 'Decimal',
+
   'tools.baseConverter.hexadecimal': 'Hexadecimal',
+
   'tools.baseConverter.invalid': 'Invalid digits for this base.',
-  'tools.base64.name': 'Base64 Encode / Decode',
-  'tools.base64.description':
-    'Encode text as Base64 or decode Base64 back to text, with full UTF-8 support.',
-  'tools.base64.encode': 'Encode',
-  'tools.base64.decode': 'Decode',
-  'tools.base64.encodePlaceholder': 'Enter text to encode…',
-  'tools.base64.decodePlaceholder': 'Paste Base64 to decode…',
-  'tools.base64.decodeError': 'Invalid Base64 input.',
+
   'tools.colorConverter.name': 'Color Converter',
+
   'tools.colorConverter.description':
     'Convert and fine-tune colors between HEX, RGB and HSL with a live preview.',
+
   'tools.colorConverter.preview': 'Preview',
+
   'tools.colorConverter.invalid': 'Invalid color value.',
+
   'tools.colorConverter.pickColor': 'Pick color',
+
   'tools.colorConverter.adjustRgb': 'RGB channels',
+
   'tools.colorConverter.red': 'Red channel',
+
   'tools.colorConverter.green': 'Green channel',
+
   'tools.colorConverter.blue': 'Blue channel',
-  'tools.timestamp.name': 'Timestamp Converter',
-  'tools.timestamp.description':
-    'Convert Unix timestamps in seconds or milliseconds across local, UTC and Asia/Shanghai time.',
-  'tools.timestamp.currentLabel': 'Current timestamp',
-  'tools.timestamp.timeZone': 'Time zone',
-  'tools.timestamp.zoneLocal': 'Local',
-  'tools.timestamp.zoneUtc': 'UTC',
-  'tools.timestamp.zoneShanghai': 'Shanghai',
-  'tools.timestamp.useNow': 'Use now',
-  'tools.timestamp.tsInputLabel': 'Timestamp',
-  'tools.timestamp.tsPlaceholder': 'Enter a seconds or milliseconds timestamp…',
-  'tools.timestamp.tsOutputLabel': 'Date and time',
-  'tools.timestamp.invalidTs': 'Not a valid timestamp.',
-  'tools.timestamp.dateInputLabel': 'Date',
-  'tools.timestamp.datePlaceholder': 'e.g. 2026-07-17 12:00:00',
-  'tools.timestamp.dateOutputLabel': 'Timestamp',
-  'tools.timestamp.outputUnit': 'Output unit',
-  'tools.timestamp.seconds': 'Seconds',
-  'tools.timestamp.milliseconds': 'Milliseconds',
-  'tools.timestamp.invalidDate': 'Not a valid date.',
+
   'tools.hashText.name': 'Text Hash',
+
   'tools.hashText.description': 'Compute SHA-1, SHA-256, SHA-384, and SHA-512 hashes of any text.',
+
   'tools.hashText.placeholder': 'Type or paste text to hash…',
+
   'tools.hashText.empty': 'Waiting for input…',
-  'tools.urlEncode.name': 'URL Encode / Decode',
-  'tools.urlEncode.description':
-    'Encode text as a URL component or decode it back, with error reporting.',
-  'tools.urlEncode.placeholder': 'Enter text here…',
-  'tools.urlEncode.encode': 'Encode',
-  'tools.urlEncode.decode': 'Decode',
-  'tools.caseConverter.name': 'Case Converter',
-  'tools.caseConverter.description':
-    'Convert text between camelCase, snake_case, kebab-case and more.',
-  'tools.caseConverter.placeholder': 'Type or paste text here…',
-  'tools.caseConverter.emptyHint': 'Waiting for input…',
-  'tools.caseConverter.camel': 'camelCase',
-  'tools.caseConverter.pascal': 'PascalCase',
-  'tools.caseConverter.snake': 'snake_case',
-  'tools.caseConverter.kebab': 'kebab-case',
-  'tools.caseConverter.constant': 'CONSTANT_CASE',
-  'tools.caseConverter.upper': 'UPPERCASE',
-  'tools.caseConverter.lower': 'lowercase',
-  'tools.caseConverter.title': 'Title Case',
+
   'tools.regexTester.name': 'Regex Tester',
+
   'tools.regexTester.description':
     'Test regular expressions against text and see every match live.',
+
   'tools.regexTester.pattern': 'Pattern',
+
   'tools.regexTester.patternPlaceholder': 'Enter a regular expression…',
+
   'tools.regexTester.testText': 'Test text',
+
   'tools.regexTester.textPlaceholder': 'Paste text to match against…',
+
   'tools.regexTester.matches': 'Matches',
+
   'tools.regexTester.noMatch': 'No matches.',
+
   'tools.regexTester.at': 'at',
+
   'tools.regexTester.flags': 'Regex flags',
+
   'tools.regexTester.flag.g': 'Find all matches',
+
   'tools.regexTester.flag.i': 'Ignore case',
+
   'tools.regexTester.flag.m': 'Multiline anchors',
+
   'tools.regexTester.flag.s': 'Dot matches line breaks',
+
   'tools.regexTester.emptyMatch': 'Empty match',
+
   'tools.regexTester.limit':
     'Showing the first 2000 matches. Narrow the pattern or shorten the text to inspect more.',
+
   'tools.textDiff.name': 'Text Diff',
+
   'tools.textDiff.description':
     'Compare two texts line by line, highlighting additions and deletions.',
+
   'tools.textDiff.original': 'Original',
+
   'tools.textDiff.modified': 'Modified',
+
   'tools.textDiff.originalPlaceholder': 'Paste the original text here…',
+
   'tools.textDiff.modifiedPlaceholder': 'Paste the modified text here…',
+
   'tools.textDiff.empty': 'Enter text on both sides to see the diff.',
+
   'tools.textDiff.identical': 'The two texts are identical.',
+
   'tools.qrcode.name': 'QR Code Generator',
+
   'tools.qrcode.description':
     'Create configurable QR codes from text or links and download them as PNG or SVG.',
+
   'tools.qrcode.placeholder': 'Enter text or a URL…',
+
   'tools.qrcode.errorCorrection': 'Error correction',
+
   'tools.qrcode.size': 'Export size',
+
   'tools.qrcode.margin': 'Quiet zone',
+
   'tools.qrcode.level.L': 'Low',
+
   'tools.qrcode.level.M': 'Medium',
+
   'tools.qrcode.level.Q': 'Quartile',
+
   'tools.qrcode.level.H': 'High',
+
   'tools.qrcode.downloadPng': 'Download PNG',
+
   'tools.qrcode.downloadSvg': 'Download SVG',
+
   'tools.qrcode.alt': 'Generated QR code',
+
   'tools.qrcode.empty': 'The QR code will appear here.',
-  'tools.uuid.name': 'UUID Generator',
-  'tools.uuid.description': 'Generate random UUID v4 or time-based UUID v7 values in bulk.',
-  'tools.uuid.version': 'Version',
-  'tools.uuid.count': 'Count',
-  'tools.uuid.regenerate': 'Regenerate',
-  'tools.jsonToYaml.name': 'JSON ⇄ YAML',
-  'tools.jsonToYaml.description': 'Convert between JSON and YAML in either direction.',
-  'tools.jsonToYaml.toYaml': 'JSON → YAML',
-  'tools.jsonToYaml.toJson': 'YAML → JSON',
-  'tools.jsonToYaml.jsonPlaceholder': 'Paste JSON here…',
-  'tools.jsonToYaml.yamlPlaceholder': 'Paste YAML here…',
-  'tools.jsonToYaml.error': 'Invalid input for this conversion.',
-  'tools.jsonToCsv.name': 'JSON ⇄ CSV',
-  'tools.jsonToCsv.description': 'Convert a JSON array of objects to CSV and back.',
-  'tools.jsonToCsv.toCsv': 'JSON → CSV',
-  'tools.jsonToCsv.toJson': 'CSV → JSON',
-  'tools.jsonToCsv.jsonPlaceholder': 'Paste a JSON array of objects here…',
-  'tools.jsonToCsv.csvPlaceholder': 'Paste CSV here…',
-  'tools.jsonToCsv.error': 'Invalid input for this conversion.',
-  'tools.jsonToCsv.notArray': 'JSON must be an array of objects.',
-  'tools.htmlEntities.name': 'HTML Entities',
-  'tools.htmlEntities.description': 'Encode text to HTML entities or decode it back.',
-  'tools.htmlEntities.encode': 'Encode',
-  'tools.htmlEntities.decode': 'Decode',
-  'tools.htmlEntities.placeholder': 'Enter text here…',
-  'tools.romanNumeral.name': 'Roman Numerals',
-  'tools.romanNumeral.description': 'Convert between Arabic and Roman numerals (1–3999).',
-  'tools.romanNumeral.arabic': 'Arabic',
-  'tools.romanNumeral.roman': 'Roman',
-  'tools.romanNumeral.invalid': 'Invalid value.',
-  'tools.romanNumeral.rangeHint': 'Valid range: 1–3999.',
-  'tools.textToBinary.name': 'Text ⇄ Binary',
-  'tools.textToBinary.description': 'Convert text to its UTF-8 binary representation and back.',
-  'tools.textToBinary.encode': 'Text → Binary',
-  'tools.textToBinary.decode': 'Binary → Text',
-  'tools.textToBinary.textPlaceholder': 'Enter text to encode…',
-  'tools.textToBinary.binaryPlaceholder': 'Paste space-separated bytes to decode…',
-  'tools.textToBinary.error': 'Invalid binary input.',
-  'tools.base32.name': 'Base32 Encode / Decode',
-  'tools.base32.description':
-    'Encode text as Base32 (RFC 4648) or decode Base32 back to text, with full UTF-8 support.',
-  'tools.base32.encode': 'Encode',
-  'tools.base32.decode': 'Decode',
-  'tools.base32.encodePlaceholder': 'Enter text to encode…',
-  'tools.base32.decodePlaceholder': 'Paste Base32 to decode…',
-  'tools.base32.error': 'Invalid Base32 input.',
-  'tools.temperatureConverter.name': 'Temperature Converter',
-  'tools.temperatureConverter.description':
-    'Convert temperatures between Celsius, Fahrenheit, and Kelvin in real time.',
-  'tools.temperatureConverter.celsius': 'Celsius (°C)',
-  'tools.temperatureConverter.fahrenheit': 'Fahrenheit (°F)',
-  'tools.temperatureConverter.kelvin': 'Kelvin (K)',
-  'tools.temperatureConverter.invalid': 'Enter a valid temperature at or above absolute zero.',
-  'tools.dataSizeConverter.name': 'Data Size Converter',
-  'tools.dataSizeConverter.description':
-    'Convert data sizes using decimal SI (1000) or binary IEC (1024) units.',
-  'tools.dataSizeConverter.valueLabel': 'Value',
-  'tools.dataSizeConverter.system': 'Unit system',
-  'tools.dataSizeConverter.binary': 'Binary · 1024',
-  'tools.dataSizeConverter.decimal': 'Decimal · 1000',
-  'tools.dataSizeConverter.unit': 'Input unit',
-  'tools.dataSizeConverter.placeholder': 'Enter a size…',
-  'tools.dataSizeConverter.invalid': 'Not a valid number.',
+
   'tools.unixPermission.name': 'chmod Calculator',
+
   'tools.unixPermission.description':
     'Compute Unix file permissions as octal and symbolic notation.',
+
   'tools.unixPermission.owner': 'Owner',
+
   'tools.unixPermission.group': 'Group',
+
   'tools.unixPermission.other': 'Other',
+
   'tools.unixPermission.read': 'Read',
+
   'tools.unixPermission.write': 'Write',
+
   'tools.unixPermission.execute': 'Execute',
+
   'tools.unixPermission.octal': 'Octal',
+
   'tools.unixPermission.symbolic': 'Symbolic',
+
   'tools.unixPermission.octalInput': 'Octal input',
-  'tools.durationConverter.name': 'Duration Converter',
-  'tools.durationConverter.description':
-    'Convert durations across milliseconds, seconds, minutes, hours, days, and weeks.',
-  'tools.durationConverter.valueLabel': 'Value',
-  'tools.durationConverter.placeholder': 'Enter a duration…',
-  'tools.durationConverter.invalid': 'Not a valid number.',
-  'tools.durationConverter.ms': 'Milliseconds',
-  'tools.durationConverter.seconds': 'Seconds',
-  'tools.durationConverter.minutes': 'Minutes',
-  'tools.durationConverter.hours': 'Hours',
-  'tools.durationConverter.days': 'Days',
-  'tools.durationConverter.weeks': 'Weeks',
-  'tools.angleConverter.name': 'Angle Converter',
-  'tools.angleConverter.description':
-    'Convert angles between degrees, radians, gradians, and turns in real time.',
-  'tools.angleConverter.degrees': 'Degrees (°)',
-  'tools.angleConverter.radians': 'Radians (rad)',
-  'tools.angleConverter.gradians': 'Gradians (gon)',
-  'tools.angleConverter.turns': 'Turns (rev)',
-  'tools.angleConverter.invalid': 'Not a valid number.',
-  'tools.hmacGenerator.name': 'HMAC Generator',
-  'tools.hmacGenerator.description':
-    'Generate an HMAC of a message with a secret key using SHA-1/256/384/512.',
-  'tools.hmacGenerator.message': 'Message',
-  'tools.hmacGenerator.messagePlaceholder': 'Enter the message to authenticate…',
-  'tools.hmacGenerator.secret': 'Secret key',
-  'tools.hmacGenerator.secretPlaceholder': 'Enter the secret key…',
-  'tools.hmacGenerator.algorithm': 'Algorithm',
-  'tools.hmacGenerator.output': 'HMAC',
-  'tools.hmacGenerator.empty': 'Waiting for input…',
+
   'tools.jwtDecoder.name': 'JWT Decoder',
+
   'tools.jwtDecoder.description':
     "Decode a JWT's header and payload without verifying the signature.",
+
   'tools.jwtDecoder.placeholder': 'Paste a JWT here…',
+
   'tools.jwtDecoder.header': 'Header',
+
   'tools.jwtDecoder.payload': 'Payload',
+
   'tools.jwtDecoder.signature': 'Signature',
+
   'tools.jwtDecoder.invalid': 'Not a valid JWT.',
+
   'tools.jwtDecoder.note': 'The signature is not verified.',
-  'tools.passwordStrength.name': 'Password Strength',
-  'tools.passwordStrength.description':
-    'Estimate password entropy and strength entirely in your browser.',
-  'tools.passwordStrength.placeholder': 'Type a password to analyze…',
-  'tools.passwordStrength.entropy': 'Entropy (bits)',
-  'tools.passwordStrength.strength': 'Strength',
-  'tools.passwordStrength.veryWeak': 'Very weak',
-  'tools.passwordStrength.weak': 'Weak',
-  'tools.passwordStrength.fair': 'Fair',
-  'tools.passwordStrength.strong': 'Strong',
-  'tools.passwordStrength.veryStrong': 'Very strong',
-  'tools.passwordStrength.length': 'Length',
-  'tools.passwordStrength.charsets': 'Character sets',
-  'tools.passwordStrength.crackTime': 'Crack time',
-  'tools.passwordStrength.empty': 'Waiting for input…',
-  'tools.passwordStrength.crackInstant': 'Instant',
-  'tools.passwordStrength.crackEternity': 'Eternity',
-  'tools.passwordStrength.unitSeconds': 'seconds',
-  'tools.passwordStrength.unitMinutes': 'minutes',
-  'tools.passwordStrength.unitHours': 'hours',
-  'tools.passwordStrength.unitDays': 'days',
-  'tools.passwordStrength.unitYears': 'years',
-  'tools.passwordStrength.unitCenturies': 'centuries',
-  'tools.crc32.name': 'CRC-32',
-  'tools.crc32.description': 'Compute the CRC-32 checksum of text as hex and decimal.',
-  'tools.crc32.placeholder': 'Type or paste text here…',
-  'tools.crc32.hex': 'Hex',
-  'tools.crc32.decimal': 'Decimal',
-  'tools.crc32.empty': 'Waiting for input…',
-  'tools.textEncrypt.name': 'Text Encryption',
-  'tools.textEncrypt.description': 'Encrypt or decrypt text with a passphrase using AES-GCM.',
-  'tools.textEncrypt.encrypt': 'Encrypt',
-  'tools.textEncrypt.decrypt': 'Decrypt',
-  'tools.textEncrypt.textPlaceholder': 'Enter text to encrypt…',
-  'tools.textEncrypt.cipherPlaceholder': 'Paste Base64 ciphertext to decrypt…',
-  'tools.textEncrypt.passphrase': 'Passphrase',
-  'tools.textEncrypt.passphrasePlaceholder': 'Enter a passphrase…',
-  'tools.textEncrypt.error': 'Decryption failed — wrong passphrase or corrupt data.',
-  'tools.textEncrypt.empty': 'Waiting for input…',
+
   'tools.totp.name': 'TOTP Generator',
+
   'tools.totp.description':
     'Generate time-based one-time passwords from a Base32 secret or otpauth URI.',
+
   'tools.totp.secret': 'Base32 secret',
+
   'tools.totp.secretPlaceholder': 'Enter a Base32 secret or paste an otpauth URI…',
+
   'tools.totp.code': 'Code',
+
   'tools.totp.expiresIn': 'Expires in',
+
   'tools.totp.seconds': 's',
+
   'tools.totp.invalid': 'Not a valid Base32 secret.',
+
   'tools.totp.empty': 'Waiting for input…',
+
   'tools.cssGradient.name': 'CSS Gradient',
+
   'tools.cssGradient.description':
     'Build a CSS linear-gradient between two colors with a live preview.',
+
   'tools.cssGradient.color1': 'Color 1',
+
   'tools.cssGradient.color2': 'Color 2',
+
   'tools.cssGradient.angle': 'Angle',
+
   'tools.cssGradient.preview': 'Preview',
+
   'tools.cssGradient.output': 'CSS',
+
   'tools.boxShadow.name': 'Box Shadow',
+
   'tools.boxShadow.description': 'Design a CSS box-shadow with a live preview and copyable output.',
+
   'tools.boxShadow.offsetX': 'Offset X',
+
   'tools.boxShadow.offsetY': 'Offset Y',
+
   'tools.boxShadow.blur': 'Blur',
+
   'tools.boxShadow.spread': 'Spread',
+
   'tools.boxShadow.color': 'Color',
+
   'tools.boxShadow.opacity': 'Opacity',
+
   'tools.boxShadow.inset': 'Inset',
+
   'tools.boxShadow.preview': 'Preview',
+
   'tools.boxShadow.output': 'CSS',
+
   'tools.crontabParser.name': 'Crontab Parser',
+
   'tools.crontabParser.description': 'Parse a 5-field cron expression into a readable schedule.',
+
   'tools.crontabParser.placeholder': 'e.g. */5 9-17 * * 1-5',
+
   'tools.crontabParser.invalid': 'Invalid cron expression.',
+
   'tools.crontabParser.summary': 'Summary',
+
   'tools.crontabParser.minute': 'Minute',
+
   'tools.crontabParser.hour': 'Hour',
+
   'tools.crontabParser.dayOfMonth': 'Day of month',
+
   'tools.crontabParser.month': 'Month',
+
   'tools.crontabParser.dayOfWeek': 'Day of week',
-  'tools.svgDataUri.name': 'SVG to Data URI',
-  'tools.svgDataUri.description': 'Convert SVG markup to an optimized URL-encoded data URI.',
-  'tools.svgDataUri.placeholder': 'Paste SVG markup here…',
-  'tools.svgDataUri.output': 'Data URI',
-  'tools.svgDataUri.cssValue': 'CSS background-image',
-  'tools.svgDataUri.empty': 'Paste SVG markup to generate a data URI.',
-  'tools.svgDataUri.invalid': 'Input does not look like SVG markup.',
-  'tools.jsonToTs.name': 'JSON to TypeScript',
-  'tools.jsonToTs.description': 'Infer TypeScript interfaces from a JSON sample.',
-  'tools.jsonToTs.placeholder': 'Paste JSON here…',
-  'tools.jsonToTs.rootName': 'Root interface name',
-  'tools.jsonToTs.output': 'TypeScript',
-  'tools.jsonToTs.error': 'Invalid JSON',
-  'tools.cssUnit.name': 'CSS Unit Converter',
-  'tools.cssUnit.description': 'Convert between px and rem/em for a given base font-size.',
-  'tools.cssUnit.px': 'Pixels',
-  'tools.cssUnit.rem': 'rem',
-  'tools.cssUnit.base': 'Base font-size',
-  'tools.cssUnit.invalid': 'Enter a valid number.',
-  'tools.cssUnit.note': '1 rem equals 1 em at the same base font-size.',
+
   'tools.metaTags.name': 'Meta Tags',
+
   'tools.metaTags.description':
     'Generate HTML title, description, Open Graph and Twitter card tags.',
+
   'tools.metaTags.titleField': 'Title',
+
   'tools.metaTags.descriptionField': 'Description',
+
   'tools.metaTags.url': 'Canonical URL',
+
   'tools.metaTags.image': 'Image URL',
+
   'tools.metaTags.siteName': 'Site name',
+
   'tools.metaTags.output': 'HTML',
-  'tools.colorShades.name': 'Color Shades',
-  'tools.colorShades.description': 'Generate tints and shades from a base color in even steps.',
-  'tools.colorShades.baseColor': 'Base color',
-  'tools.colorShades.steps': 'Steps per ramp',
-  'tools.colorShades.invalid': 'Invalid hex color.',
-  'tools.colorShades.tints': 'Tints',
-  'tools.colorShades.shades': 'Shades',
-  'tools.passwordGenerator.name': 'Password Generator',
-  'tools.passwordGenerator.description':
-    'Generate strong random passwords that include every selected character set.',
-  'tools.passwordGenerator.length': 'Length',
-  'tools.passwordGenerator.uppercase': 'Uppercase',
-  'tools.passwordGenerator.lowercase': 'Lowercase',
-  'tools.passwordGenerator.digits': 'Digits',
-  'tools.passwordGenerator.symbols': 'Symbols',
-  'tools.passwordGenerator.excludeAmbiguous': 'Exclude ambiguous',
-  'tools.passwordGenerator.regenerate': 'Regenerate',
-  'tools.passwordGenerator.output': 'Password',
-  'tools.passwordGenerator.noCharset': 'Select at least one character set.',
-  'tools.loremIpsum.name': 'Lorem Ipsum',
-  'tools.loremIpsum.description': 'Generate placeholder lorem ipsum paragraphs.',
-  'tools.loremIpsum.paragraphs': 'Paragraphs',
-  'tools.loremIpsum.regenerate': 'Regenerate',
-  'tools.loremIpsum.output': 'Output',
+
   'tools.randomNumber.name': 'Random Number',
+
   'tools.randomNumber.description': 'Generate random integers within an inclusive range.',
+
   'tools.randomNumber.min': 'Min',
+
   'tools.randomNumber.max': 'Max',
+
   'tools.randomNumber.count': 'Count',
+
   'tools.randomNumber.unique': 'Unique',
+
   'tools.randomNumber.regenerate': 'Regenerate',
+
   'tools.randomNumber.output': 'Output',
+
   'tools.randomNumber.invalidRange': 'Enter a valid integer range (min ≤ max).',
+
   'tools.randomNumber.invalidCount': 'Count must be an integer from 1 to 1000.',
+
   'tools.randomNumber.tooManyUnique':
     'There are not enough distinct integers in this range. Reduce the count or widen the range.',
-  'tools.randomString.name': 'Random String',
-  'tools.randomString.description': 'Generate random strings and tokens from a chosen alphabet.',
-  'tools.randomString.length': 'Length',
-  'tools.randomString.charset': 'Charset',
-  'tools.randomString.hex': 'Hex',
-  'tools.randomString.alphanumeric': 'Alphanumeric',
-  'tools.randomString.base64': 'Base64URL',
-  'tools.randomString.custom': 'Custom',
-  'tools.randomString.customPlaceholder': 'Enter a custom alphabet…',
-  'tools.randomString.regenerate': 'Regenerate',
-  'tools.randomString.output': 'Output',
-  'tools.randomString.invalidLength': 'Length must be an integer from 1 to 4096.',
-  'tools.randomString.emptyAlphabet': 'Enter at least one character for the custom alphabet.',
-  'tools.keyGenerator.name': 'Key Generator',
-  'tools.keyGenerator.description': 'Generate random cryptographic keys in hex and Base64.',
-  'tools.keyGenerator.bits': 'Bits',
-  'tools.keyGenerator.hex': 'Hex',
-  'tools.keyGenerator.base64': 'Base64',
-  'tools.keyGenerator.regenerate': 'Regenerate',
-  'tools.ulid.name': 'ULID Generator',
-  'tools.ulid.description': 'Generate sortable, timestamp-based ULIDs in bulk.',
-  'tools.ulid.count': 'Count',
-  'tools.ulid.regenerate': 'Regenerate',
-  'tools.ulid.output': 'ULIDs',
-  'tools.nanoid.name': 'Nano ID Generator',
-  'tools.nanoid.description': 'Generate URL-safe Nano IDs with a custom length.',
-  'tools.nanoid.length': 'Length',
-  'tools.nanoid.count': 'Count',
-  'tools.nanoid.regenerate': 'Regenerate',
-  'tools.nanoid.output': 'Nano IDs',
-  'tools.nanoid.invalidLength': 'Length must be an integer from 1 to 512.',
-  'tools.macAddress.name': 'MAC Address Generator',
-  'tools.macAddress.description': 'Generate random locally-administered unicast MAC addresses.',
-  'tools.macAddress.separator': 'Separator',
-  'tools.macAddress.count': 'Count',
-  'tools.macAddress.uppercase': 'Uppercase',
-  'tools.macAddress.regenerate': 'Regenerate',
-  'tools.macAddress.output': 'MAC addresses',
+
   'tools.placeholderImage.name': 'Placeholder Image',
+
   'tools.placeholderImage.description': 'Generate a placeholder image and export it as PNG.',
+
   'tools.placeholderImage.width': 'Width',
+
   'tools.placeholderImage.height': 'Height',
+
   'tools.placeholderImage.background': 'Background',
+
   'tools.placeholderImage.textColor': 'Text color',
+
   'tools.placeholderImage.text': 'Label',
+
   'tools.placeholderImage.download': 'Download PNG',
+
   'tools.placeholderImage.dataUri': 'Data URI',
+
   'tools.placeholderImage.preview': 'Preview',
-  'tools.randomColor.name': 'Random Color',
-  'tools.randomColor.description': 'Generate random hex colors as copyable swatches.',
-  'tools.randomColor.count': 'Count',
-  'tools.randomColor.regenerate': 'Regenerate',
-  'tools.percentageCalculator.name': 'Percentage Calculator',
-  'tools.percentageCalculator.description':
-    'Work out percentages, ratios, and percent change in real time.',
-  'tools.percentageCalculator.percentOf': 'What is X% of Y?',
-  'tools.percentageCalculator.percentOfX': 'X (percent)',
-  'tools.percentageCalculator.percentOfY': 'Y',
-  'tools.percentageCalculator.isWhatPercent': 'X is what percent of Y?',
-  'tools.percentageCalculator.isWhatX': 'X',
-  'tools.percentageCalculator.isWhatY': 'Y',
-  'tools.percentageCalculator.percentChange': 'Percent change from X to Y?',
-  'tools.percentageCalculator.changeFrom': 'From (X)',
-  'tools.percentageCalculator.changeTo': 'To (Y)',
-  'tools.percentageCalculator.result': 'Result',
-  'tools.gcdLcm.name': 'GCD & LCM',
-  'tools.gcdLcm.description': 'Compute the GCD and LCM of a list of integers.',
-  'tools.gcdLcm.placeholder': 'Enter integers, e.g. 12, 18, 24…',
-  'tools.gcdLcm.gcd': 'GCD',
-  'tools.gcdLcm.lcm': 'LCM',
-  'tools.gcdLcm.invalid': 'Enter integers separated by commas or spaces.',
-  'tools.gcdLcm.empty': 'Waiting for input…',
-  'tools.primeFactor.name': 'Prime Factorization',
-  'tools.primeFactor.description': 'Factor an integer into primes and test its primality.',
-  'tools.primeFactor.placeholder': 'Enter a positive integer…',
-  'tools.primeFactor.isPrime': 'Prime',
-  'tools.primeFactor.notPrime': 'Not prime',
-  'tools.primeFactor.factorization': 'Factorization',
-  'tools.primeFactor.divisors': 'Divisor count',
-  'tools.primeFactor.invalid': 'Enter a positive integer.',
-  'tools.primeFactor.empty': 'Waiting for input…',
-  'tools.primeFactor.tooLarge': 'Number too large (max 10^15).',
-  'tools.mathEvaluator.name': 'Math Evaluator',
-  'tools.mathEvaluator.description':
-    'Evaluate arithmetic expressions with functions, constants and selectable angle units.',
-  'tools.mathEvaluator.angleMode': 'Trigonometry angle unit',
-  'tools.mathEvaluator.radians': 'Radians',
-  'tools.mathEvaluator.degrees': 'Degrees',
-  'tools.mathEvaluator.placeholder': 'e.g. sqrt(2) * (3 + 4) ^ 2…',
-  'tools.mathEvaluator.result': 'Result',
-  'tools.mathEvaluator.error': 'Invalid expression.',
-  'tools.mathEvaluator.empty': 'Waiting for input…',
+
   'tools.statistics.name': 'Statistics',
+
   'tools.statistics.description': 'Descriptive statistics for a list of numbers.',
+
   'tools.statistics.placeholder': 'Enter numbers, e.g. 4, 8, 15, 16, 23, 42…',
+
   'tools.statistics.varianceMode': 'Variance type',
+
   'tools.statistics.population': 'Population',
+
   'tools.statistics.sample': 'Sample',
+
   'tools.statistics.count': 'Count',
+
   'tools.statistics.sum': 'Sum',
+
   'tools.statistics.mean': 'Mean',
+
   'tools.statistics.median': 'Median',
+
   'tools.statistics.mode': 'Mode',
+
   'tools.statistics.min': 'Min',
+
   'tools.statistics.max': 'Max',
+
   'tools.statistics.range': 'Range',
+
   'tools.statistics.variance': 'Variance',
+
   'tools.statistics.stddev': 'Std. deviation',
+
   'tools.statistics.variancePopulation': 'Population variance',
+
   'tools.statistics.varianceSample': 'Sample variance',
+
   'tools.statistics.stddevPopulation': 'Population std. dev.',
+
   'tools.statistics.stddevSample': 'Sample std. dev.',
+
   'tools.statistics.invalid': 'Enter numbers separated by commas or spaces.',
+
   'tools.statistics.empty': 'Waiting for input…',
-  'tools.combinatorics.name': 'Combinatorics',
-  'tools.combinatorics.description': 'Compute factorials, permutations, and combinations.',
-  'tools.combinatorics.n': 'n',
-  'tools.combinatorics.r': 'r',
-  'tools.combinatorics.factorial': 'n!',
-  'tools.combinatorics.permutations': 'P(n, r)',
-  'tools.combinatorics.combinations': 'C(n, r)',
-  'tools.combinatorics.invalid': 'Enter integers with 0 ≤ r ≤ n ≤ 1000.',
-  'tools.modPower.name': 'Modular Exponentiation',
-  'tools.modPower.description': 'Compute base^exponent mod modulus with fast exponentiation.',
-  'tools.modPower.base': 'Base',
-  'tools.modPower.exponent': 'Exponent',
-  'tools.modPower.modulus': 'Modulus',
-  'tools.modPower.result': 'Result',
-  'tools.modPower.invalid': 'Modulus must be ≥ 1 and exponent ≥ 0.',
-  'tools.primeSieve.name': 'Prime Sieve',
-  'tools.primeSieve.description': 'List all primes up to N with the Sieve of Eratosthenes.',
-  'tools.primeSieve.limitLabel': 'Upper limit (N)',
-  'tools.primeSieve.placeholder': 'e.g. 100…',
-  'tools.primeSieve.count': 'Count',
-  'tools.primeSieve.primes': 'Primes',
-  'tools.primeSieve.invalid': 'Enter a non-negative integer.',
-  'tools.primeSieve.tooLarge': 'N too large (max 1,000,000).',
-  'tools.primeSieve.empty': 'Waiting for input…',
-  'tools.textStats.name': 'Text Statistics',
-  'tools.textStats.description': 'Count characters, words, lines and more, live as you type.',
-  'tools.textStats.placeholder': 'Type or paste text here…',
-  'tools.textStats.characters': 'Characters',
-  'tools.textStats.charactersNoSpaces': 'Characters (no spaces)',
-  'tools.textStats.words': 'Words',
-  'tools.textStats.lines': 'Lines',
-  'tools.textStats.sentences': 'Sentences',
-  'tools.textStats.paragraphs': 'Paragraphs',
-  'tools.textStats.bytes': 'Bytes (UTF-8)',
-  'tools.textStats.readingTime': 'Reading time',
-  'tools.textStats.minutes': 'min',
-  'tools.sortLines.name': 'Sort Lines',
-  'tools.sortLines.description': 'Sort and de-duplicate lines with case, numeric and trim options.',
-  'tools.sortLines.placeholder': 'Paste lines to sort…',
-  'tools.sortLines.asc': 'Ascending',
-  'tools.sortLines.desc': 'Descending',
-  'tools.sortLines.caseInsensitive': 'Case-insensitive',
-  'tools.sortLines.numeric': 'Numeric sort',
-  'tools.sortLines.dedupe': 'Remove duplicates',
-  'tools.sortLines.removeEmpty': 'Remove empty lines',
-  'tools.sortLines.trimLines': 'Trim each line',
-  'tools.slugify.name': 'Slugify',
-  'tools.slugify.description': 'Turn any text into a clean URL slug.',
-  'tools.slugify.placeholder': 'Enter a title or phrase…',
-  'tools.slugify.separator': 'Separator',
-  'tools.slugify.lowercase': 'Lowercase',
-  'tools.slugify.stripDiacritics': 'Strip diacritics',
-  'tools.slugify.output': 'Slug',
-  'tools.slugify.empty': 'Waiting for input…',
-  'tools.textReverse.name': 'Text Reverse',
-  'tools.textReverse.description': 'Reverse text by characters, words or lines.',
-  'tools.textReverse.placeholder': 'Type or paste text here…',
-  'tools.textReverse.byChar': 'By characters',
-  'tools.textReverse.byWord': 'By words',
-  'tools.textReverse.byLine': 'By lines',
-  'tools.stringEscape.name': 'String Escape',
-  'tools.stringEscape.description': 'Escape or unescape a string for JSON and JavaScript.',
-  'tools.stringEscape.escape': 'Escape',
-  'tools.stringEscape.unescape': 'Unescape',
-  'tools.stringEscape.placeholder': 'Enter a string…',
-  'tools.stringEscape.error': 'Invalid escaped string.',
+
   'tools.unicodeInspector.name': 'Unicode Inspector',
+
   'tools.unicodeInspector.description':
     'Break text into code points with hex, decimal and UTF-8 bytes.',
+
   'tools.unicodeInspector.placeholder': 'Type or paste text here…',
+
   'tools.unicodeInspector.character': 'Character',
+
   'tools.unicodeInspector.codePoint': 'Code point',
+
   'tools.unicodeInspector.decimal': 'Decimal',
+
   'tools.unicodeInspector.utf8': 'UTF-8 bytes',
+
   'tools.unicodeInspector.empty': 'Waiting for input…',
+
   'tools.unicodeInspector.truncated': 'Only the first 500 code points are shown.',
-  'tools.morseCode.name': 'Morse Code',
-  'tools.morseCode.description': 'Translate text to Morse code and back.',
-  'tools.morseCode.toMorse': 'Text to Morse',
-  'tools.morseCode.toText': 'Morse to text',
-  'tools.morseCode.textPlaceholder': 'Enter text to encode…',
-  'tools.morseCode.morsePlaceholder': 'Enter Morse code to decode…',
-  'tools.natoAlphabet.name': 'NATO Phonetic Alphabet',
-  'tools.natoAlphabet.description': 'Spell text using the NATO phonetic alphabet.',
-  'tools.natoAlphabet.placeholder': 'Enter text to spell out…',
-  'tools.natoAlphabet.output': 'Phonetic spelling',
-  'tools.natoAlphabet.empty': 'Enter text to see it spelled out.',
-  'tools.lineEndings.name': 'Line Endings',
-  'tools.lineEndings.description': 'Convert line endings between LF, CRLF, and CR.',
-  'tools.lineEndings.placeholder': 'Paste text here…',
-  'tools.lineEndings.lf': 'LF (\\n)',
-  'tools.lineEndings.crlf': 'CRLF (\\r\\n)',
-  'tools.lineEndings.cr': 'CR (\\r)',
-  'tools.lineEndings.detected': 'Detected',
-  'tools.lineEndings.mixed': 'Mixed',
-  'tools.removeWhitespace.name': 'Remove Whitespace',
-  'tools.removeWhitespace.description': 'Trim, collapse, or strip whitespace from text.',
-  'tools.removeWhitespace.placeholder': 'Paste text to clean…',
-  'tools.removeWhitespace.trimLines': 'Trim each line',
-  'tools.removeWhitespace.collapseSpaces': 'Collapse spaces',
-  'tools.removeWhitespace.removeBlankLines': 'Remove blank lines',
-  'tools.removeWhitespace.tabsToSpaces': 'Tabs to spaces',
-  'tools.removeWhitespace.tabWidth': 'Tab width',
-  'tools.removeWhitespace.removeAll': 'Remove all whitespace',
-  'tools.findReplace.name': 'Find & Replace',
-  'tools.findReplace.description': 'Find and replace text, with optional regex.',
-  'tools.findReplace.textPlaceholder': 'Paste text here…',
-  'tools.findReplace.find': 'Find',
-  'tools.findReplace.findPlaceholder': 'Text or pattern to find…',
-  'tools.findReplace.replace': 'Replace',
-  'tools.findReplace.replacePlaceholder': 'Replacement text…',
-  'tools.findReplace.regex': 'Regex',
-  'tools.findReplace.caseInsensitive': 'Case-insensitive',
-  'tools.findReplace.matchCount': 'Matches',
-  'tools.findReplace.invalidRegex': 'Invalid regular expression.',
-  'tools.caesarCipher.name': 'Caesar Cipher',
-  'tools.caesarCipher.description': 'Shift letters by N (ROT-n); decode with a shift of 26 − N.',
-  'tools.caesarCipher.placeholder': 'Enter text to shift…',
-  'tools.caesarCipher.shift': 'Shift',
-  'tools.caesarCipher.rot13': 'ROT13',
-  'tools.caesarCipher.output': 'Output',
-  'tools.removeAccents.name': 'Remove Accents',
-  'tools.removeAccents.description': 'Strip diacritics and accents from text.',
-  'tools.removeAccents.placeholder': 'Enter accented text…',
-  'tools.removeAccents.output': 'Output',
-  'tools.removeAccents.empty': 'Enter text to strip its accents.',
-  'tools.urlParser.name': 'URL Parser',
-  'tools.urlParser.description': 'Break a URL into its parts and list every query parameter.',
-  'tools.urlParser.placeholder': 'https://user@example.com:8080/path?a=1&b=2#top',
-  'tools.urlParser.invalid': 'Not a valid URL.',
-  'tools.urlParser.protocol': 'Protocol',
-  'tools.urlParser.host': 'Host',
-  'tools.urlParser.hostname': 'Hostname',
-  'tools.urlParser.port': 'Port',
-  'tools.urlParser.pathname': 'Path',
-  'tools.urlParser.search': 'Query string',
-  'tools.urlParser.hash': 'Hash',
-  'tools.urlParser.origin': 'Origin',
-  'tools.urlParser.params': 'Query params',
-  'tools.urlParser.noParams': 'No query parameters.',
-  'tools.queryJson.name': 'Query ⇄ JSON',
-  'tools.queryJson.description':
-    'Convert a query string to JSON and back, collapsing repeated keys to arrays.',
-  'tools.queryJson.toJson': 'To JSON',
-  'tools.queryJson.toQuery': 'To Query',
-  'tools.queryJson.queryPlaceholder': 'a=1&b=2&b=3',
-  'tools.queryJson.jsonPlaceholder': '{"a": "1", "b": ["2", "3"]}',
-  'tools.queryJson.error': 'Invalid input for this direction.',
-  'tools.basicAuth.name': 'Basic Auth Header',
-  'tools.basicAuth.description':
-    'Build an HTTP Basic Authorization header from a username and password.',
-  'tools.basicAuth.username': 'Username',
-  'tools.basicAuth.usernamePlaceholder': 'user',
-  'tools.basicAuth.password': 'Password',
-  'tools.basicAuth.passwordPlaceholder': 'secret',
-  'tools.basicAuth.header': 'Header',
-  'tools.basicAuth.encoded': 'Base64 token',
-  'tools.userAgentParser.name': 'User-Agent Parser',
-  'tools.userAgentParser.description':
-    'Parse a User-Agent string into browser, OS, engine and device.',
-  'tools.userAgentParser.placeholder': 'Paste a User-Agent string…',
-  'tools.userAgentParser.browser': 'Browser',
-  'tools.userAgentParser.os': 'OS',
-  'tools.userAgentParser.engine': 'Engine',
-  'tools.userAgentParser.device': 'Device',
-  'tools.userAgentParser.unknown': 'Unknown',
-  'tools.userAgentParser.useMine': 'Use mine',
-  'tools.mimeLookup.name': 'MIME Lookup',
-  'tools.mimeLookup.description': 'Look up the MIME type for a file extension.',
-  'tools.mimeLookup.placeholder': 'Search by extension or MIME type…',
-  'tools.mimeLookup.extension': 'Extension',
-  'tools.mimeLookup.mimeType': 'MIME type',
-  'tools.mimeLookup.noResults': 'No matching type.',
-  'tools.httpStatus.name': 'HTTP Status Codes',
-  'tools.httpStatus.description': 'Search HTTP status codes and their meanings.',
-  'tools.httpStatus.placeholder': 'Search by code or text…',
-  'tools.httpStatus.noResults': 'No matching status code.',
-  'tools.ipConverter.name': 'IP Converter',
-  'tools.ipConverter.description': 'Convert an IPv4 address to a 32-bit integer, binary and hex.',
-  'tools.ipConverter.ipv4': 'IPv4',
-  'tools.ipConverter.integer': 'Integer',
-  'tools.ipConverter.binary': 'Binary',
-  'tools.ipConverter.hex': 'Hex',
-  'tools.ipConverter.invalid': 'Invalid value.',
-  'tools.punycode.name': 'Punycode',
-  'tools.punycode.description': 'Convert an internationalized hostname to Punycode and back.',
-  'tools.punycode.unicode': 'Unicode',
-  'tools.punycode.ascii': 'ASCII (Punycode)',
-  'tools.punycode.invalid': 'Invalid hostname.',
+
   'common.reset': 'Reset',
+
   'common.invalidInput': 'Invalid input.',
+
   'common.waitingForInput': 'Waiting for input…',
+
   'utilityError.required': 'Please enter a value.',
+
   'utilityError.number': 'Please enter a valid number.',
+
   'utilityError.csv': 'The CSV contains an unclosed quoted field.',
+
   'utilityError.xml': 'The XML is invalid.',
+
   'utilityError.hex': 'Enter complete hexadecimal byte pairs.',
+
   'utilityError.base58': 'The Base58 input contains an invalid character.',
+
   'utilityError.width': 'Width must be a positive integer.',
+
   'utilityError.uuid': 'Enter a valid UUID.',
+
   'utilityError.ipv4': 'Enter a valid IPv4 address.',
+
   'utilityError.prefix': 'The CIDR prefix must be between 0 and 32.',
+
   'utilityError.header': 'Every HTTP header must contain a name and colon.',
+
   'utilityError.paths': 'Enter at least one path.',
-  'utilityError.shellQuote': 'The command contains an unclosed quote.',
+
+  'utilityError.shellQuote': 'The command contains an unclosed quote or trailing escape.',
+
   'utilityError.dockerValue': 'A Docker option is missing its value.',
+
   'utilityError.dockerOption': 'The command contains an unsupported Docker option.',
+
   'utilityError.dockerImage': 'No Docker image was found in the command.',
+
   'utilityError.template':
     'Use supported templates: node, python, go, rust, macos, vscode, or jetbrains.',
+
   'utilityError.semver': 'Enter a valid semantic version.',
+
   'utilityError.fraction': 'Enter a whole number or fraction such as 3/4.',
+
   'utilityError.denominator': 'A fraction denominator cannot be zero.',
+
   'utilityError.divideZero': 'Division by zero is undefined.',
+
   'utilityError.coefficient': 'Coefficient a or b must be non-zero.',
+
   'utilityError.date': 'Choose a valid date.',
+
   'utilityError.birthOrder': 'The birth date cannot be after the comparison date.',
+
   'utilityError.bodyPositive': 'Height and weight must be positive.',
+
   'utilityError.loanRange': 'Enter positive loan values and a non-negative rate.',
+
   'utilityError.investmentRange': 'Enter valid non-negative investment values.',
+
   'utilityError.dimensions': 'Dimensions must be positive.',
-  'tools.csvToTsv.name': 'CSV to TSV',
-  'tools.csvToTsv.description':
-    'Convert CSV data to tab-separated values while preserving quoted fields.',
-  'tools.csvToTsv.input': 'CSV input',
-  'tools.xmlFormatter.name': 'XML Formatter',
-  'tools.xmlFormatter.description': 'Validate and format XML with readable indentation.',
-  'tools.xmlFormatter.input': 'XML input',
-  'tools.jsonFlatten.name': 'JSON Flattener',
-  'tools.jsonFlatten.description': 'Flatten nested JSON objects and arrays into path-based keys.',
-  'tools.jsonFlatten.input': 'JSON input',
-  'tools.jsonSortKeys.name': 'JSON Key Sorter',
-  'tools.jsonSortKeys.description':
-    'Sort object keys recursively while preserving arrays and values.',
-  'tools.jsonSortKeys.input': 'JSON input',
-  'tools.hexText.name': 'Hex ↔ Text',
-  'tools.hexText.description': 'Convert UTF-8 text to hexadecimal bytes and decode them back.',
-  'tools.hexText.direction': 'Direction',
-  'tools.hexText.direction.encode': 'Text → Hex',
-  'tools.hexText.direction.decode': 'Hex → Text',
-  'tools.hexText.input': 'Input',
-  'tools.listConverter.name': 'List Converter',
-  'tools.listConverter.description':
-    'Convert lists between newline, comma, space, and semicolon delimiters.',
-  'tools.listConverter.from': 'Input delimiter',
-  'tools.listConverter.to': 'Output delimiter',
-  'tools.listConverter.from.newline': 'Newline',
-  'tools.listConverter.from.comma': 'Comma',
-  'tools.listConverter.from.space': 'Space',
-  'tools.listConverter.from.semicolon': 'Semicolon',
-  'tools.listConverter.to.newline': 'Newline',
-  'tools.listConverter.to.comma': 'Comma',
-  'tools.listConverter.to.space': 'Space',
-  'tools.listConverter.to.semicolon': 'Semicolon',
-  'tools.listConverter.input': 'List input',
-  'tools.markdownToHtml.name': 'Markdown to HTML',
-  'tools.markdownToHtml.description':
-    'Convert common Markdown syntax into safe, portable HTML source.',
-  'tools.markdownToHtml.input': 'Markdown input',
-  'tools.base58.name': 'Base58 Encode / Decode',
-  'tools.base58.description':
-    'Encode UTF-8 text with the Bitcoin Base58 alphabet or decode it back.',
-  'tools.base58.direction': 'Direction',
-  'tools.base58.direction.encode': 'Encode',
-  'tools.base58.direction.decode': 'Decode',
-  'tools.base58.input': 'Input',
-  'tools.lengthConverter.name': 'Length Converter',
-  'tools.lengthConverter.description': 'Convert lengths across metric and imperial units.',
-  'tools.lengthConverter.value': 'Value',
-  'tools.lengthConverter.from': 'From',
-  'tools.lengthConverter.to': 'To',
-  'tools.lengthConverter.from.meter': 'Meter',
-  'tools.lengthConverter.from.kilometer': 'Kilometer',
-  'tools.lengthConverter.from.centimeter': 'Centimeter',
-  'tools.lengthConverter.from.millimeter': 'Millimeter',
-  'tools.lengthConverter.from.mile': 'Mile',
-  'tools.lengthConverter.from.yard': 'Yard',
-  'tools.lengthConverter.from.foot': 'Foot',
-  'tools.lengthConverter.from.inch': 'Inch',
-  'tools.lengthConverter.to.meter': 'Meter',
-  'tools.lengthConverter.to.kilometer': 'Kilometer',
-  'tools.lengthConverter.to.centimeter': 'Centimeter',
-  'tools.lengthConverter.to.millimeter': 'Millimeter',
-  'tools.lengthConverter.to.mile': 'Mile',
-  'tools.lengthConverter.to.yard': 'Yard',
-  'tools.lengthConverter.to.foot': 'Foot',
-  'tools.lengthConverter.to.inch': 'Inch',
-  'tools.duplicateLines.name': 'Duplicate Line Remover',
-  'tools.duplicateLines.description':
-    'Remove repeated lines while keeping the first occurrence and original order.',
-  'tools.duplicateLines.mode': 'Comparison',
-  'tools.duplicateLines.mode.exact': 'Exact',
-  'tools.duplicateLines.mode.trim': 'Ignore outer spaces',
-  'tools.duplicateLines.mode.ignoreCase': 'Ignore spaces and case',
-  'tools.duplicateLines.input': 'Text input',
-  'tools.wordFrequency.name': 'Word Frequency',
-  'tools.wordFrequency.description':
-    'Count words and rank them by frequency with Unicode-aware matching.',
-  'tools.wordFrequency.minimumLength': 'Minimum word length',
-  'tools.wordFrequency.input': 'Text input',
-  'tools.wordFrequency.unique': 'Unique words',
-  'tools.lineNumberer.name': 'Line Numberer',
-  'tools.lineNumberer.description': 'Add aligned, configurable numbers to every line.',
-  'tools.lineNumberer.start': 'Starting number',
-  'tools.lineNumberer.separator': 'Separator',
-  'tools.lineNumberer.input': 'Text input',
-  'tools.textWrap.name': 'Text Wrapper',
-  'tools.textWrap.description':
-    'Wrap paragraphs to a fixed column width without losing blank lines.',
-  'tools.textWrap.width': 'Column width',
-  'tools.textWrap.input': 'Text input',
-  'tools.extractEmails.name': 'Email Extractor',
-  'tools.extractEmails.description': 'Extract unique email addresses from arbitrary text.',
-  'tools.extractEmails.input': 'Text input',
-  'tools.extractUrls.name': 'URL Extractor',
-  'tools.extractUrls.description': 'Extract unique HTTP and HTTPS URLs from arbitrary text.',
-  'tools.extractUrls.input': 'Text input',
-  'tools.unicodeNormalizer.name': 'Unicode Normalizer',
-  'tools.unicodeNormalizer.description': 'Normalize Unicode text using NFC, NFD, NFKC, or NFKD.',
-  'tools.unicodeNormalizer.form': 'Normalization form',
-  'tools.unicodeNormalizer.form.NFC': 'NFC — canonical composed',
-  'tools.unicodeNormalizer.form.NFD': 'NFD — canonical decomposed',
-  'tools.unicodeNormalizer.form.NFKC': 'NFKC — compatibility composed',
-  'tools.unicodeNormalizer.form.NFKD': 'NFKD — compatibility decomposed',
-  'tools.unicodeNormalizer.input': 'Text input',
-  'tools.whitespaceVisualizer.name': 'Whitespace Visualizer',
-  'tools.whitespaceVisualizer.description':
-    'Reveal spaces, tabs, and line endings with visible symbols.',
-  'tools.whitespaceVisualizer.input': 'Text input',
-  'tools.md5Hash.name': 'MD5 Hash',
-  'tools.md5Hash.description':
-    'Compute an MD5 digest for legacy compatibility; do not use MD5 for passwords or security.',
-  'tools.md5Hash.input': 'Text input',
-  'tools.uuidInspector.name': 'UUID Inspector',
-  'tools.uuidInspector.description':
-    'Validate a UUID and inspect its version, variant, and embedded timestamp when available.',
-  'tools.uuidInspector.input': 'UUID',
-  'tools.uuidInspector.canonical': 'Canonical UUID',
-  'tools.uuidInspector.version': 'Version',
-  'tools.uuidInspector.variant': 'Variant',
-  'tools.uuidInspector.timestamp': 'Timestamp',
+
   'tools.ipv4Subnet.name': 'IPv4 Subnet Calculator',
+
   'tools.ipv4Subnet.description':
     'Calculate network, mask, broadcast, usable range, and address count from CIDR.',
+
   'tools.ipv4Subnet.address': 'IPv4 address',
+
   'tools.ipv4Subnet.prefix': 'CIDR prefix',
+
   'tools.ipv4Subnet.network': 'Network',
+
   'tools.ipv4Subnet.mask': 'Subnet mask',
+
   'tools.ipv4Subnet.broadcast': 'Broadcast',
+
   'tools.ipv4Subnet.range': 'Usable range',
+
   'tools.ipv4Subnet.addresses': 'Total addresses',
-  'tools.cookieParser.name': 'Cookie Parser',
-  'tools.cookieParser.description': 'Parse an HTTP Cookie header into readable JSON.',
-  'tools.cookieParser.input': 'Cookie header',
-  'tools.httpHeadersParser.name': 'HTTP Headers Parser',
-  'tools.httpHeadersParser.description':
-    'Parse raw HTTP headers into normalized JSON, preserving repeated values.',
-  'tools.httpHeadersParser.input': 'HTTP headers',
-  'tools.utmBuilder.name': 'UTM URL Builder',
-  'tools.utmBuilder.description': 'Build campaign URLs with correctly encoded UTM parameters.',
-  'tools.utmBuilder.url': 'Destination URL',
-  'tools.utmBuilder.source': 'Campaign source',
-  'tools.utmBuilder.medium': 'Campaign medium',
-  'tools.utmBuilder.campaign': 'Campaign name',
-  'tools.utmBuilder.term': 'Campaign term',
-  'tools.utmBuilder.content': 'Campaign content',
-  'tools.robotsGenerator.name': 'robots.txt Generator',
-  'tools.robotsGenerator.description':
-    'Generate robots.txt rules with allow, disallow, and sitemap directives.',
-  'tools.robotsGenerator.userAgent': 'User agent',
-  'tools.robotsGenerator.sitemap': 'Sitemap URL',
-  'tools.robotsGenerator.allow': 'Allowed paths',
-  'tools.robotsGenerator.disallow': 'Disallowed paths',
-  'tools.sitemapGenerator.name': 'Sitemap Generator',
-  'tools.sitemapGenerator.description':
-    'Generate a basic XML sitemap from a base URL and a list of paths.',
-  'tools.sitemapGenerator.baseUrl': 'Base URL',
-  'tools.sitemapGenerator.paths': 'Paths',
-  'tools.urlJoiner.name': 'URL Joiner',
-  'tools.urlJoiner.description':
-    'Resolve multiple relative paths against a base URL using browser URL rules.',
-  'tools.urlJoiner.baseUrl': 'Base URL',
-  'tools.urlJoiner.paths': 'Relative paths',
-  'tools.mailtoGenerator.name': 'Mailto Link Generator',
-  'tools.mailtoGenerator.description': 'Build a mailto link with recipients, subject, and body.',
-  'tools.mailtoGenerator.to': 'To',
-  'tools.mailtoGenerator.cc': 'CC',
-  'tools.mailtoGenerator.bcc': 'BCC',
-  'tools.mailtoGenerator.subject': 'Subject',
-  'tools.mailtoGenerator.body': 'Body',
-  'tools.jsonSchemaGenerator.name': 'JSON Schema Generator',
-  'tools.jsonSchemaGenerator.description':
-    'Infer a JSON Schema Draft 2020-12 document from sample JSON.',
-  'tools.jsonSchemaGenerator.input': 'Sample JSON',
-  'tools.sqlFormatter.name': 'SQL Formatter',
-  'tools.sqlFormatter.description':
-    'Format common SQL clauses and comma-separated fields for quick reading.',
-  'tools.sqlFormatter.input': 'SQL input',
-  'tools.cssMinifier.name': 'CSS Minifier',
-  'tools.cssMinifier.description': 'Remove comments and unnecessary whitespace from CSS.',
-  'tools.cssMinifier.input': 'CSS input',
-  'tools.htmlMinifier.name': 'HTML Minifier',
-  'tools.htmlMinifier.description':
-    'Conservatively remove comments and inter-tag whitespace while preserving code blocks.',
-  'tools.htmlMinifier.input': 'HTML input',
+
   'tools.dockerRunToCompose.name': 'Docker Run → Compose',
+
   'tools.dockerRunToCompose.description':
     'Convert common docker run flags into a Compose services document.',
+
   'tools.dockerRunToCompose.input': 'docker run command',
+
   'tools.gitignoreGenerator.name': '.gitignore Generator',
+
   'tools.gitignoreGenerator.description':
     'Combine practical ignore templates for common stacks and editors.',
+
   'tools.gitignoreGenerator.stacks': 'Templates',
+
   'tools.gitignoreGenerator.extra': 'Additional patterns',
-  'tools.semverCompare.name': 'Semantic Version Compare',
-  'tools.semverCompare.description':
-    'Compare two SemVer 2.0 versions, including prerelease identifiers.',
-  'tools.semverCompare.left': 'First version',
-  'tools.semverCompare.right': 'Second version',
-  'tools.semverCompare.equal': 'Versions are equal',
-  'tools.semverCompare.olderThan': 'is older than',
-  'tools.semverCompare.newerThan': 'is newer than',
-  'tools.cssSpecificity.name': 'CSS Specificity Calculator',
-  'tools.cssSpecificity.description':
-    'Estimate ID, class, and element specificity for comma-separated selectors.',
-  'tools.cssSpecificity.input': 'CSS selectors',
-  'tools.fractionCalculator.name': 'Fraction Calculator',
-  'tools.fractionCalculator.description':
-    'Add, subtract, multiply, or divide fractions with exact BigInt arithmetic.',
-  'tools.fractionCalculator.left': 'First fraction',
-  'tools.fractionCalculator.operator': 'Operation',
-  'tools.fractionCalculator.operator.add': 'Add',
-  'tools.fractionCalculator.operator.subtract': 'Subtract',
-  'tools.fractionCalculator.operator.multiply': 'Multiply',
-  'tools.fractionCalculator.operator.divide': 'Divide',
-  'tools.fractionCalculator.right': 'Second fraction',
-  'tools.quadraticSolver.name': 'Quadratic Equation Solver',
-  'tools.quadraticSolver.description':
-    'Solve ax² + bx + c = 0, including repeated and complex roots.',
-  'tools.quadraticSolver.a': 'Coefficient a',
-  'tools.quadraticSolver.b': 'Coefficient b',
-  'tools.quadraticSolver.c': 'Coefficient c',
-  'tools.quadraticSolver.discriminant': 'Discriminant',
-  'tools.quadraticSolver.linearRoot': 'Linear root',
-  'tools.dateDifference.name': 'Date Difference',
-  'tools.dateDifference.description':
-    'Measure calendar years, months, days, and total days between two dates.',
-  'tools.dateDifference.start': 'Start date',
-  'tools.dateDifference.end': 'End date',
-  'tools.dateDifference.calendar': 'Calendar difference',
-  'tools.dateDifference.years': 'years',
-  'tools.dateDifference.months': 'months',
-  'tools.dateDifference.days': 'days',
-  'tools.dateDifference.totalDays': 'Total days',
-  'tools.ageCalculator.name': 'Age Calculator',
-  'tools.ageCalculator.description': 'Calculate exact age on any comparison date.',
-  'tools.ageCalculator.birthDate': 'Birth date',
-  'tools.ageCalculator.asOf': 'Age on',
-  'tools.ageCalculator.years': 'years',
-  'tools.ageCalculator.months': 'months',
-  'tools.ageCalculator.days': 'days',
-  'tools.businessDays.name': 'Business Days Calculator',
-  'tools.businessDays.description':
-    'Count weekdays in an inclusive date range with optional holiday exclusions.',
-  'tools.businessDays.start': 'Start date',
-  'tools.businessDays.end': 'End date',
-  'tools.businessDays.holidays': 'Excluded holidays',
-  'tools.businessDays.businessDays': 'Business days',
-  'tools.businessDays.weekendDays': 'Weekend days',
-  'tools.businessDays.excludedHolidays': 'Excluded holidays',
-  'tools.bmiCalculator.name': 'BMI Calculator',
-  'tools.bmiCalculator.description': 'Calculate body mass index from metric height and weight.',
-  'tools.bmiCalculator.weight': 'Weight (kg)',
-  'tools.bmiCalculator.height': 'Height (cm)',
-  'tools.bmiCalculator.bmi': 'BMI',
-  'tools.bmiCalculator.category': 'Category',
-  'tools.bmiCalculator.underweight': 'Underweight',
-  'tools.bmiCalculator.normal': 'Normal range',
-  'tools.bmiCalculator.overweight': 'Overweight',
-  'tools.bmiCalculator.obese': 'Obesity range',
-  'tools.loanCalculator.name': 'Loan Calculator',
-  'tools.loanCalculator.description':
-    'Estimate fixed monthly payments, total payment, and interest.',
-  'tools.loanCalculator.principal': 'Principal',
-  'tools.loanCalculator.rate': 'Annual rate (%)',
-  'tools.loanCalculator.years': 'Term (years)',
-  'tools.loanCalculator.monthlyPayment': 'Monthly payment',
-  'tools.loanCalculator.totalPayment': 'Total payment',
-  'tools.loanCalculator.totalInterest': 'Total interest',
-  'tools.compoundInterest.name': 'Compound Interest Calculator',
-  'tools.compoundInterest.description':
-    'Project investment growth with recurring contributions and compound interest.',
-  'tools.compoundInterest.principal': 'Starting principal',
-  'tools.compoundInterest.rate': 'Annual rate (%)',
-  'tools.compoundInterest.years': 'Years',
-  'tools.compoundInterest.contribution': 'Contribution per period',
-  'tools.compoundInterest.frequency': 'Compounding',
-  'tools.compoundInterest.frequency.monthly': 'Monthly',
-  'tools.compoundInterest.frequency.quarterly': 'Quarterly',
-  'tools.compoundInterest.frequency.annually': 'Annually',
-  'tools.compoundInterest.futureValue': 'Future value',
-  'tools.compoundInterest.contributed': 'Total contributed',
-  'tools.compoundInterest.interestEarned': 'Interest earned',
-  'tools.aspectRatio.name': 'Aspect Ratio Calculator',
-  'tools.aspectRatio.description': 'Reduce dimensions to a ratio and calculate a scaled height.',
-  'tools.aspectRatio.width': 'Original width',
-  'tools.aspectRatio.height': 'Original height',
-  'tools.aspectRatio.targetWidth': 'Target width',
-  'tools.aspectRatio.ratio': 'Aspect ratio',
-  'tools.aspectRatio.scaledHeight': 'Scaled height',
 
   'tools.cpsTest.name': 'CPS Test',
+
   'tools.cpsTest.description': 'Measure how many mouse clicks you can make per second.',
+
   'tools.cpsTest.duration': 'Test duration',
+
   'tools.cpsTest.result': 'Clicks per second',
+
   'tools.cpsTest.resultDetail': '{clicks} valid clicks recorded in this run.',
+
   'tools.cpsTest.again': 'Try again',
+
   'tools.cpsTest.startPrompt': 'Click here to start',
+
   'tools.cpsTest.clickPrompt': 'Keep clicking',
+
   'tools.cpsTest.status.ready': 'Ready for input',
+
   'tools.cpsTest.status.live': 'Session in progress',
+
   'tools.cpsTest.status.complete': 'Session complete',
+
   'tools.cpsTest.reportTitle': 'Performance report',
+
   'tools.cpsTest.rating': 'Rating',
+
   'tools.cpsTest.newBest': 'New personal best',
+
   'tools.cpsTest.replayHint': 'Quick replay',
+
   'tools.cpsTest.totalClicks': 'Total clicks',
+
   'tools.cpsTest.peakRate': 'Peak rate',
+
   'tools.cpsTest.consistency': 'Consistency',
+
   'tools.cpsTest.personalBest': 'Personal best',
+
   'tools.cpsTest.timeline': 'Click speed curve',
+
   'tools.cpsTest.sampling': '{interval} ms sampling · {duration} s',
+
   'tools.cpsTest.readyLabel': 'Ready',
+
   'tools.cpsTest.liveLabel': 'Live clicks',
+
   'tools.cpsTest.liveRate': 'Current rate',
+
   'tools.cpsTest.privacy': 'Measured locally in your browser',
+
   'tools.cpsTest.insight.fast':
     'Excellent burst speed. Your peak is competitive; focus on preserving the same cadence over longer sessions.',
+
   'tools.cpsTest.insight.steady':
     'Your cadence is notably consistent. A slightly faster first second could lift the overall score without sacrificing control.',
+
   'tools.cpsTest.insight.practice':
     'Your speed varies between seconds. Relax your hand and aim for an even rhythm before trying to click faster.',
 
-  'tools.spacebarTest.name': 'Spacebar Speed Test',
-  'tools.spacebarTest.description': 'Test how quickly you can repeatedly press the spacebar.',
-  'tools.spacebarTest.duration': 'Test duration',
-  'tools.spacebarTest.result': 'Presses per second',
-  'tools.spacebarTest.resultDetail': '{presses} spacebar presses recorded in this run.',
-  'tools.spacebarTest.again': 'Try again',
-  'tools.spacebarTest.space': 'SPACE',
-  'tools.spacebarTest.instructions':
-    'Focus the test area, then press the spacebar as quickly as you can.',
-  'tools.spacebarTest.peakRate': 'Peak rate',
-  'tools.spacebarTest.liveRate': 'Current rate',
-  'tools.spacebarTest.timeline': 'Press speed curve',
-  'tools.spacebarTest.sampling': '{interval} ms sampling · {duration} s',
-
   'tools.reactionTime.name': 'Reaction Time Test',
+
   'tools.reactionTime.description': 'Measure how quickly you respond to a changing visual signal.',
+
   'tools.reactionTime.startPrompt': 'Start test',
+
   'tools.reactionTime.wait': 'Wait for green…',
+
   'tools.reactionTime.now': 'Tap now!',
+
   'tools.reactionTime.tooSoon': 'Too soon',
+
   'tools.reactionTime.again': 'Tap to try again',
+
   'tools.reactionTime.tapHint': 'Tap or click anywhere in this panel.',
+
   'tools.reactionTime.instructions':
     'Start the test, wait for the panel to turn green, then respond as quickly as possible.',
+
   'tools.reactionTime.resultDetail':
     'Five valid rounds are averaged. False starts this run: {falseStarts}.',
+
   'tools.reactionTime.median': 'Median',
+
   'tools.reactionTime.roundResults': 'Reaction time for each round',
+
   'tools.reactionTime.nextRound': 'Tap to begin the next round',
 
-  'tools.aimTrainer.name': 'Aim Trainer',
-  'tools.aimTrainer.description':
-    'Hit 20 moving targets and measure your average acquisition time.',
-  'tools.aimTrainer.hits': 'Targets hit',
-  'tools.aimTrainer.pace': 'Average pace',
-  'tools.aimTrainer.result': 'Average target time',
-  'tools.aimTrainer.resultDetail':
-    'Lower is better. Accuracy and controlled movement matter more than frantic clicking.',
-  'tools.aimTrainer.again': 'Run again',
-  'tools.aimTrainer.instructions':
-    'Click each target as it appears. The clock starts with the first target.',
-  'tools.aimTrainer.start': 'Start training',
-  'tools.aimTrainer.target': 'Target',
-
-  'tools.mouseAccuracy.name': 'Mouse Accuracy Test',
-  'tools.mouseAccuracy.description': 'Click as close to the center of each crosshair as possible.',
-  'tools.mouseAccuracy.round': 'Target',
-  'tools.mouseAccuracy.averageError': 'Average error',
-  'tools.mouseAccuracy.result': 'Average center error',
-  'tools.mouseAccuracy.resultDetail':
-    'The score is the average pointer distance from the exact target center.',
-  'tools.mouseAccuracy.again': 'Run again',
-  'tools.mouseAccuracy.playArea': 'Mouse accuracy play area',
-  'tools.mouseAccuracy.instructions':
-    'Twelve crosshairs will appear. Aim for the exact center of each one.',
-  'tools.mouseAccuracy.start': 'Start test',
-  'tools.mouseAccuracy.p90Error': '90th percentile error',
-  'tools.mouseAccuracy.responseTime': 'Average response time',
-
-  'tools.scrollSpeed.name': 'Scroll Speed Test',
-  'tools.scrollSpeed.description':
-    'Measure the wheel or trackpad distance you can scroll in five seconds.',
-  'tools.scrollSpeed.distance': 'Distance',
-  'tools.scrollSpeed.time': 'Time left',
-  'tools.scrollSpeed.result': 'Average scroll speed',
-  'tools.scrollSpeed.resultDetail': '{distance} pixels of wheel movement were recorded.',
-  'tools.scrollSpeed.again': 'Try again',
-  'tools.scrollSpeed.playArea': 'Scroll speed play area',
-  'tools.scrollSpeed.ready': 'Ready to scroll?',
-  'tools.scrollSpeed.scrollNow': 'Scroll now',
-  'tools.scrollSpeed.instructions':
-    'Keep the pointer over this panel and move your wheel or trackpad vertically.',
-  'tools.scrollSpeed.start': 'Start test',
-  'tools.scrollSpeed.duration': 'Test duration',
-  'tools.scrollSpeed.peakRate': 'Peak speed',
-  'tools.scrollSpeed.liveRate': 'Current speed',
-  'tools.scrollSpeed.reversals': 'Direction changes',
-  'tools.scrollSpeed.timeline': 'Scroll speed curve',
-  'tools.scrollSpeed.sampling': '{interval} ms sampling · {duration} s',
-
-  'tools.schulteTable.name': 'Schulte Table',
-  'tools.schulteTable.description':
-    'Find the numbers from 1 to 25 in order as quickly as possible.',
-  'tools.schulteTable.next': 'Find next',
-  'tools.schulteTable.time': 'Elapsed time',
-  'tools.schulteTable.result': 'Completion time',
-  'tools.schulteTable.resultDetail':
-    'Try to keep your gaze near the center and use peripheral vision to scan the grid.',
-  'tools.schulteTable.again': 'New table',
-  'tools.schulteTable.instructions':
-    'Select every number in ascending order. Timing begins when you select 1.',
-  'tools.schulteTable.size': 'Table size',
-  'tools.schulteTable.averageStep': 'Average selection time',
-
-  'tools.timePerception.name': 'Time Perception Test',
-  'tools.timePerception.description': 'Estimate a hidden time interval without watching a clock.',
-  'tools.timePerception.target': 'Target interval',
-  'tools.timePerception.result': 'Absolute error',
-  'tools.timePerception.resultDetail': 'You stopped at {elapsed} seconds.',
-  'tools.timePerception.again': 'Try again',
-  'tools.timePerception.start': 'Start hidden timer',
-  'tools.timePerception.stop': 'Stop now',
-  'tools.timePerception.instructions':
-    'Start the timer, estimate the target interval in your head, then stop it.',
-  'tools.timePerception.runningHint': 'The timer is running, but its value is hidden.',
-  'tools.timePerception.bias': 'Average bias',
-  'tools.timePerception.roundResult': 'Round error',
-  'tools.timePerception.nextRound': 'Start next round',
-
-  'tools.stroopTest.name': 'Stroop Effect Test',
-  'tools.stroopTest.description':
-    'Identify the ink color while ignoring the conflicting color word.',
-  'tools.stroopTest.progress': 'Progress',
-  'tools.stroopTest.correct': 'Correct',
-  'tools.stroopTest.result': 'Correct answers',
-  'tools.stroopTest.resultDetail': 'You completed the 20 trials in {time} seconds.',
-  'tools.stroopTest.again': 'Run again',
-  'tools.stroopTest.instructions': 'Choose the ink color, not the meaning of the displayed word.',
-  'tools.stroopTest.start': 'Start test',
-  'tools.stroopTest.chooseInk': 'Choose the ink color',
-  'tools.stroopTest.color.red': 'Red',
-  'tools.stroopTest.color.blue': 'Blue',
-  'tools.stroopTest.color.green': 'Green',
-  'tools.stroopTest.color.amber': 'Amber',
-
-  'tools.colorHueTest.name': 'Color Hue Test',
-  'tools.colorHueTest.description':
-    'Find the tile with a subtly different hue across eight rounds.',
-  'tools.colorHueTest.progress': 'Progress',
-  'tools.colorHueTest.correct': 'Correct',
-  'tools.colorHueTest.result': 'Correct answers',
-  'tools.colorHueTest.resultDetail': 'The hue difference becomes smaller after each round.',
-  'tools.colorHueTest.again': 'Run again',
-  'tools.colorHueTest.instructions':
-    'One tile has a slightly different hue. Differences become progressively harder to see.',
-  'tools.colorHueTest.start': 'Start test',
-  'tools.colorHueTest.pickDifferent': 'Pick the differently colored tile.',
-  'tools.colorHueTest.tile': 'Color tile',
-  'tools.colorHueTest.finestDifference': 'Finest hue difference',
-
-  'tools.oddOneOut.name': 'Odd One Out',
-  'tools.oddOneOut.description': 'Spot the one symbol that differs from the rest.',
-  'tools.oddOneOut.progress': 'Progress',
-  'tools.oddOneOut.correct': 'Correct',
-  'tools.oddOneOut.result': 'Correct answers',
-  'tools.oddOneOut.resultDetail':
-    'Careful visual comparison is more reliable than scanning at random.',
-  'tools.oddOneOut.again': 'Run again',
-  'tools.oddOneOut.instructions':
-    'Each grid contains one different character or symbol. Find it across ten rounds.',
-  'tools.oddOneOut.start': 'Start test',
-  'tools.oddOneOut.pickDifferent': 'Find the odd symbol.',
-
-  'tools.rhythmTest.name': 'Rhythm Accuracy Test',
-  'tools.rhythmTest.description': 'Copy a steady visual beat and measure your timing consistency.',
-  'tools.rhythmTest.result': 'Average timing error',
-  'tools.rhythmTest.resultDetail':
-    'This is your average deviation from the demonstrated 600 ms beat.',
-  'tools.rhythmTest.again': 'Try again',
-  'tools.rhythmTest.instructions':
-    'Watch four example beats, then reproduce the same tempo with nine taps.',
-  'tools.rhythmTest.start': 'Start test',
-  'tools.rhythmTest.watch': 'Watch the beat',
-  'tools.rhythmTest.tempo': 'Measured tempo',
-  'tools.rhythmTest.tap': 'Keep the rhythm',
-
-  'tools.sequenceMemory.name': 'Sequence Memory',
-  'tools.sequenceMemory.description':
-    'Remember and repeat an increasingly long sequence of grid cells.',
-  'tools.sequenceMemory.level': 'Level',
-  'tools.sequenceMemory.length': 'Sequence length',
-  'tools.sequenceMemory.result': 'Level reached',
-  'tools.sequenceMemory.resultDetail': 'Each completed level adds one more step to the sequence.',
-  'tools.sequenceMemory.again': 'Start over',
-  'tools.sequenceMemory.instructions':
-    'Watch the cells light up, then select them in exactly the same order.',
-  'tools.sequenceMemory.start': 'Start test',
-  'tools.sequenceMemory.watch': 'Watch the sequence',
-  'tools.sequenceMemory.repeat': 'Repeat it',
-  'tools.sequenceMemory.cell': 'Cell',
-  'tools.sequenceMemory.levelUnit': 'levels',
-  'tools.sequenceMemory.correctSteps': 'Correct steps',
-  'tools.sequenceMemory.expectedCell': 'Expected cell',
-  'tools.sequenceMemory.answerReveal': 'You selected cell {chosen}; the next cell was {expected}.',
-
-  'tools.numberMemory.name': 'Number Memory',
-  'tools.numberMemory.description':
-    'Memorize digit strings that grow by one digit after every success.',
-  'tools.numberMemory.digits': 'Digits',
-  'tools.numberMemory.result': 'Longest completed length',
-  'tools.numberMemory.resultDetail': 'The missed number was {number}.',
-  'tools.numberMemory.again': 'Start over',
-  'tools.numberMemory.instructions':
-    'A number will appear briefly. Enter it exactly after it disappears.',
-  'tools.numberMemory.start': 'Start test',
-  'tools.numberMemory.remember': 'Remember this number',
-  'tools.numberMemory.enterNumber': 'Enter the number you saw',
-  'tools.numberMemory.submit': 'Submit',
-  'tools.numberMemory.digitsUnit': 'digits',
-  'tools.numberMemory.targetNumber': 'Target number',
-  'tools.numberMemory.yourAnswer': 'Your answer',
-  'tools.numberMemory.displayTime': 'Display time',
-
-  'tools.visualMemory.name': 'Visual Memory',
-  'tools.visualMemory.description': 'Remember which cells were highlighted in a five-by-five grid.',
-  'tools.visualMemory.level': 'Level',
-  'tools.visualMemory.cells': 'Cells to remember',
-  'tools.visualMemory.result': 'Levels completed',
-  'tools.visualMemory.resultDetail':
-    'The number of highlighted cells increases after every successful round.',
-  'tools.visualMemory.again': 'Start over',
-  'tools.visualMemory.instructions':
-    'Memorize the highlighted cells, then select all of them after they disappear.',
-  'tools.visualMemory.start': 'Start test',
-  'tools.visualMemory.remember': 'Remember these cells',
-  'tools.visualMemory.select': 'Select the cells',
-  'tools.visualMemory.cell': 'Cell',
-  'tools.visualMemory.levelUnit': 'levels',
-  'tools.visualMemory.correctCells': 'Correct cells',
-  'tools.visualMemory.failedCell': 'Incorrect cell',
-
-  'tools.verbalMemory.name': 'Verbal Memory',
-  'tools.verbalMemory.description':
-    'Decide whether each word has appeared earlier in the current run.',
-  'tools.verbalMemory.progress': 'Progress',
-  'tools.verbalMemory.correct': 'Correct',
-  'tools.verbalMemory.result': 'Correct answers',
-  'tools.verbalMemory.resultDetail':
-    'The test mixed new words with deliberate repeats over 30 trials.',
-  'tools.verbalMemory.again': 'Run again',
-  'tools.verbalMemory.instructions':
-    'For each word, choose Seen if it appeared earlier, otherwise choose New.',
-  'tools.verbalMemory.start': 'Start test',
-  'tools.verbalMemory.haveSeen': 'Have you seen this word?',
-  'tools.verbalMemory.seen': 'Seen',
-  'tools.verbalMemory.new': 'New',
-
-  'tools.memoryMatch.name': 'Memory Matching',
-  'tools.memoryMatch.description':
-    'Flip cards and match all eight pairs in as few moves as possible.',
-  'tools.memoryMatch.moves': 'Moves',
-  'tools.memoryMatch.pairs': 'Pairs found',
-  'tools.memoryMatch.result': 'Moves used',
-  'tools.memoryMatch.resultDetail': 'You matched every pair in {time} seconds.',
-  'tools.memoryMatch.again': 'New board',
-  'tools.memoryMatch.instructions':
-    'Open two cards at a time and remember where each letter is hidden.',
-  'tools.memoryMatch.card': 'Hidden card',
-  'tools.memoryMatch.movesUnit': 'moves',
-  'tools.memoryMatch.efficiency': 'Move efficiency',
-
-  'tools.arithmeticSprint.name': 'Arithmetic Sprint',
-  'tools.arithmeticSprint.description':
-    'Train mental math speed with configurable mixed arithmetic sprints.',
-  'tools.arithmeticSprint.progress': 'Progress',
-  'tools.arithmeticSprint.correct': 'Correct',
-  'tools.arithmeticSprint.result': 'Correct answers',
-  'tools.arithmeticSprint.resultDetail':
-    'You solved {correct} of {total} problems correctly in {time} seconds.',
-  'tools.arithmeticSprint.again': 'Run again',
-  'tools.arithmeticSprint.instructions':
-    'Answer {count} mixed arithmetic problems as quickly and accurately as possible.',
-  'tools.arithmeticSprint.start': 'Start sprint',
-  'tools.arithmeticSprint.answer': 'Your answer',
-  'tools.arithmeticSprint.submit': 'Submit',
-  'tools.arithmeticSprint.questions': 'Questions',
-  'tools.arithmeticSprint.paceUnit': 'correct/min',
-  'tools.arithmeticSprint.averageResponse': 'Average response',
-  'tools.arithmeticSprint.feedbackCorrect': 'Correct — keep the rhythm going.',
-  'tools.arithmeticSprint.feedbackWrong': 'The correct answer was {answer}.',
-
-  'tools.goNoGo.name': 'Go / No-Go Test',
-  'tools.goNoGo.description':
-    'Respond to green signals while withholding responses to red signals.',
-  'tools.goNoGo.progress': 'Progress',
-  'tools.goNoGo.hits': 'Hits',
-  'tools.goNoGo.falseAlarms': 'False alarms',
-  'tools.goNoGo.result': 'Control score',
-  'tools.goNoGo.resultDetail':
-    '{misses} missed green signals and {falseAlarms} responses to red signals.',
-  'tools.goNoGo.again': 'Run again',
-  'tools.goNoGo.instructions': 'Tap or press Space for green. Do nothing when the signal is red.',
-  'tools.goNoGo.go': 'Green: respond',
-  'tools.goNoGo.stop': 'Red: hold',
-  'tools.goNoGo.start': 'Start test',
-  'tools.goNoGo.tap': 'Respond now',
-  'tools.goNoGo.hold': 'Do not respond',
-  'tools.goNoGo.wait': 'Get ready',
-  'tools.goNoGo.trials': 'Trials',
-  'tools.goNoGo.correctStops': 'Correct inhibitions',
-  'tools.goNoGo.misses': 'Misses',
-  'tools.goNoGo.averageResponse': 'Average response',
-
   'tools.typingSpeed.name': 'Typing Speed Test',
+
   'tools.typingSpeed.description':
     'Measure typing speed and character-level accuracy with a short passage.',
+
   'tools.typingSpeed.cpm': 'CPM',
+
   'tools.typingSpeed.wpm': 'WPM',
+
   'tools.typingSpeed.accuracy': 'Accuracy',
+
   'tools.typingSpeed.time': 'Elapsed time',
+
   'tools.typingSpeed.result': 'Typing speed',
+
   'tools.typingSpeed.resultDetail': 'Your character accuracy was {accuracy}%.',
+
   'tools.typingSpeed.again': 'New passage',
+
   'tools.typingSpeed.prompt': 'Text to type',
+
   'tools.typingSpeed.placeholder': 'Start typing here…',
+
   'tools.typingSpeed.input': 'Typing input',
+
   'tools.typingSpeed.instructions':
     'Timing starts with your first character and ends when the passage length is reached.',
+
   'tools.typingSpeed.rawSpeed': 'Raw character speed',
+
   'tools.typingSpeed.corrections': 'Corrections',
+} as const;
+
+export const en = {
+  ...baseEn,
+  ...curatedDataEn,
+  ...curatedTextEn,
+  ...curatedCryptoEn,
+  ...curatedWebEn,
+  ...curatedCoreEn,
+  ...curatedTimeUnitsEn,
 } as const;
 
 export type MessageKey = keyof typeof en;

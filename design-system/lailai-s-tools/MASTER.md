@@ -4,6 +4,10 @@
 
 laikit UI, extracted from lailai's Home, is the visual source of truth. Tools imports its components directly and keeps app CSS for content arrangement, domain-specific visualizations, and game surfaces. Existing shared components use their defaults.
 
+Tools is a curated browser utility collection. Related operations use one shared input, coherent
+options and a result that can continue into the next operation. Keep the catalogue focused; a new
+operation does not automatically need a new tool card.
+
 Tools is a compact browser utility collection. The interface should disappear behind the task:
 find a tool, complete one operation, and leave. Preserve the original product's quiet density.
 

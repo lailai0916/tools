@@ -1,3 +1,8 @@
+import { curatedDataGuides } from './curatedData';
+import { curatedTextGuides } from './curatedText';
+import { curatedCryptoGuides } from './curatedCrypto';
+import { curatedWebGuides } from './curatedWeb';
+import { curatedTimeUnitsGuides } from './curatedTimeUnits';
 import { converterGuides } from './converter';
 import { textGuides } from './text';
 import { cryptoGuides } from './crypto';
@@ -8,7 +13,7 @@ import { generatorGuides } from './generator';
 import { funGuides } from './fun';
 import type { LocalizedToolGuide, ToolGuideKey } from './types';
 
-// Exhaustive coverage is checked against the tool-name message keys at compile time.
+// Exhaustive coverage follows the curated registry.
 export const toolGuides = {
   ...converterGuides,
   ...textGuides,
@@ -18,4 +23,9 @@ export const toolGuides = {
   ...mathGuides,
   ...generatorGuides,
   ...funGuides,
+  ...curatedDataGuides,
+  ...curatedTextGuides,
+  ...curatedCryptoGuides,
+  ...curatedWebGuides,
+  ...curatedTimeUnitsGuides,
 } satisfies Record<ToolGuideKey, LocalizedToolGuide>;

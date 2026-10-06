@@ -1,8 +1,7 @@
 import type { Locale } from '@/i18n';
-import type { MessageKey } from '@/i18n/en';
+import type { TOOLS } from '@/tools/registry';
 
-type ToolNameKey = Extract<MessageKey, `tools.${string}.name`>;
-export type ToolGuideKey = ToolNameKey extends `tools.${infer Key}.name` ? Key : never;
+export type ToolGuideKey = (typeof TOOLS)[number]['key'];
 
 export type ToolGuide = {
   summary: string;

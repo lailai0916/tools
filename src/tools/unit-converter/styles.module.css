@@ -1,0 +1,22 @@
+.fields {
+  display: grid;
+  gap: 1rem;
+}
+
+.note {
+  margin: 0;
+  color: var(--lk-font-color-secondary);
+  font-size: var(--lk-font-size-sm);
+  line-height: 1.6;
+}
+
+.value {
+  overflow-wrap: anywhere;
+}
+
+@container tools-content (max-width: 560px) {
+  .dimensions[data-lk='segmented'] {
+    display: flex;
+    flex-direction: column;
+  }
+}

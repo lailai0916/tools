@@ -1,6 +1,0 @@
-.pane {
-  composes: pane from '../../components/ToolWorkspace/styles.module.css';
-}
-.controls {
-  composes: toolbar from '../../components/ToolWorkspace/styles.module.css';
-}

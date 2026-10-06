@@ -173,13 +173,6 @@
   max-width: 100%;
 }
 
-@container tools-content (max-width: 560px) {
-  .layout :global([data-lk='segmented']):has(> :nth-child(5)) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-  }
-}
-
 .body :global(textarea[data-lk='field-control']):not([rows]) {
   min-height: 240px;
 }

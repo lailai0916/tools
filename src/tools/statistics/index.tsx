@@ -8,11 +8,7 @@ import type { MessageKey } from '@/i18n/en';
 import styles from './styles.module.css';
 
 function fmt(n: number): string {
-  if (Number.isInteger(n)) {
-    return String(n);
-  }
-  const r = Math.round(n * 1e10) / 1e10;
-  return Object.is(r, -0) ? '0' : String(r);
+  return Object.is(n, -0) ? '0' : String(Number(n.toPrecision(15)));
 }
 
 type Stats = { labelKey: MessageKey; value: string }[];
@@ -70,6 +66,10 @@ function compute(input: string, varianceMode: VarianceMode): Result {
       ? null
       : sumSquares / (varianceMode === 'sample' ? n - 1 : n);
   const stddev = variance === null ? null : Math.sqrt(variance);
+
+  if (![sum, mean, median, max - min, variance ?? 0, stddev ?? 0].every(Number.isFinite)) {
+    return { kind: 'invalid' };
+  }
 
   const stats: Stats = [
     { labelKey: 'tools.statistics.count', value: String(n) },

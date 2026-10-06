@@ -1,9 +1,0 @@
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.field {
-  max-width: 320px;
-}

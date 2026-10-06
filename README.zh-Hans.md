@@ -13,13 +13,13 @@
 
 ## 项目简介
 
-[tools.lailai.one](https://tools.lailai.one) 上注重隐私的浏览器开发工具集，共有 140
+[tools.lailai.one](https://tools.lailai.one) 上注重隐私的浏览器开发工具集，共有 32
 项工具。网站无需账号，工具输入只在用户设备上处理；自托管、无 Cookie 的 Umami 实例仅统计
 页面访问量。
 
 ## 项目特性
 
-🧰 **140 项浏览器工具** — 覆盖转换、文本、密码学与 Web。也包含开发、数学与生成工具。
+🧰 **完整工作台** — 数据、文本、编码、颜色、日期、单位、HTTP、URL、标识符与安全随机生成按使用场景整合，共享输入与结果。
 全部使用同一份可搜索 registry。
 
 🔒 **本地处理** — 粘贴的文本与生成值由浏览器 API 处理。数据不提交至应用服务器。
@@ -66,12 +66,14 @@ tools/
 
 ## 添加工具
 
-`src/tools/registry.ts` 是首页网格、路由和搜索的单一数据源。
+`src/tools/registry.ts` 是首页网格、路由和搜索的单一数据源。新增能力时，优先并入已有工作台，避免重复的单操作入口，并使用已知输入输出验证算法。
 
 1. 创建 `src/tools/<id>/index.tsx`，按需添加 `styles.module.css`；
 2. 复用 `ToolLayout`、共享组件与 `useI18n`；
 3. 在 `src/tools/registry.ts` 注册工具；
-4. 在 `src/i18n/en.ts` 和 `src/i18n/zh-Hans.ts` 添加对应文案。
+4. 添加中英文文案与完整的工具指南，并验证已知输入输出。
+
+合并工具时，在 `src/tools/legacyRoutes.ts` 中保留旧地址到对应工作台模式的跳转，并迁移收藏、最近记录和搜索关键词。已经移除的能力不再生成路由，访问时返回 404。
 
 ## 部署
 

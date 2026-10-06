@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: npm run build
+        run: npm run check:guides && npm run check:workbenches && npm run build
 
       - name: Install rsync
         run: sudo apt-get update && sudo apt-get install -y rsync
@@ -68,3 +68,13 @@ jobs:
               "https://tools.lailai.one$asset?deployment=$GITHUB_SHA" -o "$RUNNER_TEMP/deployed-asset"
             cmp "dist$asset" "$RUNNER_TEMP/deployed-asset"
           done < "$RUNNER_TEMP/deployed-assets.txt"
+          for route in data-workbench json-to-ts; do
+            curl --fail --silent --show-error --retry 5 --retry-all-errors --retry-delay 3 --max-time 30 \
+              "https://tools.lailai.one/$route?deployment=$GITHUB_SHA" -o "$RUNNER_TEMP/deployed-route.html"
+            cmp "dist/$route.html" "$RUNNER_TEMP/deployed-route.html"
+          done
+          for route in sql-formatter removed-tool-check; do
+            status=$(curl --silent --show-error --retry 5 --retry-all-errors --retry-delay 3 --max-time 30 \
+              -o /dev/null -w '%{http_code}' "https://tools.lailai.one/$route?deployment=$GITHUB_SHA")
+            test "$status" = 404
+          done

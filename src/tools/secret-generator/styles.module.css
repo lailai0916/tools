@@ -1,0 +1,35 @@
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.label {
+  font-size: calc(var(--lk-font-size) * 0.875);
+  font-weight: 600;
+}
+.checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.note {
+  margin: 0;
+  color: var(--lk-font-color-secondary);
+  font-size: calc(var(--lk-font-size) * 0.875);
+}
+@media (max-width: 600px) {
+  .controls,
+  .checks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

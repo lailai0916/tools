@@ -1,0 +1,44 @@
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.dateField {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.dateField > button {
+  justify-self: start;
+}
+
+.note {
+  margin: 0;
+  color: var(--lk-font-color-secondary);
+  font-size: var(--lk-font-size-sm);
+  line-height: 1.6;
+}
+
+.value {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .controls,
+  .dates {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

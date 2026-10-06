@@ -8,7 +8,9 @@ import ToolNavigation from './components/ToolNavigation';
 import RouteEffects from './components/RouteEffects';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import LegacyToolRedirect from './components/LegacyToolRedirect';
 import { TOOLS } from './tools/registry';
+import { LEGACY_ROUTES } from './tools/legacyRoutes';
 import styles from './App.module.css';
 
 const toolModules = import.meta.glob<{ default: ComponentType }>('./tools/*/index.tsx');
@@ -77,6 +79,9 @@ function Application() {
               <Route path="/" element={<Home />} />
               {toolRoutes.map(({ id, Component }) => (
                 <Route key={id} path={`/${id}`} element={<ToolRoute Component={Component} />} />
+              ))}
+              {Object.entries(LEGACY_ROUTES).map(([id, target]) => (
+                <Route key={id} path={`/${id}`} element={<LegacyToolRedirect target={target} />} />
               ))}
               <Route path="*" element={<NotFound />} />
             </Routes>

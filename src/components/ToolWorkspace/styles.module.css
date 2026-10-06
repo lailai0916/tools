@@ -100,7 +100,7 @@
   }
 }
 
-@container tools-content (max-width: 680px) {
+@container tools-content (max-width: 920px) {
   .grid {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--lk-space-6);

@@ -10,6 +10,7 @@ export default function RouteEffects() {
   const { tool, title } = useToolNavigation();
   const { t } = useI18n();
   const previousKey = useRef(location.key);
+  const previousPathname = useRef(location.pathname);
   const positions = useRef(new Map<string, number>());
 
   useEffect(() => {
@@ -29,7 +30,10 @@ export default function RouteEffects() {
 
   useLayoutEffect(() => {
     if (previousKey.current === location.key) return;
+    const sameTool = Boolean(tool) && previousPathname.current === location.pathname;
     previousKey.current = location.key;
+    previousPathname.current = location.pathname;
+    if (sameTool) return;
     const top = navigationType === 'POP' ? (positions.current.get(location.key) ?? 0) : 0;
     window.scrollTo({ top, behavior: 'instant' });
     const frame = requestAnimationFrame(() => {
@@ -37,7 +41,7 @@ export default function RouteEffects() {
       window.scrollTo({ top, behavior: 'instant' });
     });
     return () => cancelAnimationFrame(frame);
-  }, [location.key, navigationType]);
+  }, [location.key, location.pathname, navigationType, tool]);
 
   return null;
 }

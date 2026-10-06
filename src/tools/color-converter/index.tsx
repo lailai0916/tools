@@ -1,4 +1,4 @@
-import { Alert, Slider, TextField, Input } from '@lailai0916/ui';
+import { Alert, Button, Slider, TextField, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolPane } from '@/components/ToolWorkspace';
@@ -32,6 +32,13 @@ function parseHex(input: string): Rgb | null {
 }
 
 function parseRgb(input: string): Rgb | null {
+  if (
+    !/^(?:rgb\(\s*\d+(?:\.\d+)?\s*,\s*\d+(?:\.\d+)?\s*,\s*\d+(?:\.\d+)?\s*\)|\d+(?:\.\d+)?\s*,\s*\d+(?:\.\d+)?\s*,\s*\d+(?:\.\d+)?)$/i.test(
+      input.trim()
+    )
+  ) {
+    return null;
+  }
   const nums = input.trim().match(/-?\d+(?:\.\d+)?/g);
   if (!nums || nums.length !== 3) {
     return null;
@@ -44,6 +51,13 @@ function parseRgb(input: string): Rgb | null {
 }
 
 function parseHsl(input: string): Rgb | null {
+  if (
+    !/^(?:hsl\(\s*\d+(?:\.\d+)?\s*,\s*\d+(?:\.\d+)?%\s*,\s*\d+(?:\.\d+)?%\s*\)|\d+(?:\.\d+)?\s*,\s*\d+(?:\.\d+)?%\s*,\s*\d+(?:\.\d+)?%)$/i.test(
+      input.trim()
+    )
+  ) {
+    return null;
+  }
   const nums = input.trim().match(/-?\d+(?:\.\d+)?/g);
   if (!nums || nums.length !== 3) {
     return null;
@@ -138,6 +152,11 @@ export default function ColorConverter() {
   const [preview, setPreview] = useState(() => toHexString(INITIAL));
 
   const current = parseHex(preview) ?? INITIAL;
+  const { h: hue, s: saturation } = rgbToHsl(current);
+  const shades = [95, 85, 75, 65, 50, 40, 30, 20, 10].map((lightness) => ({
+    lightness,
+    value: toHexString(hslToRgb(hue, saturation, lightness)),
+  }));
 
   function commit(next: Rgb) {
     setHex(toHexString(next));
@@ -213,6 +232,17 @@ export default function ColorConverter() {
       description={t('tools.colorConverter.description')}
       backLabel={t('common.back')}
     >
+      <div>
+        <Button
+          size="sm"
+          onClick={() => {
+            const bytes = crypto.getRandomValues(new Uint8Array(3));
+            commit({ r: bytes[0], g: bytes[1], b: bytes[2] });
+          }}
+        >
+          {t('tools.colorConverter.random')}
+        </Button>
+      </div>
       <div className={styles.layout}>
         <div className={styles.previewWrap}>
           <div
@@ -304,6 +334,30 @@ export default function ColorConverter() {
           })}
         </div>
       </section>
+      <ToolPane title={t('tools.colorConverter.shades')}>
+        <div className={styles.palette}>
+          {shades.map((shade) => (
+            <div key={shade.lightness} className={styles.shade}>
+              <Button
+                className={styles.swatch}
+                style={{ backgroundColor: shade.value }}
+                onClick={() => {
+                  const next = parseHex(shade.value);
+                  if (next) commit(next);
+                }}
+                aria-label={`${t('tools.colorConverter.useShade')}: ${shade.value}`}
+              />
+              <code>{shade.value}</code>
+              <CopyButton
+                value={shade.value}
+                disabled={invalid !== null}
+                label={t('common.copy')}
+                copiedLabel={t('common.copied')}
+              />
+            </div>
+          ))}
+        </div>
+      </ToolPane>
     </ToolLayout>
   );
 }

@@ -1,0 +1,25 @@
+.controls {
+  composes: toolbar from '../../components/ToolWorkspace/styles.module.css';
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.format {
+  flex: 1 1 220px;
+  max-width: 320px;
+  min-width: 0;
+}
+
+.hint {
+  margin: 0;
+  color: var(--lk-font-color-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .format {
+    flex-basis: 100%;
+    max-width: none;
+  }
+}

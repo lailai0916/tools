@@ -1,15 +1,27 @@
 import { TOOLS } from '@/tools/registry';
+import { LEGACY_ROUTES } from '@/tools/legacyRoutes';
 
 export const FAVORITES_KEY = 'tools.favorites';
 export const RECENT_KEY = 'tools.recent';
 
-const validToolIds = new Set(TOOLS.map((tool) => tool.id));
+const validToolIds = new Set<string>(TOOLS.map((tool) => tool.id));
 const cachedIds = new Map<string, string[]>();
 const listeners = new Set<() => void>();
 
 function normalizeIds(value: unknown, key: string): string[] {
   const ids = Array.isArray(value)
-    ? [...new Set(value.filter((item) => typeof item === 'string' && validToolIds.has(item)))]
+    ? [
+        ...new Set(
+          value.flatMap((item) => {
+            if (typeof item !== 'string') return [];
+            const target = Object.hasOwn(LEGACY_ROUTES, item)
+              ? LEGACY_ROUTES[item as keyof typeof LEGACY_ROUTES]
+              : undefined;
+            const id = target ? target.split('?')[0].slice(1) : item;
+            return validToolIds.has(id) ? [id] : [];
+          })
+        ),
+      ]
     : [];
   return key === RECENT_KEY ? ids.slice(0, 18) : ids;
 }
@@ -19,7 +31,10 @@ export function readToolIds(key: string): string[] {
   if (cached) return cached;
   let ids: string[] = [];
   try {
-    ids = normalizeIds(JSON.parse(localStorage.getItem(key) ?? '[]'), key);
+    const stored = localStorage.getItem(key) ?? '[]';
+    ids = normalizeIds(JSON.parse(stored), key);
+    const migrated = JSON.stringify(ids);
+    if (stored !== migrated) localStorage.setItem(key, migrated);
   } catch {
     // Keep an in-memory list when storage is unavailable or malformed.
   }

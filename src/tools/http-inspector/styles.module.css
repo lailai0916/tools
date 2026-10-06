@@ -1,0 +1,23 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.passwordField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.825rem;
+}
+.hint {
+  margin: 0;
+  font-size: 0.825rem;
+  color: var(--lk-font-color-secondary);
+  line-height: 1.5;
+}

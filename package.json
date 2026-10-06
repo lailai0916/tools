@@ -13,7 +13,8 @@
     "lint": "eslint src",
     "typecheck": "tsc -b --noEmit",
     "check:guides": "node scripts/check-tool-guides.mjs",
-    "check": "npm run format && npm run lint && npm run typecheck && npm run check:guides"
+    "check:workbenches": "node scripts/check-workbenches.mjs",
+    "check": "npm run format && npm run lint && npm run typecheck && npm run check:guides && npm run check:workbenches"
   },
   "dependencies": {
     "@iconify/react": "^6.0.0",

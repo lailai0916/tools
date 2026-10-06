@@ -1,9 +1,0 @@
-.controls {
-  composes: toolbar from '../../components/ToolWorkspace/styles.module.css';
-}
-
-@media (max-width: 600px) {
-  .controls {
-    align-items: stretch;
-  }
-}

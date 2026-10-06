@@ -1,36 +1,11 @@
 import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Badge, Button, Hint, TextAreaField, Input } from '@lailai0916/ui';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
-type Match = { text: string; index: number; groups: string[] };
-type Result =
-  { ok: true; matches: Match[]; truncated: boolean } | { ok: false; error: string } | { ok: null };
-
-const MAX_MATCHES = 2000;
-
-function run(pattern: string, flags: string, text: string): Result {
-  if (!pattern) {
-    return { ok: null };
-  }
-  let regex: RegExp;
-  try {
-    regex = new RegExp(pattern, flags);
-  } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : String(e) };
-  }
-  const matches: Match[] = [];
-  const scan = flags.includes('g')
-    ? text.matchAll(regex)
-    : [regex.exec(text)].filter((m) => m !== null);
-  for (const m of scan) {
-    if (matches.length === MAX_MATCHES) return { ok: true, matches, truncated: true };
-    matches.push({ text: m[0], index: m.index ?? 0, groups: m.slice(1) });
-  }
-  return { ok: true, matches, truncated: false };
-}
+import type { RegexResult } from '@/utils/regex.worker';
 
 const FLAGS = ['g', 'i', 'm', 's'] as const;
 
@@ -40,7 +15,47 @@ export default function RegexTester() {
   const [flags, setFlags] = useState('g');
   const [text, setText] = useState('');
 
-  const result = useMemo(() => run(pattern, flags, text), [pattern, flags, text]);
+  const [result, setResult] = useState<RegexResult>({ ok: null });
+  const [pending, setPending] = useState(false);
+
+  useEffect(() => {
+    setResult({ ok: null });
+    setPending(Boolean(pattern));
+    if (!pattern) return;
+    let active = true;
+    const worker = new Worker(new URL('../../utils/regex.worker.ts', import.meta.url), {
+      type: 'module',
+    });
+    let timeout: ReturnType<typeof setTimeout>;
+    const start = setTimeout(() => {
+      timeout = setTimeout(() => {
+        worker.terminate();
+        setResult({ ok: false, error: t('tools.regexTester.timeout') });
+        setPending(false);
+      }, 1000);
+      worker.postMessage({ pattern, flags, text });
+    }, 120);
+    worker.onmessage = (event: MessageEvent<RegexResult>) => {
+      if (!active) return;
+      clearTimeout(timeout);
+      setResult(event.data);
+      setPending(false);
+      worker.terminate();
+    };
+    worker.onerror = () => {
+      if (!active) return;
+      clearTimeout(timeout);
+      setResult({ ok: false, error: t('common.processingFailed') });
+      setPending(false);
+      worker.terminate();
+    };
+    return () => {
+      active = false;
+      clearTimeout(start);
+      clearTimeout(timeout);
+      worker.terminate();
+    };
+  }, [pattern, flags, text, t]);
 
   const toggleFlag = (flag: string) => {
     setFlags((prev) => (prev.includes(flag) ? prev.replace(flag, '') : prev + flag));
@@ -125,7 +140,11 @@ export default function RegexTester() {
           </>
         }
       >
-        {result.ok === null && <p className={styles.empty}>{t('common.waitingForInput')}</p>}
+        {result.ok === null && (
+          <p className={styles.empty}>
+            {t(pending ? 'common.processing' : 'common.waitingForInput')}
+          </p>
+        )}
         {result.ok === true && result.truncated && (
           <Alert variant="warning" role="status">
             {t('tools.regexTester.limit')}

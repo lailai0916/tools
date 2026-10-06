@@ -13,27 +13,7 @@ import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import styles from './styles.module.css';
 
-export type GameStem =
-  | 'cpsTest'
-  | 'spacebarTest'
-  | 'reactionTime'
-  | 'aimTrainer'
-  | 'mouseAccuracy'
-  | 'scrollSpeed'
-  | 'schulteTable'
-  | 'timePerception'
-  | 'stroopTest'
-  | 'colorHueTest'
-  | 'oddOneOut'
-  | 'rhythmTest'
-  | 'sequenceMemory'
-  | 'numberMemory'
-  | 'visualMemory'
-  | 'verbalMemory'
-  | 'memoryMatch'
-  | 'arithmeticSprint'
-  | 'goNoGo'
-  | 'typingSpeed';
+export type GameStem = 'cpsTest' | 'reactionTime' | 'typingSpeed';
 
 export function messageKey(key: string): MessageKey {
   return key as MessageKey;
@@ -101,7 +81,11 @@ export function useLocalBest(
   }, [key]);
 
   useEffect(() => {
-    if (!active || !Number.isFinite(value) || value <= 0) return;
+    if (!active) {
+      setNewBest(false);
+      return;
+    }
+    if (!Number.isFinite(value) || value <= 0) return;
     const improved = best === 0 || (direction === 'higher' ? value > best : value < best);
     if (!improved) return;
     setBest(value);
@@ -375,21 +359,10 @@ export function LineChart({
   );
 }
 
-export function GradeBadge({ grade, label }: { grade: string; label: string }) {
-  return (
-    <div className={styles.gradeBadge}>
-      <span>{label}</span>
-      <strong>{grade}</strong>
-    </div>
-  );
-}
-
 export function ReportShell({
   eyebrow,
   score,
   unit,
-  grade,
-  gradeLabel,
   newBest,
   newBestLabel,
   children,
@@ -401,8 +374,6 @@ export function ReportShell({
   eyebrow: string;
   score: string;
   unit: string;
-  grade: string;
-  gradeLabel: string;
   newBest?: boolean;
   newBestLabel?: string;
   children: ReactNode;
@@ -432,7 +403,6 @@ export function ReportShell({
           </div>
           {newBest && <span className={styles.bestPill}>{newBestLabel}</span>}
         </div>
-        <GradeBadge grade={grade} label={gradeLabel} />
       </header>
       {children}
       <div className={styles.insightCard}>

@@ -4,13 +4,22 @@ import { TOOLS } from '@/tools/registry';
 
 const normalize = (value: string) => value.normalize('NFKC').toLowerCase();
 
-const searchText = new Map(
+const searchText = new Map<string, string>(
   TOOLS.map((tool) => {
     const name = `tools.${tool.key}.name` as MessageKey;
     const description = `tools.${tool.key}.description` as MessageKey;
     return [
       tool.id,
-      normalize([tool.id, en[name], zhHans[name], en[description], zhHans[description]].join(' ')),
+      normalize(
+        [
+          tool.id,
+          en[name],
+          zhHans[name],
+          en[description],
+          zhHans[description],
+          ...('keywords' in tool ? tool.keywords : []),
+        ].join(' ')
+      ),
     ];
   })
 );

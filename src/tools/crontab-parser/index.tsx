@@ -184,8 +184,8 @@ function describeDayScope(dom: string, month: string, dow: string, locale: Local
       : `on day ${domList(dom, locale)} of the month`;
   else
     dayPart = zh
-      ? `每月 ${domList(dom, locale)} 日及每${weekdayList(dow, locale)}`
-      : `on day ${domList(dom, locale)} and ${weekdayList(dow, locale)}`;
+      ? `每月 ${domList(dom, locale)} 日或每${weekdayList(dow, locale)}`
+      : `on day ${domList(dom, locale)} or ${weekdayList(dow, locale)}`;
 
   if (isStar(month)) return dayPart;
   return zh
@@ -201,7 +201,9 @@ function summarize(fields: Record<Kind, string>, locale: Locale): string {
 
   const step = everyStep(minute);
   if (step && isStar(hour) && isStar(dayOfMonth) && isStar(month) && isStar(dayOfWeek)) {
-    return zh ? `每 ${step} 分钟执行一次。` : `Runs every ${step} minutes.`;
+    const minutes = Array.from({ length: Math.ceil(60 / step) }, (_, index) => index * step);
+    const list = minutes.join(zh ? '、' : ', ');
+    return zh ? `每小时第 ${list} 分钟执行。` : `Runs at minute ${list} of every hour.`;
   }
 
   const scope = describeDayScope(dayOfMonth, month, dayOfWeek, locale);

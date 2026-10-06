@@ -1,1336 +1,745 @@
-import type { MessageKey } from './en';
+import { curatedDataZhHans } from './curated/data';
 
-export const zhHans: Record<MessageKey, string> = {
+import { curatedTextZhHans } from './curated/text';
+
+import { curatedCryptoZhHans } from './curated/crypto';
+
+import { curatedWebZhHans } from './curated/web';
+
+import { curatedCoreZhHans } from './curated/core';
+
+import type { MessageKey } from './en';
+import { curatedTimeUnitsZhHans } from './curated/timeUnits';
+
+const baseZhHans = {
   'site.title': "lailai's Tools",
+
   'site.tagline': '好用的开发者工具集。',
+
   'site.toolAvailable': '个浏览器本地工具',
+
   'site.toolsAvailable': '个浏览器本地工具',
+
   'site.openNavigation': '打开导航',
+
   'site.closeNavigation': '关闭导航',
+
   'site.toolNavigation': '工具导航',
+
   'site.toolCategories': '工具分类',
+
   'site.allTools': '全部工具',
+
   'site.searchPlaceholder': '搜索工具',
+
   'site.searchHint': '搜索工具（⌘K / Ctrl+K）',
+
   'site.closeSearch': '关闭搜索',
+
   'site.clearSearch': '清除搜索筛选',
+
   'site.searchResults': '搜索结果',
+
   'site.searchNoResultsDescription': '试试工具名称或关键词。',
+
   'site.searchLocal': '在本地搜索工具',
+
   'site.searchSelect': '选择',
+
   'site.searchOpen': '打开',
+
   'site.noResults': '没有匹配的工具。',
+
   'site.noResultsDescription': '可以换个关键词，或查看全部工具。',
+
   'site.switchLanguage': '切换语言',
+
   'site.themeSystem': '自动',
+
   'site.themeLight': '浅色',
+
   'site.themeDark': '深色',
+
   'site.viewAll': '全部',
+
   'site.viewFavorites': '收藏',
+
   'site.viewRecent': '最近',
+
   'site.allCategories': '全部分类',
+
   'site.addFavorite': '添加收藏',
+
   'site.removeFavorite': '取消收藏',
+
   'site.noFavorites': '还没有收藏',
+
   'site.noRecent': '还没有最近使用的工具',
+
   'site.emptyFavorites': '收藏的工具会显示在这里。',
+
   'site.emptyRecent': '打开过的工具会显示在这里。',
+
   'site.showAllTools': '查看全部工具',
+
   'site.skipToContent': '跳到主要内容',
+
   'site.breadcrumb': '页面路径',
+
   'site.home': '首页',
+
   'common.mode': '模式',
+
   'common.options': '选项',
 
   'common.back': '返回',
+
   'common.clear': '清空',
+
   'common.copy': '复制',
+
   'common.copied': '已复制',
+
   'common.input': '输入',
+
   'common.output': '输出',
+
   'common.show': '显示',
+
   'common.hide': '隐藏',
+
   'common.loading': '正在加载工具',
+
   'common.processing': '正在处理…',
+
   'common.processingFailed': '处理失败，请重试。',
 
   'guide.title': '工具指南',
+
   'guide.steps': '如何使用',
+
   'guide.example': '示例',
+
   'guide.notes': '注意事项',
+
   'guide.input': '操作或输入',
+
   'guide.output': '结果',
 
   'category.converter': '转换',
+
   'category.crypto': '加密',
+
   'category.web': '网络',
+
   'category.text': '文本',
+
   'category.development': '开发',
+
   'category.math': '数学',
+
   'category.generator': '生成',
+
   'category.fun': '测试',
 
   'fun.report': '表现报告',
+
   'fun.rating': '评级',
+
   'fun.personalBest': '个人最佳',
+
   'fun.newBest': '刷新个人纪录',
+
   'fun.replayHint': '快速重测',
+
   'fun.status.ready': '准备就绪',
+
   'fun.status.running': '测试进行中',
+
   'fun.status.done': '测试已完成',
+
   'fun.total': '总计',
+
   'fun.average': '平均值',
+
   'fun.bestRound': '最佳单次',
+
   'fun.accuracy': '准确率',
+
   'fun.mistakes': '错误',
+
   'fun.time': '用时',
+
   'fun.rounds': '轮次',
+
   'fun.consistency': '稳定度',
+
   'fun.insight': '结合详细指标复盘表现，并通过重复测试观察自己的进步。',
 
-  'tools.jsonFormat.name': 'JSON 格式化',
-  'tools.jsonFormat.description': '美化或压缩 JSON，并报告错误。',
-  'tools.jsonFormat.placeholder': '在此粘贴 JSON……',
-  'tools.jsonFormat.spaces': '空格',
-  'tools.jsonFormat.minify': '压缩',
-
   'tools.baseConverter.name': '进制转换',
+
   'tools.baseConverter.description': '任意长度整数在二进制、八进制、十进制、十六进制之间实时互转。',
+
   'tools.baseConverter.binary': '二进制',
+
   'tools.baseConverter.octal': '八进制',
+
   'tools.baseConverter.decimal': '十进制',
+
   'tools.baseConverter.hexadecimal': '十六进制',
+
   'tools.baseConverter.invalid': '含有该进制不允许的字符。',
-  'tools.base64.name': 'Base64 编码 / 解码',
-  'tools.base64.description': '将文本编码为 Base64，或将 Base64 解码为文本，完整支持 UTF-8。',
-  'tools.base64.encode': '编码',
-  'tools.base64.decode': '解码',
-  'tools.base64.encodePlaceholder': '输入要编码的文本…',
-  'tools.base64.decodePlaceholder': '粘贴要解码的 Base64…',
-  'tools.base64.decodeError': '无效的 Base64 输入。',
+
   'tools.colorConverter.name': '颜色转换',
+
   'tools.colorConverter.description': '在 HEX、RGB、HSL 之间实时互转、精细调色并预览颜色。',
+
   'tools.colorConverter.preview': '预览',
+
   'tools.colorConverter.invalid': '颜色值无效。',
+
   'tools.colorConverter.pickColor': '选择颜色',
+
   'tools.colorConverter.adjustRgb': 'RGB 通道',
+
   'tools.colorConverter.red': '红色通道',
+
   'tools.colorConverter.green': '绿色通道',
+
   'tools.colorConverter.blue': '蓝色通道',
-  'tools.timestamp.name': '时间戳转换',
-  'tools.timestamp.description': '在本地、UTC、上海时区间转换秒级或毫秒级 Unix 时间戳。',
-  'tools.timestamp.currentLabel': '当前时间戳',
-  'tools.timestamp.timeZone': '时区',
-  'tools.timestamp.zoneLocal': '本地',
-  'tools.timestamp.zoneUtc': 'UTC',
-  'tools.timestamp.zoneShanghai': '上海',
-  'tools.timestamp.useNow': '使用当前时间',
-  'tools.timestamp.tsInputLabel': '时间戳',
-  'tools.timestamp.tsPlaceholder': '输入秒级或毫秒级时间戳…',
-  'tools.timestamp.tsOutputLabel': '日期与时间',
-  'tools.timestamp.invalidTs': '不是有效的时间戳。',
-  'tools.timestamp.dateInputLabel': '日期',
-  'tools.timestamp.datePlaceholder': '如 2026-07-17 12:00:00',
-  'tools.timestamp.dateOutputLabel': '时间戳',
-  'tools.timestamp.outputUnit': '输出单位',
-  'tools.timestamp.seconds': '秒',
-  'tools.timestamp.milliseconds': '毫秒',
-  'tools.timestamp.invalidDate': '不是有效的日期。',
+
   'tools.hashText.name': '文本哈希',
+
   'tools.hashText.description': '计算文本的 SHA-1、SHA-256、SHA-384、SHA-512 哈希值。',
+
   'tools.hashText.placeholder': '输入或粘贴要计算哈希的文本……',
+
   'tools.hashText.empty': '等待输入……',
-  'tools.urlEncode.name': 'URL 编码 / 解码',
-  'tools.urlEncode.description': '对 URL 组件进行编码或解码，并提示错误。',
-  'tools.urlEncode.placeholder': '在此输入文本…',
-  'tools.urlEncode.encode': '编码',
-  'tools.urlEncode.decode': '解码',
-  'tools.caseConverter.name': '命名转换',
-  'tools.caseConverter.description': '在 camelCase、snake_case、kebab-case 等命名格式间转换。',
-  'tools.caseConverter.placeholder': '在此输入或粘贴文本……',
-  'tools.caseConverter.emptyHint': '等待输入……',
-  'tools.caseConverter.camel': '小驼峰',
-  'tools.caseConverter.pascal': '大驼峰',
-  'tools.caseConverter.snake': '下划线',
-  'tools.caseConverter.kebab': '短横线',
-  'tools.caseConverter.constant': '常量',
-  'tools.caseConverter.upper': '全大写',
-  'tools.caseConverter.lower': '全小写',
-  'tools.caseConverter.title': '标题式',
+
   'tools.regexTester.name': '正则测试',
+
   'tools.regexTester.description': '用正则表达式匹配文本，实时查看每一处匹配。',
+
   'tools.regexTester.pattern': '正则',
+
   'tools.regexTester.patternPlaceholder': '输入正则表达式……',
+
   'tools.regexTester.testText': '测试文本',
+
   'tools.regexTester.textPlaceholder': '粘贴要匹配的文本……',
+
   'tools.regexTester.matches': '匹配结果',
+
   'tools.regexTester.noMatch': '无匹配。',
+
   'tools.regexTester.at': '位置',
+
   'tools.regexTester.flags': '正则标志',
+
   'tools.regexTester.flag.g': '匹配全部结果',
+
   'tools.regexTester.flag.i': '忽略大小写',
+
   'tools.regexTester.flag.m': '多行起止位置',
+
   'tools.regexTester.flag.s': '点号匹配换行',
+
   'tools.regexTester.emptyMatch': '空匹配',
+
   'tools.regexTester.limit': '仅显示前 2000 个匹配。请缩小匹配范围或缩短文本以查看其他结果。',
+
   'tools.textDiff.name': '文本对比',
+
   'tools.textDiff.description': '逐行对比两段文本，标出新增与删除的行。',
+
   'tools.textDiff.original': '原文',
+
   'tools.textDiff.modified': '修改后',
+
   'tools.textDiff.originalPlaceholder': '在此粘贴原文…',
+
   'tools.textDiff.modifiedPlaceholder': '在此粘贴修改后的文本…',
+
   'tools.textDiff.empty': '两侧都输入文本后显示差异。',
+
   'tools.textDiff.identical': '两段文本完全相同。',
+
   'tools.qrcode.name': '二维码生成',
+
   'tools.qrcode.description': '把文本或链接生成可调二维码，并下载为 PNG 或 SVG。',
+
   'tools.qrcode.placeholder': '输入文本或网址……',
+
   'tools.qrcode.errorCorrection': '容错等级',
+
   'tools.qrcode.size': '导出尺寸',
+
   'tools.qrcode.margin': '留白宽度',
+
   'tools.qrcode.level.L': '低',
+
   'tools.qrcode.level.M': '中',
+
   'tools.qrcode.level.Q': '较高',
+
   'tools.qrcode.level.H': '高',
+
   'tools.qrcode.downloadPng': '下载 PNG',
+
   'tools.qrcode.downloadSvg': '下载 SVG',
+
   'tools.qrcode.alt': '生成的二维码',
+
   'tools.qrcode.empty': '二维码将显示在这里。',
-  'tools.uuid.name': 'UUID 生成器',
-  'tools.uuid.description': '批量生成随机 UUID v4 或基于时间的 UUID v7。',
-  'tools.uuid.version': '版本',
-  'tools.uuid.count': '数量',
-  'tools.uuid.regenerate': '重新生成',
-  'tools.jsonToYaml.name': 'JSON ⇄ YAML',
-  'tools.jsonToYaml.description': '在 JSON 与 YAML 之间双向转换。',
-  'tools.jsonToYaml.toYaml': 'JSON → YAML',
-  'tools.jsonToYaml.toJson': 'YAML → JSON',
-  'tools.jsonToYaml.jsonPlaceholder': '在此粘贴 JSON…',
-  'tools.jsonToYaml.yamlPlaceholder': '在此粘贴 YAML…',
-  'tools.jsonToYaml.error': '输入无法完成此转换。',
-  'tools.jsonToCsv.name': 'JSON ⇄ CSV',
-  'tools.jsonToCsv.description': '在对象数组 JSON 与 CSV 之间双向转换。',
-  'tools.jsonToCsv.toCsv': 'JSON → CSV',
-  'tools.jsonToCsv.toJson': 'CSV → JSON',
-  'tools.jsonToCsv.jsonPlaceholder': '在此粘贴对象数组 JSON…',
-  'tools.jsonToCsv.csvPlaceholder': '在此粘贴 CSV…',
-  'tools.jsonToCsv.error': '输入无法完成此转换。',
-  'tools.jsonToCsv.notArray': 'JSON 必须是对象数组。',
-  'tools.htmlEntities.name': 'HTML 实体',
-  'tools.htmlEntities.description': '把文本编码为 HTML 实体，或反向解码。',
-  'tools.htmlEntities.encode': '编码',
-  'tools.htmlEntities.decode': '解码',
-  'tools.htmlEntities.placeholder': '在此输入文本…',
-  'tools.romanNumeral.name': '罗马数字',
-  'tools.romanNumeral.description': '在阿拉伯数字与罗马数字之间转换（1–3999）。',
-  'tools.romanNumeral.arabic': '阿拉伯数字',
-  'tools.romanNumeral.roman': '罗马数字',
-  'tools.romanNumeral.invalid': '无效的数值。',
-  'tools.romanNumeral.rangeHint': '有效范围：1–3999。',
-  'tools.textToBinary.name': '文本 ⇄ 二进制',
-  'tools.textToBinary.description': '在文本与其 UTF-8 二进制表示之间转换。',
-  'tools.textToBinary.encode': '文本 → 二进制',
-  'tools.textToBinary.decode': '二进制 → 文本',
-  'tools.textToBinary.textPlaceholder': '输入要编码的文本…',
-  'tools.textToBinary.binaryPlaceholder': '粘贴以空格分隔的字节…',
-  'tools.textToBinary.error': '无效的二进制输入。',
-  'tools.base32.name': 'Base32 编码 / 解码',
-  'tools.base32.description':
-    '将文本编码为 Base32（RFC 4648），或将 Base32 解码为文本，完整支持 UTF-8。',
-  'tools.base32.encode': '编码',
-  'tools.base32.decode': '解码',
-  'tools.base32.encodePlaceholder': '输入要编码的文本…',
-  'tools.base32.decodePlaceholder': '粘贴要解码的 Base32…',
-  'tools.base32.error': '无效的 Base32 输入。',
-  'tools.temperatureConverter.name': '温度转换',
-  'tools.temperatureConverter.description': '在摄氏度、华氏度、开尔文之间实时互转。',
-  'tools.temperatureConverter.celsius': '摄氏度（°C）',
-  'tools.temperatureConverter.fahrenheit': '华氏度（°F）',
-  'tools.temperatureConverter.kelvin': '开尔文（K）',
-  'tools.temperatureConverter.invalid': '请输入不低于绝对零度的有效温度。',
-  'tools.dataSizeConverter.name': '数据大小转换',
-  'tools.dataSizeConverter.description':
-    '使用十进制 SI（1000）或二进制 IEC（1024）单位换算数据大小。',
-  'tools.dataSizeConverter.valueLabel': '数值',
-  'tools.dataSizeConverter.system': '单位制',
-  'tools.dataSizeConverter.binary': '二进制 · 1024',
-  'tools.dataSizeConverter.decimal': '十进制 · 1000',
-  'tools.dataSizeConverter.unit': '输入单位',
-  'tools.dataSizeConverter.placeholder': '输入大小…',
-  'tools.dataSizeConverter.invalid': '不是有效的数值。',
+
   'tools.unixPermission.name': 'chmod 计算器',
+
   'tools.unixPermission.description': '计算 Unix 文件权限的八进制与符号表示。',
+
   'tools.unixPermission.owner': '所有者',
+
   'tools.unixPermission.group': '组',
+
   'tools.unixPermission.other': '其他',
+
   'tools.unixPermission.read': '读',
+
   'tools.unixPermission.write': '写',
+
   'tools.unixPermission.execute': '执行',
+
   'tools.unixPermission.octal': '八进制',
+
   'tools.unixPermission.symbolic': '符号',
+
   'tools.unixPermission.octalInput': '八进制输入',
-  'tools.durationConverter.name': '时长转换',
-  'tools.durationConverter.description': '在毫秒、秒、分钟、小时、天、周之间换算。',
-  'tools.durationConverter.valueLabel': '数值',
-  'tools.durationConverter.placeholder': '输入时长…',
-  'tools.durationConverter.invalid': '不是有效的数值。',
-  'tools.durationConverter.ms': '毫秒',
-  'tools.durationConverter.seconds': '秒',
-  'tools.durationConverter.minutes': '分钟',
-  'tools.durationConverter.hours': '小时',
-  'tools.durationConverter.days': '天',
-  'tools.durationConverter.weeks': '周',
-  'tools.angleConverter.name': '角度转换',
-  'tools.angleConverter.description': '在度、弧度、百分度、圈之间实时互转。',
-  'tools.angleConverter.degrees': '度（°）',
-  'tools.angleConverter.radians': '弧度（rad）',
-  'tools.angleConverter.gradians': '百分度（gon）',
-  'tools.angleConverter.turns': '圈（rev）',
-  'tools.angleConverter.invalid': '不是有效的数值。',
-  'tools.hmacGenerator.name': 'HMAC 生成',
-  'tools.hmacGenerator.description': '用密钥对消息计算 HMAC，支持 SHA-1/256/384/512。',
-  'tools.hmacGenerator.message': '消息',
-  'tools.hmacGenerator.messagePlaceholder': '输入要认证的消息…',
-  'tools.hmacGenerator.secret': '密钥',
-  'tools.hmacGenerator.secretPlaceholder': '输入密钥…',
-  'tools.hmacGenerator.algorithm': '算法',
-  'tools.hmacGenerator.output': 'HMAC',
-  'tools.hmacGenerator.empty': '等待输入……',
+
   'tools.jwtDecoder.name': 'JWT 解码',
+
   'tools.jwtDecoder.description': '解码 JWT 的头部与载荷，不校验签名。',
+
   'tools.jwtDecoder.placeholder': '在此粘贴 JWT……',
+
   'tools.jwtDecoder.header': '头部',
+
   'tools.jwtDecoder.payload': '载荷',
+
   'tools.jwtDecoder.signature': '签名',
+
   'tools.jwtDecoder.invalid': '不是有效的 JWT。',
+
   'tools.jwtDecoder.note': '未校验签名。',
-  'tools.passwordStrength.name': '密码强度',
-  'tools.passwordStrength.description': '在浏览器本地估算密码的熵与强度。',
-  'tools.passwordStrength.placeholder': '输入要分析的密码…',
-  'tools.passwordStrength.entropy': '熵（bit）',
-  'tools.passwordStrength.strength': '强度',
-  'tools.passwordStrength.veryWeak': '很弱',
-  'tools.passwordStrength.weak': '弱',
-  'tools.passwordStrength.fair': '一般',
-  'tools.passwordStrength.strong': '强',
-  'tools.passwordStrength.veryStrong': '很强',
-  'tools.passwordStrength.length': '长度',
-  'tools.passwordStrength.charsets': '字符集',
-  'tools.passwordStrength.crackTime': '破解耗时',
-  'tools.passwordStrength.empty': '等待输入……',
-  'tools.passwordStrength.crackInstant': '瞬间',
-  'tools.passwordStrength.crackEternity': '近乎永久',
-  'tools.passwordStrength.unitSeconds': '秒',
-  'tools.passwordStrength.unitMinutes': '分钟',
-  'tools.passwordStrength.unitHours': '小时',
-  'tools.passwordStrength.unitDays': '天',
-  'tools.passwordStrength.unitYears': '年',
-  'tools.passwordStrength.unitCenturies': '世纪',
-  'tools.crc32.name': 'CRC-32',
-  'tools.crc32.description': '计算文本的 CRC-32 校验值，输出十六进制与十进制。',
-  'tools.crc32.placeholder': '在此输入或粘贴文本……',
-  'tools.crc32.hex': '十六进制',
-  'tools.crc32.decimal': '十进制',
-  'tools.crc32.empty': '等待输入……',
-  'tools.textEncrypt.name': '文本加密',
-  'tools.textEncrypt.description': '用口令通过 AES-GCM 加解密文本。',
-  'tools.textEncrypt.encrypt': '加密',
-  'tools.textEncrypt.decrypt': '解密',
-  'tools.textEncrypt.textPlaceholder': '输入要加密的文本…',
-  'tools.textEncrypt.cipherPlaceholder': '粘贴要解密的 Base64 密文…',
-  'tools.textEncrypt.passphrase': '口令',
-  'tools.textEncrypt.passphrasePlaceholder': '输入口令…',
-  'tools.textEncrypt.error': '解密失败：口令错误或数据损坏。',
-  'tools.textEncrypt.empty': '等待输入……',
+
   'tools.totp.name': 'TOTP 生成',
+
   'tools.totp.description': '根据 Base32 密钥或 otpauth URI 生成基于时间的一次性密码（TOTP）。',
+
   'tools.totp.secret': 'Base32 密钥',
+
   'tools.totp.secretPlaceholder': '输入 Base32 密钥或粘贴 otpauth URI…',
+
   'tools.totp.code': '验证码',
+
   'tools.totp.expiresIn': '剩余',
+
   'tools.totp.seconds': '秒',
+
   'tools.totp.invalid': '不是有效的 Base32 密钥。',
+
   'tools.totp.empty': '等待输入……',
+
   'tools.cssGradient.name': 'CSS 渐变',
+
   'tools.cssGradient.description': '在两种颜色间生成 CSS 线性渐变，并实时预览。',
+
   'tools.cssGradient.color1': '颜色 1',
+
   'tools.cssGradient.color2': '颜色 2',
+
   'tools.cssGradient.angle': '角度',
+
   'tools.cssGradient.preview': '预览',
+
   'tools.cssGradient.output': 'CSS',
+
   'tools.boxShadow.name': '盒阴影',
+
   'tools.boxShadow.description': '可视化设计 CSS box-shadow，实时预览并复制代码。',
+
   'tools.boxShadow.offsetX': '水平偏移',
+
   'tools.boxShadow.offsetY': '垂直偏移',
+
   'tools.boxShadow.blur': '模糊',
+
   'tools.boxShadow.spread': '扩展',
+
   'tools.boxShadow.color': '颜色',
+
   'tools.boxShadow.opacity': '不透明度',
+
   'tools.boxShadow.inset': '内阴影',
+
   'tools.boxShadow.preview': '预览',
+
   'tools.boxShadow.output': 'CSS',
+
   'tools.crontabParser.name': 'Crontab 解析器',
+
   'tools.crontabParser.description': '将 5 段式 cron 表达式解析为易读的执行计划。',
+
   'tools.crontabParser.placeholder': '例如 */5 9-17 * * 1-5',
+
   'tools.crontabParser.invalid': '无效的 cron 表达式。',
+
   'tools.crontabParser.summary': '摘要',
+
   'tools.crontabParser.minute': '分钟',
+
   'tools.crontabParser.hour': '小时',
+
   'tools.crontabParser.dayOfMonth': '日',
+
   'tools.crontabParser.month': '月',
+
   'tools.crontabParser.dayOfWeek': '星期',
-  'tools.svgDataUri.name': 'SVG 转 Data URI',
-  'tools.svgDataUri.description': '将 SVG 代码转换为经过优化的 URL 编码 data URI。',
-  'tools.svgDataUri.placeholder': '在此粘贴 SVG 代码……',
-  'tools.svgDataUri.output': 'Data URI',
-  'tools.svgDataUri.cssValue': 'CSS background-image',
-  'tools.svgDataUri.empty': '粘贴 SVG 代码以生成 data URI。',
-  'tools.svgDataUri.invalid': '输入内容不像是 SVG 代码。',
-  'tools.jsonToTs.name': 'JSON 转 TypeScript',
-  'tools.jsonToTs.description': '从 JSON 样本推断 TypeScript 接口。',
-  'tools.jsonToTs.placeholder': '在此粘贴 JSON……',
-  'tools.jsonToTs.rootName': '根接口名',
-  'tools.jsonToTs.output': 'TypeScript',
-  'tools.jsonToTs.error': '无效的 JSON',
-  'tools.cssUnit.name': 'CSS 单位转换',
-  'tools.cssUnit.description': '在给定根字号下换算 px 与 rem/em。',
-  'tools.cssUnit.px': '像素',
-  'tools.cssUnit.rem': 'rem',
-  'tools.cssUnit.base': '根字号',
-  'tools.cssUnit.invalid': '请输入有效的数字。',
-  'tools.cssUnit.note': '在相同根字号下，1 rem 等于 1 em。',
+
   'tools.metaTags.name': 'Meta 标签',
+
   'tools.metaTags.description': '生成 HTML 标题、描述、Open Graph 与 Twitter 卡片标签。',
+
   'tools.metaTags.titleField': '标题',
+
   'tools.metaTags.descriptionField': '描述',
+
   'tools.metaTags.url': '规范链接',
+
   'tools.metaTags.image': '图片链接',
+
   'tools.metaTags.siteName': '站点名称',
+
   'tools.metaTags.output': 'HTML',
-  'tools.colorShades.name': '颜色深浅',
-  'tools.colorShades.description': '从基准色按等步长生成一组浅色与深色。',
-  'tools.colorShades.baseColor': '基准色',
-  'tools.colorShades.steps': '每组级数',
-  'tools.colorShades.invalid': '无效的十六进制颜色。',
-  'tools.colorShades.tints': '浅色',
-  'tools.colorShades.shades': '深色',
-  'tools.passwordGenerator.name': '密码生成',
-  'tools.passwordGenerator.description': '生成高强度随机密码，并确保包含每种已选字符类型。',
-  'tools.passwordGenerator.length': '长度',
-  'tools.passwordGenerator.uppercase': '大写字母',
-  'tools.passwordGenerator.lowercase': '小写字母',
-  'tools.passwordGenerator.digits': '数字',
-  'tools.passwordGenerator.symbols': '符号',
-  'tools.passwordGenerator.excludeAmbiguous': '排除易混字符',
-  'tools.passwordGenerator.regenerate': '重新生成',
-  'tools.passwordGenerator.output': '密码',
-  'tools.passwordGenerator.noCharset': '请至少选择一种字符集。',
-  'tools.loremIpsum.name': '乱数假文',
-  'tools.loremIpsum.description': '生成 Lorem Ipsum 占位文本段落。',
-  'tools.loremIpsum.paragraphs': '段落数',
-  'tools.loremIpsum.regenerate': '重新生成',
-  'tools.loremIpsum.output': '输出',
+
   'tools.randomNumber.name': '随机数',
+
   'tools.randomNumber.description': '在闭区间内生成随机整数。',
+
   'tools.randomNumber.min': '最小值',
+
   'tools.randomNumber.max': '最大值',
+
   'tools.randomNumber.count': '数量',
+
   'tools.randomNumber.unique': '不重复',
+
   'tools.randomNumber.regenerate': '重新生成',
+
   'tools.randomNumber.output': '输出',
+
   'tools.randomNumber.invalidCount': '数量必须是 1–1000 的整数。',
+
   'tools.randomNumber.tooManyUnique': '范围内没有足够多的不重复整数，请减少数量或扩大范围。',
+
   'tools.randomNumber.invalidRange': '请输入有效的整数范围（最小值 ≤ 最大值）。',
-  'tools.randomString.name': '随机字符串',
-  'tools.randomString.description': '按选定字符集生成随机字符串与令牌。',
-  'tools.randomString.length': '长度',
-  'tools.randomString.charset': '字符集',
-  'tools.randomString.hex': '十六进制',
-  'tools.randomString.alphanumeric': '字母数字',
-  'tools.randomString.base64': 'Base64URL',
-  'tools.randomString.custom': '自定义',
-  'tools.randomString.customPlaceholder': '输入自定义字符集……',
-  'tools.randomString.regenerate': '重新生成',
-  'tools.randomString.output': '输出',
-  'tools.randomString.invalidLength': '长度必须是 1–4096 的整数。',
-  'tools.randomString.emptyAlphabet': '请在自定义字符集中输入至少一个字符。',
-  'tools.keyGenerator.name': '密钥生成',
-  'tools.keyGenerator.description': '生成随机加密密钥，输出十六进制与 Base64。',
-  'tools.keyGenerator.bits': '位数',
-  'tools.keyGenerator.hex': '十六进制',
-  'tools.keyGenerator.base64': 'Base64',
-  'tools.keyGenerator.regenerate': '重新生成',
-  'tools.ulid.name': 'ULID 生成器',
-  'tools.ulid.description': '批量生成基于时间戳、可排序的 ULID。',
-  'tools.ulid.count': '数量',
-  'tools.ulid.regenerate': '重新生成',
-  'tools.ulid.output': 'ULID',
-  'tools.nanoid.name': 'Nano ID 生成器',
-  'tools.nanoid.description': '生成指定长度的 URL 安全 Nano ID。',
-  'tools.nanoid.length': '长度',
-  'tools.nanoid.count': '数量',
-  'tools.nanoid.regenerate': '重新生成',
-  'tools.nanoid.output': 'Nano ID',
-  'tools.nanoid.invalidLength': '长度必须是 1–512 的整数。',
-  'tools.macAddress.name': 'MAC 地址生成器',
-  'tools.macAddress.description': '生成随机的本地管理单播 MAC 地址。',
-  'tools.macAddress.separator': '分隔符',
-  'tools.macAddress.count': '数量',
-  'tools.macAddress.uppercase': '大写',
-  'tools.macAddress.regenerate': '重新生成',
-  'tools.macAddress.output': 'MAC 地址',
+
   'tools.placeholderImage.name': '占位图生成',
+
   'tools.placeholderImage.description': '生成占位图片，并导出为 PNG。',
+
   'tools.placeholderImage.width': '宽度',
+
   'tools.placeholderImage.height': '高度',
+
   'tools.placeholderImage.background': '背景色',
+
   'tools.placeholderImage.textColor': '文字颜色',
+
   'tools.placeholderImage.text': '文字',
+
   'tools.placeholderImage.download': '下载 PNG',
+
   'tools.placeholderImage.dataUri': 'Data URI',
+
   'tools.placeholderImage.preview': '预览',
-  'tools.randomColor.name': '随机颜色',
-  'tools.randomColor.description': '随机生成十六进制颜色色块，可直接复制。',
-  'tools.randomColor.count': '数量',
-  'tools.randomColor.regenerate': '重新生成',
-  'tools.percentageCalculator.name': '百分比计算',
-  'tools.percentageCalculator.description': '实时计算百分比、占比与增减幅度。',
-  'tools.percentageCalculator.percentOf': 'X% 的 Y 是多少？',
-  'tools.percentageCalculator.percentOfX': 'X（百分数）',
-  'tools.percentageCalculator.percentOfY': 'Y',
-  'tools.percentageCalculator.isWhatPercent': 'X 占 Y 的百分之几？',
-  'tools.percentageCalculator.isWhatX': 'X',
-  'tools.percentageCalculator.isWhatY': 'Y',
-  'tools.percentageCalculator.percentChange': '从 X 到 Y 变化了百分之几？',
-  'tools.percentageCalculator.changeFrom': '起始值（X）',
-  'tools.percentageCalculator.changeTo': '结束值（Y）',
-  'tools.percentageCalculator.result': '结果',
-  'tools.gcdLcm.name': '最大公约数与最小公倍数',
-  'tools.gcdLcm.description': '计算一组整数的最大公约数与最小公倍数。',
-  'tools.gcdLcm.placeholder': '输入整数，如 12, 18, 24……',
-  'tools.gcdLcm.gcd': '最大公约数',
-  'tools.gcdLcm.lcm': '最小公倍数',
-  'tools.gcdLcm.invalid': '请输入以逗号或空格分隔的整数。',
-  'tools.gcdLcm.empty': '等待输入……',
-  'tools.primeFactor.name': '质因数分解',
-  'tools.primeFactor.description': '把整数分解为质因数，并判断是否为质数。',
-  'tools.primeFactor.placeholder': '输入一个正整数……',
-  'tools.primeFactor.isPrime': '质数',
-  'tools.primeFactor.notPrime': '非质数',
-  'tools.primeFactor.factorization': '分解式',
-  'tools.primeFactor.divisors': '因数个数',
-  'tools.primeFactor.invalid': '请输入一个正整数。',
-  'tools.primeFactor.empty': '等待输入……',
-  'tools.primeFactor.tooLarge': '数字过大（上限 10^15）。',
-  'tools.mathEvaluator.name': '表达式计算',
-  'tools.mathEvaluator.description': '计算含函数与常量的算术表达式，并可切换三角函数角度单位。',
-  'tools.mathEvaluator.angleMode': '三角函数角度单位',
-  'tools.mathEvaluator.radians': '弧度',
-  'tools.mathEvaluator.degrees': '角度',
-  'tools.mathEvaluator.placeholder': '如 sqrt(2) * (3 + 4) ^ 2……',
-  'tools.mathEvaluator.result': '结果',
-  'tools.mathEvaluator.error': '表达式无效。',
-  'tools.mathEvaluator.empty': '等待输入……',
+
   'tools.statistics.name': '描述统计',
+
   'tools.statistics.description': '计算一组数字的描述统计量。',
+
   'tools.statistics.placeholder': '输入数字，如 4, 8, 15, 16, 23, 42……',
+
   'tools.statistics.varianceMode': '方差类型',
+
   'tools.statistics.population': '总体',
+
   'tools.statistics.sample': '样本',
+
   'tools.statistics.count': '数量',
+
   'tools.statistics.sum': '求和',
+
   'tools.statistics.mean': '平均数',
+
   'tools.statistics.median': '中位数',
+
   'tools.statistics.mode': '众数',
+
   'tools.statistics.min': '最小值',
+
   'tools.statistics.max': '最大值',
+
   'tools.statistics.range': '极差',
+
   'tools.statistics.variance': '方差',
+
   'tools.statistics.stddev': '标准差',
+
   'tools.statistics.variancePopulation': '总体方差',
+
   'tools.statistics.varianceSample': '样本方差',
+
   'tools.statistics.stddevPopulation': '总体标准差',
+
   'tools.statistics.stddevSample': '样本标准差',
+
   'tools.statistics.invalid': '请输入以逗号或空格分隔的数字。',
+
   'tools.statistics.empty': '等待输入……',
-  'tools.combinatorics.name': '排列组合',
-  'tools.combinatorics.description': '计算阶乘、排列数与组合数。',
-  'tools.combinatorics.n': 'n',
-  'tools.combinatorics.r': 'r',
-  'tools.combinatorics.factorial': 'n!',
-  'tools.combinatorics.permutations': 'P(n, r)',
-  'tools.combinatorics.combinations': 'C(n, r)',
-  'tools.combinatorics.invalid': '请输入满足 0 ≤ r ≤ n ≤ 1000 的整数。',
-  'tools.modPower.name': '模幂运算',
-  'tools.modPower.description': '用快速幂计算 base^exponent mod modulus。',
-  'tools.modPower.base': '底数',
-  'tools.modPower.exponent': '指数',
-  'tools.modPower.modulus': '模数',
-  'tools.modPower.result': '结果',
-  'tools.modPower.invalid': '模数需 ≥ 1，指数需 ≥ 0。',
-  'tools.primeSieve.name': '素数筛',
-  'tools.primeSieve.description': '用埃拉托斯特尼筛法列出不超过 N 的所有素数。',
-  'tools.primeSieve.limitLabel': '上限 N',
-  'tools.primeSieve.placeholder': '如 100……',
-  'tools.primeSieve.count': '数量',
-  'tools.primeSieve.primes': '素数',
-  'tools.primeSieve.invalid': '请输入一个非负整数。',
-  'tools.primeSieve.tooLarge': 'N 过大（上限 1,000,000）。',
-  'tools.primeSieve.empty': '等待输入……',
-  'tools.textStats.name': '文本统计',
-  'tools.textStats.description': '实时统计字符、单词、行数等信息。',
-  'tools.textStats.placeholder': '在此输入或粘贴文本……',
-  'tools.textStats.characters': '字符数',
-  'tools.textStats.charactersNoSpaces': '字符数（不含空格）',
-  'tools.textStats.words': '单词数',
-  'tools.textStats.lines': '行数',
-  'tools.textStats.sentences': '句子数',
-  'tools.textStats.paragraphs': '段落数',
-  'tools.textStats.bytes': '字节数（UTF-8）',
-  'tools.textStats.readingTime': '阅读时间',
-  'tools.textStats.minutes': '分钟',
-  'tools.sortLines.name': '行排序',
-  'tools.sortLines.description': '对文本行排序、去重，支持忽略大小写、数字排序与去空白。',
-  'tools.sortLines.placeholder': '粘贴要排序的文本行…',
-  'tools.sortLines.asc': '升序',
-  'tools.sortLines.desc': '降序',
-  'tools.sortLines.caseInsensitive': '忽略大小写',
-  'tools.sortLines.numeric': '数字排序',
-  'tools.sortLines.dedupe': '去除重复行',
-  'tools.sortLines.removeEmpty': '去除空行',
-  'tools.sortLines.trimLines': '去除每行首尾空白',
-  'tools.slugify.name': 'URL 别名',
-  'tools.slugify.description': '把任意文本转换为干净的 URL 别名。',
-  'tools.slugify.placeholder': '输入标题或短语…',
-  'tools.slugify.separator': '分隔符',
-  'tools.slugify.lowercase': '转为小写',
-  'tools.slugify.stripDiacritics': '去除变音符号',
-  'tools.slugify.output': '别名',
-  'tools.slugify.empty': '等待输入……',
-  'tools.textReverse.name': '文本反转',
-  'tools.textReverse.description': '按字符、单词或行反转文本。',
-  'tools.textReverse.placeholder': '在此输入或粘贴文本……',
-  'tools.textReverse.byChar': '按字符',
-  'tools.textReverse.byWord': '按单词',
-  'tools.textReverse.byLine': '按行',
-  'tools.stringEscape.name': '字符串转义',
-  'tools.stringEscape.description': '为 JSON 与 JavaScript 转义或反转义字符串。',
-  'tools.stringEscape.escape': '转义',
-  'tools.stringEscape.unescape': '反转义',
-  'tools.stringEscape.placeholder': '输入字符串…',
-  'tools.stringEscape.error': '无效的转义字符串。',
+
   'tools.unicodeInspector.name': 'Unicode 检查器',
+
   'tools.unicodeInspector.description': '把文本拆分为码点，显示十六进制、十进制与 UTF-8 字节。',
+
   'tools.unicodeInspector.placeholder': '在此输入或粘贴文本……',
+
   'tools.unicodeInspector.character': '字符',
+
   'tools.unicodeInspector.codePoint': '码点',
+
   'tools.unicodeInspector.decimal': '十进制',
+
   'tools.unicodeInspector.utf8': 'UTF-8 字节',
+
   'tools.unicodeInspector.empty': '等待输入……',
+
   'tools.unicodeInspector.truncated': '仅显示前 500 个码点。',
-  'tools.morseCode.name': '摩尔斯电码',
-  'tools.morseCode.description': '在文本与摩尔斯电码之间互译。',
-  'tools.morseCode.toMorse': '文本转电码',
-  'tools.morseCode.toText': '电码转文本',
-  'tools.morseCode.textPlaceholder': '输入要编码的文本…',
-  'tools.morseCode.morsePlaceholder': '输入要解码的摩尔斯电码…',
-  'tools.natoAlphabet.name': 'NATO 音标字母',
-  'tools.natoAlphabet.description': '用 NATO 音标字母拼读文本。',
-  'tools.natoAlphabet.placeholder': '输入要拼读的文本…',
-  'tools.natoAlphabet.output': '拼读结果',
-  'tools.natoAlphabet.empty': '输入文本后显示拼读结果。',
-  'tools.lineEndings.name': '换行符转换',
-  'tools.lineEndings.description': '在 LF、CRLF、CR 之间转换换行符。',
-  'tools.lineEndings.placeholder': '在此粘贴文本…',
-  'tools.lineEndings.lf': 'LF (\\n)',
-  'tools.lineEndings.crlf': 'CRLF (\\r\\n)',
-  'tools.lineEndings.cr': 'CR (\\r)',
-  'tools.lineEndings.detected': '检测到',
-  'tools.lineEndings.mixed': '混合',
-  'tools.removeWhitespace.name': '清理空白',
-  'tools.removeWhitespace.description': '去除、合并或清理文本中的空白字符。',
-  'tools.removeWhitespace.placeholder': '粘贴要清理的文本…',
-  'tools.removeWhitespace.trimLines': '去除每行首尾空白',
-  'tools.removeWhitespace.collapseSpaces': '合并连续空格',
-  'tools.removeWhitespace.removeBlankLines': '删除空行',
-  'tools.removeWhitespace.tabsToSpaces': '制表符转空格',
-  'tools.removeWhitespace.tabWidth': '制表宽度',
-  'tools.removeWhitespace.removeAll': '删除所有空白',
-  'tools.findReplace.name': '查找替换',
-  'tools.findReplace.description': '查找并替换文本，支持正则表达式。',
-  'tools.findReplace.textPlaceholder': '在此粘贴文本…',
-  'tools.findReplace.find': '查找',
-  'tools.findReplace.findPlaceholder': '要查找的文本或模式…',
-  'tools.findReplace.replace': '替换为',
-  'tools.findReplace.replacePlaceholder': '替换后的文本…',
-  'tools.findReplace.regex': '正则表达式',
-  'tools.findReplace.caseInsensitive': '忽略大小写',
-  'tools.findReplace.matchCount': '匹配数',
-  'tools.findReplace.invalidRegex': '无效的正则表达式。',
-  'tools.caesarCipher.name': '凯撒密码',
-  'tools.caesarCipher.description': '按 N 位移位字母（ROT-n）；解码时使用 26 − N 位移位。',
-  'tools.caesarCipher.placeholder': '输入要移位的文本…',
-  'tools.caesarCipher.shift': '位移',
-  'tools.caesarCipher.rot13': 'ROT13',
-  'tools.caesarCipher.output': '输出',
-  'tools.removeAccents.name': '去除重音符号',
-  'tools.removeAccents.description': '去除文本中的变音符号与重音。',
-  'tools.removeAccents.placeholder': '输入带重音的文本…',
-  'tools.removeAccents.output': '输出',
-  'tools.removeAccents.empty': '输入文本后去除其中的重音符号。',
-  'tools.urlParser.name': 'URL 解析',
-  'tools.urlParser.description': '把 URL 拆解为各组成部分，并列出全部查询参数。',
-  'tools.urlParser.placeholder': 'https://user@example.com:8080/path?a=1&b=2#top',
-  'tools.urlParser.invalid': '不是有效的 URL。',
-  'tools.urlParser.protocol': '协议',
-  'tools.urlParser.host': '主机',
-  'tools.urlParser.hostname': '主机名',
-  'tools.urlParser.port': '端口',
-  'tools.urlParser.pathname': '路径',
-  'tools.urlParser.search': '查询字符串',
-  'tools.urlParser.hash': '哈希',
-  'tools.urlParser.origin': '源',
-  'tools.urlParser.params': '查询参数',
-  'tools.urlParser.noParams': '没有查询参数。',
-  'tools.queryJson.name': '查询串 ⇄ JSON',
-  'tools.queryJson.description': '在查询字符串与 JSON 之间互转，重复的键会合并为数组。',
-  'tools.queryJson.toJson': '转 JSON',
-  'tools.queryJson.toQuery': '转查询串',
-  'tools.queryJson.queryPlaceholder': 'a=1&b=2&b=3',
-  'tools.queryJson.jsonPlaceholder': '{"a": "1", "b": ["2", "3"]}',
-  'tools.queryJson.error': '当前方向下输入无效。',
-  'tools.basicAuth.name': 'Basic 认证头',
-  'tools.basicAuth.description': '根据用户名和密码生成 HTTP Basic 认证头。',
-  'tools.basicAuth.username': '用户名',
-  'tools.basicAuth.usernamePlaceholder': 'user',
-  'tools.basicAuth.password': '密码',
-  'tools.basicAuth.passwordPlaceholder': 'secret',
-  'tools.basicAuth.header': '认证头',
-  'tools.basicAuth.encoded': 'Base64 令牌',
-  'tools.userAgentParser.name': 'User-Agent 解析',
-  'tools.userAgentParser.description':
-    '把 User-Agent 字符串解析为浏览器、操作系统、引擎和设备类型。',
-  'tools.userAgentParser.placeholder': '粘贴 User-Agent 字符串……',
-  'tools.userAgentParser.browser': '浏览器',
-  'tools.userAgentParser.os': '操作系统',
-  'tools.userAgentParser.engine': '引擎',
-  'tools.userAgentParser.device': '设备',
-  'tools.userAgentParser.unknown': '未知',
-  'tools.userAgentParser.useMine': '用本机',
-  'tools.mimeLookup.name': 'MIME 查询',
-  'tools.mimeLookup.description': '按文件扩展名查询对应的 MIME 类型。',
-  'tools.mimeLookup.placeholder': '按扩展名或 MIME 类型搜索……',
-  'tools.mimeLookup.extension': '扩展名',
-  'tools.mimeLookup.mimeType': 'MIME 类型',
-  'tools.mimeLookup.noResults': '没有匹配的类型。',
-  'tools.httpStatus.name': 'HTTP 状态码',
-  'tools.httpStatus.description': '查询 HTTP 状态码及其含义。',
-  'tools.httpStatus.placeholder': '按状态码或文字搜索……',
-  'tools.httpStatus.noResults': '没有匹配的状态码。',
-  'tools.ipConverter.name': 'IP 转换',
-  'tools.ipConverter.description': '在 IPv4 地址与 32 位整数、二进制、十六进制之间互转。',
-  'tools.ipConverter.ipv4': 'IPv4',
-  'tools.ipConverter.integer': '整数',
-  'tools.ipConverter.binary': '二进制',
-  'tools.ipConverter.hex': '十六进制',
-  'tools.ipConverter.invalid': '值无效。',
-  'tools.punycode.name': 'Punycode',
-  'tools.punycode.description': '在国际化域名与 Punycode 之间互转。',
-  'tools.punycode.unicode': 'Unicode',
-  'tools.punycode.ascii': 'ASCII（Punycode）',
-  'tools.punycode.invalid': '主机名无效。',
+
   'common.reset': '重置',
+
   'common.invalidInput': '输入无效。',
+
   'common.waitingForInput': '等待输入……',
+
   'utilityError.required': '请输入内容。',
+
   'utilityError.number': '请输入有效数字。',
+
   'utilityError.csv': 'CSV 中存在未闭合的引号字段。',
+
   'utilityError.xml': 'XML 格式无效。',
+
   'utilityError.hex': '请输入完整的十六进制字节对。',
+
   'utilityError.base58': 'Base58 输入中含有无效字符。',
+
   'utilityError.width': '列宽必须是正整数。',
+
   'utilityError.uuid': '请输入有效的 UUID。',
+
   'utilityError.ipv4': '请输入有效的 IPv4 地址。',
+
   'utilityError.prefix': 'CIDR 前缀必须在 0 到 32 之间。',
+
   'utilityError.header': '每个 HTTP 头都必须包含名称和冒号。',
+
   'utilityError.paths': '请至少输入一个路径。',
-  'utilityError.shellQuote': '命令中存在未闭合的引号。',
+
+  'utilityError.shellQuote': '命令中存在未闭合的引号或末尾转义符。',
+
   'utilityError.dockerValue': 'Docker 选项缺少对应的值。',
+
   'utilityError.dockerOption': '命令中含有暂不支持的 Docker 选项。',
+
   'utilityError.dockerImage': '命令中没有找到 Docker 镜像。',
+
   'utilityError.template': '可用模板：node、python、go、rust、macos、vscode 或 jetbrains。',
+
   'utilityError.semver': '请输入有效的语义化版本号。',
+
   'utilityError.fraction': '请输入整数或 3/4 形式的分数。',
+
   'utilityError.denominator': '分母不能为零。',
+
   'utilityError.divideZero': '不能除以零。',
+
   'utilityError.coefficient': '系数 a 或 b 必须至少有一个不为零。',
+
   'utilityError.date': '请选择有效日期。',
+
   'utilityError.birthOrder': '出生日期不能晚于计算日期。',
+
   'utilityError.bodyPositive': '身高和体重必须为正数。',
+
   'utilityError.loanRange': '请输入正数贷款值和非负利率。',
+
   'utilityError.investmentRange': '请输入有效的非负投资数值。',
+
   'utilityError.dimensions': '尺寸必须为正数。',
-  'tools.csvToTsv.name': 'CSV 转 TSV',
-  'tools.csvToTsv.description': '将 CSV 数据转换为制表符分隔格式，并正确保留带引号字段。',
-  'tools.csvToTsv.input': 'CSV 输入',
-  'tools.xmlFormatter.name': 'XML 格式化',
-  'tools.xmlFormatter.description': '校验 XML 并用清晰的缩进进行格式化。',
-  'tools.xmlFormatter.input': 'XML 输入',
-  'tools.jsonFlatten.name': 'JSON 扁平化',
-  'tools.jsonFlatten.description': '将嵌套 JSON 对象和数组展开为基于路径的键。',
-  'tools.jsonFlatten.input': 'JSON 输入',
-  'tools.jsonSortKeys.name': 'JSON 键排序',
-  'tools.jsonSortKeys.description': '递归排序对象键，同时保持数组和值不变。',
-  'tools.jsonSortKeys.input': 'JSON 输入',
-  'tools.hexText.name': '十六进制 ↔ 文本',
-  'tools.hexText.description': '在 UTF-8 文本和十六进制字节之间互转。',
-  'tools.hexText.direction': '转换方向',
-  'tools.hexText.direction.encode': '文本 → 十六进制',
-  'tools.hexText.direction.decode': '十六进制 → 文本',
-  'tools.hexText.input': '输入',
-  'tools.listConverter.name': '列表格式转换',
-  'tools.listConverter.description': '在换行、逗号、空格和分号分隔的列表格式之间转换。',
-  'tools.listConverter.from': '输入分隔符',
-  'tools.listConverter.to': '输出分隔符',
-  'tools.listConverter.from.newline': '换行',
-  'tools.listConverter.from.comma': '逗号',
-  'tools.listConverter.from.space': '空格',
-  'tools.listConverter.from.semicolon': '分号',
-  'tools.listConverter.to.newline': '换行',
-  'tools.listConverter.to.comma': '逗号',
-  'tools.listConverter.to.space': '空格',
-  'tools.listConverter.to.semicolon': '分号',
-  'tools.listConverter.input': '列表输入',
-  'tools.markdownToHtml.name': 'Markdown 转 HTML',
-  'tools.markdownToHtml.description': '将常用 Markdown 语法转换为安全、便携的 HTML 源码。',
-  'tools.markdownToHtml.input': 'Markdown 输入',
-  'tools.base58.name': 'Base58 编码 / 解码',
-  'tools.base58.description': '使用 Bitcoin Base58 字母表编码 UTF-8 文本或解码回文本。',
-  'tools.base58.direction': '转换方向',
-  'tools.base58.direction.encode': '编码',
-  'tools.base58.direction.decode': '解码',
-  'tools.base58.input': '输入',
-  'tools.lengthConverter.name': '长度转换',
-  'tools.lengthConverter.description': '在常用公制与英制长度单位之间转换。',
-  'tools.lengthConverter.value': '数值',
-  'tools.lengthConverter.from': '从',
-  'tools.lengthConverter.to': '转换为',
-  'tools.lengthConverter.from.meter': '米',
-  'tools.lengthConverter.from.kilometer': '千米',
-  'tools.lengthConverter.from.centimeter': '厘米',
-  'tools.lengthConverter.from.millimeter': '毫米',
-  'tools.lengthConverter.from.mile': '英里',
-  'tools.lengthConverter.from.yard': '码',
-  'tools.lengthConverter.from.foot': '英尺',
-  'tools.lengthConverter.from.inch': '英寸',
-  'tools.lengthConverter.to.meter': '米',
-  'tools.lengthConverter.to.kilometer': '千米',
-  'tools.lengthConverter.to.centimeter': '厘米',
-  'tools.lengthConverter.to.millimeter': '毫米',
-  'tools.lengthConverter.to.mile': '英里',
-  'tools.lengthConverter.to.yard': '码',
-  'tools.lengthConverter.to.foot': '英尺',
-  'tools.lengthConverter.to.inch': '英寸',
-  'tools.duplicateLines.name': '重复行移除',
-  'tools.duplicateLines.description': '删除重复行，同时保留第一次出现的内容和原始顺序。',
-  'tools.duplicateLines.mode': '比较方式',
-  'tools.duplicateLines.mode.exact': '完全一致',
-  'tools.duplicateLines.mode.trim': '忽略首尾空格',
-  'tools.duplicateLines.mode.ignoreCase': '忽略空格与大小写',
-  'tools.duplicateLines.input': '文本输入',
-  'tools.wordFrequency.name': '词频统计',
-  'tools.wordFrequency.description': '使用支持 Unicode 的规则统计单词并按出现频率排序。',
-  'tools.wordFrequency.minimumLength': '最短词长',
-  'tools.wordFrequency.input': '文本输入',
-  'tools.wordFrequency.unique': '不同单词数',
-  'tools.lineNumberer.name': '行号添加器',
-  'tools.lineNumberer.description': '为每一行添加对齐且可配置的行号。',
-  'tools.lineNumberer.start': '起始编号',
-  'tools.lineNumberer.separator': '分隔符',
-  'tools.lineNumberer.input': '文本输入',
-  'tools.textWrap.name': '文本自动换行',
-  'tools.textWrap.description': '按固定列宽折行，同时保留空行。',
-  'tools.textWrap.width': '列宽',
-  'tools.textWrap.input': '文本输入',
-  'tools.extractEmails.name': '邮箱提取器',
-  'tools.extractEmails.description': '从任意文本中提取不重复的电子邮箱地址。',
-  'tools.extractEmails.input': '文本输入',
-  'tools.extractUrls.name': '网址提取器',
-  'tools.extractUrls.description': '从任意文本中提取不重复的 HTTP 和 HTTPS 地址。',
-  'tools.extractUrls.input': '文本输入',
-  'tools.unicodeNormalizer.name': 'Unicode 规范化',
-  'tools.unicodeNormalizer.description': '使用 NFC、NFD、NFKC 或 NFKD 规范化 Unicode 文本。',
-  'tools.unicodeNormalizer.form': '规范化形式',
-  'tools.unicodeNormalizer.form.NFC': 'NFC——标准组合',
-  'tools.unicodeNormalizer.form.NFD': 'NFD——标准分解',
-  'tools.unicodeNormalizer.form.NFKC': 'NFKC——兼容组合',
-  'tools.unicodeNormalizer.form.NFKD': 'NFKD——兼容分解',
-  'tools.unicodeNormalizer.input': '文本输入',
-  'tools.whitespaceVisualizer.name': '空白字符可视化',
-  'tools.whitespaceVisualizer.description': '用可见符号显示空格、制表符和换行符。',
-  'tools.whitespaceVisualizer.input': '文本输入',
-  'tools.md5Hash.name': 'MD5 哈希',
-  'tools.md5Hash.description': '为旧系统兼容计算 MD5 摘要；请勿将 MD5 用于密码或安全用途。',
-  'tools.md5Hash.input': '文本输入',
-  'tools.uuidInspector.name': 'UUID 检查器',
-  'tools.uuidInspector.description': '校验 UUID，并查看版本、变体及可用时的内嵌时间戳。',
-  'tools.uuidInspector.input': 'UUID',
-  'tools.uuidInspector.canonical': '标准 UUID',
-  'tools.uuidInspector.version': '版本',
-  'tools.uuidInspector.variant': '变体',
-  'tools.uuidInspector.timestamp': '时间戳',
+
   'tools.ipv4Subnet.name': 'IPv4 子网计算器',
+
   'tools.ipv4Subnet.description': '根据 CIDR 计算网络、掩码、广播地址、可用范围和地址数。',
+
   'tools.ipv4Subnet.address': 'IPv4 地址',
+
   'tools.ipv4Subnet.prefix': 'CIDR 前缀',
+
   'tools.ipv4Subnet.network': '网络地址',
+
   'tools.ipv4Subnet.mask': '子网掩码',
+
   'tools.ipv4Subnet.broadcast': '广播地址',
+
   'tools.ipv4Subnet.range': '可用范围',
+
   'tools.ipv4Subnet.addresses': '地址总数',
-  'tools.cookieParser.name': 'Cookie 解析器',
-  'tools.cookieParser.description': '将 HTTP Cookie 请求头解析为易读的 JSON。',
-  'tools.cookieParser.input': 'Cookie 请求头',
-  'tools.httpHeadersParser.name': 'HTTP 头解析器',
-  'tools.httpHeadersParser.description': '将原始 HTTP 头解析为规范化 JSON，并保留重复字段。',
-  'tools.httpHeadersParser.input': 'HTTP 头',
-  'tools.utmBuilder.name': 'UTM 链接生成器',
-  'tools.utmBuilder.description': '生成参数编码正确的 UTM 营销活动链接。',
-  'tools.utmBuilder.url': '目标网址',
-  'tools.utmBuilder.source': '活动来源',
-  'tools.utmBuilder.medium': '活动媒介',
-  'tools.utmBuilder.campaign': '活动名称',
-  'tools.utmBuilder.term': '活动关键词',
-  'tools.utmBuilder.content': '活动内容',
-  'tools.robotsGenerator.name': 'robots.txt 生成器',
-  'tools.robotsGenerator.description': '生成包含允许、禁止及站点地图指令的 robots.txt。',
-  'tools.robotsGenerator.userAgent': '用户代理',
-  'tools.robotsGenerator.sitemap': '站点地图地址',
-  'tools.robotsGenerator.allow': '允许路径',
-  'tools.robotsGenerator.disallow': '禁止路径',
-  'tools.sitemapGenerator.name': '站点地图生成器',
-  'tools.sitemapGenerator.description': '根据基础网址和路径列表生成基础 XML 站点地图。',
-  'tools.sitemapGenerator.baseUrl': '基础网址',
-  'tools.sitemapGenerator.paths': '路径',
-  'tools.urlJoiner.name': '网址拼接器',
-  'tools.urlJoiner.description': '按照浏览器 URL 规则，将多个相对路径解析到基础网址。',
-  'tools.urlJoiner.baseUrl': '基础网址',
-  'tools.urlJoiner.paths': '相对路径',
-  'tools.mailtoGenerator.name': '邮件链接生成器',
-  'tools.mailtoGenerator.description': '生成包含收件人、主题和正文的 mailto 链接。',
-  'tools.mailtoGenerator.to': '收件人',
-  'tools.mailtoGenerator.cc': '抄送',
-  'tools.mailtoGenerator.bcc': '密送',
-  'tools.mailtoGenerator.subject': '主题',
-  'tools.mailtoGenerator.body': '正文',
-  'tools.jsonSchemaGenerator.name': 'JSON Schema 生成器',
-  'tools.jsonSchemaGenerator.description': '根据示例 JSON 推断 JSON Schema Draft 2020-12 文档。',
-  'tools.jsonSchemaGenerator.input': '示例 JSON',
-  'tools.sqlFormatter.name': 'SQL 格式化',
-  'tools.sqlFormatter.description': '整理常用 SQL 子句和逗号分隔字段，便于快速阅读。',
-  'tools.sqlFormatter.input': 'SQL 输入',
-  'tools.cssMinifier.name': 'CSS 压缩',
-  'tools.cssMinifier.description': '移除 CSS 中的注释和不必要空白。',
-  'tools.cssMinifier.input': 'CSS 输入',
-  'tools.htmlMinifier.name': 'HTML 压缩',
-  'tools.htmlMinifier.description': '保守移除注释和标签间空白，同时保留代码块内容。',
-  'tools.htmlMinifier.input': 'HTML 输入',
+
   'tools.dockerRunToCompose.name': 'Docker Run 转 Compose',
+
   'tools.dockerRunToCompose.description': '将常见 docker run 参数转换为 Compose services 文档。',
+
   'tools.dockerRunToCompose.input': 'docker run 命令',
+
   'tools.gitignoreGenerator.name': '.gitignore 生成器',
+
   'tools.gitignoreGenerator.description': '组合常见技术栈和编辑器的实用忽略模板。',
+
   'tools.gitignoreGenerator.stacks': '模板',
+
   'tools.gitignoreGenerator.extra': '附加规则',
-  'tools.semverCompare.name': '语义化版本比较',
-  'tools.semverCompare.description': '比较两个 SemVer 2.0 版本，包括预发布标识符。',
-  'tools.semverCompare.left': '第一个版本',
-  'tools.semverCompare.right': '第二个版本',
-  'tools.semverCompare.equal': '两个版本相同',
-  'tools.semverCompare.olderThan': '早于',
-  'tools.semverCompare.newerThan': '晚于',
-  'tools.cssSpecificity.name': 'CSS 优先级计算器',
-  'tools.cssSpecificity.description': '估算逗号分隔选择器的 ID、类和元素优先级。',
-  'tools.cssSpecificity.input': 'CSS 选择器',
-  'tools.fractionCalculator.name': '分数计算器',
-  'tools.fractionCalculator.description': '使用精确的 BigInt 运算进行分数加、减、乘、除。',
-  'tools.fractionCalculator.left': '第一个分数',
-  'tools.fractionCalculator.operator': '运算',
-  'tools.fractionCalculator.operator.add': '加',
-  'tools.fractionCalculator.operator.subtract': '减',
-  'tools.fractionCalculator.operator.multiply': '乘',
-  'tools.fractionCalculator.operator.divide': '除',
-  'tools.fractionCalculator.right': '第二个分数',
-  'tools.quadraticSolver.name': '一元二次方程求解',
-  'tools.quadraticSolver.description': '求解 ax² + bx + c = 0，包括重根和复数根。',
-  'tools.quadraticSolver.a': '系数 a',
-  'tools.quadraticSolver.b': '系数 b',
-  'tools.quadraticSolver.c': '系数 c',
-  'tools.quadraticSolver.discriminant': '判别式',
-  'tools.quadraticSolver.linearRoot': '一次方程根',
-  'tools.dateDifference.name': '日期间隔',
-  'tools.dateDifference.description': '计算两个日期之间的日历年、月、日及总天数。',
-  'tools.dateDifference.start': '开始日期',
-  'tools.dateDifference.end': '结束日期',
-  'tools.dateDifference.calendar': '日历间隔',
-  'tools.dateDifference.years': '年',
-  'tools.dateDifference.months': '个月',
-  'tools.dateDifference.days': '天',
-  'tools.dateDifference.totalDays': '总天数',
-  'tools.ageCalculator.name': '年龄计算器',
-  'tools.ageCalculator.description': '计算任意指定日期时的精确年龄。',
-  'tools.ageCalculator.birthDate': '出生日期',
-  'tools.ageCalculator.asOf': '计算日期',
-  'tools.ageCalculator.years': '岁',
-  'tools.ageCalculator.months': '个月',
-  'tools.ageCalculator.days': '天',
-  'tools.businessDays.name': '工作日计算器',
-  'tools.businessDays.description': '计算含首尾日期的工作日数，并可排除节假日。',
-  'tools.businessDays.start': '开始日期',
-  'tools.businessDays.end': '结束日期',
-  'tools.businessDays.holidays': '排除的节假日',
-  'tools.businessDays.businessDays': '工作日',
-  'tools.businessDays.weekendDays': '周末天数',
-  'tools.businessDays.excludedHolidays': '排除的节假日',
-  'tools.bmiCalculator.name': 'BMI 计算器',
-  'tools.bmiCalculator.description': '根据公制身高和体重计算身体质量指数。',
-  'tools.bmiCalculator.weight': '体重（千克）',
-  'tools.bmiCalculator.height': '身高（厘米）',
-  'tools.bmiCalculator.bmi': 'BMI',
-  'tools.bmiCalculator.category': '类别',
-  'tools.bmiCalculator.underweight': '偏瘦',
-  'tools.bmiCalculator.normal': '正常范围',
-  'tools.bmiCalculator.overweight': '超重',
-  'tools.bmiCalculator.obese': '肥胖范围',
-  'tools.loanCalculator.name': '贷款计算器',
-  'tools.loanCalculator.description': '估算等额月供、总还款额和总利息。',
-  'tools.loanCalculator.principal': '贷款本金',
-  'tools.loanCalculator.rate': '年利率（%）',
-  'tools.loanCalculator.years': '期限（年）',
-  'tools.loanCalculator.monthlyPayment': '每月还款',
-  'tools.loanCalculator.totalPayment': '还款总额',
-  'tools.loanCalculator.totalInterest': '利息总额',
-  'tools.compoundInterest.name': '复利计算器',
-  'tools.compoundInterest.description': '根据定期投入和复利估算投资增长。',
-  'tools.compoundInterest.principal': '初始本金',
-  'tools.compoundInterest.rate': '年利率（%）',
-  'tools.compoundInterest.years': '年数',
-  'tools.compoundInterest.contribution': '每期投入',
-  'tools.compoundInterest.frequency': '复利频率',
-  'tools.compoundInterest.frequency.monthly': '每月',
-  'tools.compoundInterest.frequency.quarterly': '每季度',
-  'tools.compoundInterest.frequency.annually': '每年',
-  'tools.compoundInterest.futureValue': '未来价值',
-  'tools.compoundInterest.contributed': '投入总额',
-  'tools.compoundInterest.interestEarned': '利息收益',
-  'tools.aspectRatio.name': '宽高比计算器',
-  'tools.aspectRatio.description': '将尺寸约分为宽高比，并计算缩放后的高度。',
-  'tools.aspectRatio.width': '原始宽度',
-  'tools.aspectRatio.height': '原始高度',
-  'tools.aspectRatio.targetWidth': '目标宽度',
-  'tools.aspectRatio.ratio': '宽高比',
-  'tools.aspectRatio.scaledHeight': '缩放后高度',
 
   'tools.cpsTest.name': 'CPS 手速测试',
+
   'tools.cpsTest.description': '测试每秒能够完成多少次鼠标点击。',
+
   'tools.cpsTest.duration': '测试时长',
+
   'tools.cpsTest.result': '每秒点击次数',
+
   'tools.cpsTest.resultDetail': '本轮共记录 {clicks} 次有效点击。',
+
   'tools.cpsTest.again': '再试一次',
+
   'tools.cpsTest.startPrompt': '点击此处开始',
+
   'tools.cpsTest.clickPrompt': '继续点击',
+
   'tools.cpsTest.status.ready': '等待输入',
+
   'tools.cpsTest.status.live': '测试进行中',
+
   'tools.cpsTest.status.complete': '测试已完成',
+
   'tools.cpsTest.reportTitle': '表现报告',
+
   'tools.cpsTest.rating': '评级',
+
   'tools.cpsTest.newBest': '刷新个人纪录',
+
   'tools.cpsTest.replayHint': '快速重测',
+
   'tools.cpsTest.totalClicks': '总点击次数',
+
   'tools.cpsTest.peakRate': '峰值速度',
+
   'tools.cpsTest.consistency': '节奏稳定度',
+
   'tools.cpsTest.personalBest': '个人最佳',
+
   'tools.cpsTest.timeline': '点击速度曲线',
+
   'tools.cpsTest.sampling': '约 {interval} ms 采样 · {duration} s',
+
   'tools.cpsTest.readyLabel': '准备就绪',
+
   'tools.cpsTest.liveLabel': '实时点击',
+
   'tools.cpsTest.liveRate': '当前速度',
+
   'tools.cpsTest.privacy': '全部数据仅在浏览器本地测量',
+
   'tools.cpsTest.insight.fast':
     '爆发速度非常出色，峰值已具备竞争力；接下来可以尝试在更长测试中维持相同节奏。',
+
   'tools.cpsTest.insight.steady':
     '你的点击节奏十分稳定；在不牺牲控制的前提下加快第一秒启动，可以进一步提高总成绩。',
+
   'tools.cpsTest.insight.practice':
     '各秒之间的速度波动较大。先放松手部、保持均匀节奏，再逐步提高点击速度。',
 
-  'tools.spacebarTest.name': '空格键速度测试',
-  'tools.spacebarTest.description': '测试连续敲击空格键的速度。',
-  'tools.spacebarTest.duration': '测试时长',
-  'tools.spacebarTest.result': '每秒敲击次数',
-  'tools.spacebarTest.resultDetail': '本轮共记录 {presses} 次空格键敲击。',
-  'tools.spacebarTest.again': '再试一次',
-  'tools.spacebarTest.space': '空格键',
-  'tools.spacebarTest.instructions': '聚焦测试区域，然后尽可能快速地连续按下空格键。',
-  'tools.spacebarTest.peakRate': '峰值速度',
-  'tools.spacebarTest.liveRate': '当前速度',
-  'tools.spacebarTest.timeline': '敲击速度曲线',
-  'tools.spacebarTest.sampling': '约 {interval} ms 采样 · {duration} s',
-
   'tools.reactionTime.name': '反应速度测试',
+
   'tools.reactionTime.description': '测量看到视觉信号变化后作出反应所需的时间。',
+
   'tools.reactionTime.startPrompt': '开始测试',
+
   'tools.reactionTime.wait': '等待绿色信号……',
+
   'tools.reactionTime.now': '立即点击！',
+
   'tools.reactionTime.tooSoon': '点早了',
+
   'tools.reactionTime.again': '点击重新测试',
+
   'tools.reactionTime.tapHint': '点击或轻触面板任意位置。',
+
   'tools.reactionTime.instructions': '开始后等待面板变为绿色，再尽快点击。',
+
   'tools.reactionTime.resultDetail': '最终成绩取五次有效反应的平均值。本轮抢点 {falseStarts} 次。',
+
   'tools.reactionTime.median': '中位数',
+
   'tools.reactionTime.roundResults': '各轮反应时间',
+
   'tools.reactionTime.nextRound': '点击开始下一轮',
 
-  'tools.aimTrainer.name': '瞄准训练',
-  'tools.aimTrainer.description': '连续命中 20 个移动目标，测量平均锁定速度。',
-  'tools.aimTrainer.hits': '已命中目标',
-  'tools.aimTrainer.pace': '平均速度',
-  'tools.aimTrainer.result': '平均目标用时',
-  'tools.aimTrainer.resultDetail': '成绩越低越好，稳定准确的移动比盲目连点更重要。',
-  'tools.aimTrainer.again': '再次训练',
-  'tools.aimTrainer.instructions': '依次点击出现的目标，首个目标出现时开始计时。',
-  'tools.aimTrainer.start': '开始训练',
-  'tools.aimTrainer.target': '目标',
-
-  'tools.mouseAccuracy.name': '鼠标精度测试',
-  'tools.mouseAccuracy.description': '尽量点击每个准星的正中心。',
-  'tools.mouseAccuracy.round': '目标',
-  'tools.mouseAccuracy.averageError': '平均误差',
-  'tools.mouseAccuracy.result': '平均中心误差',
-  'tools.mouseAccuracy.resultDetail': '成绩为指针落点与目标精确中心之间的平均距离。',
-  'tools.mouseAccuracy.again': '再次测试',
-  'tools.mouseAccuracy.playArea': '鼠标精度测试区域',
-  'tools.mouseAccuracy.instructions': '将依次出现十二个准星，请尽量点击每个准星的正中心。',
-  'tools.mouseAccuracy.start': '开始测试',
-  'tools.mouseAccuracy.p90Error': '90% 分位误差',
-  'tools.mouseAccuracy.responseTime': '平均响应时间',
-
-  'tools.scrollSpeed.name': '滚轮速度测试',
-  'tools.scrollSpeed.description': '测量五秒内滚轮或触控板产生的垂直滚动距离。',
-  'tools.scrollSpeed.distance': '滚动距离',
-  'tools.scrollSpeed.time': '剩余时间',
-  'tools.scrollSpeed.result': '平均滚动速度',
-  'tools.scrollSpeed.resultDetail': '本轮共记录 {distance} 像素的滚动量。',
-  'tools.scrollSpeed.again': '再试一次',
-  'tools.scrollSpeed.playArea': '滚轮速度测试区域',
-  'tools.scrollSpeed.ready': '准备滚动了吗？',
-  'tools.scrollSpeed.scrollNow': '立即滚动',
-  'tools.scrollSpeed.instructions': '把指针停留在面板中，然后快速上下滚动滚轮或触控板。',
-  'tools.scrollSpeed.start': '开始测试',
-  'tools.scrollSpeed.duration': '测试时长',
-  'tools.scrollSpeed.peakRate': '峰值速度',
-  'tools.scrollSpeed.liveRate': '当前速度',
-  'tools.scrollSpeed.reversals': '方向切换',
-  'tools.scrollSpeed.timeline': '滚动速度曲线',
-  'tools.scrollSpeed.sampling': '约 {interval} ms 采样 · {duration} s',
-
-  'tools.schulteTable.name': '舒尔特表测试',
-  'tools.schulteTable.description': '按照从 1 到 25 的顺序尽快找出所有数字。',
-  'tools.schulteTable.next': '下一个数字',
-  'tools.schulteTable.time': '已用时间',
-  'tools.schulteTable.result': '完成用时',
-  'tools.schulteTable.resultDetail': '可以尝试让视线停留在中央，通过周边视野扫描数字。',
-  'tools.schulteTable.again': '生成新表格',
-  'tools.schulteTable.instructions': '按升序依次选择所有数字，点击 1 时开始计时。',
-  'tools.schulteTable.size': '表格尺寸',
-  'tools.schulteTable.averageStep': '平均选择用时',
-
-  'tools.timePerception.name': '时间感知测试',
-  'tools.timePerception.description': '在看不到计时器的情况下估计一段时间。',
-  'tools.timePerception.target': '目标时长',
-  'tools.timePerception.result': '绝对误差',
-  'tools.timePerception.resultDetail': '你在 {elapsed} 秒时停止了计时。',
-  'tools.timePerception.again': '再试一次',
-  'tools.timePerception.start': '启动隐藏计时器',
-  'tools.timePerception.stop': '现在停止',
-  'tools.timePerception.instructions': '启动计时器，在心中估计目标时长，然后停止。',
-  'tools.timePerception.runningHint': '计时器正在运行，但不会显示当前数值。',
-  'tools.timePerception.bias': '平均偏差',
-  'tools.timePerception.roundResult': '本轮误差',
-  'tools.timePerception.nextRound': '开始下一轮',
-
-  'tools.stroopTest.name': 'Stroop 色词测试',
-  'tools.stroopTest.description': '忽略文字含义，判断文字实际显示的颜色。',
-  'tools.stroopTest.progress': '进度',
-  'tools.stroopTest.correct': '正确',
-  'tools.stroopTest.result': '正确数量',
-  'tools.stroopTest.resultDetail': '你用 {time} 秒完成了 20 道题。',
-  'tools.stroopTest.again': '再次测试',
-  'tools.stroopTest.instructions': '请选择文字的实际颜色，而不是文字所表达的颜色。',
-  'tools.stroopTest.start': '开始测试',
-  'tools.stroopTest.chooseInk': '选择文字颜色',
-  'tools.stroopTest.color.red': '红色',
-  'tools.stroopTest.color.blue': '蓝色',
-  'tools.stroopTest.color.green': '绿色',
-  'tools.stroopTest.color.amber': '琥珀色',
-
-  'tools.colorHueTest.name': '色相辨别测试',
-  'tools.colorHueTest.description': '连续八轮找出色相略有不同的色块。',
-  'tools.colorHueTest.progress': '进度',
-  'tools.colorHueTest.correct': '正确',
-  'tools.colorHueTest.result': '正确数量',
-  'tools.colorHueTest.resultDetail': '每轮之后，异色块与其他色块之间的差异都会变小。',
-  'tools.colorHueTest.again': '再次测试',
-  'tools.colorHueTest.instructions': '其中一个色块的色相略有不同，差异将逐轮变得更难分辨。',
-  'tools.colorHueTest.start': '开始测试',
-  'tools.colorHueTest.pickDifferent': '选择颜色不同的色块。',
-  'tools.colorHueTest.tile': '色块',
-  'tools.colorHueTest.finestDifference': '最细微色相差',
-
-  'tools.oddOneOut.name': '找出异类',
-  'tools.oddOneOut.description': '从一组相似符号中找出唯一不同的一个。',
-  'tools.oddOneOut.progress': '进度',
-  'tools.oddOneOut.correct': '正确',
-  'tools.oddOneOut.result': '正确数量',
-  'tools.oddOneOut.resultDetail': '有序、细致地比较通常比随机扫视更加可靠。',
-  'tools.oddOneOut.again': '再次测试',
-  'tools.oddOneOut.instructions': '每个方阵里只有一个不同的字符或符号，共进行十轮。',
-  'tools.oddOneOut.start': '开始测试',
-  'tools.oddOneOut.pickDifferent': '找出不同的符号。',
-
-  'tools.rhythmTest.name': '节奏感测试',
-  'tools.rhythmTest.description': '模仿稳定的视觉节拍，测量节奏误差。',
-  'tools.rhythmTest.result': '平均节奏误差',
-  'tools.rhythmTest.resultDetail': '这是每次敲击与示范的 600 毫秒节拍之间的平均偏差。',
-  'tools.rhythmTest.again': '再试一次',
-  'tools.rhythmTest.instructions': '先观看四次示范节拍，再用九次敲击复现相同速度。',
-  'tools.rhythmTest.start': '开始测试',
-  'tools.rhythmTest.watch': '观察节拍',
-  'tools.rhythmTest.tempo': '实测节拍',
-  'tools.rhythmTest.tap': '保持节奏',
-
-  'tools.sequenceMemory.name': '序列记忆测试',
-  'tools.sequenceMemory.description': '记住并复现逐渐变长的方格闪烁序列。',
-  'tools.sequenceMemory.level': '等级',
-  'tools.sequenceMemory.length': '序列长度',
-  'tools.sequenceMemory.result': '到达等级',
-  'tools.sequenceMemory.resultDetail': '每完成一级，序列都会增加一个步骤。',
-  'tools.sequenceMemory.again': '重新开始',
-  'tools.sequenceMemory.instructions': '观察方格依次亮起，然后严格按照相同顺序点击。',
-  'tools.sequenceMemory.start': '开始测试',
-  'tools.sequenceMemory.watch': '观察序列',
-  'tools.sequenceMemory.repeat': '复现序列',
-  'tools.sequenceMemory.cell': '方格',
-  'tools.sequenceMemory.levelUnit': '级',
-  'tools.sequenceMemory.correctSteps': '正确步骤',
-  'tools.sequenceMemory.expectedCell': '正确方格',
-  'tools.sequenceMemory.answerReveal': '你选择了第 {chosen} 格，正确的下一格是第 {expected} 格。',
-
-  'tools.numberMemory.name': '数字记忆测试',
-  'tools.numberMemory.description': '记住数字串，每次成功后都会增加一位数字。',
-  'tools.numberMemory.digits': '数字位数',
-  'tools.numberMemory.result': '最长完成位数',
-  'tools.numberMemory.resultDetail': '刚才显示的数字是 {number}。',
-  'tools.numberMemory.again': '重新开始',
-  'tools.numberMemory.instructions': '数字会短暂显示，消失后请准确输入刚才看到的内容。',
-  'tools.numberMemory.start': '开始测试',
-  'tools.numberMemory.remember': '记住这个数字',
-  'tools.numberMemory.enterNumber': '输入刚才看到的数字',
-  'tools.numberMemory.submit': '提交',
-  'tools.numberMemory.digitsUnit': '位',
-  'tools.numberMemory.targetNumber': '正确数字',
-  'tools.numberMemory.yourAnswer': '你的答案',
-  'tools.numberMemory.displayTime': '展示时间',
-
-  'tools.visualMemory.name': '视觉记忆测试',
-  'tools.visualMemory.description': '记住五乘五方格中曾经高亮的位置。',
-  'tools.visualMemory.level': '等级',
-  'tools.visualMemory.cells': '需要记住的方格',
-  'tools.visualMemory.result': '完成等级',
-  'tools.visualMemory.resultDetail': '每成功一轮，下一轮高亮的方格数量都会增加。',
-  'tools.visualMemory.again': '重新开始',
-  'tools.visualMemory.instructions': '记住高亮方格，消失后选出所有相同位置。',
-  'tools.visualMemory.start': '开始测试',
-  'tools.visualMemory.remember': '记住这些方格',
-  'tools.visualMemory.select': '选出方格',
-  'tools.visualMemory.cell': '方格',
-  'tools.visualMemory.levelUnit': '级',
-  'tools.visualMemory.correctCells': '正确方格',
-  'tools.visualMemory.failedCell': '错误方格',
-
-  'tools.verbalMemory.name': '词语记忆测试',
-  'tools.verbalMemory.description': '判断每个词语是否在本轮测试中出现过。',
-  'tools.verbalMemory.progress': '进度',
-  'tools.verbalMemory.correct': '正确',
-  'tools.verbalMemory.result': '正确数量',
-  'tools.verbalMemory.resultDetail': '30 道题中混合了新词和有意重复的词语。',
-  'tools.verbalMemory.again': '再次测试',
-  'tools.verbalMemory.instructions': '如果词语之前出现过，请选择“见过”，否则选择“新词”。',
-  'tools.verbalMemory.start': '开始测试',
-  'tools.verbalMemory.haveSeen': '你见过这个词吗？',
-  'tools.verbalMemory.seen': '见过',
-  'tools.verbalMemory.new': '新词',
-
-  'tools.memoryMatch.name': '翻牌记忆游戏',
-  'tools.memoryMatch.description': '翻开卡片并用尽量少的步数配对全部八组字母。',
-  'tools.memoryMatch.moves': '步数',
-  'tools.memoryMatch.pairs': '已找到配对',
-  'tools.memoryMatch.result': '使用步数',
-  'tools.memoryMatch.resultDetail': '你用 {time} 秒找到了所有配对。',
-  'tools.memoryMatch.again': '生成新牌局',
-  'tools.memoryMatch.instructions': '每次翻开两张卡片，并记住每个字母的位置。',
-  'tools.memoryMatch.card': '隐藏卡片',
-  'tools.memoryMatch.movesUnit': '步',
-  'tools.memoryMatch.efficiency': '步数效率',
-
-  'tools.arithmeticSprint.name': '心算冲刺',
-  'tools.arithmeticSprint.description': '通过可选题量的混合运算冲刺训练心算速度。',
-  'tools.arithmeticSprint.progress': '进度',
-  'tools.arithmeticSprint.correct': '正确',
-  'tools.arithmeticSprint.result': '正确数量',
-  'tools.arithmeticSprint.resultDetail': '你用 {time} 秒完成 {total} 道题，答对 {correct} 道。',
-  'tools.arithmeticSprint.again': '再次挑战',
-  'tools.arithmeticSprint.instructions': '尽可能快速、准确地完成 {count} 道混合心算题。',
-  'tools.arithmeticSprint.start': '开始冲刺',
-  'tools.arithmeticSprint.answer': '你的答案',
-  'tools.arithmeticSprint.submit': '提交',
-  'tools.arithmeticSprint.questions': '题目数量',
-  'tools.arithmeticSprint.paceUnit': '正确题/分',
-  'tools.arithmeticSprint.averageResponse': '平均作答时间',
-  'tools.arithmeticSprint.feedbackCorrect': '回答正确，继续保持节奏。',
-  'tools.arithmeticSprint.feedbackWrong': '正确答案是 {answer}。',
-
-  'tools.goNoGo.name': 'Go / No-Go 抑制测试',
-  'tools.goNoGo.description': '看到绿色信号时作出反应，看到红色信号时保持不动。',
-  'tools.goNoGo.progress': '进度',
-  'tools.goNoGo.hits': '成功反应',
-  'tools.goNoGo.falseAlarms': '错误反应',
-  'tools.goNoGo.result': '控制得分',
-  'tools.goNoGo.resultDetail': '漏掉 {misses} 个绿色信号，对红色信号错误反应 {falseAlarms} 次。',
-  'tools.goNoGo.again': '再次测试',
-  'tools.goNoGo.instructions': '绿色时点击或按空格键，红色时不要做出任何反应。',
-  'tools.goNoGo.go': '绿色：作出反应',
-  'tools.goNoGo.stop': '红色：保持不动',
-  'tools.goNoGo.start': '开始测试',
-  'tools.goNoGo.tap': '立即反应',
-  'tools.goNoGo.hold': '不要反应',
-  'tools.goNoGo.wait': '准备',
-  'tools.goNoGo.trials': '测试轮次',
-  'tools.goNoGo.correctStops': '正确抑制',
-  'tools.goNoGo.misses': '漏按',
-  'tools.goNoGo.averageResponse': '平均反应时间',
-
   'tools.typingSpeed.name': '打字速度测试',
+
   'tools.typingSpeed.description': '通过一段短文测量打字速度与逐字准确率。',
+
   'tools.typingSpeed.cpm': '字/分',
+
   'tools.typingSpeed.wpm': '词/分',
+
   'tools.typingSpeed.accuracy': '准确率',
+
   'tools.typingSpeed.time': '已用时间',
+
   'tools.typingSpeed.result': '打字速度',
+
   'tools.typingSpeed.resultDetail': '本轮逐字准确率为 {accuracy}%。',
+
   'tools.typingSpeed.again': '更换短文',
+
   'tools.typingSpeed.prompt': '需要输入的文本',
+
   'tools.typingSpeed.placeholder': '从这里开始输入……',
+
   'tools.typingSpeed.input': '打字输入框',
+
   'tools.typingSpeed.instructions': '输入第一个字符时开始计时，达到短文长度时结束。',
+
   'tools.typingSpeed.rawSpeed': '原始字符速度',
+
   'tools.typingSpeed.corrections': '修正次数',
+} as const;
+
+export const zhHans: Record<MessageKey, string> = {
+  ...baseZhHans,
+  ...curatedDataZhHans,
+  ...curatedTextZhHans,
+  ...curatedCryptoZhHans,
+  ...curatedWebZhHans,
+  ...curatedCoreZhHans,
+  ...curatedTimeUnitsZhHans,
 };

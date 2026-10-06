@@ -136,6 +136,30 @@
   border: 0;
 }
 
+.palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: var(--lk-space-3);
+}
+
+.shade {
+  display: grid;
+  min-width: 0;
+  gap: var(--lk-space-2);
+  justify-items: center;
+}
+
+.shade code {
+  font-size: 12px;
+}
+
+.swatch:global([data-lk='button']) {
+  width: 100%;
+  height: 56px;
+  border: 1px solid var(--lk-color-emphasis-300);
+  border-radius: var(--lk-radius-sm);
+}
+
 @media (max-width: 600px) {
   .pickerLabel > span {
     display: none;

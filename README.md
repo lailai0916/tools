@@ -13,14 +13,14 @@
 
 ## Project Introduction
 
-A privacy-respecting collection of 140 browser-based developer tools at
+A curated collection of 32 browser-based developer tools at
 [tools.lailai.one](https://tools.lailai.one). No account is required, and tool inputs stay
 on the user's device. A self-hosted, cookieless Umami instance counts page views.
 
 ## Project Features
 
-🧰 **140 browser tools** — conversion, text, cryptography, Web, development, maths and
-generation utilities share one searchable registry.
+🧰 **Focused workspaces** — related operations share one input and result: structured data,
+text processing, encodings, colors, dates, units, HTTP, URLs, identifiers and secure generation.
 
 🔒 **Local processing** — pasted text and generated values are handled by browser APIs
 instead of being submitted to an application server.
@@ -70,12 +70,16 @@ tools/
 ## Adding a Tool
 
 The registry at `src/tools/registry.ts` is the single source for the home grid, routes and
-search.
+search. Merge a related capability into its existing workspace before adding an entry; avoid
+single-operation duplicates and verify algorithms against known examples.
 
 1. Create `src/tools/<id>/index.tsx` and an optional `styles.module.css`.
 2. Reuse `ToolLayout`, shared components and `useI18n`.
 3. Add the tool to `src/tools/registry.ts`.
-4. Add matching copy to `src/i18n/en.ts` and `src/i18n/zh-Hans.ts`.
+4. Add matching English and Simplified Chinese copy, plus a tool guide in `src/content/toolGuides/`.
+
+Merged paths live in `src/tools/legacyRoutes.ts`. They redirect to the relevant workspace mode,
+and saved favorites are migrated automatically. Removed tools return the normal 404 page.
 
 ## Deployment
 

@@ -1,33 +1,5 @@
 import type { LocalizedToolGuide, ToolGuideKey } from './types';
-
 export const developmentGuides = {
-  jsonToTs: {
-    en: {
-      summary: 'Infer TypeScript declarations from a sample JSON value.',
-      steps: [
-        'Paste valid JSON and choose a name for the root type.',
-        'Copy the generated declarations and review inferred types and optional fields.',
-      ],
-      example: {
-        input: 'Root name: Root\n{"name":"lailai","active":true}',
-        output: 'interface Root {\n  name: string;\n  active: boolean;\n}',
-      },
-      notes: [
-        'Types are inferred from the supplied sample. Missing cases, empty arrays and future values may require manual edits; declarations do not validate data at runtime.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '根据 JSON 样本推断 TypeScript 类型声明。',
-      steps: ['粘贴有效 JSON，并设置根类型名称。', '复制声明，检查推断出的类型与可选字段。'],
-      example: {
-        input: '根类型名称：Root\n{"name":"lailai","active":true}',
-        output: 'interface Root {\n  name: string;\n  active: boolean;\n}',
-      },
-      notes: [
-        '只依据所提供的样本推断；未出现的情况、空数组及未来数据可能需要手动调整，类型声明不进行运行时验证。',
-      ],
-    },
-  },
   cssGradient: {
     en: {
       summary: 'Preview a two-color linear gradient and generate its CSS declaration.',
@@ -78,55 +50,6 @@ export const developmentGuides = {
       notes: ['偏移与扩展可为负数，模糊半径不能为负；最终效果还取决于元素形状及周围背景。'],
     },
   },
-  colorShades: {
-    en: {
-      summary: 'Create lighter and darker variants of a base color.',
-      steps: [
-        'Choose the base color and the number of steps.',
-        'Inspect the shade palette and copy individual HEX values.',
-      ],
-      example: {
-        input: 'Base: #808080',
-        output: 'Lighter variants approach #ffffff.\nDarker variants approach #000000.',
-      },
-      notes: [
-        'Colors are produced by mixing RGB channels with white or black. Steps are not perceptually uniform and do not guarantee accessible text contrast.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '为基础颜色生成更浅与更深的变体。',
-      steps: ['选择基础色与阶数。', '查看色阶，复制需要的 HEX 值。'],
-      example: {
-        input: '基础色：#808080',
-        output: '浅色逐渐接近 #ffffff。\n深色逐渐接近 #000000。',
-      },
-      notes: [
-        '通过 RGB 通道与白色或黑色混合生成色阶；各阶视觉差异不一定均匀，也不保证文字对比度符合无障碍要求。',
-      ],
-    },
-  },
-  cssUnit: {
-    en: {
-      summary: 'Convert between px and rem using an explicit root font size.',
-      steps: ['Set the root font size in pixels.', 'Edit px or rem to update the other value.'],
-      example: {
-        input: 'Root font size: 16 px\nPixels: 24',
-        output: '1.5 rem',
-      },
-      notes: [
-        'rem is relative to the document root font size. This calculator does not read the computed font size of another website or convert em units.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '根据指定根字体大小，在 px 与 rem 之间换算。',
-      steps: ['设置以像素为单位的根字体大小。', '编辑 px 或 rem，另一数值会同步更新。'],
-      example: {
-        input: '根字体大小：16 px\n像素：24',
-        output: '1.5 rem',
-      },
-      notes: ['rem 相对于文档根字体大小；此工具不会读取其他网站的计算字体大小，也不换算 em 单位。'],
-    },
-  },
   crontabParser: {
     en: {
       summary: 'Explain a standard five-field cron expression field by field.',
@@ -140,6 +63,7 @@ export const developmentGuides = {
       },
       notes: [
         'Supports numeric fields, *, lists, ranges and steps. The actual execution time zone is configured by your scheduler; seconds, years, named months and Quartz extensions are not supported.',
+        'The five-field Unix cron schedule restricts matching values inside each hour or month. Steps do not always imply evenly spaced elapsed intervals. If day of month and day of week are both restricted, either may match.',
       ],
     },
     'zh-Hans': {
@@ -151,36 +75,7 @@ export const developmentGuides = {
       },
       notes: [
         '支持数字字段、*、列表、范围与步长；实际执行时区由调度器配置；不支持秒、年份、月份名称或 Quartz 扩展。',
-      ],
-    },
-  },
-  svgDataUri: {
-    en: {
-      summary: 'Encode SVG source as a data URI for embedding in CSS.',
-      steps: [
-        'Paste SVG source with opening and closing svg tags.',
-        'Copy the data URI or ready-to-use background-image declaration.',
-      ],
-      example: {
-        input: '<svg xmlns="http://www.w3.org/2000/svg"></svg>',
-        output: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3c/svg%3e",
-      },
-      notes: [
-        'The tool performs basic SVG detection and whitespace reduction, not full validation or sanitization. Embedded data can increase stylesheet size.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '将 SVG 源码编码为可嵌入 CSS 的 data URI。',
-      steps: [
-        '粘贴包含开始与结束 svg 标签的源码。',
-        '复制 data URI 或可直接使用的 background-image 声明。',
-      ],
-      example: {
-        input: '<svg xmlns="http://www.w3.org/2000/svg"></svg>',
-        output: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3c/svg%3e",
-      },
-      notes: [
-        '仅进行基础 SVG 检测与空白压缩，不是完整验证或安全清理；内嵌数据可能增大样式表体积。',
+        '五字段 Unix cron 在每小时、每月的字段范围内匹配；步长不一定表示固定时间间隔。日期与星期同时受限时，满足其中之一即可。',
       ],
     },
   },
@@ -210,113 +105,6 @@ export const developmentGuides = {
         output: '包含：\n<title>Hello</title>\n<meta name="description" content="A demo page">',
       },
       notes: ['空字段会省略。页面与图片建议使用绝对 URL；发布标签不保证爬虫的显示或缓存行为。'],
-    },
-  },
-  jsonSchemaGenerator: {
-    en: {
-      summary: 'Infer a JSON Schema draft from a sample JSON document.',
-      steps: [
-        'Paste the sample JSON.',
-        'Inspect the generated draft 2020-12 schema, especially types, required keys and array items.',
-      ],
-      example: {
-        input: '{"name":"lailai"}',
-        output:
-          'Inferred object schema:\ntype: object\nproperties.name.type: string\nrequired: ["name"]\nadditionalProperties: false',
-      },
-      notes: [
-        'Present object keys are marked required and extra keys disallowed. A single sample cannot establish every valid value or constraint; review the schema before adopting it.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '从 JSON 样本推断 JSON Schema 草稿。',
-      steps: [
-        '粘贴 JSON 样本。',
-        '检查生成的 draft 2020-12 Schema，重点核对类型、必填键与数组项。',
-      ],
-      example: {
-        input: '{"name":"lailai"}',
-        output:
-          '推断出的对象 Schema：\ntype: object\nproperties.name.type: string\nrequired: ["name"]\nadditionalProperties: false',
-      },
-      notes: [
-        '样本中存在的对象键会标记为必填，额外键被禁止；单个样本不能覆盖全部有效值与约束，正式采用前请审阅。',
-      ],
-    },
-  },
-  sqlFormatter: {
-    en: {
-      summary: 'Apply basic line breaks and keyword formatting to a SQL snippet.',
-      steps: [
-        'Paste the SQL text.',
-        'Review the formatted output before copying it into your editor.',
-      ],
-      example: {
-        input: 'select id from users where active = 1',
-        output: 'SELECT id\nFROM users\nWHERE active = 1',
-      },
-      notes: [
-        'This is a lightweight text formatter, not a SQL parser. Whitespace in strings and comments can be affected; verify semantics for the SQL dialect you use.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '为 SQL 片段添加基础换行并整理关键字格式。',
-      steps: ['粘贴 SQL 文本。', '检查排版结果，再复制到编辑器中。'],
-      example: {
-        input: 'select id from users where active = 1',
-        output: 'SELECT id\nFROM users\nWHERE active = 1',
-      },
-      notes: [
-        '采用轻量文本规则，不是 SQL 解析器；字符串与注释中的空白可能受到影响，请按所用 SQL 方言核对语义。',
-      ],
-    },
-  },
-  cssMinifier: {
-    en: {
-      summary: 'Remove comments and reduce whitespace in a CSS snippet.',
-      steps: ['Paste the CSS source.', 'Review the compact output and copy it.'],
-      example: {
-        input: 'body { color: red; margin: 0; }',
-        output: 'body{color:red;margin:0}',
-      },
-      notes: [
-        'Uses lightweight text rules rather than a full CSS parser. Review whitespace-sensitive values, strings and calc() expressions before using the result.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '移除 CSS 注释并压缩空白。',
-      steps: ['粘贴 CSS 源码。', '检查压缩结果并复制。'],
-      example: {
-        input: 'body { color: red; margin: 0; }',
-        output: 'body{color:red;margin:0}',
-      },
-      notes: [
-        '采用轻量文本规则而非完整 CSS 解析器；使用前请核对依赖空白的值、字符串与 calc() 表达式。',
-      ],
-    },
-  },
-  htmlMinifier: {
-    en: {
-      summary: 'Compact HTML while preserving pre, textarea, script and style blocks.',
-      steps: ['Paste HTML source.', 'Review the reduced markup and copy it.'],
-      example: {
-        input: '<div>\n  <span>Hello</span>\n</div>',
-        output: '<div><span>Hello</span></div>',
-      },
-      notes: [
-        'Removes ordinary comments and collapses surrounding whitespace. Spaces between inline elements can affect rendering; embedded CSS and JavaScript are preserved rather than minified.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '压缩 HTML，并保留 pre、textarea、script 与 style 块的内容。',
-      steps: ['粘贴 HTML 源码。', '检查精简后的标记并复制。'],
-      example: {
-        input: '<div>\n  <span>Hello</span>\n</div>',
-        output: '<div><span>Hello</span></div>',
-      },
-      notes: [
-        '移除普通注释并合并外围空白；行内元素之间的空格可能影响显示，嵌入的 CSS 与 JavaScript 会保留，不会继续压缩。',
-      ],
     },
   },
   dockerRunToCompose: {
@@ -377,63 +165,6 @@ export const developmentGuides = {
         output: '包含：\nnode_modules/\n.env.local',
       },
       notes: ['需将 .gitignore 放入对应仓库；忽略规则不会自动停止跟踪已经提交的文件。'],
-    },
-  },
-  semverCompare: {
-    en: {
-      summary: 'Compare two semantic version strings by precedence.',
-      steps: [
-        'Enter versions with three numeric parts, optionally followed by prerelease and build identifiers.',
-        'Read whether the left version is lower, equal or higher.',
-      ],
-      example: {
-        input: '1.0.0-beta.1 vs 1.0.0',
-        output: '1.0.0-beta.1 < 1.0.0',
-      },
-      notes: [
-        'A stable release ranks above its prereleases. Build metadata after + does not affect precedence; ranges such as ^1.0.0 and ~1.0.0 are not supported.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '按照语义化版本优先级比较两个版本。',
-      steps: [
-        '输入包含三个数字部分的版本，可附预发布与构建标识。',
-        '查看左侧版本小于、等于还是大于右侧版本。',
-      ],
-      example: {
-        input: '1.0.0-beta.1 与 1.0.0',
-        output: '1.0.0-beta.1 < 1.0.0',
-      },
-      notes: [
-        '稳定版本高于其预发布版本；+ 后的构建信息不影响优先级，不支持 ^1.0.0、~1.0.0 等版本范围。',
-      ],
-    },
-  },
-  cssSpecificity: {
-    en: {
-      summary: 'Estimate the specificity of simple CSS selectors.',
-      steps: [
-        'Enter one or more selectors, separated by commas.',
-        'Read the ID, class/attribute/pseudo-class and element/pseudo-element counts.',
-      ],
-      example: {
-        input: '.card #title',
-        output: '1,1,0',
-      },
-      notes: [
-        'This is a simplified estimator. :where() contributes zero, while complex nested :is(), :not() and :has() expressions may need a standards-aware checker.',
-      ],
-    },
-    'zh-Hans': {
-      summary: '估算简单 CSS 选择器的优先级。',
-      steps: ['输入选择器，多个选择器用逗号分隔。', '查看 ID、类/属性/伪类、元素/伪元素三组计数。'],
-      example: {
-        input: '.card #title',
-        output: '1,1,0',
-      },
-      notes: [
-        '这是简化估算器；:where() 不计优先级，复杂嵌套的 :is()、:not() 与 :has() 可能需要符合完整标准的检查器。',
-      ],
     },
   },
 } as const satisfies Partial<Record<ToolGuideKey, LocalizedToolGuide>>;

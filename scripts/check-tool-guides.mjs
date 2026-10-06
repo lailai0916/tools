@@ -1,29 +1,23 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
+import { readRegistryModule } from './read-registry.mjs';
 import { runInNewContext } from 'node:vm';
 import ts from 'typescript';
 
 const root = new URL('../', import.meta.url);
-const categories = [
-  'converter',
-  'text',
-  'crypto',
-  'web',
-  'development',
-  'math',
-  'generator',
-  'fun',
-];
+const guideFiles = (await readdir(new URL('src/content/toolGuides/', root))).filter(
+  (file) => file.endsWith('.ts') && file !== 'index.ts' && file !== 'types.ts'
+);
 const guides = new Map();
 
-for (const category of categories) {
-  const source = await readFile(new URL(`src/content/toolGuides/${category}.ts`, root), 'utf8');
+for (const filename of guideFiles) {
+  const source = await readFile(new URL(`src/content/toolGuides/${filename}`, root), 'utf8');
   const { outputText } = ts.transpileModule(source, {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   });
   const context = { exports: {} };
   runInNewContext(outputText, context);
-  for (const [key, localized] of Object.entries(context.exports[`${category}Guides`])) {
+  for (const [key, localized] of Object.entries(Object.values(context.exports)[0])) {
     assert(!guides.has(key), `Duplicate guide: ${key}`);
     guides.set(key, localized);
     assert.deepEqual(Object.keys(localized).sort(), ['en', 'zh-Hans'], `${key}: locales`);
@@ -44,24 +38,19 @@ for (const category of categories) {
   }
 }
 
-const registry = ts.createSourceFile(
-  'registry.ts',
-  await readFile(new URL('src/tools/registry.ts', root), 'utf8'),
-  ts.ScriptTarget.Latest,
-  true
-);
-const keys = [];
-function visit(node) {
-  if (
-    ts.isPropertyAssignment(node) &&
-    node.name.getText(registry) === 'key' &&
-    ts.isStringLiteral(node.initializer)
-  ) {
-    keys.push(node.initializer.text);
-  }
-  ts.forEachChild(node, visit);
+const { TOOLS } = await readRegistryModule('registry');
+const { LEGACY_ROUTES } = await readRegistryModule('legacyRoutes');
+const keys = Array.from(TOOLS, (tool) => tool.key);
+const ids = new Set(TOOLS.map((tool) => tool.id));
+assert.equal(ids.size, TOOLS.length, 'Registry route IDs must be unique');
+const folders = (await readdir(new URL('src/tools/', root), { withFileTypes: true }))
+  .filter((item) => item.isDirectory())
+  .map((item) => item.name);
+assert.deepEqual(folders.sort(), [...ids].sort(), 'Every tool directory must be registered');
+for (const [legacy, target] of Object.entries(LEGACY_ROUTES)) {
+  assert(!ids.has(legacy), `Legacy route overlaps a tool: ${legacy}`);
+  assert(ids.has(target.split('?')[0].slice(1)), `Missing legacy target: ${target}`);
 }
-visit(registry);
 assert.equal(new Set(keys).size, keys.length, 'Registry guide keys must be unique');
 assert.deepEqual(
   [...guides.keys()].sort(),
