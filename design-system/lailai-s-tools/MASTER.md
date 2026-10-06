@@ -52,7 +52,10 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - `ToolLayout` composes `Stack`, `Link`, `Panel`, and `PanelBody` into a consistent tool workspace.
   Its breadcrumbs follow Home: a house icon linking home, a category link, and the current tool name.
   Breadcrumbs use an ordered list, muted chevrons, and a stronger current label; long labels truncate
-  on narrow screens. It includes the same favorite action as the catalogue.
+  on narrow screens. The favorite action sits on the right of the breadcrumb row and follows Home's
+  document action buttons: a transparent `28px` control, `16px` icon, `8px` radius, blue hover feedback,
+  and a visible keyboard focus ring. Keep this row together on narrow screens with a `44px` touch target;
+  catalogue favorite buttons retain their existing size.
 - Catalogue cards use `Panel`, muted `IconBlock`, and `Badge`, with a flat border and no elevation.
 - Single-choice modes, quantities, and test settings use the shared `Segmented`. Short groups remain
   horizontal; longer groups wrap into a grid on narrow containers. Long labels may use supported stacking.

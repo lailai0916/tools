@@ -4,12 +4,21 @@
   container: tools-content / inline-size;
 }
 
-.breadcrumb {
+.topRow {
+  display: flex;
   min-width: 0;
   min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lk-space-4);
   margin-bottom: var(--lk-space-4);
   padding-bottom: var(--lk-space-2);
   border-bottom: 1px solid var(--lk-color-emphasis-200);
+}
+
+.breadcrumb {
+  flex: 1;
+  min-width: 0;
 }
 
 .breadcrumbs {
@@ -101,7 +110,8 @@
 }
 
 @media (max-width: 600px), (pointer: coarse) {
-  .breadcrumb {
+  .topRow {
+    gap: var(--lk-space-2);
     margin-bottom: var(--lk-space-3);
     padding-bottom: 0;
     border-bottom: 0;
@@ -120,10 +130,6 @@
 }
 
 .header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--lk-space-4);
   margin-bottom: var(--lk-space-6);
 }
 

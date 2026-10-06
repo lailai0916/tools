@@ -10,6 +10,31 @@
   fill: currentColor;
 }
 
+.document.button {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: var(--lk-radius-sm);
+  color: var(--lk-color-emphasis-600);
+  transition:
+    color var(--lk-transition),
+    background-color var(--lk-transition),
+    transform var(--lk-transition);
+}
+
+.document.button[aria-pressed='true'] svg,
+.document.button:not(:disabled):hover {
+  color: var(--lk-color-primary);
+}
+
+.document.button:not(:disabled):hover {
+  background: color-mix(in srgb, var(--emphasis-1000) 5%, transparent);
+}
+
+.document.button:not(:disabled):not([aria-disabled='true']):active {
+  transform: scale(0.92);
+}
+
 @media (max-width: 600px), (pointer: coarse) {
   .button {
     min-width: 44px;
