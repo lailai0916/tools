@@ -190,11 +190,18 @@ function encodeHtml(input: string): string {
 
 function decodeHtml(input: string): string {
   const parser = new DOMParser();
+  // A pasted document often repeats the same escapes thousands of times. Keep the
+  // browser's entity rules, but parse each exact token only once for this input.
+  const decoded = new Map<string, string>();
   // Only entity-shaped tokens reach the HTML parser. Literal tags, line endings,
   // and strings such as </textarea> stay text; decoded markup is never re-parsed.
   return input.replace(/&(?:#(?:[xX][0-9a-f]+|[0-9]+);?|[a-z][a-z0-9]*;?)/gi, (entity) => {
+    const cached = decoded.get(entity);
+    if (cached !== undefined) return cached;
     const document = parser.parseFromString(`<!doctype html><body>${entity}`, 'text/html');
-    return document.body.textContent ?? entity;
+    const text = document.body.textContent ?? entity;
+    decoded.set(entity, text);
+    return text;
   });
 }
 

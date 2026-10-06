@@ -634,6 +634,45 @@ test('Wrapping keeps ZWJ emoji intact', () =>
   assert.equal(text.wrapTextGraphemes('a👨‍👩‍👧‍👦b', 1), 'a\n👨‍👩‍👧‍👦\nb'));
 test('Wrapping keeps combining sequences intact', () =>
   assert.equal(text.wrapTextGraphemes('e\u0301a', 1), 'e\u0301\na'));
+test('Wrapping respects greedy word boundaries and Arabic words', () => {
+  assert.equal(text.wrapTextGraphemes('Alpha beta gamma', 10), 'Alpha beta\ngamma');
+  assert.equal(text.wrapTextGraphemes('مرحبا عالم', 5), 'مرحبا\nعالم');
+});
+test('Wrapping preserves CJK characters and whitespace-only lines', () =>
+  assert.equal(text.wrapTextGraphemes(' 中文测试 \r\n\t\nabc ', 2), '中文\n测试\n\nab\nc'));
+test('Word frequency measures graphemes and excludes punctuation', () => {
+  const rows = text.textWordFrequency('Ada ada ADA e\u0301 é 👨‍👩‍👧‍👦 中文 中文. 一 一 two TWO!', 2);
+  assert.deepEqual(Object.fromEntries(rows), { ada: 3, two: 2, 中文: 2 });
+});
+test('Word frequency measures Unicode case expansions after lowercasing', () => {
+  const rows = text.textWordFrequency('İ İSTANBUL ẞ SS ΟΣ ΟΣΑ A\u030A AA ÅA', 2);
+  assert.deepEqual(Object.fromEntries(rows), {
+    aa: 1,
+    åa: 1,
+    'i\u0307stanbul': 1,
+    ss: 1,
+    ος: 1,
+    οσα: 1,
+  });
+});
+test('Word frequency sorts count ties with the existing locale comparator', () =>
+  assert.deepEqual(text.textWordFrequency('b a B A 10 2', 1), [
+    ['a', 2],
+    ['b', 2],
+    ['10', 1],
+    ['2', 1],
+  ]));
+test('Whitespace-only wrapping does not require Unicode segmentation support', () => {
+  const original = Intl.Segmenter;
+  try {
+    Intl.Segmenter = undefined;
+    assert.equal(text.wrapTextGraphemes('', 10), '');
+    assert.equal(text.wrapTextGraphemes(' \n\t', 10), '\n');
+    assert.throws(() => text.textWordFrequency('', 1), hasCode('unsupported'));
+  } finally {
+    Intl.Segmenter = original;
+  }
+});
 test('Uppercase conversion preserves punctuation and whitespace', () =>
   assert.equal(text.convertTextCase('Hi, friend!\n  ok?', 'upper'), 'HI, FRIEND!\n  OK?'));
 test('Literal replacement preserves dollar signs', () =>

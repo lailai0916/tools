@@ -106,13 +106,21 @@ function integer(value: number, minimum: number, maximum: number): number {
   return value;
 }
 
-function segment(input: string, granularity: 'grapheme' | 'word' | 'sentence') {
+function createSegmenter(granularity: 'grapheme' | 'word' | 'sentence'): Intl.Segmenter {
   if (typeof Intl.Segmenter !== 'function') throw new TextWorkbenchError('unsupported');
-  return [...new Intl.Segmenter(undefined, { granularity }).segment(input)];
+  return new Intl.Segmenter(undefined, { granularity });
+}
+
+function segment(input: string, granularity: 'grapheme' | 'word' | 'sentence') {
+  return [...createSegmenter(granularity).segment(input)];
+}
+
+function splitGraphemes(input: string, segmenter: Intl.Segmenter): string[] {
+  return Array.from(segmenter.segment(input), (part) => part.segment);
 }
 
 export function graphemes(input: string): string[] {
-  return segment(input, 'grapheme').map((part) => part.segment);
+  return splitGraphemes(input, createSegmenter('grapheme'));
 }
 
 function words(input: string): string[] {
@@ -179,13 +187,14 @@ function uniqueLines(lines: string[], ignoreCase: boolean): string[] {
 /** Greedy word wrapping measures grapheme clusters and never splits an emoji or combining sequence. */
 export function wrapTextGraphemes(input: string, width: number): string {
   integer(width, 1, 100_000);
+  let segmenter: Intl.Segmenter | undefined;
   return splitTextLines(input)
     .flatMap((line) => {
       if (!line.trim()) return [''];
       const output: string[] = [];
       let current: string[] = [];
       for (const word of line.trim().split(/\s+/u)) {
-        const units = graphemes(word);
+        const units = splitGraphemes(word, (segmenter ??= createSegmenter('grapheme')));
         if (units.length > width) {
           if (current.length) output.push(current.join(''));
           let offset = 0;
@@ -301,9 +310,17 @@ export function textWordFrequency(input: string, minimumLength: number): [string
   integer(minimumLength, 1, 100_000);
   const counts = new Map<string, number>();
   for (const word of words(input.toLocaleLowerCase())) {
-    if (graphemes(word).length >= minimumLength) counts.set(word, (counts.get(word) ?? 0) + 1);
+    counts.set(word, (counts.get(word) ?? 0) + 1);
   }
-  return [...counts].sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]));
+  // Segment each distinct word once rather than repeating Unicode analysis for
+  // every occurrence. The segmenter is local and only needed for nonempty input.
+  let segmenter: Intl.Segmenter | undefined;
+  return [...counts]
+    .filter(
+      ([word]) =>
+        splitGraphemes(word, (segmenter ??= createSegmenter('grapheme'))).length >= minimumLength
+    )
+    .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]));
 }
 
 export function transformText(
