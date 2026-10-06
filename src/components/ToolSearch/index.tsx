@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import { TOOLS } from '@/tools/registry';
-import { rememberTool } from '@/utils/toolStorage';
 import { matchesToolSearch } from '@/utils/toolSearch';
 import styles from './styles.module.css';
 
@@ -73,7 +72,6 @@ function SearchDialog({ id, onClose }: { id: string; onClose: () => void }) {
   }, [active, query]);
 
   const choose = (toolId: string) => {
-    rememberTool(toolId);
     onClose();
     navigate(`/${toolId}`);
     requestAnimationFrame(() => {

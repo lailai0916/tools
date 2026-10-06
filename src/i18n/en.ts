@@ -8,6 +8,11 @@ import { curatedWebEn } from './curated/web';
 
 import { curatedCoreEn } from './curated/core';
 import { curatedTimeUnitsEn } from './curated/timeUnits';
+import { developmentPolishEn } from './curated/developmentPolish';
+import { randomNumberPolishEn } from './curated/randomNumberPolish';
+import { cryptoPolishEn } from './curated/cryptoPolish';
+import { textMathPolishEn } from './curated/textMathPolish';
+import { mediaPolishEn } from './curated/mediaPolish';
 
 const baseEn = {
   'site.title': "lailai's Tools",
@@ -761,6 +766,11 @@ export const en = {
   ...curatedWebEn,
   ...curatedCoreEn,
   ...curatedTimeUnitsEn,
+  ...developmentPolishEn,
+  ...randomNumberPolishEn,
+  ...cryptoPolishEn,
+  ...textMathPolishEn,
+  ...mediaPolishEn,
 } as const;
 
 export type MessageKey = keyof typeof en;

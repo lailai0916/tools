@@ -59,11 +59,11 @@ export const developmentGuides = {
       ],
       example: {
         input: '0 9 * * 1-5',
-        output: 'Runs at 09:00 Monday through Friday.',
+        output: 'Runs at 09:00 on Monday, Tuesday, Wednesday, Thursday, Friday.',
       },
       notes: [
-        'Supports numeric fields, *, lists, ranges and steps. The actual execution time zone is configured by your scheduler; seconds, years, named months and Quartz extensions are not supported.',
-        'The five-field Unix cron schedule restricts matching values inside each hour or month. Steps do not always imply evenly spaced elapsed intervals. If day of month and day of week are both restricted, either may match.',
+        'Supports numeric fields, *, lists, ranges and positive safe-integer steps on * or a range. Scalar/step forms such as 5/2, seconds, years, named months and Quartz extensions are not supported. Your scheduler determines the time zone.',
+        'Steps select values within each field, rather than fixed elapsed intervals. Following Unix Cronie semantics, date and weekday both must match if either field starts with * (including */2); otherwise either may match.',
       ],
     },
     'zh-Hans': {
@@ -71,11 +71,11 @@ export const developmentGuides = {
       steps: ['按分钟、小时、日、月、星期顺序填写，以空格分隔。', '查看自然语言说明与各字段含义。'],
       example: {
         input: '0 9 * * 1-5',
-        output: '每周一至周五 09:00 执行。',
+        output: '每周一、周二、周三、周四、周五 09:00 执行。',
       },
       notes: [
-        '支持数字字段、*、列表、范围与步长；实际执行时区由调度器配置；不支持秒、年份、月份名称或 Quartz 扩展。',
-        '五字段 Unix cron 在每小时、每月的字段范围内匹配；步长不一定表示固定时间间隔。日期与星期同时受限时，满足其中之一即可。',
+        '支持数字字段、*、列表、范围，以及 * 或范围上的正安全整数步长；不支持 5/2 这样的单值步长、秒、年份、月份名称或 Quartz 扩展，实际时区由调度器配置。',
+        '步长在字段范围内选取值，不表示固定时间间隔；遵循 Unix Cronie 规则，日期或星期字段以 * 开头时（包括 */2），两者都须匹配，否则满足其中之一即可。',
       ],
     },
   },
@@ -121,6 +121,8 @@ export const developmentGuides = {
       },
       notes: [
         'Supports common name, publish, env, volume and restart options; unsupported flags are rejected. It generates text only and never starts a container.',
+        'Option values must be nonempty; a following flag cannot substitute for a value. Command arguments after the image are preserved, including empty quoted arguments.',
+        'The input is tokenized without executing shell variables or commands. Dollar signs are escaped as $$ in Compose so literal values and container-shell variables are not expanded on the host.',
       ],
     },
     'zh-Hans': {
@@ -136,6 +138,8 @@ export const developmentGuides = {
       },
       notes: [
         '支持常见的 name、publish、env、volume 与 restart 选项，遇到不支持的参数会报错；仅生成文本，不会启动容器。',
+        '参数值不能为空，不能用后续选项代替；镜像后的命令参数会保留，包括带引号的空参数。',
+        '只拆分输入参数，不执行 shell 变量或命令；Compose 中的美元符号转义为 $$，防止字面值和容器 shell 变量被宿主机提前展开。',
       ],
     },
   },
@@ -152,6 +156,7 @@ export const developmentGuides = {
       },
       notes: [
         'Use a .gitignore file in the relevant repository. Ignore rules do not stop tracking files that are already committed.',
+        'Custom rules are preserved verbatim, including leading spaces and escaped trailing spaces. An all-whitespace custom field adds no section.',
       ],
     },
     'zh-Hans': {
@@ -164,7 +169,10 @@ export const developmentGuides = {
         input: '模板：node\n额外规则：.env.local',
         output: '包含：\nnode_modules/\n.env.local',
       },
-      notes: ['需将 .gitignore 放入对应仓库；忽略规则不会自动停止跟踪已经提交的文件。'],
+      notes: [
+        '需将 .gitignore 放入对应仓库；忽略规则不会自动停止跟踪已经提交的文件。',
+        '自定义规则按原文保留，包括前导空格和转义的末尾空格；仅含空白的输入不会添加自定义段落。',
+      ],
     },
   },
 } as const satisfies Partial<Record<ToolGuideKey, LocalizedToolGuide>>;

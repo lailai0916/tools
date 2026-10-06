@@ -41,9 +41,487 @@ const crypto = loadHelper('curatedCrypto');
 const web = loadHelper('curatedWeb');
 const time = loadHelper('curatedTimeUnits');
 const { utilityDefinitions } = loadHelper('utilityDefinitions');
+const media = loadHelper('mediaGeneration');
+const statistics = loadHelper('statistics');
+const unicode = loadHelper('unicodeInspector');
+const diff = loadHelper('textDiff');
 const cases = [];
 const test = (name, run) => cases.push({ name, run });
 const hasCode = (code) => (error) => error?.code === code;
+
+test('Statistics preserves every digit of safe integers in displayed results', () => {
+  for (const input of ['1234567890123456', '9007199254740991', '-9007199254740991']) {
+    const result = statistics.computeStatistics(input);
+    assert.equal(result.kind, 'ok');
+    for (const key of ['sum', 'mean', 'median', 'min', 'max']) {
+      assert.equal(statistics.formatStatisticNumber(result.values[key]), input);
+    }
+  }
+});
+test('Statistics retains a small addend when large positive and negative values cancel', () => {
+  const result = statistics.computeStatistics('1e150 1 -1e150');
+  assert.equal(result.kind, 'ok');
+  assert.equal(result.values.sum, 1);
+  assert.equal(result.values.mean, 1 / 3);
+});
+test('Statistics scales variance without losing small differences at large offsets', () => {
+  const adjacent = statistics.computeStatistics('9007199254740990 9007199254740991');
+  assert.equal(adjacent.kind, 'ok');
+  assert.equal(adjacent.values.variance, 0.25);
+  assert.equal(adjacent.values.stddev, 0.5);
+  const tiny = statistics.computeStatistics('1e-150 2e-150');
+  assert.equal(tiny.kind, 'ok');
+  assert.ok(Math.abs(tiny.values.variance / 2.5e-301 - 1) < 1e-14);
+  assert.ok(Math.abs(tiny.values.stddev / 5e-151 - 1) < 1e-14);
+});
+test('Statistics reports underflow and invalid syntax rather than inventing zero results', () => {
+  for (const input of ['1e-324', '1e-200 2e-200', '1e309', '1e308 1e308']) {
+    assert.deepEqual(statistics.computeStatistics(input), { kind: 'invalid', reason: 'range' });
+  }
+  assert.deepEqual(statistics.computeStatistics('0x10'), { kind: 'invalid', reason: 'syntax' });
+  const subnormal = statistics.computeStatistics('5e-324 5e-324');
+  assert.equal(subnormal.kind, 'ok');
+  assert.equal(subnormal.values.median, 5e-324);
+  assert.equal(subnormal.values.variance, 0);
+  assert.equal(statistics.computeStatistics('1', 'sample').values.stddev, null);
+});
+test('Unicode distinguishes lone surrogates from the actual replacement character', () => {
+  for (const input of ['\uD800', '\uDC00']) {
+    const result = unicode.inspectUnicode(input);
+    assert.equal(result.hasUnpairedSurrogate, true);
+    assert.equal(result.rows[0].utf8, null);
+  }
+  assert.equal(unicode.inspectUnicode('\uFFFD').rows[0].utf8, 'EF BF BD');
+  assert.equal(unicode.inspectUnicode('😀').rows[0].utf8, 'F0 9F 98 80');
+});
+test('Text diff preserves the edited lines and their copy markers', () => {
+  const result = diff.computeTextDiff('hello\n', 'world\n');
+  assert.equal(result.ok, true);
+  assert.equal(diff.textDiffCopyText(result.lines), '- hello\n+ world');
+  assert.deepEqual(diff.computeTextDiff('', ''), { ok: true, lines: [] });
+});
+test('Text diff rejects oversized inputs instead of returning an identical or truncated result', () => {
+  assert.deepEqual(diff.computeTextDiff('x'.repeat(500001), ''), { ok: false, error: 'size' });
+  assert.deepEqual(diff.computeTextDiff('a\n'.repeat(10001), 'b\n'.repeat(10000)), {
+    ok: false,
+    error: 'size',
+  });
+});
+test('Text diff either completes a large edit accurately or reports its computation timeout', () => {
+  const original = Array.from({ length: 5000 }, (_, index) => `old-${index}`).join('\n');
+  const modified = Array.from({ length: 5000 }, (_, index) => `new-${index}`).join('\n');
+  const result = diff.computeTextDiff(original, modified);
+  if (result.ok) {
+    assert.equal(result.lines.filter((line) => line.type === 'del').length, 5000);
+    assert.equal(result.lines.filter((line) => line.type === 'add').length, 5000);
+  } else {
+    assert.equal(result.error, 'timeout');
+  }
+});
+
+test('Placeholder image dimensions reject invalid values instead of generating a fallback', () => {
+  for (const input of ['', ' ', '0', '-1', '1.5', '4097', '1e3', '1.0000000000000001']) {
+    assert.equal(media.parseImageDimension(input), null, input);
+  }
+  assert.equal(media.parseImageDimension('1'), 1);
+  assert.equal(media.parseImageDimension('4096'), 4096);
+  assert.equal(media.parseImageDimension('600.0'), 600);
+});
+test('QR raster boundaries fill the exact selected size with whole pixels', () => {
+  for (const modules of [21, 49, 53, 177, 193]) {
+    for (const size of [256, 512, 1024]) {
+      const edges = media.qrPixelBoundaries(modules, size);
+      const widths = edges.slice(1).map((edge, index) => edge - edges[index]);
+      assert.equal(edges[0], 0);
+      assert.equal(edges.at(-1), size);
+      assert.ok(widths.every((width) => Number.isInteger(width) && width >= 1));
+      assert.ok(Math.max(...widths) - Math.min(...widths) <= 1);
+      assert.equal(
+        widths.reduce((total, width) => total + width, 0),
+        size
+      );
+    }
+  }
+  assert.throws(() => media.qrPixelBoundaries(257, 256), RangeError);
+});
+
+const randomNumber = loadHelper('randomNumber');
+
+test('Random Number rejects decimals before floating-point rounding', () => {
+  for (const input of [
+    '1.0000000000000001',
+    '9007199254740990.1',
+    '9007199254740991.1',
+    '1000.00000000000001',
+    '1e-999',
+    '1e3',
+  ]) {
+    assert.equal(randomNumber.parseDecimalInteger(input), null);
+  }
+  assert.equal(
+    randomNumber.buildRandomNumbers('9007199254740990.1', '9007199254740990', '1', false),
+    ''
+  );
+  assert.equal(randomNumber.buildRandomNumbers('1', '1', '1.0000000000000001', false), '');
+  assert.equal(randomNumber.buildRandomNumbers('1', '1', '1000.00000000000001', false), '');
+});
+test('Random Number accepts decimal safe integers and rejects unsafe bounds and range widths', () => {
+  assert.equal(randomNumber.parseDecimalInteger('+001'), 1);
+  assert.equal(randomNumber.parseDecimalInteger('-9007199254740991'), -9007199254740991);
+  assert.equal(randomNumber.parseDecimalInteger('9007199254740991'), 9007199254740991);
+  assert.equal(randomNumber.parseDecimalInteger('9007199254740992'), null);
+  assert.equal(randomNumber.validateRandomNumberParams('0', '9007199254740991', '1'), null);
+  assert.equal(
+    randomNumber.validateRandomNumberParams('1', '9007199254740991', '1').size,
+    9007199254740991
+  );
+  assert.equal(
+    randomNumber.buildRandomNumbers('9007199254740991', '9007199254740991', '2', false),
+    '9007199254740991\n9007199254740991'
+  );
+});
+test('Random Number unique output preserves inclusive endpoints and the requested count', () => {
+  const values = randomNumber
+    .buildRandomNumbers('-2', '2', '5', true)
+    .split('\n')
+    .map(Number)
+    .sort((a, b) => a - b);
+  assert.deepEqual(values, [-2, -1, 0, 1, 2]);
+  assert.equal(randomNumber.buildRandomNumbers('-2', '2', '6', true), '');
+  for (const [min, max] of [
+    [-100000, 0],
+    [9007199254739992, 9007199254740991],
+    [-9007199254740991, -9007199254739992],
+  ]) {
+    const output = randomNumber
+      .buildRandomNumbers(String(min), String(max), '1000', true)
+      .split('\n')
+      .map(Number);
+    assert.equal(output.length, 1000);
+    assert.equal(new Set(output).size, 1000);
+    assert.ok(output.every((value) => Number.isSafeInteger(value) && value >= min && value <= max));
+  }
+});
+test('Random Number 32-bit and 64-bit draws reject the biased tail', () => {
+  const original = webcrypto.getRandomValues;
+  try {
+    for (const [range, draws, expected] of [
+      [3, [[4294967295], [4294967294]], 2],
+      [
+        4294967297,
+        [
+          [4294967295, 4294967295],
+          [4294967295, 4294967294],
+        ],
+        4294967296,
+      ],
+      [
+        9007199254740991,
+        [
+          [4294967295, 4294965248],
+          [4294967295, 4294967295],
+          [4294967295, 4294965247],
+        ],
+        9007199254740990,
+      ],
+    ]) {
+      let calls = 0;
+      webcrypto.getRandomValues = (buffer) => {
+        assert.ok(calls < draws.length);
+        buffer.set(draws[calls++]);
+        return buffer;
+      };
+      assert.equal(randomNumber.randomBelow(range), expected);
+      assert.equal(calls, draws.length);
+    }
+  } finally {
+    webcrypto.getRandomValues = original;
+  }
+});
+
+const cron = loadHelper('cronExpression');
+const { dockerRunToCompose, buildGitignore } = loadHelper('utilityDefinitions');
+const yaml = createRequire(import.meta.url)('js-yaml');
+const parsedCron = (expression) => {
+  const result = cron.parseCronExpression(expression, 'en');
+  assert.equal(result.ok, true, expression);
+  return result;
+};
+
+test('Docker escapes literal and container-shell dollars from Compose interpolation', () => {
+  const service = yaml.load(
+    dockerRunToCompose(
+      "docker run --name web -e 'TOKEN=${QA_CURATED_HOST}' -v '/tmp/$QA_CURATED_HOST:/data' alpine sh -c 'echo $QA_CURATED_HOST $$ ${VALUE}' ''"
+    )
+  ).services.web;
+  assert.deepEqual(service.environment, ['TOKEN=$${QA_CURATED_HOST}']);
+  assert.deepEqual(service.volumes, ['/tmp/$$QA_CURATED_HOST:/data']);
+  assert.deepEqual(service.command, ['sh', '-c', 'echo $$QA_CURATED_HOST $$$$ $${VALUE}', '']);
+});
+for (const option of ['--publish', '--env', '--volume', '--name', '--restart']) {
+  test(`Docker rejects an empty inline ${option} value`, () =>
+    assert.throws(() => dockerRunToCompose(`docker run ${option}= nginx`), hasCode('dockerValue')));
+  test(`Docker rejects a following unsupported flag as ${option} value`, () =>
+    assert.throws(
+      () => dockerRunToCompose(`docker run ${option} --unsupported nginx`),
+      hasCode('dockerValue')
+    ));
+}
+test('Docker accepts an empty environment value while retaining its name', () =>
+  assert.deepEqual(
+    yaml.load(dockerRunToCompose('docker run -e KEY= alpine')).services.alpine.environment,
+    ['KEY=']
+  ));
+
+test('Gitignore preserves leading and escaped trailing pattern spaces', () => {
+  for (const extra of [' file.txt', String.raw`file.txt\ `, '  file.txt\\  ']) {
+    const result = buildGitignore({ stacks: 'node', extra });
+    assert(result.endsWith('# custom\n' + extra + '\n'));
+  }
+});
+test('Gitignore omits a custom section containing only whitespace', () =>
+  assert(!buildGitignore({ stacks: 'node', extra: ' \n\t ' }).includes('# custom')));
+
+test('Cron wildcard-step day of month intersects with weekday', () => {
+  const everyDay = parsedCron('0 0 */1 * 1');
+  assert.equal(everyDay.dayMatch, 'and');
+  assert.equal(everyDay.summary, 'Runs at 00:00 on Monday.');
+  const oddDays = parsedCron('0 0 */2 * 1');
+  assert.equal(oddDays.dayMatch, 'and');
+  assert.deepEqual(
+    oddDays.values.dayOfMonth,
+    [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31]
+  );
+  assert.match(oddDays.summary, /and Monday/);
+});
+test('Cron wildcard-step weekday intersects with day of month', () => {
+  const result = parsedCron('0 0 1 * */1');
+  assert.equal(result.dayMatch, 'and');
+  assert.equal(result.summary, 'Runs at 00:00 on day 1 of the month.');
+});
+test('Cron date and weekday without an initial wildcard retain OR semantics', () => {
+  assert.equal(parsedCron('0 0 1 * 1').dayMatch, 'or');
+  assert.equal(parsedCron('0 0 1,* * 1').summary, 'Runs at 00:00 every day.');
+  assert.equal(parsedCron('0 0 *,1 * 1').summary, 'Runs at 00:00 on Monday.');
+});
+test('Cron steps select actual values rather than a fixed elapsed interval', () => {
+  assert.deepEqual(parsedCron('*/40 * * * *').values.minute, [0, 40]);
+  assert.deepEqual(parsedCron('1-59/40 * * * *').values.minute, [1, 41]);
+  assert.deepEqual(parsedCron('*/60 * * * *').values.minute, [0]);
+  assert.deepEqual(parsedCron('*/9007199254740991 * * * *').values.minute, [0]);
+});
+test('Cron normalizes the two Sunday spellings without duplicate values', () =>
+  assert.deepEqual(parsedCron('0 0 * * 0,7').values.dayOfWeek, [0]));
+test('Cron rejects scalar steps, zero and unsafe or overflowing step values', () => {
+  for (const expression of [
+    '5/2 * * * *',
+    '*/0 * * * *',
+    '*/9007199254740992 * * * *',
+    '*/' + '9'.repeat(400) + ' * * * *',
+  ]) {
+    assert.equal(cron.parseCronExpression(expression, 'en').ok, false, expression);
+  }
+});
+
+const retained = loadHelper('retainedCrypto');
+const jwtToken = (header, payload, signature = 'AA') =>
+  Buffer.from(header).toString('base64url') +
+  '.' +
+  Buffer.from(payload).toString('base64url') +
+  '.' +
+  signature;
+
+test('JWT keeps valid numeric claims and requires canonical Base64URL JSON objects', () => {
+  const payload =
+    '{"sub":"用户","exp":1700000000.5,"iat":0,"nbf":-1,"size":9007199254740991,"scale":1e3}';
+  const value = retained.inspectJwt(jwtToken('{"alg":"HS256"}', payload));
+  assert.deepEqual(JSON.parse(value.payload), {
+    sub: '用户',
+    exp: 1700000000.5,
+    iat: 0,
+    nbf: -1,
+    size: 9007199254740991,
+    scale: 1000,
+  });
+  assert.equal(retained.inspectJwt(jwtToken('{"alg":"none"}', '{}', '')).signature, '');
+  for (const input of [
+    jwtToken('[]', '{}'),
+    jwtToken('{"alg":"HS256"}', 'null'),
+    jwtToken('{"alg":"HS256"}', '[]'),
+    jwtToken('{"alg":1}', '{}'),
+    jwtToken('{"alg":"HS256"}', '{}', ''),
+    jwtToken('{"alg":"none"}', '{}', 'AA'),
+    jwtToken('{"alg":"HS256"}', '{}', '%%%'),
+    jwtToken('{"alg":"HS256"}', '{}', 'AB'),
+    jwtToken('{"alg":"HS256"}', '{}', 'AA='),
+    'eyJhbGciOiJIUzI1NiJ9.e31.AA',
+  ])
+    assert.throws(() => retained.inspectJwt(input));
+  assert.throws(
+    () =>
+      retained.inspectJwt(
+        Buffer.from('{"alg":"HS256"}').toString('base64url') +
+          '.' +
+          Buffer.from([123, 34, 115, 117, 98, 34, 58, 34, 255, 34, 125]).toString('base64url') +
+          '.AA'
+      ),
+    hasCode('utf8')
+  );
+  assert.throws(
+    () =>
+      retained.inspectJwt(
+        Buffer.from('{"alg":"HS256"}').toString('base64url') +
+          '.' +
+          Buffer.from('{"sub":"࿿"}').toString('base64') +
+          '.AA'
+      ),
+    hasCode('base64url')
+  );
+});
+test('JWT rejects unsafe, nonfinite and precision-losing numbers before copied output changes', () => {
+  for (const numeric of [
+    '9007199254740993',
+    '-9007199254740993',
+    '1e400',
+    '1e-400',
+    '1.0000000000000001',
+    '9007199254740991.1',
+    '0.10000000000000001',
+  ]) {
+    assert.throws(
+      () =>
+        retained.inspectJwt(jwtToken('{"alg":"HS256"}', '{"nested":{"value":' + numeric + '}}')),
+      hasCode('number')
+    );
+  }
+  const value = retained.inspectJwt(
+    jwtToken(
+      '{"alg":"HS256"}',
+      '{"quoted":"9007199254740993 and \\\"1e400\\\"","zero":0e999999,"fraction":0.125}'
+    )
+  );
+  assert.equal(JSON.parse(value.payload).quoted, '9007199254740993 and "1e400"');
+  for (const field of ['exp', 'iat', 'nbf'])
+    for (const value of ['null', 'true', '"1700000000"', '{}', '[]']) {
+      assert.throws(
+        () => retained.inspectJwt(jwtToken('{"alg":"HS256"}', '{"' + field + '":' + value + '}')),
+        hasCode('claim')
+      );
+    }
+});
+test('TOTP Base32 accepts canonical RFC4648 vectors and rejects discarded bits or bad padding', () => {
+  for (const [encoded, plain] of [
+    ['MY======', 'f'],
+    ['MZXQ====', 'fo'],
+    ['MZXW6===', 'foo'],
+    ['MZXW6YQ=', 'foob'],
+    ['MZXW6YTB', 'fooba'],
+    ['MZXW6YTBOI======', 'foobar'],
+  ]) {
+    assert.equal(Buffer.from(retained.decodeBase32Secret(encoded)).toString(), plain);
+    assert.equal(
+      Buffer.from(retained.decodeBase32Secret(encoded.replace(/=+$/, ''))).toString(),
+      plain
+    );
+  }
+  assert.equal(Buffer.from(retained.decodeBase32Secret(' m y = = = = = = ')).toString(), 'f');
+  for (const input of [
+    '',
+    'MZ',
+    'MZX',
+    'MZXW6=',
+    'MZXW6====',
+    'MZXW6YTBOJ',
+    'MY=======',
+    'MY0',
+    'MY=AAAAA',
+    'A',
+  ])
+    assert.throws(() => retained.decodeBase32Secret(input), hasCode('base32'));
+});
+test('TOTP URI uses exact decimal options and rejects ambiguous or unsupported URI forms', () => {
+  const base = 'otpauth://totp/example?secret=JBSWY3DPEHPK3PXP';
+  assert.equal(retained.parseTotpConfig(base).period, 30);
+  const value = retained.parseTotpConfig(base + '&algorithm=sha-256&digits=8&period=15');
+  assert.equal(value.algorithm, 'SHA-256');
+  assert.equal(value.digits, 8);
+  assert.equal(value.period, 15);
+  assert.equal(
+    retained.parseTotpConfig(base + '&period=9007199254740991').period,
+    9007199254740991
+  );
+  for (const suffix of [
+    '&period=9007199254740993',
+    '&period=30.0000000000000001',
+    '&period=3e1',
+    '&period=0x1e',
+    '&period=0',
+    '&period=-1',
+    '&period=',
+    '&digits=6.0000000000000001',
+    '&digits=7',
+    '&digits=',
+    '&algorithm=SHA384',
+    '&algorithm=',
+    '&secret=MY',
+    '&digits=6&digits=8',
+    '&period=15&period=30',
+    '&algorithm=SHA1&algorithm=SHA256',
+  ])
+    assert.throws(() => retained.parseTotpConfig(base + suffix));
+  for (const input of [
+    'otpauth://totp?secret=MY',
+    'otpauth://hotp/example?secret=MY',
+    'otpauth://user:pw@totp/example?secret=MY',
+    'otpauth://totp:999/example?secret=MY',
+    'otpauth://totp/%?secret=MY',
+  ])
+    assert.throws(() => retained.parseTotpConfig(input));
+});
+test('TOTP follows all RFC6238 SHA1 SHA256 SHA512 vectors and exact period boundaries', async () => {
+  const timestamps = [59, 1111111109, 1111111111, 1234567890, 2000000000, 20000000000];
+  const vectors = [
+    [
+      'SHA-1',
+      '12345678901234567890',
+      ['94287082', '07081804', '14050471', '89005924', '69279037', '65353130'],
+    ],
+    [
+      'SHA-256',
+      '12345678901234567890123456789012',
+      ['46119246', '68084774', '67062674', '91819424', '90698825', '77737706'],
+    ],
+    [
+      'SHA-512',
+      '1234567890123456789012345678901234567890123456789012345678901234',
+      ['90693936', '25091201', '99943326', '93441116', '38618901', '47863826'],
+    ],
+  ];
+  for (const [algorithm, secret, expected] of vectors)
+    for (let index = 0; index < timestamps.length; index++) {
+      const config = { algorithm, secret: new TextEncoder().encode(secret), digits: 8, period: 30 };
+      assert.equal(
+        await retained.generateTotpCode(
+          config,
+          retained.getTotpTime(timestamps[index] * 1000, 30).counter
+        ),
+        expected[index]
+      );
+    }
+  assert.deepEqual(retained.getTotpTime(59000, 30), { counter: 1, remaining: 1 });
+  assert.deepEqual(retained.getTotpTime(60000, 30), { counter: 2, remaining: 30 });
+  assert.deepEqual(retained.getTotpTime(59999, 30), { counter: 1, remaining: 1 });
+  for (const period of [0, -1, 1.5, 9007199254740992, NaN, Infinity])
+    assert.throws(() => retained.getTotpTime(60000, period));
+  assert.throws(() => retained.getTotpTime(-1, 30));
+  await assert.rejects(
+    retained.generateTotpCode(
+      { algorithm: 'SHA-1', secret: new Uint8Array([1]), digits: 6, period: 30 },
+      9007199254740992
+    ),
+    hasCode('counter')
+  );
+});
 
 test('Docker preserves flags and empty arguments after the image', () => {
   const output = utilityDefinitions.dockerRunToCompose.compute({

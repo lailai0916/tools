@@ -39,6 +39,7 @@ export const converterGuides = {
       },
       notes: [
         'HEX supports three or six digits. RGB channels must be between 0 and 255; HSL saturation and lightness are percentages. Alpha and named CSS colors are not supported.',
+        'RGB and HSL use comma-separated values, such as rgb(255, 0, 0) and hsl(0, 100%, 50%). HSL hue must be between 0 and 360; space-separated CSS syntax and other hue units are not supported.',
         'Shades keep hue and saturation while changing HSL lightness; this is a palette aid and does not guarantee contrast accessibility.',
       ],
     },
@@ -54,6 +55,7 @@ export const converterGuides = {
       },
       notes: [
         'HEX 支持三位或六位；RGB 通道为 0–255，HSL 的饱和度与亮度使用百分比。暂不支持透明度或 CSS 颜色名称。',
+        'RGB 与 HSL 使用逗号分隔，例如 rgb(255, 0, 0) 和 hsl(0, 100%, 50%)；HSL 色相为 0–360，暂不支持空格分隔的 CSS 写法或其他色相单位。',
         '色阶保持色相与饱和度，仅改变 HSL 亮度；它用于辅助配色，不保证无障碍对比度。',
       ],
     },

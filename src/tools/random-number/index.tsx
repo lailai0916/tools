@@ -5,96 +5,13 @@ import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
+import {
+  MAX_RANDOM_NUMBER_COUNT,
+  buildRandomNumbers,
+  parseDecimalInteger,
+  validateRandomNumberParams,
+} from '@/utils/randomNumber';
 import styles from './styles.module.css';
-
-const MAX_COUNT = 1000;
-
-// Unbiased integer in [0, n); handles ranges beyond 2^32 with a 64-bit draw.
-function randomBelow(n: number): number {
-  if (n <= 1) return 0;
-  if (n <= 0x100000000) {
-    const limit = 0x100000000 - (0x100000000 % n);
-    const buf = new Uint32Array(1);
-    let x: number;
-    do {
-      crypto.getRandomValues(buf);
-      x = buf[0];
-    } while (x >= limit);
-    return x % n;
-  }
-  const big = BigInt(n);
-  const range = 1n << 64n;
-  const limit = range - (range % big);
-  const buf = new Uint32Array(2);
-  let x: bigint;
-  do {
-    crypto.getRandomValues(buf);
-    x = (BigInt(buf[0]) << 32n) | BigInt(buf[1]);
-  } while (x >= limit);
-  return Number(x % big);
-}
-
-function drawUnique(min: number, size: number, k: number): number[] {
-  // Materialize and partial-shuffle when the pool is small; otherwise reject.
-  if (size <= 100000) {
-    const pool = Array.from({ length: size }, (_, i) => i);
-    for (let i = 0; i < k; i++) {
-      const j = i + randomBelow(size - i);
-      const tmp = pool[i];
-      pool[i] = pool[j];
-      pool[j] = tmp;
-    }
-    return pool.slice(0, k).map((v) => v + min);
-  }
-  const seen = new Set<number>();
-  const out: number[] = [];
-  while (out.length < k) {
-    const v = randomBelow(size);
-    if (!seen.has(v)) {
-      seen.add(v);
-      out.push(v + min);
-    }
-  }
-  return out;
-}
-
-function parseInt10(s: string): number | null {
-  const t = s.trim();
-  if (t === '') return null;
-  const n = Number(t);
-  return Number.isSafeInteger(n) ? n : null;
-}
-
-type Params = { lo: number; hi: number; k: number };
-
-function validate(minS: string, maxS: string, countS: string): Params | null {
-  const lo = parseInt10(minS);
-  const hi = parseInt10(maxS);
-  const k = parseInt10(countS);
-  if (
-    lo === null ||
-    hi === null ||
-    k === null ||
-    lo > hi ||
-    k < 1 ||
-    k > MAX_COUNT ||
-    !Number.isSafeInteger(hi - lo + 1)
-  ) {
-    return null;
-  }
-  return { lo, hi, k };
-}
-
-function build(minS: string, maxS: string, countS: string, unique: boolean): string {
-  const p = validate(minS, maxS, countS);
-  if (!p) return '';
-  const size = p.hi - p.lo + 1;
-  if (unique && p.k > size) return '';
-  const nums = unique
-    ? drawUnique(p.lo, size, p.k)
-    : Array.from({ length: p.k }, () => p.lo + randomBelow(size));
-  return nums.join('\n');
-}
 
 export default function RandomNumber() {
   const { t } = useI18n();
@@ -102,23 +19,34 @@ export default function RandomNumber() {
   const [max, setMax] = useState('100');
   const [count, setCount] = useState('5');
   const [unique, setUnique] = useState(false);
-  const [output, setOutput] = useState(() => build('1', '100', '5', false));
+  const [output, setOutput] = useState(() => buildRandomNumbers('1', '100', '5', false));
 
+  const parsedCount = parseDecimalInteger(count);
   const validCount =
-    Number.isInteger(Number(count)) && Number(count) >= 1 && Number(count) <= MAX_COUNT;
-  const params = validate(min, max, count);
-  const tooManyUnique = !!params && unique && params.k > params.hi - params.lo + 1;
+    parsedCount !== null && parsedCount >= 1 && parsedCount <= MAX_RANDOM_NUMBER_COUNT;
+  const params = validateRandomNumberParams(min, max, count);
+  const parsedMin = parseDecimalInteger(min);
+  const parsedMax = parseDecimalInteger(max);
+  const rangeTooWide =
+    parsedMin !== null &&
+    parsedMax !== null &&
+    parsedMin <= parsedMax &&
+    BigInt(parsedMax) - BigInt(parsedMin) + 1n > BigInt(Number.MAX_SAFE_INTEGER);
+  const tooManyUnique = !!params && unique && params.k > params.size;
   const error = !validCount
     ? t('tools.randomNumber.invalidCount')
     : !params
-      ? t('tools.randomNumber.invalidRange')
+      ? t(rangeTooWide ? 'tools.randomNumber.invalidRangeSize' : 'tools.randomNumber.invalidRange')
       : tooManyUnique
         ? t('tools.randomNumber.tooManyUnique')
         : '';
   const invalid = !!error;
+  const inputDescription = invalid
+    ? 'random-number-format random-number-error'
+    : 'random-number-format';
 
   const run = (minS = min, maxS = max, countS = count, uniq = unique) => {
-    setOutput(build(minS, maxS, countS, uniq));
+    setOutput(buildRandomNumbers(minS, maxS, countS, uniq));
   };
 
   return (
@@ -136,7 +64,7 @@ export default function RandomNumber() {
             type="number"
             value={min}
             invalid={validCount && !params}
-            aria-describedby={invalid ? 'random-number-error' : undefined}
+            aria-describedby={inputDescription}
             onChange={(e) => {
               setMin(e.target.value);
               run(e.target.value, max, count, unique);
@@ -150,7 +78,7 @@ export default function RandomNumber() {
             type="number"
             value={max}
             invalid={validCount && !params}
-            aria-describedby={invalid ? 'random-number-error' : undefined}
+            aria-describedby={inputDescription}
             onChange={(e) => {
               setMax(e.target.value);
               run(min, e.target.value, count, unique);
@@ -163,10 +91,10 @@ export default function RandomNumber() {
             id="rn-count"
             type="number"
             min={1}
-            max={MAX_COUNT}
+            max={MAX_RANDOM_NUMBER_COUNT}
             value={count}
             invalid={!validCount || tooManyUnique}
-            aria-describedby={invalid ? 'random-number-error' : undefined}
+            aria-describedby={inputDescription}
             onChange={(e) => {
               setCount(e.target.value);
               run(min, max, e.target.value, unique);
@@ -174,6 +102,9 @@ export default function RandomNumber() {
             aria-label={t('tools.randomNumber.count')}
           />
         </div>
+        <p className={styles.hint} id="random-number-format">
+          {t('tools.randomNumber.integerFormat')}
+        </p>
         <Checkbox
           checked={unique}
           onChange={(e) => {

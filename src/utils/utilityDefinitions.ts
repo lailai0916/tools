@@ -50,7 +50,23 @@ function shellTokens(input: string): string[] {
   return tokens;
 }
 
-function dockerRunToCompose(input: string): string {
+function dockerOptionValue(value: string | undefined): string {
+  if (!value?.trim() || value.startsWith('-')) throw new UtilityInputError('dockerValue');
+  return value;
+}
+
+function escapeComposeValue(value: unknown): unknown {
+  if (typeof value === 'string') return value.replaceAll('$', () => '$$');
+  if (Array.isArray(value)) return value.map(escapeComposeValue);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, child]) => [key, escapeComposeValue(child)])
+    );
+  }
+  return value;
+}
+
+export function dockerRunToCompose(input: string): string {
   const tokens = shellTokens(input);
   if (tokens[0] === 'docker') tokens.shift();
   if (tokens[0] === 'run') tokens.shift();
@@ -61,10 +77,7 @@ function dockerRunToCompose(input: string): string {
   const command: string[] = [];
   let image = '';
 
-  const take = (index: number) => {
-    if (!tokens[index + 1]) throw new UtilityInputError('dockerValue');
-    return tokens[index + 1];
-  };
+  const take = (index: number) => dockerOptionValue(tokens[index + 1]);
   for (let index = 0; index < tokens.length; index += 1) {
     const token = tokens[index];
     if (image) {
@@ -78,7 +91,7 @@ function dockerRunToCompose(input: string): string {
       continue;
     }
     if (token.startsWith('--publish=')) {
-      ports.push(token.slice(10));
+      ports.push(dockerOptionValue(token.slice(10)));
       continue;
     }
     if (token === '-e' || token === '--env') {
@@ -87,7 +100,7 @@ function dockerRunToCompose(input: string): string {
       continue;
     }
     if (token.startsWith('--env=')) {
-      environment.push(token.slice(6));
+      environment.push(dockerOptionValue(token.slice(6)));
       continue;
     }
     if (token === '-v' || token === '--volume') {
@@ -96,7 +109,7 @@ function dockerRunToCompose(input: string): string {
       continue;
     }
     if (token.startsWith('--volume=')) {
-      volumes.push(token.slice(9));
+      volumes.push(dockerOptionValue(token.slice(9)));
       continue;
     }
     if (token === '--name') {
@@ -105,7 +118,7 @@ function dockerRunToCompose(input: string): string {
       continue;
     }
     if (token.startsWith('--name=')) {
-      service.container_name = token.slice(7);
+      service.container_name = dockerOptionValue(token.slice(7));
       continue;
     }
     if (token === '--restart') {
@@ -114,7 +127,7 @@ function dockerRunToCompose(input: string): string {
       continue;
     }
     if (token.startsWith('--restart=')) {
-      service.restart = token.slice(10);
+      service.restart = dockerOptionValue(token.slice(10));
       continue;
     }
     if (token.startsWith('-') && !image) throw new UtilityInputError('dockerOption');
@@ -130,7 +143,10 @@ function dockerRunToCompose(input: string): string {
   const name = String(
     service.container_name ?? image.split('/').pop()?.split(':')[0] ?? 'app'
   ).replace(/[^a-zA-Z0-9_-]/g, '-');
-  return dumpYaml({ services: { [name]: service } }, { noRefs: true, lineWidth: 100 });
+  return dumpYaml(
+    { services: { [name]: escapeComposeValue(service) } },
+    { noRefs: true, lineWidth: 100 }
+  );
 }
 
 const gitignoreTemplates: Record<string, string[]> = {
@@ -152,7 +168,7 @@ const gitignoreTemplates: Record<string, string[]> = {
   jetbrains: ['.idea/', '*.iml'],
 };
 
-function buildGitignore(values: UtilityValues): string {
+export function buildGitignore(values: UtilityValues): string {
   const stacks = required(values, 'stacks')
     .toLowerCase()
     .split(/[\s,;]+/)
@@ -163,7 +179,7 @@ function buildGitignore(values: UtilityValues): string {
     const entries = gitignoreTemplates[stack];
     sections.push(`# ${stack}\n${entries.join('\n')}`);
   }
-  if (values.extra.trim()) sections.push(`# custom\n${values.extra.trim()}`);
+  if (values.extra.trim()) sections.push(`# custom\n${values.extra}`);
   return sections.join('\n\n') + '\n';
 }
 

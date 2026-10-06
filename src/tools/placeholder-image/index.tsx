@@ -1,21 +1,15 @@
 import { ToolPane } from '@/components/ToolWorkspace';
-import { TextField } from '@lailai0916/ui';
+import { Alert, Button, ButtonLink, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
+import { MAX_IMAGE_DIMENSION, parseImageDimension } from '@/utils/mediaGeneration';
 import styles from './styles.module.css';
 
 const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
-const MAX_DIMENSION = 4096;
-
-function resolveDimension(value: string, fallback: number): { size: number; valid: boolean } {
-  const n = Number(value);
-  const valid = Number.isInteger(n) && n >= 1 && n <= MAX_DIMENSION;
-  return { size: valid ? n : fallback, valid };
-}
 
 function render(w: number, h: number, bg: string, fg: string, label: string): string {
   const canvas = document.createElement('canvas');
@@ -44,13 +38,17 @@ export default function PlaceholderImage() {
   const [textColor, setTextColor] = useState('#64748b');
   const [text, setText] = useState('');
 
-  const { size: wSize, valid: wValid } = resolveDimension(width, DEFAULT_WIDTH);
-  const { size: hSize, valid: hValid } = resolveDimension(height, DEFAULT_HEIGHT);
-  const fallbackLabel = `${wSize}×${hSize}`;
+  const wSize = parseImageDimension(width);
+  const hSize = parseImageDimension(height);
+  const wValid = wSize !== null;
+  const hValid = hSize !== null;
+  const dimensionsValid = wValid && hValid;
+  const fallbackLabel = dimensionsValid ? `${wSize}×${hSize}` : '';
   const label = text.trim() || fallbackLabel;
 
   const dataUrl = useMemo(
-    () => render(wSize, hSize, background, textColor, label),
+    () =>
+      wSize !== null && hSize !== null ? render(wSize, hSize, background, textColor, label) : '',
     [wSize, hSize, background, textColor, label]
   );
 
@@ -68,9 +66,11 @@ export default function PlaceholderImage() {
           className={styles.input}
           type="number"
           min={1}
-          max={MAX_DIMENSION}
+          max={MAX_IMAGE_DIMENSION}
+          step={1}
           value={width}
           invalid={!wValid}
+          aria-describedby={!wValid ? 'ph-dimensions-error' : undefined}
           onChange={(e) => setWidth(e.target.value)}
           aria-label={t('tools.placeholderImage.width')}
           monospace
@@ -82,9 +82,11 @@ export default function PlaceholderImage() {
           className={styles.input}
           type="number"
           min={1}
-          max={MAX_DIMENSION}
+          max={MAX_IMAGE_DIMENSION}
+          step={1}
           value={height}
           invalid={!hValid}
+          aria-describedby={!hValid ? 'ph-dimensions-error' : undefined}
           onChange={(e) => setHeight(e.target.value)}
           aria-label={t('tools.placeholderImage.height')}
           monospace
@@ -120,19 +122,40 @@ export default function PlaceholderImage() {
         />
       </div>
 
+      {!dimensionsValid && (
+        <Alert id="ph-dimensions-error" variant="danger" role="alert">
+          {t('tools.placeholderImage.dimensionError')}
+        </Alert>
+      )}
+
       <ToolPane title={t('tools.placeholderImage.preview')}>
-        <div className={styles.previewBox}>
-          <img className={styles.image} src={dataUrl} alt={label} />
-        </div>
-        <a className={styles.download} href={dataUrl} download="placeholder.png">
-          {t('tools.placeholderImage.download')}
-        </a>
+        {dataUrl ? (
+          <div className={styles.previewBox}>
+            <img className={styles.image} src={dataUrl} alt={label} />
+          </div>
+        ) : (
+          <p className={styles.note}>{t('tools.placeholderImage.empty')}</p>
+        )}
+        {dataUrl ? (
+          <ButtonLink size="sm" to={dataUrl} download="placeholder.png">
+            {t('tools.placeholderImage.download')}
+          </ButtonLink>
+        ) : (
+          <Button size="sm" disabled>
+            {t('tools.placeholderImage.download')}
+          </Button>
+        )}
       </ToolPane>
 
       <ToolPane
         title={t('tools.placeholderImage.dataUri')}
         actions={
-          <CopyButton value={dataUrl} label={t('common.copy')} copiedLabel={t('common.copied')} />
+          <CopyButton
+            value={dataUrl}
+            disabled={!dataUrl}
+            label={t('common.copy')}
+            copiedLabel={t('common.copied')}
+          />
         }
       >
         <TextArea value={dataUrl} readOnly aria-label={t('tools.placeholderImage.dataUri')} />

@@ -8,6 +8,7 @@
 
 .row {
   composes: resultRow from '../../components/ToolWorkspace/styles.module.css';
+  grid-template-columns: minmax(90px, 1fr) minmax(0, 1fr) minmax(0, 2fr);
 }
 
 .results {
@@ -48,4 +49,26 @@
   font-size: var(--font-size-code);
   color: var(--font-color-base);
   text-align: center;
+  overflow-wrap: anywhere;
+}
+
+@container tools-content (max-width: 560px) {
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .row > .rowLabel {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .row > .rowField {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .row > .rowValue {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
 }

@@ -5,72 +5,18 @@ import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
+import {
+  computeStatistics,
+  formatStatisticNumber as fmt,
+  type StatisticsValues,
+  type VarianceMode,
+} from '@/utils/statistics';
 import styles from './styles.module.css';
 
-function fmt(n: number): string {
-  return Object.is(n, -0) ? '0' : String(Number(n.toPrecision(15)));
-}
-
 type Stats = { labelKey: MessageKey; value: string }[];
-type VarianceMode = 'population' | 'sample';
 
-type Result = { kind: 'empty' } | { kind: 'invalid' } | { kind: 'ok'; stats: Stats };
-
-function compute(input: string, varianceMode: VarianceMode): Result {
-  const tokens = input
-    .trim()
-    .split(/[\s,]+/)
-    .filter(Boolean);
-  if (tokens.length === 0) {
-    return { kind: 'empty' };
-  }
-  const values: number[] = [];
-  for (const tok of tokens) {
-    const n = Number(tok);
-    if (!Number.isFinite(n)) {
-      return { kind: 'invalid' };
-    }
-    values.push(n);
-  }
-
-  const n = values.length;
-  const sum = values.reduce((a, b) => a + b, 0);
-  const mean = sum / n;
-  const sorted = [...values].sort((a, b) => a - b);
-  const median = n % 2 === 1 ? sorted[(n - 1) / 2] : (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
-
-  const freq = new Map<number, number>();
-  for (const v of values) {
-    freq.set(v, (freq.get(v) ?? 0) + 1);
-  }
-  let maxFreq = 0;
-  for (const c of freq.values()) {
-    if (c > maxFreq) {
-      maxFreq = c;
-    }
-  }
-  const seen = new Set<number>();
-  const modes: number[] = [];
-  for (const v of values) {
-    if (freq.get(v) === maxFreq && !seen.has(v)) {
-      seen.add(v);
-      modes.push(v);
-    }
-  }
-
-  const min = sorted[0];
-  const max = sorted[n - 1];
-  const sumSquares = values.reduce((acc, v) => acc + (v - mean) ** 2, 0);
-  const variance =
-    varianceMode === 'sample' && n < 2
-      ? null
-      : sumSquares / (varianceMode === 'sample' ? n - 1 : n);
-  const stddev = variance === null ? null : Math.sqrt(variance);
-
-  if (![sum, mean, median, max - min, variance ?? 0, stddev ?? 0].every(Number.isFinite)) {
-    return { kind: 'invalid' };
-  }
-
+function displayStatistics(values: StatisticsValues, varianceMode: VarianceMode): Stats {
+  const { count: n, sum, mean, median, modes, min, max, range, variance, stddev } = values;
   const stats: Stats = [
     { labelKey: 'tools.statistics.count', value: String(n) },
     { labelKey: 'tools.statistics.sum', value: fmt(sum) },
@@ -79,7 +25,7 @@ function compute(input: string, varianceMode: VarianceMode): Result {
     { labelKey: 'tools.statistics.mode', value: modes.map(fmt).join(', ') },
     { labelKey: 'tools.statistics.min', value: fmt(min) },
     { labelKey: 'tools.statistics.max', value: fmt(max) },
-    { labelKey: 'tools.statistics.range', value: fmt(max - min) },
+    { labelKey: 'tools.statistics.range', value: fmt(range) },
     {
       labelKey:
         varianceMode === 'sample'
@@ -95,14 +41,14 @@ function compute(input: string, varianceMode: VarianceMode): Result {
       value: stddev === null ? '—' : fmt(stddev),
     },
   ];
-  return { kind: 'ok', stats };
+  return stats;
 }
 
 export default function Statistics() {
   const { t } = useI18n();
   const [input, setInput] = useState('');
   const [varianceMode, setVarianceMode] = useState<VarianceMode>('population');
-  const result = useMemo(() => compute(input, varianceMode), [input, varianceMode]);
+  const result = useMemo(() => computeStatistics(input, varianceMode), [input, varianceMode]);
 
   return (
     <ToolLayout
@@ -139,12 +85,18 @@ export default function Statistics() {
         aria-label={t('common.input')}
       />
 
-      {result.kind === 'invalid' && <Alert variant="danger">{t('tools.statistics.invalid')}</Alert>}
+      {result.kind === 'invalid' && (
+        <Alert variant="danger">
+          {t(
+            result.reason === 'range' ? 'tools.statistics.rangeError' : 'tools.statistics.invalid'
+          )}
+        </Alert>
+      )}
       {result.kind === 'empty' && <p className={styles.hint}>{t('tools.statistics.empty')}</p>}
 
       {result.kind === 'ok' && (
         <div className={styles.results}>
-          {result.stats.map((s) => (
+          {displayStatistics(result.values, varianceMode).map((s) => (
             <div key={s.labelKey} className={styles.row}>
               <span className={styles.rowLabel}>{t(s.labelKey)}</span>
               <code className={styles.rowValue}>{s.value}</code>

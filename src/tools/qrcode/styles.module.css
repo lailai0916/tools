@@ -60,6 +60,13 @@
   border-radius: var(--radius-panel);
 }
 
+.note {
+  margin: 0;
+  color: var(--lk-font-color-secondary);
+  font-size: var(--lk-font-size-sm);
+  line-height: 1.6;
+}
+
 @container tools-content (max-width: 680px) {
   .settings {
     grid-template-columns: 1fr;

@@ -70,7 +70,9 @@ export function subscribeToolStorage(listener: () => void) {
 }
 
 export function rememberTool(toolId: string): string[] {
-  const next = [toolId, ...readToolIds(RECENT_KEY).filter((id) => id !== toolId)].slice(0, 18);
+  const recent = readToolIds(RECENT_KEY);
+  if (recent[0] === toolId) return recent;
+  const next = [toolId, ...recent.filter((id) => id !== toolId)].slice(0, 18);
   writeToolIds(RECENT_KEY, next);
   return readToolIds(RECENT_KEY);
 }

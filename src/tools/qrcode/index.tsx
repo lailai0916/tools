@@ -1,15 +1,21 @@
 import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
 import { Alert, Button, ButtonLink, Slider, Segmented } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
-import QRCode from 'qrcode';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
+import {
+  generateQrMedia,
+  QrCapacityError,
+  type QrMedia,
+  type QrLevel,
+  type QrSize,
+} from '@/utils/mediaGeneration';
 import styles from './styles.module.css';
 
-type Level = 'L' | 'M' | 'Q' | 'H';
-type Size = 256 | 512 | 1024;
+type Level = QrLevel;
+type Size = QrSize;
 
 const LEVELS: { value: Level; label: MessageKey }[] = [
   { value: 'L', label: 'tools.qrcode.level.L' },
@@ -24,46 +30,34 @@ export default function QrCode() {
   const [input, setInput] = useState('');
   const [level, setLevel] = useState<Level>('M');
   const [size, setSize] = useState<Size>(512);
-  const [margin, setMargin] = useState(2);
-  const [dataUrl, setDataUrl] = useState('');
-  const [svgUrl, setSvgUrl] = useState('');
-  const [error, setError] = useState('');
-  const [pending, setPending] = useState(false);
+  const [margin, setMargin] = useState(4);
+  const source = JSON.stringify([input, level, size, margin]);
+  const [result, setResult] = useState<{ source: string; media: QrMedia } | null>(null);
+  const [failure, setFailure] = useState<{ source: string; capacity: boolean } | null>(null);
+  const media = result?.source === source ? result.media : null;
+  const error =
+    failure?.source === source
+      ? t(failure.capacity ? 'tools.qrcode.errorCapacity' : 'tools.qrcode.errorGeneration')
+      : '';
+  const pending = input.length > 0 && !media && !error;
 
   useEffect(() => {
-    setDataUrl('');
-    setSvgUrl('');
-    setError('');
-    const text = input.trim();
-    if (!text) {
-      setPending(false);
-      return;
-    }
+    if (input.length === 0) return;
     let active = true;
-    setPending(true);
-    const options = { errorCorrectionLevel: level, margin, width: size };
-    Promise.all([
-      QRCode.toDataURL(text, options),
-      QRCode.toString(text, { ...options, type: 'svg' }),
-    ])
-      .then(([url, svg]) => {
+    generateQrMedia(input, { level, margin, size })
+      .then((media) => {
         if (!active) return;
-        setDataUrl(url);
-        setSvgUrl(`data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`);
-        setError('');
-        setPending(false);
+        setResult({ source, media });
+        setFailure(null);
       })
       .catch((e: unknown) => {
         if (!active) return;
-        setDataUrl('');
-        setSvgUrl('');
-        setError(e instanceof Error ? e.message : String(e));
-        setPending(false);
+        setFailure({ source, capacity: e instanceof QrCapacityError });
       });
     return () => {
       active = false;
     };
-  }, [input, level, margin, size]);
+  }, [input, level, margin, size, source]);
 
   return (
     <ToolLayout
@@ -124,18 +118,23 @@ export default function QrCode() {
             placeholder={t('tools.qrcode.placeholder')}
             aria-label={t('common.input')}
           />
-          {error && <Alert variant="danger">{error}</Alert>}
+          <p className={styles.note}>{t('tools.qrcode.contentHint')}</p>
+          {error && (
+            <Alert variant="danger" role="alert">
+              {error}
+            </Alert>
+          )}
         </ToolPane>
 
         <ToolPane title={t('common.output')}>
-          {dataUrl ? (
+          {media ? (
             <div className={styles.preview}>
-              <img className={styles.image} src={dataUrl} alt={t('tools.qrcode.alt')} />
+              <img className={styles.image} src={media.png} alt={t('tools.qrcode.alt')} />
               <div className={styles.downloads}>
-                <ButtonLink size="sm" to={dataUrl} download={`qrcode-${size}.png`}>
+                <ButtonLink size="sm" to={media.png} download={`qrcode-${size}.png`}>
                   {t('tools.qrcode.downloadPng')}
                 </ButtonLink>
-                <ButtonLink size="sm" to={svgUrl} download="qrcode.svg">
+                <ButtonLink size="sm" to={media.svg} download="qrcode.svg">
                   {t('tools.qrcode.downloadSvg')}
                 </ButtonLink>
               </div>

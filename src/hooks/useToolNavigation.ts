@@ -8,6 +8,13 @@ export type ToolView = 'all' | 'favorites' | 'recent';
 export function useToolNavigation() {
   const { t } = useI18n();
   const { pathname } = useLocation();
+  let routePath = pathname;
+  try {
+    routePath = decodeURI(pathname);
+  } catch {
+    // Malformed URL escapes should still fall through to the router's 404 page.
+  }
+  routePath = routePath.replace(/\/+$/, '').toLowerCase() || '/';
   const [searchParams] = useSearchParams();
   const requestedView = searchParams.get('view');
   const view: ToolView =
@@ -16,7 +23,7 @@ export function useToolNavigation() {
   const category = CATEGORY_ORDER.includes(requestedCategory as ToolCategory)
     ? (requestedCategory as ToolCategory)
     : null;
-  const tool = TOOLS.find((item) => pathname === `/${item.id}`);
+  const tool = TOOLS.find((item) => routePath === `/${item.id}`);
   const title =
     view === 'favorites'
       ? t('site.viewFavorites')

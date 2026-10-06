@@ -3,6 +3,7 @@ import { useLocation, useNavigationType } from 'react-router';
 import { useToolNavigation } from '@/hooks/useToolNavigation';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
+import { rememberTool } from '@/utils/toolStorage';
 
 export default function RouteEffects() {
   const location = useLocation();
@@ -12,6 +13,10 @@ export default function RouteEffects() {
   const previousKey = useRef(location.key);
   const previousPathname = useRef(location.pathname);
   const positions = useRef(new Map<string, number>());
+
+  useEffect(() => {
+    if (tool) rememberTool(tool.id);
+  }, [tool]);
 
   useEffect(() => {
     document.title = `${tool ? t(`tools.${tool.key}.name` as MessageKey) : location.pathname === '/' ? title : '404'} · ${t('site.title')}`;

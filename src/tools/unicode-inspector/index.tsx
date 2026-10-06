@@ -1,44 +1,17 @@
 import { ToolPane } from '@/components/ToolWorkspace';
-import { Button, Table } from '@lailai0916/ui';
+import { Alert, Button, Table } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
+import { inspectUnicode } from '@/utils/unicodeInspector';
 import styles from './styles.module.css';
-
-const MAX_ROWS = 500;
-
-type CodePointRow = {
-  glyph: string;
-  codePoint: string;
-  decimal: string;
-  utf8: string;
-};
-
-function inspect(input: string): { rows: CodePointRow[]; truncated: boolean } {
-  const chars = Array.from(input);
-  const truncated = chars.length > MAX_ROWS;
-  const encoder = new TextEncoder();
-  const rows = chars.slice(0, MAX_ROWS).map((ch) => {
-    const cp = ch.codePointAt(0) ?? 0;
-    const utf8 = Array.from(encoder.encode(ch))
-      .map((b) => b.toString(16).toUpperCase().padStart(2, '0'))
-      .join(' ');
-    return {
-      glyph: ch,
-      codePoint: `U+${cp.toString(16).toUpperCase().padStart(4, '0')}`,
-      decimal: String(cp),
-      utf8,
-    };
-  });
-  return { rows, truncated };
-}
 
 export default function UnicodeInspector() {
   const { t } = useI18n();
   const [input, setInput] = useState('');
 
-  const { rows, truncated } = useMemo(() => inspect(input), [input]);
+  const { rows, truncated, hasUnpairedSurrogate } = useMemo(() => inspectUnicode(input), [input]);
 
   return (
     <ToolLayout
@@ -64,6 +37,12 @@ export default function UnicodeInspector() {
         />
       </ToolPane>
 
+      {hasUnpairedSurrogate && (
+        <Alert variant="warning" role="status">
+          {t('tools.unicodeInspector.unpairedSurrogate')}
+        </Alert>
+      )}
+
       {rows.length === 0 ? (
         <p className={styles.empty}>{t('tools.unicodeInspector.empty')}</p>
       ) : (
@@ -85,7 +64,9 @@ export default function UnicodeInspector() {
                   </td>
                   <td className={styles.td}>{row.codePoint}</td>
                   <td className={styles.td}>{row.decimal}</td>
-                  <td className={styles.td}>{row.utf8}</td>
+                  <td className={styles.td}>
+                    {row.utf8 ?? t('tools.unicodeInspector.invalidUtf8')}
+                  </td>
                 </tr>
               ))}
             </tbody>

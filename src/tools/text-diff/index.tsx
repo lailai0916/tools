@@ -1,49 +1,79 @@
 import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
-import { Badge, Button } from '@lailai0916/ui';
-import { useMemo, useState } from 'react';
-import { diffLines } from 'diff';
+import { Alert, Badge, Button } from '@lailai0916/ui';
+import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
 
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
+import {
+  DIFF_SIGN,
+  TEXT_DIFF_TIMEOUT_MS,
+  textDiffCopyText,
+  textDiffInputError,
+  type TextDiffResult,
+} from '@/utils/textDiff';
 import styles from './styles.module.css';
 
-type LineType = 'add' | 'del' | 'same';
-type DiffLine = { type: LineType; text: string };
-
-const SIGN: Record<LineType, string> = { add: '+', del: '-', same: ' ' };
-
-function toLines(value: string): string[] {
-  const lines = value.split('\n');
-  if (lines.length > 1 && lines[lines.length - 1] === '') {
-    lines.pop();
-  }
-  return lines;
-}
-
-function computeDiff(original: string, modified: string): DiffLine[] {
-  const changes = diffLines(original, modified);
-  const result: DiffLine[] = [];
-  for (const change of changes) {
-    const type: LineType = change.added ? 'add' : change.removed ? 'del' : 'same';
-    for (const text of toLines(change.value)) {
-      result.push({ type, text });
-    }
-  }
-  return result;
-}
+type CompletedDiff = { original: string; modified: string; result: TextDiffResult };
 
 export default function TextDiff() {
   const { t } = useI18n();
   const [original, setOriginal] = useState('');
   const [modified, setModified] = useState('');
+  const [completed, setCompleted] = useState<CompletedDiff | null>(null);
 
-  const lines = useMemo(() => computeDiff(original, modified), [original, modified]);
+  useEffect(() => {
+    if (!original && !modified) return;
+    const inputError = textDiffInputError(original, modified);
+    if (inputError) {
+      setCompleted({ original, modified, result: { ok: false, error: inputError } });
+      return;
+    }
+    let active = true;
+    let worker: Worker | undefined;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    const finish = (result: TextDiffResult) => {
+      if (!active) return;
+      active = false;
+      clearTimeout(timeout);
+      worker?.terminate();
+      setCompleted({ original, modified, result });
+    };
+    const start = setTimeout(() => {
+      try {
+        worker = new Worker(new URL('../../utils/textDiff.worker.ts', import.meta.url), {
+          type: 'module',
+        });
+        worker.onmessage = (event: MessageEvent<TextDiffResult>) => finish(event.data);
+        worker.onerror = () => finish({ ok: false, error: 'failed' });
+        // Include startup grace; the worker's diff algorithm itself is limited to one second.
+        timeout = setTimeout(
+          () => finish({ ok: false, error: 'timeout' }),
+          TEXT_DIFF_TIMEOUT_MS + 500
+        );
+        worker.postMessage({ original, modified });
+      } catch {
+        finish({ ok: false, error: 'failed' });
+      }
+    }, 120);
+    return () => {
+      active = false;
+      clearTimeout(start);
+      clearTimeout(timeout);
+      worker?.terminate();
+    };
+  }, [original, modified]);
 
   const hasInput = original !== '' || modified !== '';
-  const noChange = hasInput && lines.every((l) => l.type === 'same');
-  const copyText = lines.map((l) => SIGN[l.type] + (l.text ? ' ' + l.text : '')).join('\n');
+  // State from a previous input is hidden during the render that starts a new comparison.
+  const result =
+    completed?.original === original && completed.modified === modified ? completed.result : null;
+  const lines = result?.ok ? result.lines : [];
+  const pending = hasInput && result === null;
+  const error = result?.ok === false ? result.error : null;
+  const noChange = hasInput && result?.ok === true && lines.every((line) => line.type === 'same');
+  const copyText = result?.ok ? textDiffCopyText(lines) : '';
 
   return (
     <ToolLayout
@@ -90,7 +120,7 @@ export default function TextDiff() {
         title={
           <>
             {t('common.output')}
-            {hasInput && !noChange && (
+            {hasInput && result?.ok && !noChange && (
               <>
                 <Badge>{`+${lines.filter((l) => l.type === 'add').length}`}</Badge>
                 <Badge>{`−${lines.filter((l) => l.type === 'del').length}`}</Badge>
@@ -99,21 +129,30 @@ export default function TextDiff() {
           </>
         }
         actions={
-          <CopyButton
-            value={hasInput ? copyText : ''}
-            label={t('common.copy')}
-            copiedLabel={t('common.copied')}
-          />
+          <CopyButton value={copyText} label={t('common.copy')} copiedLabel={t('common.copied')} />
         }
       >
         <div className={styles.diff}>
           {!hasInput && <p className={styles.hint}>{t('tools.textDiff.empty')}</p>}
+          {pending && <p className={styles.hint}>{t('tools.textDiff.processing')}</p>}
+          {error && (
+            <Alert variant="danger">
+              {t(
+                error === 'size'
+                  ? 'tools.textDiff.limitError'
+                  : error === 'timeout'
+                    ? 'tools.textDiff.timeoutError'
+                    : 'tools.textDiff.failedError'
+              )}
+            </Alert>
+          )}
           {noChange && <p className={styles.hint}>{t('tools.textDiff.identical')}</p>}
           {hasInput &&
+            result?.ok &&
             !noChange &&
             lines.map((line, i) => (
               <div key={i} className={styles[`line_${line.type}`]}>
-                <span className={styles.sign}>{SIGN[line.type]}</span>
+                <span className={styles.sign}>{DIFF_SIGN[line.type]}</span>
                 <span className={styles.text}>{line.text || ' '}</span>
               </div>
             ))}

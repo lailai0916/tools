@@ -8,7 +8,7 @@ import { CATEGORY_ORDER, TOOLS } from '@/tools/registry';
 import type { MessageKey } from '@/i18n/en';
 import { useToolNavigation } from '@/hooks/useToolNavigation';
 import { useSavedTools } from '@/hooks/useSavedTools';
-import { toggleToolFavorite, rememberTool } from '@/utils/toolStorage';
+import { toggleToolFavorite } from '@/utils/toolStorage';
 import { matchesToolSearch } from '@/utils/toolSearch';
 import styles from './styles.module.css';
 
@@ -138,11 +138,7 @@ export default function Home() {
                 return (
                   <article key={tool.id} className={styles.card}>
                     <Panel className={styles.cardSurface}>
-                      <Link
-                        to={`/${tool.id}`}
-                        className={styles.cardLink}
-                        onClick={() => rememberTool(tool.id)}
-                      >
+                      <Link to={`/${tool.id}`} className={styles.cardLink}>
                         <IconBlock icon={tool.icon} variant="muted" />
                         <span className={styles.cardCopy}>
                           <Hint label={name}>

@@ -10,6 +10,11 @@ import { curatedCoreZhHans } from './curated/core';
 
 import type { MessageKey } from './en';
 import { curatedTimeUnitsZhHans } from './curated/timeUnits';
+import { developmentPolishZhHans } from './curated/developmentPolish';
+import { randomNumberPolishZhHans } from './curated/randomNumberPolish';
+import { cryptoPolishZhHans } from './curated/cryptoPolish';
+import { textMathPolishZhHans } from './curated/textMathPolish';
+import { mediaPolishZhHans } from './curated/mediaPolish';
 
 const baseZhHans = {
   'site.title': "lailai's Tools",
@@ -742,4 +747,9 @@ export const zhHans: Record<MessageKey, string> = {
   ...curatedWebZhHans,
   ...curatedCoreZhHans,
   ...curatedTimeUnitsZhHans,
+  ...developmentPolishZhHans,
+  ...randomNumberPolishZhHans,
+  ...cryptoPolishZhHans,
+  ...textMathPolishZhHans,
+  ...mediaPolishZhHans,
 };

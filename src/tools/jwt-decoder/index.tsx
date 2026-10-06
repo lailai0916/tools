@@ -5,47 +5,23 @@ import ToolLayout from '@/components/ToolLayout';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
+import {
+  inspectJwt,
+  RetainedCryptoError,
+  type JwtInspection,
+  type RetainedCryptoErrorCode,
+} from '@/utils/retainedCrypto';
 import styles from './styles.module.css';
 
-type Decoded = {
-  ok: true;
-  header: string;
-  payload: string;
-  signature: string;
-};
-
-type Result = Decoded | { ok: false } | { ok: null };
-
-function base64UrlDecode(segment: string): string {
-  const normalized = segment.replace(/-/g, '+').replace(/_/g, '/');
-  const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=');
-  const binary = atob(padded);
-  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
-}
-
-function prettyJson(segment: string): string {
-  return JSON.stringify(JSON.parse(base64UrlDecode(segment)), null, 2);
-}
+type Result =
+  ({ ok: true } & JwtInspection) | { ok: false; error: RetainedCryptoErrorCode } | { ok: null };
 
 function decode(input: string): Result {
-  const trimmed = input.trim();
-  if (!trimmed) {
-    return { ok: null };
-  }
-  const parts = trimmed.split('.');
-  if (parts.length !== 3) {
-    return { ok: false };
-  }
+  if (!input.trim()) return { ok: null };
   try {
-    return {
-      ok: true,
-      header: prettyJson(parts[0]),
-      payload: prettyJson(parts[1]),
-      signature: parts[2],
-    };
-  } catch {
-    return { ok: false };
+    return { ok: true, ...inspectJwt(input) };
+  } catch (error) {
+    return { ok: false, error: error instanceof RetainedCryptoError ? error.code : 'jwtFormat' };
   }
 }
 
@@ -53,6 +29,16 @@ export default function JwtDecoder() {
   const { t } = useI18n();
   const [input, setInput] = useState('');
   const result = useMemo(() => decode(input), [input]);
+  const errorKey =
+    result.ok === false && ['base64url', 'utf8'].includes(result.error)
+      ? 'tools.jwtDecoder.invalidEncoding'
+      : result.ok === false && result.error === 'object'
+        ? 'tools.jwtDecoder.invalidObject'
+        : result.ok === false && result.error === 'number'
+          ? 'tools.jwtDecoder.invalidNumber'
+          : result.ok === false && result.error === 'claim'
+            ? 'tools.jwtDecoder.invalidClaim'
+            : 'tools.jwtDecoder.invalid';
 
   return (
     <ToolLayout
@@ -74,8 +60,10 @@ export default function JwtDecoder() {
           placeholder={t('tools.jwtDecoder.placeholder')}
           aria-label={t('common.input')}
         />
-        {result.ok === false && <Alert variant="danger">{t('tools.jwtDecoder.invalid')}</Alert>}
+        {result.ok === false && <Alert variant="danger">{t(errorKey)}</Alert>}
       </div>
+
+      <p className={styles.note}>{t('tools.jwtDecoder.inputNote')}</p>
 
       {result.ok === true && (
         <>
@@ -83,6 +71,7 @@ export default function JwtDecoder() {
             title={t('tools.jwtDecoder.header')}
             actions={
               <CopyButton
+                key={result.header}
                 value={result.header}
                 label={t('common.copy')}
                 copiedLabel={t('common.copied')}
@@ -96,6 +85,7 @@ export default function JwtDecoder() {
             title={t('tools.jwtDecoder.payload')}
             actions={
               <CopyButton
+                key={result.payload}
                 value={result.payload}
                 label={t('common.copy')}
                 copiedLabel={t('common.copied')}

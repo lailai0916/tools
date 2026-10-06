@@ -45,6 +45,7 @@ export const textGuides = {
       },
       notes: [
         'Comparison is by line, not by individual word or character. A changed line is shown as a removal and an addition.',
+        'Comparison runs in a worker and stops after one second. Both inputs together support up to 500,000 UTF-16 code units and 20,000 lines; results support up to 20,000 rows. An error clears the result and disables copying.',
       ],
     },
     'zh-Hans': {
@@ -57,7 +58,10 @@ export const textGuides = {
         input: '原始：hello\n修改后：hello world',
         output: '- hello\n+ hello world',
       },
-      notes: ['按行比较，而不是逐词或逐字符比较；修改一行会显示为删除旧行并新增新行。'],
+      notes: [
+        '按行比较，而不是逐词或逐字符比较；修改一行会显示为删除旧行并新增新行。',
+        '比较在独立线程运行，超过一秒会停止。两份输入合计最多支持 500,000 个 UTF-16 码元和 20,000 行，结果最多 20,000 行；出错时清空结果并禁用复制。',
+      ],
     },
   },
   unicodeInspector: {
@@ -73,6 +77,7 @@ export const textGuides = {
       },
       notes: [
         'Shows up to 500 code points. One visible symbol, including some emoji, can occupy multiple rows because it contains several code points.',
+        'Unpaired UTF-16 surrogates are shown as code units with a warning. They have no valid UTF-8 encoding; replacement-character bytes are not substituted.',
       ],
     },
     'zh-Hans': {
@@ -82,7 +87,10 @@ export const textGuides = {
         input: 'A',
         output: 'U+0041\n十进制：65\nUTF-8：41',
       },
-      notes: ['最多展示 500 个码点。部分 emoji 等可见符号由多个码点构成，因此可能占用多行。'],
+      notes: [
+        '最多展示 500 个码点。部分 emoji 等可见符号由多个码点构成，因此可能占用多行。',
+        '未配对的 UTF-16 代理项会按码元展示并提示警告。它们没有合法的 UTF-8 编码，不会用替换字符的字节代替。',
+      ],
     },
   },
 } as const satisfies Partial<Record<ToolGuideKey, LocalizedToolGuide>>;
