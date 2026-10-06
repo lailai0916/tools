@@ -4,4 +4,3 @@ dist
 *.local
 .vite
 *.tsbuildinfo
-perf/bench/results

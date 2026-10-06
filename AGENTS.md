@@ -17,6 +17,8 @@ npm run check     # format + lint + typecheck + guides + workbench regressions
 ```
 
 Run `npm run check` and `npm run build` before delivering code changes.
+After building, run `npm run check:performance` to verify the initial JS/CSS ceilings in
+`scripts/performance-budgets.json`. Optimization results are summarized in `perf/report.md`.
 The deployment workflow checks the public homepage, entry assets, new and merged routes against
 the exact build after syncing the server, and verifies retired paths return 404.
 

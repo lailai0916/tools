@@ -7,7 +7,7 @@ import { readRegistryModule } from './read-registry.mjs';
 const repository = fileURLToPath(new URL('../', import.meta.url));
 const defaults = {
   dist: resolve(repository, 'dist'),
-  budgets: resolve(repository, 'perf/bench/budgets.json'),
+  budgets: resolve(repository, 'scripts/performance-budgets.json'),
 };
 const format = { version: 1, metric: 'gzip-bytes', compression: { level: 9 } };
 
