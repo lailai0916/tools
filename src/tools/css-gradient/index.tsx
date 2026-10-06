@@ -2,6 +2,7 @@ import { ToolPane } from '@/components/ToolWorkspace';
 import { Slider, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { developmentGuides } from '@/content/toolGuides/development';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
@@ -20,6 +21,7 @@ export default function CssGradient() {
 
   return (
     <ToolLayout
+      guide={developmentGuides.cssGradient}
       title={t('tools.cssGradient.name')}
       description={t('tools.cssGradient.description')}
       backLabel={t('common.back')}

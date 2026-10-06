@@ -2,6 +2,7 @@ import { Icon, Link, Stack } from '@lailai0916/ui';
 import type { ReactNode } from 'react';
 import FavoriteButton from '@/components/FavoriteButton';
 import ToolGuide from '@/components/ToolGuide';
+import type { LocalizedToolGuide } from '@/content/toolGuides/types';
 import { useToolNavigation } from '@/hooks/useToolNavigation';
 import { useSavedTools } from '@/hooks/useSavedTools';
 import { useI18n } from '@/i18n';
@@ -10,6 +11,7 @@ import { toggleToolFavorite } from '@/utils/toolStorage';
 import styles from './styles.module.css';
 
 type ToolLayoutProps = {
+  guide: LocalizedToolGuide;
   title: string;
   description?: string;
   backLabel?: string;
@@ -18,6 +20,7 @@ type ToolLayoutProps = {
 };
 
 export default function ToolLayout({
+  guide,
   title,
   description,
   children,
@@ -70,7 +73,7 @@ export default function ToolLayout({
       >
         {children}
       </Stack>
-      {tool && <ToolGuide toolKey={tool.key} />}
+      {tool && <ToolGuide guide={guide} />}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
 import { Alert, Button, ButtonLink, Slider, Segmented } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { generatorGuides } from '@/content/toolGuides/generator';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -61,6 +62,7 @@ export default function QrCode() {
 
   return (
     <ToolLayout
+      guide={generatorGuides.qrcode}
       title={t('tools.qrcode.name')}
       description={t('tools.qrcode.description')}
       backLabel={t('common.back')}

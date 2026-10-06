@@ -2,6 +2,7 @@ import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Button, Checkbox, TextField } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { generatorGuides } from '@/content/toolGuides/generator';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -51,6 +52,7 @@ export default function RandomNumber() {
 
   return (
     <ToolLayout
+      guide={generatorGuides.randomNumber}
       title={t('tools.randomNumber.name')}
       description={t('tools.randomNumber.description')}
       backLabel={t('common.back')}

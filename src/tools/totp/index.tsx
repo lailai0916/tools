@@ -2,6 +2,7 @@ import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Button, PasswordInput } from '@lailai0916/ui';
 import { useEffect, useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { cryptoGuides } from '@/content/toolGuides/crypto';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import {
@@ -72,7 +73,11 @@ export default function Totp() {
   }, [config, counter, retry]);
 
   return (
-    <ToolLayout title={t('tools.totp.name')} description={t('tools.totp.description')}>
+    <ToolLayout
+      guide={cryptoGuides.totp}
+      title={t('tools.totp.name')}
+      description={t('tools.totp.description')}
+    >
       <ToolPane title={t('tools.totp.secret')}>
         <PasswordInput
           value={secret}

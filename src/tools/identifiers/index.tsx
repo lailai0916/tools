@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
 import ToolLayout from '@/components/ToolLayout';
+import { curatedCryptoGuides } from '@/content/toolGuides/curatedCrypto';
 import { ToolPane, ToolResults } from '@/components/ToolWorkspace';
 import { useI18n } from '@/i18n';
 import { generateIdentifiers, inspectUuid, type IdentifierFormat } from '@/utils/curatedCrypto';
@@ -80,6 +81,7 @@ export default function Identifiers() {
 
   return (
     <ToolLayout
+      guide={curatedCryptoGuides.identifiers}
       title={t('tools.identifiers.name')}
       description={t('tools.identifiers.description')}
     >

@@ -2,6 +2,7 @@ import { ToolPane } from '@/components/ToolWorkspace';
 import { TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { developmentGuides } from '@/content/toolGuides/development';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -80,6 +81,7 @@ export default function MetaTags() {
 
   return (
     <ToolLayout
+      guide={developmentGuides.metaTags}
       title={t('tools.metaTags.name')}
       description={t('tools.metaTags.description')}
       backLabel={t('common.back')}

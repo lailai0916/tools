@@ -2,6 +2,7 @@ import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Button, Table } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { textGuides } from '@/content/toolGuides/text';
 import TextArea from '@/components/TextArea';
 import { useI18n } from '@/i18n';
 import { inspectUnicode } from '@/utils/unicodeInspector';
@@ -15,6 +16,7 @@ export default function UnicodeInspector() {
 
   return (
     <ToolLayout
+      guide={textGuides.unicodeInspector}
       title={t('tools.unicodeInspector.name')}
       description={t('tools.unicodeInspector.description')}
       backLabel={t('common.back')}

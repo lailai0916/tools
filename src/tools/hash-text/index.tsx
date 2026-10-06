@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
 import ToolLayout from '@/components/ToolLayout';
+import { curatedCryptoGuides } from '@/content/toolGuides/curatedCrypto';
 import { ToolPane } from '@/components/ToolWorkspace';
 import { useI18n } from '@/i18n';
 import {
@@ -78,7 +79,11 @@ export default function HashText() {
   };
 
   return (
-    <ToolLayout title={t('tools.hashText.name')} description={t('tools.hashText.description')}>
+    <ToolLayout
+      guide={curatedCryptoGuides.hashText}
+      title={t('tools.hashText.name')}
+      description={t('tools.hashText.description')}
+    >
       <div className={styles.controls}>
         <div className={styles.field}>
           <span className={styles.label}>{t('tools.hashText.mode')}</span>

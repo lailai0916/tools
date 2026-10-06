@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
 import ToolLayout from '@/components/ToolLayout';
+import { curatedTimeUnitsGuides } from '@/content/toolGuides/curatedTimeUnits';
 import { ToolGrid, ToolPane, ToolResults } from '@/components/ToolWorkspace';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -46,6 +47,7 @@ export default function UnitConverter() {
 
   return (
     <ToolLayout
+      guide={curatedTimeUnitsGuides.unitConverter}
       title={t('tools.unitConverter.name')}
       description={t('tools.unitConverter.description')}
     >

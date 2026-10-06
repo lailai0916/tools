@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
 import ToolLayout from '@/components/ToolLayout';
+import { curatedTextGuides } from '@/content/toolGuides/curatedText';
 import { ToolGrid, ToolPane } from '@/components/ToolWorkspace';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -91,7 +92,12 @@ export default function TextWorkbench() {
   const lineOptions = operation === 'sort' || operation === 'dedupe' || operation === 'list';
 
   return (
-    <ToolLayout title={text('name')} description={text('description')} backLabel={t('common.back')}>
+    <ToolLayout
+      guide={curatedTextGuides.textWorkbench}
+      title={text('name')}
+      description={text('description')}
+      backLabel={t('common.back')}
+    >
       <div className={styles.controls}>
         <DropdownSelectField
           label={text('operation')}

@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
 import ToolLayout from '@/components/ToolLayout';
+import { curatedWebGuides } from '@/content/toolGuides/curatedWeb';
 import { ToolGrid, ToolPane } from '@/components/ToolWorkspace';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -86,7 +87,12 @@ export default function HttpInspector() {
   const placeholder = mode === 'basic-auth' ? 'authPlaceholder' : `${mode}Placeholder`;
 
   return (
-    <ToolLayout title={text('name')} description={text('description')} backLabel={t('common.back')}>
+    <ToolLayout
+      guide={curatedWebGuides.httpInspector}
+      title={text('name')}
+      description={text('description')}
+      backLabel={t('common.back')}
+    >
       <div className={styles.controls}>
         <Segmented<Mode>
           value={mode}

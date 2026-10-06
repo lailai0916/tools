@@ -2,6 +2,7 @@ import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
 import { Alert, Button, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { converterGuides } from '@/content/toolGuides/converter';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -64,6 +65,7 @@ export default function BaseConverter() {
 
   return (
     <ToolLayout
+      guide={converterGuides.baseConverter}
       title={t('tools.baseConverter.name')}
       description={t('tools.baseConverter.description')}
       backLabel={t('common.back')}

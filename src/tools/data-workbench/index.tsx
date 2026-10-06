@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
 import ToolLayout from '@/components/ToolLayout';
+import { curatedDataGuides } from '@/content/toolGuides/curatedData';
 import { ToolGrid, ToolPane } from '@/components/ToolWorkspace';
 import { useI18n } from '@/i18n';
 import {
@@ -57,6 +58,7 @@ export default function DataWorkbench() {
 
   return (
     <ToolLayout
+      guide={curatedDataGuides.dataWorkbench}
       title={t('tools.dataWorkbench.name')}
       description={t('tools.dataWorkbench.description')}
     >

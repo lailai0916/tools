@@ -1,6 +1,7 @@
 import { Alert, Button, Segmented } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { mathGuides } from '@/content/toolGuides/math';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -52,6 +53,7 @@ export default function Statistics() {
 
   return (
     <ToolLayout
+      guide={mathGuides.statistics}
       title={t('tools.statistics.name')}
       description={t('tools.statistics.description')}
       backLabel={t('common.back')}

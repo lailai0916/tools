@@ -1,14 +1,13 @@
 import { Icon, Panel, PanelBody } from '@lailai0916/ui';
 import { useId } from 'react';
-import { toolGuides } from '@/content/toolGuides';
-import type { ToolGuideKey } from '@/content/toolGuides/types';
+import type { LocalizedToolGuide } from '@/content/toolGuides/types';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
-export default function ToolGuide({ toolKey }: { toolKey: string }) {
+export default function ToolGuide({ guide: localizedGuide }: { guide: LocalizedToolGuide }) {
   const { locale, t } = useI18n();
   const headingId = useId();
-  const guide = toolGuides[toolKey as ToolGuideKey][locale];
+  const guide = localizedGuide[locale];
 
   return (
     <section className={styles.guide} data-tool="guide" aria-labelledby={headingId}>

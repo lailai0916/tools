@@ -2,6 +2,7 @@ import { ToolPane } from '@/components/ToolWorkspace';
 import { Checkbox, Slider, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { developmentGuides } from '@/content/toolGuides/development';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -48,6 +49,7 @@ export default function BoxShadow() {
 
   return (
     <ToolLayout
+      guide={developmentGuides.boxShadow}
       title={t('tools.boxShadow.name')}
       description={t('tools.boxShadow.description')}
       backLabel={t('common.back')}

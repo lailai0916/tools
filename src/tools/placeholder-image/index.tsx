@@ -2,6 +2,7 @@ import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Button, ButtonLink, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { generatorGuides } from '@/content/toolGuides/generator';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -54,6 +55,7 @@ export default function PlaceholderImage() {
 
   return (
     <ToolLayout
+      guide={generatorGuides.placeholderImage}
       title={t('tools.placeholderImage.name')}
       description={t('tools.placeholderImage.description')}
       backLabel={t('common.back')}

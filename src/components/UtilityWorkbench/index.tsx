@@ -4,6 +4,7 @@ import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolGrid, ToolPane, ToolResults } from '@/components/ToolWorkspace';
+import type { LocalizedToolGuide } from '@/content/toolGuides/types';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import { UtilityInputError } from '@/utils/UtilityInputError';
@@ -36,7 +37,13 @@ function initialValues(fields: readonly UtilityField[]): UtilityValues {
   return Object.fromEntries(fields.map((field) => [field.key, field.defaultValue ?? '']));
 }
 
-export function UtilityWorkbench({ definition }: { definition: UtilityDefinition }) {
+export function UtilityWorkbench({
+  definition,
+  guide,
+}: {
+  definition: UtilityDefinition;
+  guide: LocalizedToolGuide;
+}) {
   const { t } = useI18n();
   const defaults = useMemo(() => initialValues(definition.fields), [definition.fields]);
   const [values, setValues] = useState<UtilityValues>(defaults);
@@ -86,6 +93,7 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
 
   return (
     <ToolLayout
+      guide={guide}
       title={t(messageKey(`${stem}.name`))}
       description={t(messageKey(`${stem}.description`))}
       backLabel={t('common.back')}
@@ -187,8 +195,8 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
   );
 }
 
-export function createUtilityTool(definition: UtilityDefinition) {
+export function createUtilityTool(definition: UtilityDefinition, guide: LocalizedToolGuide) {
   return function UtilityTool() {
-    return <UtilityWorkbench definition={definition} />;
+    return <UtilityWorkbench definition={definition} guide={guide} />;
   };
 }

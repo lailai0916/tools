@@ -1,6 +1,7 @@
 import { Alert, Card, Input } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { developmentGuides } from '@/content/toolGuides/development';
 import { useI18n } from '@/i18n';
 import { CRON_KINDS, parseCronExpression } from '@/utils/cronExpression';
 import type { MessageKey } from '@/i18n/en';
@@ -14,6 +15,7 @@ export default function CrontabParser() {
 
   return (
     <ToolLayout
+      guide={developmentGuides.crontabParser}
       title={t('tools.crontabParser.name')}
       description={t('tools.crontabParser.description')}
       backLabel={t('common.back')}

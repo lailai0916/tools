@@ -2,6 +2,7 @@ import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Badge, Button, Hint, TextAreaField, Input } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { textGuides } from '@/content/toolGuides/text';
 import { useI18n } from '@/i18n';
 import styles from './styles.module.css';
 
@@ -66,6 +67,7 @@ export default function RegexTester() {
 
   return (
     <ToolLayout
+      guide={textGuides.regexTester}
       title={t('tools.regexTester.name')}
       description={t('tools.regexTester.description')}
       backLabel={t('common.back')}

@@ -2,6 +2,7 @@ import { ToolPane, ToolGrid } from '@/components/ToolWorkspace';
 import { Alert, Badge, Button } from '@lailai0916/ui';
 import { useEffect, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { textGuides } from '@/content/toolGuides/text';
 import TextArea from '@/components/TextArea';
 
 import CopyButton from '@/components/CopyButton';
@@ -77,6 +78,7 @@ export default function TextDiff() {
 
   return (
     <ToolLayout
+      guide={textGuides.textDiff}
       title={t('tools.textDiff.name')}
       description={t('tools.textDiff.description')}
       backLabel={t('common.back')}

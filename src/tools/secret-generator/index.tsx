@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
 import ToolLayout from '@/components/ToolLayout';
+import { curatedCryptoGuides } from '@/content/toolGuides/curatedCrypto';
 import { ToolPane } from '@/components/ToolWorkspace';
 import { useI18n } from '@/i18n';
 import { generateSecrets, type SecretPurpose, type SecretResult } from '@/utils/curatedCrypto';
@@ -99,6 +100,7 @@ export default function SecretGenerator() {
 
   return (
     <ToolLayout
+      guide={curatedCryptoGuides.secretGenerator}
       title={t('tools.secretGenerator.name')}
       description={t('tools.secretGenerator.description')}
     >

@@ -9,6 +9,7 @@ import {
 } from 'react';
 import clsx from 'clsx';
 import ToolLayout from '@/components/ToolLayout';
+import { funGuides } from '@/content/toolGuides/fun';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
 import styles from './styles.module.css';
@@ -52,6 +53,7 @@ export function TestShell({ stem, children }: { stem: GameStem; children: ReactN
   }, [stem]);
   return (
     <ToolLayout
+      guide={funGuides[stem]}
       title={t(messageKey(`tools.${stem}.name`))}
       description={t(messageKey(`tools.${stem}.description`))}
       backLabel={t('common.back')}

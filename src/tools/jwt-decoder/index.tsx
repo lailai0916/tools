@@ -2,6 +2,7 @@ import { ToolPane } from '@/components/ToolWorkspace';
 import { Alert, Button } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { cryptoGuides } from '@/content/toolGuides/crypto';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -42,6 +43,7 @@ export default function JwtDecoder() {
 
   return (
     <ToolLayout
+      guide={cryptoGuides.jwtDecoder}
       title={t('tools.jwtDecoder.name')}
       description={t('tools.jwtDecoder.description')}
       backLabel={t('common.back')}

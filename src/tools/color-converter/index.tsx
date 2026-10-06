@@ -1,6 +1,7 @@
 import { Alert, Button, Slider, TextField, Input } from '@lailai0916/ui';
 import { useState } from 'react';
 import ToolLayout from '@/components/ToolLayout';
+import { converterGuides } from '@/content/toolGuides/converter';
 import { ToolPane } from '@/components/ToolWorkspace';
 import CopyButton from '@/components/CopyButton';
 import { useI18n } from '@/i18n';
@@ -228,6 +229,7 @@ export default function ColorConverter() {
 
   return (
     <ToolLayout
+      guide={converterGuides.colorConverter}
       title={t('tools.colorConverter.name')}
       description={t('tools.colorConverter.description')}
       backLabel={t('common.back')}

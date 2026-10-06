@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
 import ToolLayout from '@/components/ToolLayout';
+import { curatedWebGuides } from '@/content/toolGuides/curatedWeb';
 import { ToolGrid, ToolPane, ToolResults } from '@/components/ToolWorkspace';
 import { useI18n } from '@/i18n';
 import type { MessageKey } from '@/i18n/en';
@@ -82,7 +83,12 @@ export default function Ipv4Workbench() {
     : [];
 
   return (
-    <ToolLayout title={text('name')} description={text('description')} backLabel={t('common.back')}>
+    <ToolLayout
+      guide={curatedWebGuides.ipv4Subnet}
+      title={text('name')}
+      description={text('description')}
+      backLabel={t('common.back')}
+    >
       <div className={styles.controls}>
         <Segmented<Ipv4Format>
           value={format}

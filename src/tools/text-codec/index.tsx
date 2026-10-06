@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { Alert, Button, Segmented, DropdownSelectField } from '@lailai0916/ui';
 import ToolLayout from '@/components/ToolLayout';
+import { curatedTextGuides } from '@/content/toolGuides/curatedText';
 import { ToolGrid, ToolPane } from '@/components/ToolWorkspace';
 import TextArea from '@/components/TextArea';
 import CopyButton from '@/components/CopyButton';
@@ -72,6 +73,7 @@ export default function TextCodec() {
 
   return (
     <ToolLayout
+      guide={curatedTextGuides.textCodec}
       title={t('tools.textCodec.name')}
       description={t('tools.textCodec.description')}
       backLabel={t('common.back')}
