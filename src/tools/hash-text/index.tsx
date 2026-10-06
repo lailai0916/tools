@@ -1,4 +1,4 @@
-import { Alert, Button, PasswordField, Segmented, SelectField } from '@lailai0916/ui';
+import { Alert, Button, PasswordField, Segmented, DropdownSelectField } from '@lailai0916/ui';
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
@@ -95,17 +95,12 @@ export default function HashText() {
             ariaLabel={t('tools.hashText.mode')}
           />
         </div>
-        <SelectField
+        <DropdownSelectField
           label={t('tools.hashText.algorithm')}
           value={algorithm}
-          onChange={(event) => changeOption('algorithm', event.target.value)}
-        >
-          {algorithms.map((value) => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </SelectField>
+          onValueChange={(value) => changeOption('algorithm', value)}
+          options={algorithms.map((value) => ({ value, label: value }))}
+        />
       </div>
       <ToolPane
         title={t('common.input')}

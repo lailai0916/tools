@@ -1,4 +1,4 @@
-import { Alert, Button, Segmented, SelectField, TextField } from '@lailai0916/ui';
+import { Alert, Button, Segmented, DropdownSelectField, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
@@ -85,17 +85,12 @@ export default function UnitConverter() {
               invalid={result.state === 'invalid'}
               aria-describedby={result.state === 'invalid' ? 'unit-converter-error' : undefined}
             />
-            <SelectField
+            <DropdownSelectField
               label={t('tools.unitConverter.sourceUnit')}
               value={unit}
-              onChange={(event) => update(dimension, event.target.value)}
-            >
-              {units.map((value) => (
-                <option key={value.id} value={value.id}>
-                  {label(value)}
-                </option>
-              ))}
-            </SelectField>
+              onValueChange={(value) => update(dimension, value)}
+              options={units.map((value) => ({ value: value.id, label: label(value) }))}
+            />
           </div>
           {result.state === 'invalid' && (
             <Alert id="unit-converter-error" variant="danger" role="alert">

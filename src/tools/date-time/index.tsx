@@ -3,7 +3,7 @@ import {
   Button,
   Checkbox,
   Segmented,
-  SelectField,
+  DropdownSelectField,
   TextAreaField,
   TextField,
 } from '@lailai0916/ui';
@@ -105,30 +105,33 @@ export default function DateTime() {
       {mode === 'timestamp' ? (
         <>
           <div className={styles.controls}>
-            <SelectField
+            <DropdownSelectField
               label={t('tools.dateTime.source')}
               value={source}
-              onChange={(event) => changeSource(event.target.value as SourceFormat)}
-            >
-              <option value="timestamp">{t('tools.dateTime.source.timestamp')}</option>
-              <option value="date">{t('tools.dateTime.source.date')}</option>
-            </SelectField>
-            <SelectField
+              onValueChange={(value) => changeSource(value as SourceFormat)}
+              options={[
+                { value: 'timestamp', label: t('tools.dateTime.source.timestamp') },
+                { value: 'date', label: t('tools.dateTime.source.date') },
+              ]}
+            />
+            <DropdownSelectField
               label={t('tools.dateTime.unit')}
               value={unit}
-              onChange={(event) => update('unit', event.target.value)}
-            >
-              <option value="seconds">{t('tools.dateTime.seconds')}</option>
-              <option value="milliseconds">{t('tools.dateTime.milliseconds')}</option>
-            </SelectField>
-            <SelectField
+              onValueChange={(value) => update('unit', value)}
+              options={[
+                { value: 'seconds', label: t('tools.dateTime.seconds') },
+                { value: 'milliseconds', label: t('tools.dateTime.milliseconds') },
+              ]}
+            />
+            <DropdownSelectField
               label={t('tools.dateTime.zone')}
               value={zone}
-              onChange={(event) => update('zone', event.target.value)}
-            >
-              <option value="utc">{t('tools.dateTime.zone.utc')}</option>
-              <option value="local">{t('tools.dateTime.zone.local')}</option>
-            </SelectField>
+              onValueChange={(value) => update('zone', value)}
+              options={[
+                { value: 'utc', label: t('tools.dateTime.zone.utc') },
+                { value: 'local', label: t('tools.dateTime.zone.local') },
+              ]}
+            />
           </div>
           <ToolGrid>
             <ToolPane
@@ -237,17 +240,15 @@ export default function DateTime() {
                   </Button>
                 </div>
               </div>
-              <SelectField
+              <DropdownSelectField
                 label={t('tools.dateTime.weekend')}
                 value={weekend}
-                onChange={(event) => setWeekend(event.target.value as WeekendPattern)}
-              >
-                {WEEKENDS.map((value) => (
-                  <option key={value} value={value}>
-                    {t(`tools.dateTime.weekend.${value}`)}
-                  </option>
-                ))}
-              </SelectField>
+                onValueChange={(value) => setWeekend(value as WeekendPattern)}
+                options={WEEKENDS.map((value) => ({
+                  value,
+                  label: t(`tools.dateTime.weekend.${value}`),
+                }))}
+              />
               <Checkbox
                 checked={includeEnd}
                 onChange={(event) => setIncludeEnd(event.target.checked)}

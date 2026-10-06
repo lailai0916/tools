@@ -1,4 +1,4 @@
-import { Alert, Button, Checkbox, SelectField, TextField } from '@lailai0916/ui';
+import { Alert, Button, Checkbox, DropdownSelectField, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
@@ -61,17 +61,12 @@ export default function TextWorkbench() {
     prefix: string,
     onChange: (value: string) => void
   ) => (
-    <SelectField
+    <DropdownSelectField
       label={text(label)}
       value={value}
-      onChange={(event) => onChange(event.target.value)}
-    >
-      {items.map((item) => (
-        <option key={item} value={item}>
-          {text(`${prefix}.${item}`)}
-        </option>
-      ))}
-    </SelectField>
+      onValueChange={onChange}
+      options={items.map((item) => ({ value: item, label: text(`${prefix}.${item}`) }))}
+    />
   );
   const check = (
     key:
@@ -98,21 +93,19 @@ export default function TextWorkbench() {
   return (
     <ToolLayout title={text('name')} description={text('description')} backLabel={t('common.back')}>
       <div className={styles.controls}>
-        <SelectField
+        <DropdownSelectField
           label={text('operation')}
           value={operation}
-          onChange={(event) => {
+          onValueChange={(value) => {
             const next = new URLSearchParams(searchParams);
-            next.set('operation', event.target.value);
+            next.set('operation', value);
             setSearchParams(next, { replace: true });
           }}
-        >
-          {TEXT_OPERATIONS.map((item) => (
-            <option value={item} key={item}>
-              {text(`operation.${item}`)}
-            </option>
-          ))}
-        </SelectField>
+          options={TEXT_OPERATIONS.map((item) => ({
+            value: item,
+            label: text(`operation.${item}`),
+          }))}
+        />
         {operation === 'case' &&
           select('caseFormat', options.caseFormat, CASE_FORMATS, 'case', (value) =>
             update('caseFormat', value as TextWorkbenchOptions['caseFormat'])
@@ -195,19 +188,17 @@ export default function TextWorkbench() {
           </>
         )}
         {operation === 'normalize' && (
-          <SelectField
+          <DropdownSelectField
             label={text('normalizeForm')}
             value={options.normalizeForm}
-            onChange={(event) =>
-              update('normalizeForm', event.target.value as TextWorkbenchOptions['normalizeForm'])
+            onValueChange={(value) =>
+              update('normalizeForm', value as TextWorkbenchOptions['normalizeForm'])
             }
-          >
-            {(['NFC', 'NFD', 'NFKC', 'NFKD'] as const).map((form) => (
-              <option key={form} value={form}>
-                {form}
-              </option>
-            ))}
-          </SelectField>
+            options={(['NFC', 'NFD', 'NFKC', 'NFKD'] as const).map((form) => ({
+              value: form,
+              label: form,
+            }))}
+          />
         )}
         {operation === 'frequency' && (
           <TextField

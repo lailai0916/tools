@@ -1,4 +1,4 @@
-import { Alert, Button, Checkbox, Icon, SelectField, TextField } from '@lailai0916/ui';
+import { Alert, Button, Checkbox, Icon, DropdownSelectField, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
@@ -61,20 +61,17 @@ export default function DataWorkbench() {
       description={t('tools.dataWorkbench.description')}
     >
       <div className={styles.formats}>
-        <SelectField
+        <DropdownSelectField
           label={t('tools.dataWorkbench.from')}
           value={options.from}
-          onChange={(event) => {
-            const from = event.target.value;
+          onValueChange={(from) => {
             if (isDataInputFormat(from)) setOptions({ from });
           }}
-        >
-          {dataInputFormats.map((format) => (
-            <option key={format} value={format}>
-              {t(`tools.dataWorkbench.${format}`)}
-            </option>
-          ))}
-        </SelectField>
+          options={dataInputFormats.map((format) => ({
+            value: format,
+            label: t(`tools.dataWorkbench.${format}`),
+          }))}
+        />
         <Button
           variant="ghost"
           size="sm"
@@ -92,37 +89,36 @@ export default function DataWorkbench() {
           <Icon icon="lucide:arrow-left-right" width={18} height={18} aria-hidden="true" />
           {t('tools.dataWorkbench.swap')}
         </Button>
-        <SelectField
+        <DropdownSelectField
           label={t('tools.dataWorkbench.to')}
           value={options.to}
-          onChange={(event) => {
-            const to = dataOutputFormats.find((format) => format === event.target.value);
+          onValueChange={(value) => {
+            const to = dataOutputFormats.find((format) => format === value);
             if (to) setOptions({ to });
           }}
-        >
-          {dataOutputFormats.map((format) => (
-            <option key={format} value={format}>
-              {t(`tools.dataWorkbench.${format}`)}
-            </option>
-          ))}
-        </SelectField>
+          options={dataOutputFormats.map((format) => ({
+            value: format,
+            label: t(`tools.dataWorkbench.${format}`),
+          }))}
+        />
       </div>
 
       <div className={styles.options}>
-        <SelectField
+        <DropdownSelectField
           wrapperClassName={styles.indent}
           label={t('tools.dataWorkbench.indent')}
-          value={options.indent}
-          onChange={(event) => {
-            const indent = Number(event.target.value);
+          value={String(options.indent)}
+          onValueChange={(value) => {
+            const indent = Number(value);
             if (indent === 0 || indent === 2 || indent === 4) setOptions({ indent });
           }}
           disabled={options.to === 'csv' || options.to === 'tsv'}
-        >
-          <option value={2}>{t('tools.dataWorkbench.twoSpaces')}</option>
-          <option value={4}>{t('tools.dataWorkbench.fourSpaces')}</option>
-          <option value={0}>{t('tools.dataWorkbench.compact')}</option>
-        </SelectField>
+          options={[
+            { value: '2', label: t('tools.dataWorkbench.twoSpaces') },
+            { value: '4', label: t('tools.dataWorkbench.fourSpaces') },
+            { value: '0', label: t('tools.dataWorkbench.compact') },
+          ]}
+        />
         <div className={styles.checks}>
           <Checkbox
             label={t('tools.dataWorkbench.sort')}

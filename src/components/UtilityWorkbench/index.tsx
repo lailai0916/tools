@@ -1,4 +1,4 @@
-import { Alert, Button, SelectField, TextAreaField, TextField } from '@lailai0916/ui';
+import { Alert, Button, DropdownSelectField, TextAreaField, TextField } from '@lailai0916/ui';
 import { useEffect, useMemo, useState } from 'react';
 import CopyButton from '@/components/CopyButton';
 import TextArea from '@/components/TextArea';
@@ -127,18 +127,16 @@ export function UtilityWorkbench({ definition }: { definition: UtilityDefinition
                   monospace
                 />
               ) : field.type === 'select' ? (
-                <SelectField
+                <DropdownSelectField
                   key={field.key}
                   label={label}
                   value={values[field.key] ?? ''}
-                  onChange={(event) => update(field.key, event.target.value)}
-                >
-                  {field.options?.map((option) => (
-                    <option key={option} value={option}>
-                      {t(messageKey(`${stem}.${field.key}.${option}`))}
-                    </option>
-                  ))}
-                </SelectField>
+                  onValueChange={(value) => update(field.key, value)}
+                  options={(field.options ?? []).map((option) => ({
+                    value: option,
+                    label: t(messageKey(`${stem}.${field.key}.${option}`)),
+                  }))}
+                />
               ) : (
                 <TextField
                   key={field.key}

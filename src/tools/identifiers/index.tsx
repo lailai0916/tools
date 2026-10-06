@@ -1,4 +1,4 @@
-import { Alert, Button, Segmented, SelectField, TextField } from '@lailai0916/ui';
+import { Alert, Button, Segmented, DropdownSelectField, TextField } from '@lailai0916/ui';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import CopyButton from '@/components/CopyButton';
@@ -98,17 +98,12 @@ export default function Identifiers() {
       {mode === 'generate' ? (
         <>
           <div className={styles.controls}>
-            <SelectField
+            <DropdownSelectField
               label={t('tools.identifiers.format')}
               value={format}
-              onChange={(event) => update('format', event.target.value)}
-            >
-              {FORMATS.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
-                </option>
-              ))}
-            </SelectField>
+              onValueChange={(value) => update('format', value)}
+              options={FORMATS}
+            />
             <TextField
               label={t('tools.identifiers.count')}
               type="number"

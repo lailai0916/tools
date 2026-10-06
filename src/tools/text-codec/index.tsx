@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
-import { Alert, Button, Segmented, SelectField } from '@lailai0916/ui';
+import { Alert, Button, Segmented, DropdownSelectField } from '@lailai0916/ui';
 import ToolLayout from '@/components/ToolLayout';
 import { ToolGrid, ToolPane } from '@/components/ToolWorkspace';
 import TextArea from '@/components/TextArea';
@@ -77,22 +77,20 @@ export default function TextCodec() {
       backLabel={t('common.back')}
     >
       <div className={styles.controls}>
-        <SelectField
+        <DropdownSelectField
           id="text-codec-format"
           wrapperClassName={styles.format}
           label={t('tools.textCodec.format')}
           value={format}
-          onChange={(event) => {
-            if (isCodecFormat(event.target.value)) changeFormat(event.target.value);
+          onValueChange={(value) => {
+            if (isCodecFormat(value)) changeFormat(value);
           }}
           aria-describedby="text-codec-format-hint"
-        >
-          {CODEC_FORMATS.map((value) => (
-            <option key={value} value={value}>
-              {t(`tools.textCodec.formats.${value}` as MessageKey)}
-            </option>
-          ))}
-        </SelectField>
+          options={CODEC_FORMATS.map((value) => ({
+            value,
+            label: t(`tools.textCodec.formats.${value}` as MessageKey),
+          }))}
+        />
         <Segmented<CodecMode>
           value={mode}
           onChange={changeMode}
