@@ -159,26 +159,16 @@
   min-width: 0;
 }
 
-.body {
-  padding: var(--lk-space-6);
-}
-
-@container tools-content (max-width: 560px) {
-  .body {
-    padding: var(--lk-space-4);
-  }
-}
-
 .layout :global([data-lk='segmented']) {
   max-width: 100%;
 }
 
-.body :global(textarea[data-lk='field-control']):not([rows]) {
+.workspace :global(textarea[data-lk='field-control']):not([rows]) {
   min-height: 240px;
 }
 
 @container tools-content (max-width: 560px) {
-  .body :global(textarea[data-lk='field-control']):not([rows]) {
+  .workspace :global(textarea[data-lk='field-control']):not([rows]) {
     min-height: 176px;
   }
 }

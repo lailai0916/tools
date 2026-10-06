@@ -53,7 +53,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 - Icon-only controls use the shared `Hint` from laikit UI through `IconButton`, `LanguageButton`, and `ThemeButton`. Supplemental text can use `Hint`; structured data points continue to use `Tooltip`.
 - Do not place a segmented theme card in the header.
 - Inputs, fields, selects, passwords, checkboxes, sliders, copy feedback, and errors come from laikit UI.
-- `ToolLayout` composes `Stack`, `Link`, `Panel`, and `PanelBody` into a consistent tool workspace.
+- `ToolLayout` composes `Stack` and `Link` into a consistent, open tool workspace.
   Its breadcrumbs follow Home: a house icon linking home, a category link, and the current tool name.
   Breadcrumbs use an ordered list, muted chevrons, and a stronger current label; long labels truncate
   on narrow screens. The favorite action sits on the right of the breadcrumb row and follows Home's
@@ -106,8 +106,9 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 
 - `ToolGrid`, `ToolPane`, and `ToolResults` are Tools-specific compositions; primitive control styles
   continue to come from laikit UI. Tool CSS composes their layout rules instead of repeating them.
-- Normal workspaces use a shared `Panel` with `24px` padding, reduced to `16px` below `560px` of content width.
-- Pair input and output panes in a two-column grid with a `24px` gap; stack below `680px` of content width, so tablet comparisons remain side by side.
+- Place controls and panes directly on the page, aligned with the title and guide. Use `24px` section gaps;
+  omit an enclosing card, border, background, and extra inset. Fields, result lists, and domain previews keep their own meaningful boundaries.
+- Pair input and output panes in a two-column grid with a `24px` gap; stack below `920px` of content width to keep tablet results readable.
   Use container queries so the persistent sidebar is included in available-space calculations.
 - Pane headings and their clear/reset/copy actions share one header row. Errors stay beside the relevant input.
 - Code/text editors start at `240px`, or `176px` in narrow workspaces; single-line values use explicit rows or `TextField`.

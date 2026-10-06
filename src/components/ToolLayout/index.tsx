@@ -1,4 +1,4 @@
-import { Icon, Link, Panel, PanelBody, Stack } from '@lailai0916/ui';
+import { Icon, Link, Stack } from '@lailai0916/ui';
 import type { ReactNode } from 'react';
 import FavoriteButton from '@/components/FavoriteButton';
 import ToolGuide from '@/components/ToolGuide';
@@ -26,7 +26,6 @@ export default function ToolLayout({
   const { tool } = useToolNavigation();
   const { favorites } = useSavedTools();
   const { t } = useI18n();
-  const content = <Stack gap={24}>{children}</Stack>;
   return (
     <div className={styles.layout} data-tool="page" data-wide={wide || undefined}>
       <div className={styles.topRow}>
@@ -64,13 +63,13 @@ export default function ToolLayout({
           {description && <p className={styles.description}>{description}</p>}
         </div>
       </header>
-      {tool?.category === 'fun' ? (
-        content
-      ) : (
-        <Panel className={styles.workspace}>
-          <PanelBody className={styles.body}>{content}</PanelBody>
-        </Panel>
-      )}
+      <Stack
+        gap={24}
+        className={tool?.category === 'fun' ? undefined : styles.workspace}
+        data-tool="workspace"
+      >
+        {children}
+      </Stack>
       {tool && <ToolGuide toolKey={tool.key} />}
     </div>
   );
