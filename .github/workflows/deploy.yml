@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: npm run check:guides && npm run check:workbenches && npm run build
+        run: npm run check:guides && npm run check:workbenches && npm run build && npm run check:performance
 
       - name: Install rsync
         run: sudo apt-get update && sudo apt-get install -y rsync

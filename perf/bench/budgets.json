@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "metric": "gzip-bytes",
+  "compression": {
+    "level": 9
+  },
+  "routes": {
+    "/": {
+      "js": 144972,
+      "css": 14834
+    },
+    "/data-workbench": {
+      "js": 191914,
+      "css": 17553
+    },
+    "/text-codec": {
+      "js": 176851,
+      "css": 17903
+    },
+    "/base-converter": {
+      "js": 150756,
+      "css": 16899
+    },
+    "/unit-converter": {
+      "js": 178668,
+      "css": 17137
+    },
+    "/date-time": {
+      "js": 179397,
+      "css": 17201
+    },
+    "/color-converter": {
+      "js": 152952,
+      "css": 17780
+    },
+    "/text-workbench": {
+      "js": 177291,
+      "css": 17333
+    },
+    "/unicode-inspector": {
+      "js": 150696,
+      "css": 17503
+    },
+    "/regex-tester": {
+      "js": 150829,
+      "css": 17835
+    },
+    "/text-diff": {
+      "js": 151770,
+      "css": 17503
+    },
+    "/hash-text": {
+      "js": 178038,
+      "css": 17431
+    },
+    "/jwt-decoder": {
+      "js": 153494,
+      "css": 17919
+    },
+    "/totp": {
+      "js": 153539,
+      "css": 17782
+    },
+    "/url-workbench": {
+      "js": 156088,
+      "css": 17336
+    },
+    "/http-inspector": {
+      "js": 155861,
+      "css": 17285
+    },
+    "/ipv4-subnet": {
+      "js": 155464,
+      "css": 17064
+    },
+    "/unix-permission": {
+      "js": 149860,
+      "css": 17048
+    },
+    "/css-gradient": {
+      "js": 152741,
+      "css": 17827
+    },
+    "/box-shadow": {
+      "js": 153034,
+      "css": 17368
+    },
+    "/crontab-parser": {
+      "js": 153046,
+      "css": 17126
+    },
+    "/meta-tags": {
+      "js": 152567,
+      "css": 17245
+    },
+    "/docker-run-to-compose": {
+      "js": 191505,
+      "css": 17478
+    },
+    "/gitignore-generator": {
+      "js": 191505,
+      "css": 17478
+    },
+    "/statistics": {
+      "js": 151633,
+      "css": 17135
+    },
+    "/identifiers": {
+      "js": 178271,
+      "css": 17471
+    },
+    "/secret-generator": {
+      "js": 156526,
+      "css": 17376
+    },
+    "/random-number": {
+      "js": 152012,
+      "css": 17901
+    },
+    "/qrcode": {
+      "js": 153621,
+      "css": 18056
+    },
+    "/placeholder-image": {
+      "js": 152851,
+      "css": 17491
+    },
+    "/cps-test": {
+      "js": 155543,
+      "css": 19300
+    },
+    "/reaction-time": {
+      "js": 155543,
+      "css": 19300
+    },
+    "/typing-speed": {
+      "js": 154380,
+      "css": 19300
+    }
+  }
+}
