@@ -6,136 +6,136 @@
   },
   "routes": {
     "/": {
-      "js": 144972,
-      "css": 14834
+      "js": 144973,
+      "css": 14937
     },
     "/data-workbench": {
-      "js": 191914,
-      "css": 17553
+      "js": 191926,
+      "css": 17656
     },
     "/text-codec": {
-      "js": 176851,
-      "css": 17903
+      "js": 176863,
+      "css": 18006
     },
     "/base-converter": {
-      "js": 150756,
-      "css": 16899
+      "js": 150763,
+      "css": 17002
     },
     "/unit-converter": {
-      "js": 178668,
-      "css": 17137
+      "js": 178676,
+      "css": 17240
     },
     "/date-time": {
-      "js": 179397,
-      "css": 17201
+      "js": 179410,
+      "css": 17304
     },
     "/color-converter": {
-      "js": 152952,
-      "css": 17780
+      "js": 152960,
+      "css": 17883
     },
     "/text-workbench": {
-      "js": 177291,
-      "css": 17333
+      "js": 177303,
+      "css": 17436
     },
     "/unicode-inspector": {
-      "js": 150696,
-      "css": 17503
+      "js": 150704,
+      "css": 17606
     },
     "/regex-tester": {
-      "js": 150829,
-      "css": 17835
+      "js": 150839,
+      "css": 17938
     },
     "/text-diff": {
-      "js": 151770,
-      "css": 17503
+      "js": 151780,
+      "css": 17606
     },
     "/hash-text": {
-      "js": 178038,
-      "css": 17431
+      "js": 178053,
+      "css": 17534
     },
     "/jwt-decoder": {
-      "js": 153494,
-      "css": 17919
+      "js": 153502,
+      "css": 18022
     },
     "/totp": {
-      "js": 153539,
-      "css": 17782
+      "js": 153546,
+      "css": 17885
     },
     "/url-workbench": {
-      "js": 156088,
-      "css": 17336
+      "js": 156101,
+      "css": 17439
     },
     "/http-inspector": {
-      "js": 155861,
-      "css": 17285
+      "js": 155869,
+      "css": 17388
     },
     "/ipv4-subnet": {
-      "js": 155464,
-      "css": 17064
+      "js": 155470,
+      "css": 17167
     },
     "/unix-permission": {
-      "js": 149860,
-      "css": 17048
+      "js": 149862,
+      "css": 17151
     },
     "/css-gradient": {
-      "js": 152741,
-      "css": 17827
+      "js": 152747,
+      "css": 17930
     },
     "/box-shadow": {
-      "js": 153034,
-      "css": 17368
-    },
-    "/crontab-parser": {
-      "js": 153046,
-      "css": 17126
-    },
-    "/meta-tags": {
-      "js": 152567,
-      "css": 17245
-    },
-    "/docker-run-to-compose": {
-      "js": 191505,
-      "css": 17478
-    },
-    "/gitignore-generator": {
-      "js": 191505,
-      "css": 17478
-    },
-    "/statistics": {
-      "js": 151633,
-      "css": 17135
-    },
-    "/identifiers": {
-      "js": 178271,
+      "js": 153040,
       "css": 17471
     },
+    "/crontab-parser": {
+      "js": 153050,
+      "css": 17229
+    },
+    "/meta-tags": {
+      "js": 152573,
+      "css": 17348
+    },
+    "/docker-run-to-compose": {
+      "js": 191517,
+      "css": 17581
+    },
+    "/gitignore-generator": {
+      "js": 191517,
+      "css": 17581
+    },
+    "/statistics": {
+      "js": 151641,
+      "css": 17238
+    },
+    "/identifiers": {
+      "js": 178286,
+      "css": 17574
+    },
     "/secret-generator": {
-      "js": 156526,
-      "css": 17376
+      "js": 156539,
+      "css": 17479
     },
     "/random-number": {
-      "js": 152012,
-      "css": 17901
+      "js": 152021,
+      "css": 18004
     },
     "/qrcode": {
-      "js": 153621,
-      "css": 18056
+      "js": 153634,
+      "css": 18159
     },
     "/placeholder-image": {
-      "js": 152851,
-      "css": 17491
+      "js": 152862,
+      "css": 17594
     },
     "/cps-test": {
-      "js": 155543,
-      "css": 19300
+      "js": 155548,
+      "css": 19424
     },
     "/reaction-time": {
-      "js": 155543,
-      "css": 19300
+      "js": 155548,
+      "css": 19424
     },
     "/typing-speed": {
-      "js": 154380,
-      "css": 19300
+      "js": 154384,
+      "css": 19424
     }
   }
 }

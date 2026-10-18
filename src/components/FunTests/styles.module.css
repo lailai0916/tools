@@ -465,9 +465,10 @@
   opacity: 0.5;
 }
 
-.testSegments {
+.testSegments[data-lk='segmented'] {
   display: grid;
   width: 100%;
+  grid-auto-flow: row;
   grid-template-columns: repeat(auto-fit, minmax(54px, 1fr));
 }
 
