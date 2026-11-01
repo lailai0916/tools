@@ -48,3 +48,9 @@ is only a compatibility import. Claude-specific launch configuration remains in
 
 Shared UI is maintained in `lailai0916/ui` and installed from npm. Import `theme.css` before
 `styles.css`, use `--lk-*` tokens, and customize supported `data-lk` hooks rather than generated classes.
+
+Appearance follows the [theme preference contract](https://github.com/lailai0916/ui/blob/main/docs/integration.md#theme-preference-contract).
+Keep the persistent `ThemeProvider` default and compact three-option `ThemeControl`; the pre-paint
+script shares its `lailai.theme` storage key. Invalid or blocked storage defaults to System.
+Manual choices persist across reloads, language switches, tabs, and system changes; selecting
+System immediately resumes synchronization. Do not restore temporary `mode="system"` behavior.

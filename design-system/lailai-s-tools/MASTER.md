@@ -39,7 +39,7 @@ find a tool, complete one operation, and leave. Preserve the original product's 
 ### Header
 
 - `SiteHeader` and `SkipLink` own the common header layout and keyboard skip navigation.
-- `LanguageButton` and `ThemeButton` share the Prispect header controls. Language state stays in Tools; appearance follows the system on load and system changes, with a temporary one-click light/dark choice through `ThemeProvider mode="system"`.
+- `LanguageButton` keeps language state in Tools. Appearance uses compact `ThemeControl` with System, Light, and Dark choices and the persistent `ThemeProvider` default, following the [shared theme preference contract](https://github.com/lailai0916/ui/blob/main/docs/integration.md#theme-preference-contract). Default to System; preserve manual choices across reloads, tabs, language changes, and system changes. The pre-paint script reads the same validated `lailai.theme` preference.
 - The brand always belongs to the header; omit the current-view/tool context label. Keep the brand on
   the left and group search, language, theme, and the mobile menu on the right, following Prispect.
   Keep the title on one line and hide it only when the brand's available space is `8.5rem` or less.
@@ -47,10 +47,10 @@ find a tool, complete one operation, and leave. Preserve the original product's 
   `480px`; respect horizontal safe-area insets. Action gaps are `8px`, `2px` on mobile/touch devices,
   and `0px` at widths up to `640px`. Keep the shared button visuals and header height.
 - The mobile menu and drawer close controls also use `IconButton variant="header"`.
-- Search, language, and theme buttons are `32px` on desktop and `44px` at widths up to `980px` or on touch devices.
-- Search uses `IconButton variant="header"`, the same base primitive as the language and theme controls, including borders, icon strokes, focus and press feedback.
-- Theme changes immediately on click.
-- Icon-only controls use the shared `Hint` from laikit UI through `IconButton`, `LanguageButton`, and `ThemeButton`. Supplemental text can use `Hint`; structured data points continue to use `Tooltip`.
+- Search and language buttons are `32px` on desktop and `44px` at widths up to `980px` or on touch devices. The theme menu retains the shared compact control's sizing and keyboard behavior.
+- Search uses `IconButton variant="header"`, the same base primitive as language and navigation actions. Keep shared component surfaces, icon strokes, focus, and press feedback.
+- Theme changes immediately after selecting a preference; the System icon continues to represent that preference regardless of the resolved palette.
+- Icon-only actions use the shared `Hint` through `IconButton` and `LanguageButton`; `ThemeControl` exposes its current preference and radio menu through accessible labels. Supplemental text can use `Hint`; structured data points continue to use `Tooltip`.
 - Do not place a segmented theme card in the header.
 - Inputs, fields, selects, passwords, checkboxes, sliders, copy feedback, and errors come from laikit UI.
 - `ToolLayout` composes `Stack` and `Link` into a consistent, open tool workspace.
