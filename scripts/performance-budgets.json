@@ -7,135 +7,135 @@
   "routes": {
     "/": {
       "js": 144973,
-      "css": 14937
+      "css": 16389
     },
     "/data-workbench": {
       "js": 191926,
-      "css": 17656
+      "css": 19108
     },
     "/text-codec": {
-      "js": 176863,
-      "css": 18006
+      "js": 177109,
+      "css": 19452
     },
     "/base-converter": {
-      "js": 150763,
-      "css": 17002
+      "js": 150982,
+      "css": 18453
     },
     "/unit-converter": {
-      "js": 178676,
-      "css": 17240
+      "js": 178832,
+      "css": 18691
     },
     "/date-time": {
-      "js": 179410,
-      "css": 17304
+      "js": 179564,
+      "css": 18754
     },
     "/color-converter": {
-      "js": 152960,
-      "css": 17883
+      "js": 153172,
+      "css": 19331
     },
     "/text-workbench": {
-      "js": 177303,
-      "css": 17436
+      "js": 177372,
+      "css": 18887
     },
     "/unicode-inspector": {
       "js": 150704,
-      "css": 17606
+      "css": 19059
     },
     "/regex-tester": {
       "js": 150839,
-      "css": 17938
+      "css": 19385
     },
     "/text-diff": {
-      "js": 151780,
-      "css": 17606
+      "js": 152014,
+      "css": 19057
     },
     "/hash-text": {
-      "js": 178053,
-      "css": 17534
+      "js": 178250,
+      "css": 18984
     },
     "/jwt-decoder": {
-      "js": 153502,
-      "css": 18022
+      "js": 153626,
+      "css": 19470
     },
     "/totp": {
-      "js": 153546,
-      "css": 17885
+      "js": 153674,
+      "css": 19332
     },
     "/url-workbench": {
-      "js": 156101,
-      "css": 17439
+      "js": 156369,
+      "css": 18891
     },
     "/http-inspector": {
-      "js": 155869,
-      "css": 17388
+      "js": 156146,
+      "css": 18839
     },
     "/ipv4-subnet": {
-      "js": 155470,
-      "css": 17167
+      "js": 155749,
+      "css": 18619
     },
     "/unix-permission": {
-      "js": 149862,
-      "css": 17151
+      "js": 150080,
+      "css": 18600
     },
     "/css-gradient": {
-      "js": 152747,
-      "css": 17930
+      "js": 152920,
+      "css": 19374
     },
     "/box-shadow": {
-      "js": 153040,
-      "css": 17471
+      "js": 153211,
+      "css": 18920
     },
     "/crontab-parser": {
       "js": 153050,
-      "css": 17229
+      "css": 18681
     },
     "/meta-tags": {
-      "js": 152573,
-      "css": 17348
+      "js": 152754,
+      "css": 18800
     },
     "/docker-run-to-compose": {
       "js": 191517,
-      "css": 17581
+      "css": 19034
     },
     "/gitignore-generator": {
       "js": 191517,
-      "css": 17581
+      "css": 19034
     },
     "/statistics": {
-      "js": 151641,
-      "css": 17238
+      "js": 152028,
+      "css": 18692
     },
     "/identifiers": {
-      "js": 178286,
-      "css": 17574
+      "js": 178475,
+      "css": 19026
     },
     "/secret-generator": {
-      "js": 156539,
-      "css": 17479
+      "js": 156814,
+      "css": 18930
     },
     "/random-number": {
-      "js": 152021,
-      "css": 18004
+      "js": 152230,
+      "css": 19450
     },
     "/qrcode": {
       "js": 153634,
-      "css": 18159
+      "css": 19605
     },
     "/placeholder-image": {
-      "js": 152862,
-      "css": 17594
+      "js": 153068,
+      "css": 19045
     },
     "/cps-test": {
       "js": 155548,
-      "css": 19424
+      "css": 20883
     },
     "/reaction-time": {
       "js": 155548,
-      "css": 19424
+      "css": 20883
     },
     "/typing-speed": {
       "js": 154384,
-      "css": 19424
+      "css": 20883
     }
   }
 }

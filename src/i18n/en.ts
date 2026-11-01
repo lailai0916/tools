@@ -57,7 +57,7 @@ const baseEn = {
 
   'site.switchLanguage': 'Switch language',
 
-  'site.themeSystem': 'Auto',
+  'site.themeSystem': 'System',
 
   'site.themeLight': 'Light',
 

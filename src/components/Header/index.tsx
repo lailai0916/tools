@@ -6,8 +6,7 @@ import {
   LanguageButton,
   SiteHeader,
   SkipLink,
-  ThemeButton,
-  useTheme,
+  ThemeControl,
 } from '@lailai0916/ui';
 import { useI18n } from '@/i18n';
 import ToolSearch from '@/components/ToolSearch';
@@ -25,7 +24,6 @@ export default function Header({
   className?: string;
 }) {
   const { locale, setLocale, t } = useI18n();
-  const { resolvedTheme, setPreference } = useTheme();
 
   return (
     <>
@@ -42,7 +40,14 @@ export default function Header({
           <>
             <ToolSearch />
             <LanguageButton locale={locale} onLocaleChange={setLocale} />
-            <ThemeButton theme={resolvedTheme} onThemeChange={setPreference} />
+            <ThemeControl
+              variant="compact"
+              labels={{
+                system: t('site.themeSystem'),
+                light: t('site.themeLight'),
+                dark: t('site.themeDark'),
+              }}
+            />
             <IconButton
               className={styles.menuButton}
               variant="header"

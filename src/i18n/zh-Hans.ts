@@ -59,7 +59,7 @@ const baseZhHans = {
 
   'site.switchLanguage': '切换语言',
 
-  'site.themeSystem': '自动',
+  'site.themeSystem': '跟随系统',
 
   'site.themeLight': '浅色',
 
